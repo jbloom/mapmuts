@@ -656,6 +656,14 @@ removeoutlier False
 </ul>
 </blockquote>
 </li>
+<li><p class="first">Compute the overall equilibrium preferences across both <em>replicates</em> for the <em>WT</em> samples and the <em>N334H</em> samples with <tt class="docutils literal">mapmuts_preferencemeans.py</tt>. This creates the following files:</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">./WT_p1_equilibriumpreferences.txt</tt> gives the preferences inferred from the passage 1 (<em>p1</em>) averaged across the <em>WT-1</em> and <em>WT-2</em> <em>samples</em> from both <em>replicates</em>.</li>
+<li><tt class="docutils literal">./N334H_p1_equilibriumpreferences.txt</tt></li>
+</ul>
+</blockquote>
+</li>
 <li><p class="first">Compute the overall equilibrium preferences averaged over the two independent replicates (<em>replicate_A</em> and <em>replicate_B</em>) with <tt class="docutils literal">mapmuts_preferencemeans.py</tt>. This is the &quot;best&quot; estimate for these preferences as it combines the data for the two replicates. The results are in the main subdirectory for this example in the following files:</p>
 <blockquote>
 <ul class="simple">
@@ -664,7 +672,7 @@ removeoutlier False
 </ul>
 </blockquote>
 </li>
-<li><p class="first">Compute the correlations between the inferred preferences. These allow us to compare the inferred preferences across replicates, and between the passage 1 (<em>p1</em>) and passage 2 (<em>p2</em>) viruses within each replicate. These correlations were computed using the <tt class="docutils literal">mapmuts_preferencescorrelate.py</tt> described in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>). The results are in the form of PDF plots that are created in the <tt class="docutils literal">./correlations/</tt> subdirectory. The key plots are shown below. Overall these plots show that the two passages <em>p1</em> and <em>p2</em> are highly correlated with each other. The two independent replicates (<em>replicate_A</em> and <em>replicate_B</em>) are correlated, but less so -- presumably this is due to stochasticity in growth of the viruses from these replicates.</p>
+<li><p class="first">Compute the correlations between the inferred preferences. These allow us to compare the inferred preferences across replicates, and between the passage 1 (<em>p1</em>) and passage 2 (<em>p2</em>) viruses within each replicate. These correlations were computed using the <tt class="docutils literal">mapmuts_preferencescorrelate.py</tt> described in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>). The results are in the form of PDF plots that are created in the <tt class="docutils literal">./correlations/</tt> subdirectory. The key plots are shown below. Overall these plots show that the two passages <em>p1</em> and <em>p2</em> are highly correlated with each other. The two independent replicates (<em>replicate_A</em> and <em>replicate_B</em>) are correlated, but less so -- presumably this is due to stochasticity in growth of the viruses from these replicates. The <em>WT</em> and <em>N334H</em> samples are about as correlated as the two replicates.</p>
 <blockquote>
 <div class="figure align-center">
 <img alt="correlations/replicate_A_p1_vs_replicate_A_p2.jpg" src="correlations/replicate_A_p1_vs_replicate_A_p2.jpg" style="width: 30%;" />
@@ -677,6 +685,10 @@ removeoutlier False
 <div class="figure align-center">
 <img alt="correlations/replicate_A_p1_vs_replicate_B_p1.jpg" src="correlations/replicate_A_p1_vs_replicate_B_p1.jpg" style="width: 30%;" />
 <p class="caption">The <tt class="docutils literal">correlations/replicate_A_p1_vs_replicate_B_p1.jpg</tt> plot.</p>
+</div>
+<div class="figure align-center">
+<img alt="correlations/WT_p1_vs_N334H_p1.jpg" src="correlations/WT_p1_vs_N334H_p1.jpg" style="width: 30%;" />
+<p class="caption">The <tt class="docutils literal">correlations/WT_p1_vs_N334H_p1.jpg</tt> plot.</p>
 </div>
 </blockquote>
 </li>

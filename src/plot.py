@@ -2110,12 +2110,12 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
         raise ValueError("xs and ys do not specify lists of the same length with >= 2 entries")
     if fixaxes and (logy or logx):
         raise ValueError("Cannot use fixaxes with logx or logy")
-    (bigmargin, smallmargin) = (0.24, 0.05)
+    (bigmargin, smallmargin) = (0.26, 0.05)
     (lmargin, rmargin, bmargin, tmargin) = (bigmargin, smallmargin, bigmargin, smallmargin)
     titlemargin = 0.09
     plotmargin = 0.02 # add this much above and below the last data point
     logplotmargin = 2 # scale limits by this much if log scale
-    xsize = 2.0
+    xsize = 1.8
     if title:
         tmargin += titlemargin
     ysize = xsize * (1.0 - lmargin - rmargin) / (1.0 - tmargin - bmargin)

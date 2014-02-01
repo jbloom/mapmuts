@@ -164,6 +164,7 @@ def main():
     # Specify the replicates, samples, and amplicons.
     replicates = ['replicate_A', 'replicate_B']
     samples = ['WT-1', 'WT-2', 'N334H-1', 'N334H-2']
+    sampletypes = [('WT', ['WT-1', 'WT-2']), ('N334H', ['N334H-1', 'N334H-2'])]
     amplicons = ['DNA', 'RNA', 'mutDNA', 'virus-p1', 'mutvirus-p1', 'virus-p2', 'mutvirus-p2']
 
     # Now run mapmuts_makealignments.py. Each sample is run its own subdirectory
@@ -331,6 +332,14 @@ def main():
         commands = [('preferencefiles', ' '.join(preferencefiles)), ('outfile', '%s_equilibriumpreferences.txt' % p), ('includestop', 'False')]
         RunScript('./', 'preferencemeans', 'mapmuts_preferencemeans.py', commands, False, 1)
 
+    # Now run mapmuts_preferencemeans for each sampletype
+    for (sampletype, samplelist) in sampletypes:
+        preferencefiles = []
+        for replicate in replicates:
+            preferencefiles += ['%s/%s/p1_equilibriumpreferences.txt' % (replicate, sample) for sample in samplelist]
+        commands = [('preferencefiles', ' '.join(preferencefiles)), ('includestop', 'False'), ('outfile', '%s_p1_equilibriumpreferences.txt' % sampletype)]
+        RunScript('./', '%s_preferencemeans' % sampletype, 'mapmuts_preferencemeans.py', commands, False, 1)
+
     # Now run mapmuts_preferencescorrelate.py
     correlationdir = './correlations/'
     convert_to_jpgs = []
@@ -344,6 +353,16 @@ def main():
         commands.append(('alpha', '0.1'))
         RunScript(correlationdir, 'preferencescorrelate_%s_passages' % replicate, 'mapmuts_preferencescorrelate.py', commands, False, 1)
         convert_to_jpgs.append('%s/%s_p1_vs_%s_p2.pdf' % (correlationdir, replicate, replicate))
+    # correlation between sample types
+    for i1 in range(len(sampletypes)):
+        sampletype1 = sampletypes[i1][0]
+        for (sampletype2, samplelist2) in sampletypes[i1 + 1: ]:
+            commands = [('plotdir', './')]
+            commands.append(('samplenames', '%s_p1 %s_p1' % (sampletype1, sampletype2)))
+            commands.append(('preferencesfiles', '%s/%s_p1_equilibriumpreferences.txt %s/%s_p1_equilibriumpreferences.txt' % (basedir, sampletype1, basedir, sampletype2)))
+            commands.append(('alpha', '0.1'))
+            RunScript(correlationdir, 'preferencescorrelate_%s_vs_%s' % (sampletype1, sampletype2), 'mapmuts_preferencescorrelate.py', commands, False, 1)
+            convert_to_jpgs.append("%s/%s_p1_vs_%s_p1.pdf" % (correlationdir, sampletype1, sampletype2))
     # correlations between replicates for p1
     for i1 in range(len(replicates)):
         replicate1 = replicates[i1]

@@ -350,14 +350,19 @@ Specifically, the steps are as follows:
 
     - ``./replicate_B/replicate_B_p2_equilibriumpreferences.txt``
 
+3) Compute the overall equilibrium preferences across both *replicates* for the *WT* samples and the *N334H* samples with ``mapmuts_preferencemeans.py``. This creates the following files:
 
-3) Compute the overall equilibrium preferences averaged over the two independent replicates (*replicate_A* and *replicate_B*) with ``mapmuts_preferencemeans.py``. This is the "best" estimate for these preferences as it combines the data for the two replicates. The results are in the main subdirectory for this example in the following files:
+    - ``./WT_p1_equilibriumpreferences.txt`` gives the preferences inferred from the passage 1 (*p1*) averaged across the *WT-1* and *WT-2* *samples* from both *replicates*.
+
+    - ``./N334H_p1_equilibriumpreferences.txt`` 
+
+4) Compute the overall equilibrium preferences averaged over the two independent replicates (*replicate_A* and *replicate_B*) with ``mapmuts_preferencemeans.py``. This is the "best" estimate for these preferences as it combines the data for the two replicates. The results are in the main subdirectory for this example in the following files:
 
     - ``./p1_equilibriumpreferences.txt`` gives the preferences inferred from the first passage (*p1*).
 
     - ``./p2_equilibriumpreferences.txt`` gives the preferences inferred from the second passage (*p2*).
 
-4) Compute the correlations between the inferred preferences. These allow us to compare the inferred preferences across replicates, and between the passage 1 (*p1*) and passage 2 (*p2*) viruses within each replicate. These correlations were computed using the ``mapmuts_preferencescorrelate.py`` described in the `mapmuts documentation`_). The results are in the form of PDF plots that are created in the ``./correlations/`` subdirectory. The key plots are shown below. Overall these plots show that the two passages *p1* and *p2* are highly correlated with each other. The two independent replicates (*replicate_A* and *replicate_B*) are correlated, but less so -- presumably this is due to stochasticity in growth of the viruses from these replicates.
+5) Compute the correlations between the inferred preferences. These allow us to compare the inferred preferences across replicates, and between the passage 1 (*p1*) and passage 2 (*p2*) viruses within each replicate. These correlations were computed using the ``mapmuts_preferencescorrelate.py`` described in the `mapmuts documentation`_). The results are in the form of PDF plots that are created in the ``./correlations/`` subdirectory. The key plots are shown below. Overall these plots show that the two passages *p1* and *p2* are highly correlated with each other. The two independent replicates (*replicate_A* and *replicate_B*) are correlated, but less so -- presumably this is due to stochasticity in growth of the viruses from these replicates. The *WT* and *N334H* samples are about as correlated as the two replicates.
 
         .. figure:: example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_A_p1_vs_replicate_A_p2.jpg 
            :width: 30%
@@ -379,6 +384,13 @@ Specifically, the steps are as follows:
            :alt: correlations/replicate_A_p1_vs_replicate_B_p1.jpg
 
            The ``correlations/replicate_A_p1_vs_replicate_B_p1.jpg`` plot.
+
+        .. figure:: example_2013Analysis_Influenza_NP_Aichi68_correlations_WT_p1_vs_N334H_p1.jpg 
+           :width: 30%
+           :align: center
+           :alt: correlations/WT_p1_vs_N334H_p1.jpg
+
+           The ``correlations/WT_p1_vs_N334H_p1.jpg`` plot.
 
 
 Summary of amino-acid preferences

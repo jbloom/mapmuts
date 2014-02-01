@@ -1,0 +1,4 @@
+# input file for running script mapmuts_preferencemeans.py for N334H_preferencemeans
+preferencefiles replicate_A/N334H-1/p1_equilibriumpreferences.txt replicate_A/N334H-2/p1_equilibriumpreferences.txt replicate_B/N334H-1/p1_equilibriumpreferences.txt replicate_B/N334H-2/p1_equilibriumpreferences.txt
+includestop False
+outfile N334H_p1_equilibriumpreferences.txt

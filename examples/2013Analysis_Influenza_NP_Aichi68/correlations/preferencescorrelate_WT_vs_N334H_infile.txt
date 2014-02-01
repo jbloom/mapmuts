@@ -1,0 +1,5 @@
+# input file for running script mapmuts_preferencescorrelate.py for preferencescorrelate_WT_vs_N334H
+plotdir ./
+samplenames WT_p1 N334H_p1
+preferencesfiles /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/WT_p1_equilibriumpreferences.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/N334H_p1_equilibriumpreferences.txt
+alpha 0.1
