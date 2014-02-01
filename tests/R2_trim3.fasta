@@ -1,0 +1,2 @@
+>R2_trim3: sequence to be trimmed from the 3' ends of Illumina R2 (read 2) reads that extend into the adaptor of Nextera prepared libraries. This is the reverse complement of the Nextera adaptor 1 upstream of the barcode.
+CTGTCTCTTATACACATCTGACGCTGCCGACGA

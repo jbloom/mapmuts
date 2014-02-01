@@ -1,0 +1,35 @@
+# input file for running script mapmuts_parsesummaryplots.py for parsesummaryplots
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/DNA/replicate_A_WT-1_DNA WT-1 DNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/DNA/replicate_A_WT-2_DNA WT-2 DNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/DNA/replicate_A_N334H-1_DNA N334H-1 DNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/DNA/replicate_A_N334H-2_DNA N334H-2 DNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/RNA/replicate_A_WT-1_RNA WT-1 RNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/RNA/replicate_A_WT-2_RNA WT-2 RNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/RNA/replicate_A_N334H-1_RNA N334H-1 RNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/RNA/replicate_A_N334H-2_RNA N334H-2 RNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/mutDNA/replicate_A_WT-1_mutDNA WT-1 mutDNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/mutDNA/replicate_A_WT-2_mutDNA WT-2 mutDNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/mutDNA/replicate_A_N334H-1_mutDNA N334H-1 mutDNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/mutDNA/replicate_A_N334H-2_mutDNA N334H-2 mutDNA
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/virus-p1/replicate_A_WT-1_virus-p1 WT-1 virus-p1
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/virus-p1/replicate_A_WT-2_virus-p1 WT-2 virus-p1
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/virus-p1/replicate_A_N334H-1_virus-p1 N334H-1 virus-p1
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/virus-p1/replicate_A_N334H-2_virus-p1 N334H-2 virus-p1
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/mutvirus-p1/replicate_A_WT-1_mutvirus-p1 WT-1 mutvirus-p1
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/mutvirus-p1/replicate_A_WT-2_mutvirus-p1 WT-2 mutvirus-p1
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/mutvirus-p1/replicate_A_N334H-1_mutvirus-p1 N334H-1 mutvirus-p1
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/mutvirus-p1/replicate_A_N334H-2_mutvirus-p1 N334H-2 mutvirus-p1
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/virus-p2/replicate_A_WT-1_virus-p2 WT-1 virus-p2
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/virus-p2/replicate_A_WT-2_virus-p2 WT-2 virus-p2
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/virus-p2/replicate_A_N334H-1_virus-p2 N334H-1 virus-p2
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/virus-p2/replicate_A_N334H-2_virus-p2 N334H-2 virus-p2
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/mutvirus-p2/replicate_A_WT-1_mutvirus-p2 WT-1 mutvirus-p2
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/mutvirus-p2/replicate_A_WT-2_mutvirus-p2 WT-2 mutvirus-p2
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/mutvirus-p2/replicate_A_N334H-1_mutvirus-p2 N334H-1 mutvirus-p2
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/mutvirus-p2/replicate_A_N334H-2_mutvirus-p2 N334H-2 mutvirus-p2
+manual_codontypes 0.00040 0.00468 0.00027 Sanger
+manual_codonnmuts 0.00100 0.00227 0.00207 Sanger
+plotfileprefix /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/parsesummary
+writefracs True
+textwritefracs /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/parsesummary
+pairedcodonplot True

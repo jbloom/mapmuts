@@ -1,0 +1,9 @@
+# input file for running script mapmuts_parsecounts.py for parsecounts
+generange 62 1555
+samplename replicate_B, WT-2, virus-p1
+r1exclude None
+r2exclude None
+alignmentfile /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_B/WT-2/virus-p1/replicate_B_WT-2_virus-p1_alignments.txt.gz
+outfileprefix replicate_B_WT-2_virus-p1
+upcase test
+fullgenefile /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/Aichi68-NP_amplicon.fasta

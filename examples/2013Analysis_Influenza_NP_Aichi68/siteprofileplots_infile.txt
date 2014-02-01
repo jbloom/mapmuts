@@ -1,0 +1,10 @@
+# input file for running script mapmuts_siteprofileplots.py for siteprofileplots
+sitepreferences p1_equilibriumpreferences.txt
+outfileprefix p1_
+siterange 2 498
+dsspfile ./DSSP_analysis/2IQH_monomerC.dssp
+dsspchain C
+add_rsa True
+add_ss True
+nperline 63
+includestop False

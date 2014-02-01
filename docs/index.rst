@@ -1,0 +1,47 @@
+.. mapmuts documentation master file, created by
+   sphinx-quickstart on Sun Feb 24 15:57:39 2013.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+===========================
+`mapmuts`_
+===========================
+
+`mapmuts`_ is a `Python`_ package for mapping mutations from deep-sequencing of protein-coding genes. It is specifically designed for the analysis of overlapping Illumina paired-end reads.
+
+`mapmuts`_ source code is available `on GitHub`_.
+
+`mapmuts documentation`_ is available `on GitHub Pages`_.
+
+The `mapmuts`_ package was created by `Jesse Bloom`_.
+
+
+Using `mapmuts`_
+===================
+This package can be run using a series of scripts, and does not require you to directly interface with the `Python`_ modules.
+
+Some examples are provided with the package; they can be found in the ``./examples/`` subdirectory of the main `mapmuts`_ package.
+
+
+Documentation
+===============
+
+.. toctree::
+   :maxdepth: 2
+
+   installation
+   workflow
+   scripts
+   examples
+   pythonapi
+   shortcomings
+   acknowledgements
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+
+.. include:: weblinks.txt

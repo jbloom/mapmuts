@@ -1,0 +1,282 @@
+Beginning execution of mapmuts_makealignments.py in directory /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_B/WT-2/DNA
+
+****************************************************
+Version information for mapmuts and associated programs.
+
+Time and date: Fri Jan 17 08:46:04 2014
+
+Platform: Linux-3.2.0-56-generic-x86_64-with-Ubuntu-12.04-precise
+
+Python version: 2.7.3 (default, Sep 26 2013, 20:03:06) 
+[GCC 4.6.3]
+
+mapmuts version: 1.0
+
+numpy version: 1.6.1
+
+pymc version: 2.3
+
+scipy version: 0.9.0
+
+matplotlib version: 1.3.1
+
+pyPdf version: pyPdf is available, but no version string accessible
+
+pdflatex version: pdfTeX 3.1415926-1.40.10-2.2 (TeX Live 2009/Debian)
+kpathsea version 5.0.0
+Copyright 2009 Peter Breitenlohner (eTeX)/Han The Thanh (pdfTeX).
+There is NO warranty.  Redistribution of this software is
+covered by the terms of both the pdfTeX copyright and
+the Lesser GNU General Public License.
+For more information about these matters, see the file
+named COPYING and the pdfTeX source.
+Primary author of pdfTeX: Peter Breitenlohner (eTeX)/Han The Thanh (pdfTeX).
+Compiled with libpng 1.2.46; using libpng 1.2.46
+Compiled with zlib 1.2.3.4; using zlib 1.2.3.4
+Compiled with poppler version 0.18.2
+
+weblogo version: WebLogo 3.3 (2012-07-02)
+****************************************************
+
+Input data being read from infile makealignments_infile.txt
+
+Progress being logged to this file, replicate_B_WT-2_DNA_makealignments_log.txt
+
+Read the following key/value pairs from infile makealignments_infile.txt:
+maxrm 1
+maxa2m 1
+generange 62 1555
+a2file /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/R2_trim3.fasta
+r1files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/*R1*.fastq.gz
+write_unaligned True
+outfileprefix replicate_B_WT-2_DNA
+r2files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/*R2*.fastq.gz
+maxa1m 1
+maxn 2
+fullgenefile /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/Aichi68-NP_amplicon.fasta
+a1file /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/R1_trim3.fasta
+applyfilter True
+gzipped True
+minq 25
+minoverlap 30
+samplename replicate_B, WT-2, DNA
+maxgenem 6
+upcase test
+
+Beginning execution of mapmuts.main.MakeAlignments.
+Current time is Fri Jan 17 08:46:05 2014.
+Current directory is /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_B/WT-2/DNA.
+
+The R1 reads will come from the following FASTQ files:
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/WT-2_DNA_TAAGGC_L002_R1_001.fastq.gz
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/WT-2_DNA_TAAGGC_L002_R1_002.fastq.gz
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/WT-2_DNA_TAAGGC_L002_R1_003.fastq.gz
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/WT-2_DNA_TAAGGC_L002_R1_004.fastq.gz
+
+The R2 reads will come from the following FASTQ files:
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/WT-2_DNA_TAAGGC_L002_R2_001.fastq.gz
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/WT-2_DNA_TAAGGC_L002_R2_002.fastq.gz
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/WT-2_DNA_TAAGGC_L002_R2_003.fastq.gz
+/home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_B/Sample_WT-2_DNA/WT-2_DNA_TAAGGC_L002_R2_004.fastq.gz
+
+applyfilter = True: all reads flagged Y  by the Illumina filter will be removed.
+
+minq = 25.00: any read pair where the average Q-score of either read is < this will be removed.
+
+upcase = 'test': converting fullgene, a1, and a2 to upper case.
+Testing case of first R1 and R2 reads... test passed, first reads upper case.
+
+The value of fullgene is:
+CATGATCGTCTCAGGGAGCAAAAGCAGGGTAGATAATCACTCACAGAGTGACATCGAAATCATGGCGTCCCAAGGCACCAAACGGTCTTATGAACAGATGGAAACTGATGGGGAACGCCAGAATGCAACTGAGATCAGAGCATCCGTCGGGAAGATGATTGATGGAATTGGACGATTCTACATCCAAATGTGCACTGAACTTAAACTCAGTGATTATGAGGGGCGACTGATCCAGAACAGCTTAACAATAGAGAGAATGGTGCTCTCTGCTTTTGACGAAAGAAGGAATAAATATCTGGAAGAACATCCCAGCGCGGGGAAGGATCCTAAGAAAACTGGAGGACCCATATACAAGAGAGTAGATAGAAAGTGGATGAGGGAACTCGTCCTTTATGACAAAGAAGAAATAAGGCGAATCTGGCGCCAAGCCAATAATGGTGATGATGCAACAGCTGGTCTGACTCACATGATGATCTGGCATTCCAATTTGAATGATACAACATACCAGAGGACAAGAGCTCTTGTTCGCACCGGCATGGATCCCAGGATGTGCTCTCTGATGCAGGGTTCGACTCTCCCTAGGAGGTCTGGAGCTGCAGGCGCTGCAGTCAAAGGAGTTGGGACAATGGTGATGGAGTTGATAAGGATGATCAAACGTGGGATCAATGATCGGAACTTCTGGAGAGGTGAAAATGGACGAAAAACAAGGAGTGCTTACGAGAGAATGTGCAACATTCTCAAAGGAAAATTTCAAACAGCTGCACAAAGGGCAATGATGGATCAAGTGAGAGAAAGTCGGAACCCAGGAAATGCTGAGATCGAAGATCTCATCTTTCTGGCACGGTCTGCACTCATATTGAGAGGGTCAGTTGCTCACAAATCTTGTCTGCCCGCCTGTGTGTATGGACCTGCCGTAGCCAGTGGCTACGACTTCGAAAAAGAGGGATACTCTTTAGTGGGAATAGACCCTTTCAAACTGCTTCAAAACAGCCAAGTATACAGCCTAATCAGACCGAACGAGAATCCAGCACACAAGAGTCAGCTGGTGTGGATGGCATGCAATTCTGCTGCATTTGAAGATCTAAGAGTATTAAGCTTCATCAGAGGGACCAAAGTATCCCCAAGGGGGAAACTTTCCACTAGAGGAGTACAAATTGCTTCAAATGAAAACATGGATGCTATGGAATCAAGTACTCTTGAACTGAGAAGCAGGTACTGGGCCATAAGAACCAGAAGTGGAGGAAACACTAATCAACAGAGGGCCTCTGCAGGTCAAATCAGTGTGCAACCTGCATTTTCTGTGCAAAGAAACCTCCCATTTGACAAACCAACCATCATGGCAGCATTCACTGGGAATACAGAGGGAAGAACATCAGACATGAGGGCAGAAATTATAAGGATGATGGAAGGTGCAAAACCAGAAGAAATGTCCTTCCAGGGGCGGGGAGTCTTCGAGCTCTCGGACGAAAGGGCAGCGAACCCGATCGTGCCCTCTTTTGACATGAGTAATGAAGGATCTTATTTCTTCGGAGACAATGCAGAGGAGTACGACAATTAAAGAAAAATACCCTTGTTTCTACTAATACGAGACGATCATG
+
+The value of generange is:
+(61, 1555)
+
+This means that the value of gene (the region of fullgene specified by generange) is:
+ATGGCGTCCCAAGGCACCAAACGGTCTTATGAACAGATGGAAACTGATGGGGAACGCCAGAATGCAACTGAGATCAGAGCATCCGTCGGGAAGATGATTGATGGAATTGGACGATTCTACATCCAAATGTGCACTGAACTTAAACTCAGTGATTATGAGGGGCGACTGATCCAGAACAGCTTAACAATAGAGAGAATGGTGCTCTCTGCTTTTGACGAAAGAAGGAATAAATATCTGGAAGAACATCCCAGCGCGGGGAAGGATCCTAAGAAAACTGGAGGACCCATATACAAGAGAGTAGATAGAAAGTGGATGAGGGAACTCGTCCTTTATGACAAAGAAGAAATAAGGCGAATCTGGCGCCAAGCCAATAATGGTGATGATGCAACAGCTGGTCTGACTCACATGATGATCTGGCATTCCAATTTGAATGATACAACATACCAGAGGACAAGAGCTCTTGTTCGCACCGGCATGGATCCCAGGATGTGCTCTCTGATGCAGGGTTCGACTCTCCCTAGGAGGTCTGGAGCTGCAGGCGCTGCAGTCAAAGGAGTTGGGACAATGGTGATGGAGTTGATAAGGATGATCAAACGTGGGATCAATGATCGGAACTTCTGGAGAGGTGAAAATGGACGAAAAACAAGGAGTGCTTACGAGAGAATGTGCAACATTCTCAAAGGAAAATTTCAAACAGCTGCACAAAGGGCAATGATGGATCAAGTGAGAGAAAGTCGGAACCCAGGAAATGCTGAGATCGAAGATCTCATCTTTCTGGCACGGTCTGCACTCATATTGAGAGGGTCAGTTGCTCACAAATCTTGTCTGCCCGCCTGTGTGTATGGACCTGCCGTAGCCAGTGGCTACGACTTCGAAAAAGAGGGATACTCTTTAGTGGGAATAGACCCTTTCAAACTGCTTCAAAACAGCCAAGTATACAGCCTAATCAGACCGAACGAGAATCCAGCACACAAGAGTCAGCTGGTGTGGATGGCATGCAATTCTGCTGCATTTGAAGATCTAAGAGTATTAAGCTTCATCAGAGGGACCAAAGTATCCCCAAGGGGGAAACTTTCCACTAGAGGAGTACAAATTGCTTCAAATGAAAACATGGATGCTATGGAATCAAGTACTCTTGAACTGAGAAGCAGGTACTGGGCCATAAGAACCAGAAGTGGAGGAAACACTAATCAACAGAGGGCCTCTGCAGGTCAAATCAGTGTGCAACCTGCATTTTCTGTGCAAAGAAACCTCCCATTTGACAAACCAACCATCATGGCAGCATTCACTGGGAATACAGAGGGAAGAACATCAGACATGAGGGCAGAAATTATAAGGATGATGGAAGGTGCAAAACCAGAAGAAATGTCCTTCCAGGGGCGGGGAGTCTTCGAGCTCTCGGACGAAAGGGCAGCGAACCCGATCGTGCCCTCTTTTGACATGAGTAATGAAGGATCTTATTTCTTCGGAGACAATGCAGAGGAGTACGACAAT
+
+The value of a1 (the adaptor at the 3' end of R1 reads) is:
+CTGTCTCTTATACACATCTCCGAGCCCACGAGAC
+
+The value of a2 (the adaptor at the 3' end of R2 reads) is:
+CTGTCTCTTATACACATCTGACGCTGCCGACGA
+
+The value of maxn (the maximum number of N / n nucleotides allowed in a read) is 2
+
+The value of minoverlap (minimum acceptable overlap between R1 and R2) is 30.
+
+The value of maxrm (maximum allowed mismatches between R1 and R2 in overlap) is 1.
+
+The value of maxa1m (maximum allowed mismatches between R1 and its adaptor a1) is 1.
+
+The value of maxa2m (maximum allowed mismatches between R2 and its adaptor a2) is 1.
+
+The value of maxgenem (maximum allowed mismatches of either read with fullgene after removing read adaptors) is 6.
+
+Unaligned reads that passed applyfilter will be written to replicate_B_WT-2_DNA_unaligned.fasta.gz
+
+Successfully aligned reads will be written to replicate_B_WT-2_DNA_alignments.txt.gz
+
+Beginning reading and aligning reads...
+Completed 100000 reads in 12.280 seconds.
+Completed 200000 reads in 24.480 seconds.
+Completed 300000 reads in 36.670 seconds.
+Completed 400000 reads in 48.900 seconds.
+Completed 500000 reads in 61.160 seconds.
+Completed 600000 reads in 73.460 seconds.
+Completed 700000 reads in 85.810 seconds.
+Completed 800000 reads in 98.070 seconds.
+Completed 900000 reads in 110.260 seconds.
+Completed 1000000 reads in 122.450 seconds.
+Completed 1100000 reads in 134.640 seconds.
+Completed 1200000 reads in 146.850 seconds.
+Completed 1300000 reads in 159.000 seconds.
+Completed 1400000 reads in 171.190 seconds.
+Completed 1500000 reads in 183.370 seconds.
+Completed 1600000 reads in 195.530 seconds.
+Completed 1700000 reads in 207.680 seconds.
+Completed 1800000 reads in 219.860 seconds.
+Completed 1900000 reads in 232.050 seconds.
+Completed 2000000 reads in 244.180 seconds.
+Completed 2100000 reads in 256.320 seconds.
+Completed 2200000 reads in 268.480 seconds.
+Completed 2300000 reads in 280.630 seconds.
+Completed 2400000 reads in 292.740 seconds.
+Completed 2500000 reads in 304.880 seconds.
+Completed 2600000 reads in 317.010 seconds.
+Completed 2700000 reads in 329.070 seconds.
+Completed 2800000 reads in 341.170 seconds.
+Completed 2900000 reads in 353.230 seconds.
+Completed 3000000 reads in 365.320 seconds.
+Completed 3100000 reads in 377.350 seconds.
+Completed 3200000 reads in 389.330 seconds.
+Completed 3300000 reads in 401.330 seconds.
+Completed 3400000 reads in 413.260 seconds.
+Completed 3500000 reads in 425.220 seconds.
+Completed 3600000 reads in 437.180 seconds.
+Completed 3700000 reads in 448.890 seconds.
+Completed 3800000 reads in 461.220 seconds.
+Completed 3900000 reads in 473.540 seconds.
+Completed 4000000 reads in 485.900 seconds.
+Completed 4100000 reads in 498.400 seconds.
+Completed 4200000 reads in 510.740 seconds.
+Completed 4300000 reads in 523.040 seconds.
+Completed 4400000 reads in 535.540 seconds.
+Completed 4500000 reads in 547.820 seconds.
+Completed 4600000 reads in 560.100 seconds.
+Completed 4700000 reads in 572.380 seconds.
+Completed 4800000 reads in 584.810 seconds.
+Completed 4900000 reads in 597.250 seconds.
+Completed 5000000 reads in 609.660 seconds.
+Completed 5100000 reads in 622.050 seconds.
+Completed 5200000 reads in 634.530 seconds.
+Completed 5300000 reads in 646.960 seconds.
+Completed 5400000 reads in 659.220 seconds.
+Completed 5500000 reads in 671.480 seconds.
+Completed 5600000 reads in 683.730 seconds.
+Completed 5700000 reads in 695.950 seconds.
+Completed 5800000 reads in 708.190 seconds.
+Completed 5900000 reads in 720.420 seconds.
+Completed 6000000 reads in 732.690 seconds.
+Completed 6100000 reads in 744.910 seconds.
+Completed 6200000 reads in 757.090 seconds.
+Completed 6300000 reads in 769.290 seconds.
+Completed 6400000 reads in 781.460 seconds.
+Completed 6500000 reads in 793.620 seconds.
+Completed 6600000 reads in 805.800 seconds.
+Completed 6700000 reads in 817.950 seconds.
+Completed 6800000 reads in 830.220 seconds.
+Completed 6900000 reads in 842.450 seconds.
+Completed 7000000 reads in 854.870 seconds.
+Completed 7100000 reads in 867.460 seconds.
+Completed 7200000 reads in 880.000 seconds.
+Completed 7300000 reads in 892.620 seconds.
+Completed 7400000 reads in 905.990 seconds.
+Completed 7500000 reads in 918.660 seconds.
+Completed 7600000 reads in 931.050 seconds.
+Completed 7700000 reads in 943.420 seconds.
+Completed 7800000 reads in 955.800 seconds.
+Completed 7900000 reads in 968.150 seconds.
+Completed 8000000 reads in 980.610 seconds.
+Completed 8100000 reads in 993.760 seconds.
+Completed 8200000 reads in 1006.210 seconds.
+Completed 8300000 reads in 1018.470 seconds.
+Completed 8400000 reads in 1030.680 seconds.
+Completed 8500000 reads in 1042.830 seconds.
+Completed 8600000 reads in 1055.070 seconds.
+Completed 8700000 reads in 1067.410 seconds.
+Completed 8800000 reads in 1079.780 seconds.
+Completed 8900000 reads in 1092.150 seconds.
+Completed 9000000 reads in 1104.520 seconds.
+Completed 9100000 reads in 1117.020 seconds.
+Completed 9200000 reads in 1129.380 seconds.
+Completed 9300000 reads in 1141.680 seconds.
+Completed 9400000 reads in 1153.940 seconds.
+Completed 9500000 reads in 1166.400 seconds.
+Completed 9600000 reads in 1178.710 seconds.
+Completed 9700000 reads in 1191.000 seconds.
+Completed 9800000 reads in 1203.250 seconds.
+Completed 9900000 reads in 1215.500 seconds.
+Completed 10000000 reads in 1227.750 seconds.
+Completed 10100000 reads in 1239.970 seconds.
+Completed 10200000 reads in 1252.210 seconds.
+Completed 10300000 reads in 1264.520 seconds.
+Completed 10400000 reads in 1276.810 seconds.
+Completed 10500000 reads in 1289.060 seconds.
+Completed 10600000 reads in 1301.290 seconds.
+Completed 10700000 reads in 1313.510 seconds.
+Completed 10800000 reads in 1325.640 seconds.
+Completed 10900000 reads in 1337.650 seconds.
+Completed 11000000 reads in 1349.720 seconds.
+Completed 11100000 reads in 1362.200 seconds.
+Completed 11200000 reads in 1374.660 seconds.
+Completed 11300000 reads in 1387.030 seconds.
+Completed 11400000 reads in 1399.360 seconds.
+Completed 11500000 reads in 1411.700 seconds.
+Completed 11600000 reads in 1424.110 seconds.
+Completed 11700000 reads in 1436.640 seconds.
+Completed 11800000 reads in 1449.120 seconds.
+Completed 11900000 reads in 1461.600 seconds.
+Completed 12000000 reads in 1474.110 seconds.
+Completed 12100000 reads in 1486.610 seconds.
+Completed 12200000 reads in 1499.200 seconds.
+Completed 12300000 reads in 1511.520 seconds.
+Completed 12400000 reads in 1523.840 seconds.
+Completed 12500000 reads in 1536.160 seconds.
+Completed 12600000 reads in 1548.480 seconds.
+Completed 12700000 reads in 1560.720 seconds.
+Completed 12800000 reads in 1573.050 seconds.
+Completed 12900000 reads in 1585.330 seconds.
+Completed 13000000 reads in 1597.700 seconds.
+Completed 13100000 reads in 1610.010 seconds.
+Completed 13200000 reads in 1622.300 seconds.
+Completed 13300000 reads in 1634.550 seconds.
+Completed 13400000 reads in 1646.850 seconds.
+Completed 13500000 reads in 1659.140 seconds.
+Completed 13600000 reads in 1671.430 seconds.
+Completed 13700000 reads in 1683.700 seconds.
+Completed 13800000 reads in 1695.930 seconds.
+Completed 13900000 reads in 1708.180 seconds.
+Completed 14000000 reads in 1720.420 seconds.
+Completed 14100000 reads in 1732.740 seconds.
+Completed 14200000 reads in 1745.500 seconds.
+Completed 14300000 reads in 1758.060 seconds.
+Completed 14400000 reads in 1770.280 seconds.
+Completed 14500000 reads in 1782.320 seconds.
+
+Now writing statistics to output files.
+Writing summary statistics to replicate_B_WT-2_DNA_alignmentstatistics.txt.
+Writing insert length distribution to replicate_B_WT-2_DNA_insertlengths.txt.
+Writing R1 mismatch distribution to replicate_B_WT-2_DNA_R1mismatches.txt.
+Writing R2 mismatch distribution to replicate_B_WT-2_DNA_R2mismatches.txt.
+
+Completed execution of mapmuts.main.MakeAlignments at Fri Jan 17 09:23:10 2014.
+Pylab / matplotlib appear to be available, so we will make the summary plots.
+
+pdflatex is available, so we will also make an overall summary PDF.
+
+Now running mapmuts.main.MakeAlignmentsPlots...
+Completed running mapmuts.main.MakeAlignmentsPlots.
+
+
+Execution completed at Fri Jan 17 09:23:23 2014.

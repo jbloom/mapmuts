@@ -1,0 +1,20 @@
+# input file for running script mapmuts_makealignments.py for makealignments
+maxa2m 1
+generange 62 1555
+write_unaligned True
+r2files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_A/Sample_N334H-1_mutvirus-p2/*R2*.fastq.gz
+maxa1m 1
+a1file /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/R1_trim3.fasta
+gzipped True
+minq 25
+minoverlap 30
+maxgenem 6
+r1files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_A/Sample_N334H-1_mutvirus-p2/*R1*.fastq.gz
+a2file /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/R2_trim3.fasta
+maxrm 1
+outfileprefix replicate_A_N334H-1_mutvirus-p2
+fullgenefile /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/Aichi68-NP-N334H_amplicon.fasta
+maxn 2
+upcase test
+applyfilter True
+samplename replicate_A, N334H-1, mutvirus-p2

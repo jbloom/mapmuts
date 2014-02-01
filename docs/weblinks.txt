@@ -1,0 +1,28 @@
+.. _`Jesse Bloom`: http://research.fhcrc.org/bloom/en.html
+.. _`mapmuts`: https://github.com/jbloom/mapmuts
+.. _`GPLv3`: http://www.gnu.org/licenses/gpl.html
+.. _`on GitHub`: https://github.com/jbloom/mapmuts
+.. _`on GitHub Pages`: http://jbloom.github.io/mapmuts/
+.. _`mapmuts documentation`: http://jbloom.github.io/mapmuts/
+.. _`matplotlib`: http://matplotlib.org/
+.. _`pylab`: http://wiki.scipy.org/PyLab
+.. _`pdflatex`: http://www.tug.org/applications/pdftex/
+.. _`pymc` : http://pymc-devs.github.io/pymc/
+.. _`numpy` : http://www.numpy.org/
+.. _`scipy` : http://www.scipy.org/
+.. _`Gong et al (eLife, 2013)` : http://elife.elifesciences.org/content/2/e00631
+.. _`DSSP` : http://swift.cmbi.ru.nl/gv/dssp/
+.. _`2IQH PDB` : http://www.rcsb.org/pdb/explore.do?structureId=2IQH
+.. _`ImageMagick` : http://www.imagemagick.org/script/index.php
+.. _`Tien et al, 2013` : http://www.plosone.org/article/info:doi/10.1371/journal.pone.0080635
+.. _`weblogo` : http://weblogo.threeplusone.com/
+.. _`ImageMagick` : http://www.imagemagick.org/script/index.php
+.. _`pyPdf` : http://pybrary.net/pyPdf/
+.. _`Python`: http://www.python.org/
+.. _`gcc`: http://gcc.gnu.org/
+.. _`Python gzip`: http://docs.python.org/2/library/gzip.html
+.. _`Python subprocess`: http://docs.python.org/2/library/subprocess.html
+.. _`Gelman-Rubin statistic`: http://www.jstor.org/discover/10.2307/2246093
+.. _`Dirichlet distribution`: http://en.wikipedia.org/wiki/Dirichlet_distribution
+.. _`concentration parameter`: http://en.wikipedia.org/wiki/Concentration_parameter
+.. _`Shannon-Jensen divergence` : http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence

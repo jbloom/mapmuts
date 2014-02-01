@@ -1,0 +1,1256 @@
+Beginning execution of mapmuts_inferpreferences.py in directory /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_B/WT-1
+
+****************************************************
+Version information for mapmuts and associated programs.
+
+Time and date: Fri Jan 17 16:06:02 2014
+
+Platform: Linux-3.2.0-56-generic-x86_64-with-Ubuntu-12.04-precise
+
+Python version: 2.7.3 (default, Sep 26 2013, 20:03:06) 
+[GCC 4.6.3]
+
+mapmuts version: 1.0
+
+numpy version: 1.6.1
+
+pymc version: 2.3
+
+scipy version: 0.9.0
+
+matplotlib version: 1.3.1
+
+pyPdf version: pyPdf is available, but no version string accessible
+
+pdflatex version: pdfTeX 3.1415926-1.40.10-2.2 (TeX Live 2009/Debian)
+kpathsea version 5.0.0
+Copyright 2009 Peter Breitenlohner (eTeX)/Han The Thanh (pdfTeX).
+There is NO warranty.  Redistribution of this software is
+covered by the terms of both the pdfTeX copyright and
+the Lesser GNU General Public License.
+For more information about these matters, see the file
+named COPYING and the pdfTeX source.
+Primary author of pdfTeX: Peter Breitenlohner (eTeX)/Han The Thanh (pdfTeX).
+Compiled with libpng 1.2.46; using libpng 1.2.46
+Compiled with zlib 1.2.3.4; using zlib 1.2.3.4
+Compiled with poppler version 0.18.2
+
+weblogo version: WebLogo 3.3 (2012-07-02)
+****************************************************
+
+Input data being read from infile p2_inferpreferences_infile.txt
+
+Progress being logged to this file, p2_inferpreferences_log.txt
+
+Read the following key/value pairs from infile p2_inferpreferences_infile.txt:
+RNA_files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_B/WT-1/RNA/replicate_B_WT-1_RNA_codoncounts.txt
+DNA_files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_B/WT-1/DNA/replicate_B_WT-1_DNA_codoncounts.txt
+pi_concentration 1.0
+removeoutlier False
+rho_concentration 1.0
+mutvirus_files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_B/WT-1/mutvirus-p2/replicate_B_WT-1_mutvirus-p2_codoncounts.txt
+mu_concentration 1.0
+nruns 3
+stepincrease 4
+outfileprefix p2
+preference_plots None
+seed 1
+mutDNA_files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_B/WT-1/mutDNA/replicate_B_WT-1_mutDNA_codoncounts.txt
+nsteps 200000
+epsilon_concentration 1.0
+convergence 0.01
+minvalue 1e-7
+ncpus 6
+MCMC_traces None
+thin 200
+
+Reading in the codon counts... completed reading the codon counts.
+
+Now beginning inference of the equilibrium preferences...
+
+Performing inference for site 1... completed MCMC of 200000 steps in 429.7 seconds; inference FAILED to converge (run difference of 0.0779).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1808.7 seconds (run difference of 0.042).
+
+Performing inference for site 2... completed MCMC of 200000 steps in 443.3 seconds; inference converged (run difference of 0.00562).
+
+Performing inference for site 3... completed MCMC of 200000 steps in 498.0 seconds; inference converged (run difference of 0.00374).
+
+Performing inference for site 4... completed MCMC of 200000 steps in 485.4 seconds; inference FAILED to converge (run difference of 0.18).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 2004.9 seconds (run difference of 0.098).
+
+Performing inference for site 5... completed MCMC of 200000 steps in 479.0 seconds; inference FAILED to converge (run difference of 0.0115).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1993.7 seconds (run difference of 0.013).
+
+Performing inference for site 6... completed MCMC of 200000 steps in 443.8 seconds; inference converged (run difference of 0.00275).
+
+Performing inference for site 7... completed MCMC of 200000 steps in 465.9 seconds; inference converged (run difference of 0.00431).
+
+Performing inference for site 8... completed MCMC of 200000 steps in 433.9 seconds; inference FAILED to converge (run difference of 0.0103).
+Trying again with 4-fold more steps... this time MCMC converged in 1795.9 seconds (run difference of 0.009).
+
+Performing inference for site 9... completed MCMC of 200000 steps in 484.3 seconds; inference converged (run difference of 0.00607).
+
+Performing inference for site 10... completed MCMC of 200000 steps in 504.7 seconds; inference converged (run difference of 0.0045).
+
+Performing inference for site 11... completed MCMC of 200000 steps in 472.0 seconds; inference converged (run difference of 0.0056).
+
+Performing inference for site 12... completed MCMC of 200000 steps in 480.1 seconds; inference converged (run difference of 0.00469).
+
+Performing inference for site 13... completed MCMC of 200000 steps in 478.0 seconds; inference converged (run difference of 0.00805).
+
+Performing inference for site 14... completed MCMC of 200000 steps in 472.1 seconds; inference FAILED to converge (run difference of 0.0111).
+Trying again with 4-fold more steps... this time MCMC converged in 1936.8 seconds (run difference of 0.00542).
+
+Performing inference for site 15... completed MCMC of 200000 steps in 447.4 seconds; inference converged (run difference of 0.00887).
+
+Performing inference for site 16... completed MCMC of 200000 steps in 460.4 seconds; inference converged (run difference of 0.00807).
+
+Performing inference for site 17... completed MCMC of 200000 steps in 476.4 seconds; inference FAILED to converge (run difference of 0.0327).
+Trying again with 4-fold more steps... this time MCMC converged in 1962.0 seconds (run difference of 0.00671).
+
+Performing inference for site 18... completed MCMC of 200000 steps in 475.4 seconds; inference FAILED to converge (run difference of 0.098).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1935.9 seconds (run difference of 0.057).
+
+Performing inference for site 19... completed MCMC of 200000 steps in 463.1 seconds; inference converged (run difference of 0.00738).
+
+Performing inference for site 20... completed MCMC of 200000 steps in 487.1 seconds; inference converged (run difference of 0.00369).
+
+Performing inference for site 21... completed MCMC of 200000 steps in 482.3 seconds; inference FAILED to converge (run difference of 0.113).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1981.1 seconds (run difference of 0.14).
+
+Performing inference for site 22... completed MCMC of 200000 steps in 479.4 seconds; inference converged (run difference of 0.00213).
+
+Performing inference for site 23... completed MCMC of 200000 steps in 486.4 seconds; inference converged (run difference of 0.00261).
+
+Performing inference for site 24... completed MCMC of 200000 steps in 511.6 seconds; inference converged (run difference of 0.00697).
+
+Performing inference for site 25... completed MCMC of 200000 steps in 463.6 seconds; inference FAILED to converge (run difference of 0.0414).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1950.2 seconds (run difference of 0.014).
+
+Performing inference for site 26... completed MCMC of 200000 steps in 468.7 seconds; inference FAILED to converge (run difference of 0.0389).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1965.7 seconds (run difference of 0.033).
+
+Performing inference for site 27... completed MCMC of 200000 steps in 475.5 seconds; inference converged (run difference of 0.0053).
+
+Performing inference for site 28... completed MCMC of 200000 steps in 506.1 seconds; inference converged (run difference of 0.00481).
+
+Performing inference for site 29... completed MCMC of 200000 steps in 474.6 seconds; inference FAILED to converge (run difference of 0.0113).
+Trying again with 4-fold more steps... this time MCMC converged in 1975.9 seconds (run difference of 0.00611).
+
+Performing inference for site 30... completed MCMC of 200000 steps in 479.3 seconds; inference converged (run difference of 0.00797).
+
+Performing inference for site 31... completed MCMC of 200000 steps in 472.5 seconds; inference FAILED to converge (run difference of 0.0158).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1960.8 seconds (run difference of 0.039).
+
+Performing inference for site 32... completed MCMC of 200000 steps in 480.5 seconds; inference converged (run difference of 0.00359).
+
+Performing inference for site 33... completed MCMC of 200000 steps in 473.4 seconds; inference converged (run difference of 0.00926).
+
+Performing inference for site 34... completed MCMC of 200000 steps in 495.4 seconds; inference converged (run difference of 0.00287).
+
+Performing inference for site 35... completed MCMC of 200000 steps in 489.4 seconds; inference converged (run difference of 0.00316).
+
+Performing inference for site 36... completed MCMC of 200000 steps in 474.9 seconds; inference FAILED to converge (run difference of 0.0666).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1985.4 seconds (run difference of 0.01).
+
+Performing inference for site 37... completed MCMC of 200000 steps in 473.7 seconds; inference converged (run difference of 0.00482).
+
+Performing inference for site 38... completed MCMC of 200000 steps in 459.4 seconds; inference converged (run difference of 0.00731).
+
+Performing inference for site 39... completed MCMC of 200000 steps in 493.5 seconds; inference FAILED to converge (run difference of 0.0139).
+Trying again with 4-fold more steps... this time MCMC converged in 2065.9 seconds (run difference of 0.00453).
+
+Performing inference for site 40... completed MCMC of 200000 steps in 455.4 seconds; inference FAILED to converge (run difference of 0.0102).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1910.0 seconds (run difference of 0.012).
+
+Performing inference for site 41... completed MCMC of 200000 steps in 481.6 seconds; inference FAILED to converge (run difference of 0.012).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1967.3 seconds (run difference of 0.014).
+
+Performing inference for site 42... completed MCMC of 200000 steps in 464.7 seconds; inference FAILED to converge (run difference of 0.0134).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1863.8 seconds (run difference of 0.011).
+
+Performing inference for site 43... completed MCMC of 200000 steps in 453.5 seconds; inference FAILED to converge (run difference of 0.0205).
+Trying again with 4-fold more steps... this time MCMC converged in 1894.5 seconds (run difference of 0.00987).
+
+Performing inference for site 44... completed MCMC of 200000 steps in 465.9 seconds; inference FAILED to converge (run difference of 0.0213).
+Trying again with 4-fold more steps... this time MCMC converged in 1972.1 seconds (run difference of 0.00862).
+
+Performing inference for site 45... completed MCMC of 200000 steps in 460.9 seconds; inference FAILED to converge (run difference of 0.0114).
+Trying again with 4-fold more steps... this time MCMC converged in 1906.9 seconds (run difference of 0.00593).
+
+Performing inference for site 46... completed MCMC of 200000 steps in 465.3 seconds; inference converged (run difference of 0.00845).
+
+Performing inference for site 47... completed MCMC of 200000 steps in 478.3 seconds; inference FAILED to converge (run difference of 0.0424).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1975.9 seconds (run difference of 0.05).
+
+Performing inference for site 48... completed MCMC of 200000 steps in 462.0 seconds; inference FAILED to converge (run difference of 0.0242).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1943.6 seconds (run difference of 0.014).
+
+Performing inference for site 49... completed MCMC of 200000 steps in 523.3 seconds; inference converged (run difference of 0.000821).
+
+Performing inference for site 50... completed MCMC of 200000 steps in 494.1 seconds; inference converged (run difference of 0.00341).
+
+Performing inference for site 51... completed MCMC of 200000 steps in 476.2 seconds; inference converged (run difference of 0.00433).
+
+Performing inference for site 52... completed MCMC of 200000 steps in 482.3 seconds; inference converged (run difference of 0.00348).
+
+Performing inference for site 53... completed MCMC of 200000 steps in 503.7 seconds; inference FAILED to converge (run difference of 0.0119).
+Trying again with 4-fold more steps... this time MCMC converged in 2087.0 seconds (run difference of 0.0064).
+
+Performing inference for site 54... completed MCMC of 200000 steps in 500.7 seconds; inference converged (run difference of 0.00218).
+
+Performing inference for site 55... completed MCMC of 200000 steps in 503.3 seconds; inference converged (run difference of 0.0064).
+
+Performing inference for site 56... completed MCMC of 200000 steps in 524.8 seconds; inference converged (run difference of 0.000753).
+
+Performing inference for site 57... completed MCMC of 200000 steps in 504.6 seconds; inference converged (run difference of 0.00262).
+
+Performing inference for site 58... completed MCMC of 200000 steps in 510.0 seconds; inference converged (run difference of 0.00455).
+
+Performing inference for site 59... completed MCMC of 200000 steps in 516.9 seconds; inference converged (run difference of 0.00145).
+
+Performing inference for site 60... completed MCMC of 200000 steps in 487.1 seconds; inference converged (run difference of 0.00825).
+
+Performing inference for site 61... completed MCMC of 200000 steps in 480.0 seconds; inference FAILED to converge (run difference of 0.0405).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1973.5 seconds (run difference of 0.054).
+
+Performing inference for site 62... completed MCMC of 200000 steps in 489.5 seconds; inference converged (run difference of 0.00171).
+
+Performing inference for site 63... completed MCMC of 200000 steps in 495.0 seconds; inference converged (run difference of 0.00421).
+
+Performing inference for site 64... completed MCMC of 200000 steps in 465.9 seconds; inference converged (run difference of 0.00642).
+
+Performing inference for site 65... completed MCMC of 200000 steps in 437.6 seconds; inference FAILED to converge (run difference of 0.0147).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1859.1 seconds (run difference of 0.014).
+
+Performing inference for site 66... completed MCMC of 200000 steps in 433.8 seconds; inference FAILED to converge (run difference of 0.0316).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1853.3 seconds (run difference of 0.021).
+
+Performing inference for site 67... completed MCMC of 200000 steps in 469.0 seconds; inference FAILED to converge (run difference of 0.0712).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1959.6 seconds (run difference of 0.039).
+
+Performing inference for site 68... completed MCMC of 200000 steps in 440.3 seconds; inference FAILED to converge (run difference of 0.0221).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1908.9 seconds (run difference of 0.014).
+
+Performing inference for site 69... completed MCMC of 200000 steps in 491.5 seconds; inference converged (run difference of 0.00745).
+
+Performing inference for site 70... completed MCMC of 200000 steps in 468.2 seconds; inference FAILED to converge (run difference of 0.0123).
+Trying again with 4-fold more steps... this time MCMC converged in 1913.1 seconds (run difference of 0.0061).
+
+Performing inference for site 71... completed MCMC of 200000 steps in 454.9 seconds; inference converged (run difference of 0.00576).
+
+Performing inference for site 72... completed MCMC of 200000 steps in 492.9 seconds; inference converged (run difference of 0.00746).
+
+Performing inference for site 73... completed MCMC of 200000 steps in 481.1 seconds; inference FAILED to converge (run difference of 0.017).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1977.9 seconds (run difference of 0.042).
+
+Performing inference for site 74... completed MCMC of 200000 steps in 432.7 seconds; inference FAILED to converge (run difference of 0.0206).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1826.7 seconds (run difference of 0.021).
+
+Performing inference for site 75... completed MCMC of 200000 steps in 474.1 seconds; inference converged (run difference of 0.00619).
+
+Performing inference for site 76... completed MCMC of 200000 steps in 466.1 seconds; inference converged (run difference of 0.0065).
+
+Performing inference for site 77... completed MCMC of 200000 steps in 503.4 seconds; inference converged (run difference of 0.00266).
+
+Performing inference for site 78... completed MCMC of 200000 steps in 445.0 seconds; inference FAILED to converge (run difference of 0.0126).
+Trying again with 4-fold more steps... this time MCMC converged in 1850.9 seconds (run difference of 0.00762).
+
+Performing inference for site 79... completed MCMC of 200000 steps in 495.2 seconds; inference converged (run difference of 0.00785).
+
+Performing inference for site 80... completed MCMC of 200000 steps in 479.8 seconds; inference converged (run difference of 0.00277).
+
+Performing inference for site 81... completed MCMC of 200000 steps in 464.7 seconds; inference converged (run difference of 0.00668).
+
+Performing inference for site 82... completed MCMC of 200000 steps in 469.6 seconds; inference FAILED to converge (run difference of 0.0576).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1964.6 seconds (run difference of 0.034).
+
+Performing inference for site 83... completed MCMC of 200000 steps in 500.6 seconds; inference converged (run difference of 0.00298).
+
+Performing inference for site 84... completed MCMC of 200000 steps in 495.9 seconds; inference converged (run difference of 0.0039).
+
+Performing inference for site 85... completed MCMC of 200000 steps in 508.4 seconds; inference converged (run difference of 0.00244).
+
+Performing inference for site 86... completed MCMC of 200000 steps in 508.4 seconds; inference converged (run difference of 0.00166).
+
+Performing inference for site 87... completed MCMC of 200000 steps in 497.8 seconds; inference converged (run difference of 0.00573).
+
+Performing inference for site 88... completed MCMC of 200000 steps in 493.2 seconds; inference converged (run difference of 0.00262).
+
+Performing inference for site 89... completed MCMC of 200000 steps in 520.6 seconds; inference converged (run difference of 0.000544).
+
+Performing inference for site 90... completed MCMC of 200000 steps in 488.7 seconds; inference converged (run difference of 0.00111).
+
+Performing inference for site 91... completed MCMC of 200000 steps in 472.8 seconds; inference converged (run difference of 0.00301).
+
+Performing inference for site 92... completed MCMC of 200000 steps in 460.5 seconds; inference FAILED to converge (run difference of 0.0152).
+Trying again with 4-fold more steps... this time MCMC converged in 1841.6 seconds (run difference of 0.00503).
+
+Performing inference for site 93... completed MCMC of 200000 steps in 447.2 seconds; inference converged (run difference of 0.00774).
+
+Performing inference for site 94... completed MCMC of 200000 steps in 438.0 seconds; inference FAILED to converge (run difference of 0.0138).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1846.0 seconds (run difference of 0.013).
+
+Performing inference for site 95... completed MCMC of 200000 steps in 448.7 seconds; inference FAILED to converge (run difference of 0.0111).
+Trying again with 4-fold more steps... this time MCMC converged in 1857.1 seconds (run difference of 0.00634).
+
+Performing inference for site 96... completed MCMC of 200000 steps in 457.5 seconds; inference FAILED to converge (run difference of 0.0104).
+Trying again with 4-fold more steps... this time MCMC converged in 1916.5 seconds (run difference of 0.00868).
+
+Performing inference for site 97... completed MCMC of 200000 steps in 463.9 seconds; inference FAILED to converge (run difference of 0.104).
+Trying again with 4-fold more steps... this time MCMC converged in 1888.7 seconds (run difference of 0.00773).
+
+Performing inference for site 98... completed MCMC of 200000 steps in 470.5 seconds; inference converged (run difference of 0.00779).
+
+Performing inference for site 99... completed MCMC of 200000 steps in 441.8 seconds; inference FAILED to converge (run difference of 0.0129).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1902.9 seconds (run difference of 0.01).
+
+Performing inference for site 100... completed MCMC of 200000 steps in 481.4 seconds; inference converged (run difference of 0.00454).
+
+Performing inference for site 101... completed MCMC of 200000 steps in 467.1 seconds; inference FAILED to converge (run difference of 0.0246).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1992.8 seconds (run difference of 0.043).
+
+Performing inference for site 102... completed MCMC of 200000 steps in 455.7 seconds; inference converged (run difference of 0.00784).
+
+Performing inference for site 103... completed MCMC of 200000 steps in 443.4 seconds; inference FAILED to converge (run difference of 0.0784).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1859.8 seconds (run difference of 0.084).
+
+Performing inference for site 104... completed MCMC of 200000 steps in 464.5 seconds; inference converged (run difference of 0.00417).
+
+Performing inference for site 105... completed MCMC of 200000 steps in 451.6 seconds; inference converged (run difference of 0.0078).
+
+Performing inference for site 106... completed MCMC of 200000 steps in 441.2 seconds; inference converged (run difference of 0.00435).
+
+Performing inference for site 107... completed MCMC of 200000 steps in 468.6 seconds; inference converged (run difference of 0.00594).
+
+Performing inference for site 108... completed MCMC of 200000 steps in 434.1 seconds; inference FAILED to converge (run difference of 0.0103).
+Trying again with 4-fold more steps... this time MCMC converged in 1836.5 seconds (run difference of 0.0074).
+
+Performing inference for site 109... completed MCMC of 200000 steps in 472.0 seconds; inference converged (run difference of 0.00583).
+
+Performing inference for site 110... completed MCMC of 200000 steps in 491.1 seconds; inference converged (run difference of 0.006).
+
+Performing inference for site 111... completed MCMC of 200000 steps in 479.3 seconds; inference converged (run difference of 0.00761).
+
+Performing inference for site 112... completed MCMC of 200000 steps in 479.1 seconds; inference FAILED to converge (run difference of 0.0198).
+Trying again with 4-fold more steps... this time MCMC converged in 1977.5 seconds (run difference of 0.00848).
+
+Performing inference for site 113... completed MCMC of 200000 steps in 435.6 seconds; inference converged (run difference of 0.00417).
+
+Performing inference for site 114... completed MCMC of 200000 steps in 456.7 seconds; inference converged (run difference of 0.00645).
+
+Performing inference for site 115... completed MCMC of 200000 steps in 434.2 seconds; inference FAILED to converge (run difference of 0.0105).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1851.9 seconds (run difference of 0.011).
+
+Performing inference for site 116... completed MCMC of 200000 steps in 488.8 seconds; inference converged (run difference of 0.00755).
+
+Performing inference for site 117... completed MCMC of 200000 steps in 499.3 seconds; inference converged (run difference of 0.00338).
+
+Performing inference for site 118... completed MCMC of 200000 steps in 459.5 seconds; inference FAILED to converge (run difference of 0.0288).
+Trying again with 4-fold more steps... this time MCMC converged in 1849.6 seconds (run difference of 0.00917).
+
+Performing inference for site 119... completed MCMC of 200000 steps in 436.1 seconds; inference FAILED to converge (run difference of 0.0128).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1827.9 seconds (run difference of 0.018).
+
+Performing inference for site 120... completed MCMC of 200000 steps in 453.4 seconds; inference FAILED to converge (run difference of 0.0101).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1895.8 seconds (run difference of 0.011).
+
+Performing inference for site 121... completed MCMC of 200000 steps in 482.0 seconds; inference converged (run difference of 0.00157).
+
+Performing inference for site 122... completed MCMC of 200000 steps in 470.4 seconds; inference FAILED to converge (run difference of 0.0201).
+Trying again with 4-fold more steps... this time MCMC converged in 1977.6 seconds (run difference of 0.00271).
+
+Performing inference for site 123... completed MCMC of 200000 steps in 480.2 seconds; inference converged (run difference of 0.00822).
+
+Performing inference for site 124... completed MCMC of 200000 steps in 454.9 seconds; inference converged (run difference of 0.00286).
+
+Performing inference for site 125... completed MCMC of 200000 steps in 488.9 seconds; inference converged (run difference of 0.00693).
+
+Performing inference for site 126... completed MCMC of 200000 steps in 484.0 seconds; inference converged (run difference of 0.00546).
+
+Performing inference for site 127... completed MCMC of 200000 steps in 507.0 seconds; inference converged (run difference of 0.00425).
+
+Performing inference for site 128... completed MCMC of 200000 steps in 477.6 seconds; inference converged (run difference of 0.01).
+
+Performing inference for site 129... completed MCMC of 200000 steps in 490.0 seconds; inference converged (run difference of 0.00215).
+
+Performing inference for site 130... completed MCMC of 200000 steps in 447.0 seconds; inference FAILED to converge (run difference of 0.0108).
+Trying again with 4-fold more steps... this time MCMC converged in 1884.9 seconds (run difference of 0.00422).
+
+Performing inference for site 131... completed MCMC of 200000 steps in 463.4 seconds; inference converged (run difference of 0.00725).
+
+Performing inference for site 132... completed MCMC of 200000 steps in 484.7 seconds; inference converged (run difference of 0.00564).
+
+Performing inference for site 133... completed MCMC of 200000 steps in 467.3 seconds; inference converged (run difference of 0.00999).
+
+Performing inference for site 134... completed MCMC of 200000 steps in 463.3 seconds; inference converged (run difference of 0.00308).
+
+Performing inference for site 135... completed MCMC of 200000 steps in 485.9 seconds; inference converged (run difference of 0.00754).
+
+Performing inference for site 136... completed MCMC of 200000 steps in 502.4 seconds; inference converged (run difference of 0.0078).
+
+Performing inference for site 137... completed MCMC of 200000 steps in 471.4 seconds; inference converged (run difference of 0.00549).
+
+Performing inference for site 138... completed MCMC of 200000 steps in 444.5 seconds; inference FAILED to converge (run difference of 0.0146).
+Trying again with 4-fold more steps... this time MCMC converged in 1834.2 seconds (run difference of 0.00473).
+
+Performing inference for site 139... completed MCMC of 200000 steps in 438.5 seconds; inference converged (run difference of 0.00486).
+
+Performing inference for site 140... completed MCMC of 200000 steps in 446.2 seconds; inference converged (run difference of 0.00758).
+
+Performing inference for site 141... completed MCMC of 200000 steps in 426.4 seconds; inference FAILED to converge (run difference of 0.0144).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1831.1 seconds (run difference of 0.011).
+
+Performing inference for site 142... completed MCMC of 200000 steps in 431.3 seconds; inference converged (run difference of 0.00583).
+
+Performing inference for site 143... completed MCMC of 200000 steps in 447.8 seconds; inference converged (run difference of 0.00828).
+
+Performing inference for site 144... completed MCMC of 200000 steps in 448.3 seconds; inference converged (run difference of 0.00653).
+
+Performing inference for site 145... completed MCMC of 200000 steps in 442.1 seconds; inference FAILED to converge (run difference of 0.0149).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1833.2 seconds (run difference of 0.016).
+
+Performing inference for site 146... completed MCMC of 200000 steps in 480.5 seconds; inference converged (run difference of 0.00729).
+
+Performing inference for site 147... completed MCMC of 200000 steps in 442.3 seconds; inference converged (run difference of 0.00811).
+
+Performing inference for site 148... completed MCMC of 200000 steps in 438.4 seconds; inference converged (run difference of 0.00989).
+
+Performing inference for site 149... completed MCMC of 200000 steps in 457.7 seconds; inference converged (run difference of 0.00397).
+
+Performing inference for site 150... completed MCMC of 200000 steps in 438.5 seconds; inference FAILED to converge (run difference of 0.0112).
+Trying again with 4-fold more steps... this time MCMC converged in 1887.1 seconds (run difference of 0.00749).
+
+Performing inference for site 151... completed MCMC of 200000 steps in 435.6 seconds; inference converged (run difference of 0.00543).
+
+Performing inference for site 152... completed MCMC of 200000 steps in 471.3 seconds; inference converged (run difference of 0.00603).
+
+Performing inference for site 153... completed MCMC of 200000 steps in 491.7 seconds; inference converged (run difference of 0.0057).
+
+Performing inference for site 154... completed MCMC of 200000 steps in 493.6 seconds; inference converged (run difference of 0.00365).
+
+Performing inference for site 155... completed MCMC of 200000 steps in 465.4 seconds; inference converged (run difference of 0.00985).
+
+Performing inference for site 156... completed MCMC of 200000 steps in 497.5 seconds; inference converged (run difference of 0.00539).
+
+Performing inference for site 157... completed MCMC of 200000 steps in 494.6 seconds; inference converged (run difference of 0.00415).
+
+Performing inference for site 158... completed MCMC of 200000 steps in 489.2 seconds; inference converged (run difference of 0.0036).
+
+Performing inference for site 159... completed MCMC of 200000 steps in 501.0 seconds; inference converged (run difference of 0.00199).
+
+Performing inference for site 160... completed MCMC of 200000 steps in 510.8 seconds; inference converged (run difference of 0.00253).
+
+Performing inference for site 161... completed MCMC of 200000 steps in 513.8 seconds; inference converged (run difference of 0.00222).
+
+Performing inference for site 162... completed MCMC of 200000 steps in 493.0 seconds; inference converged (run difference of 0.00266).
+
+Performing inference for site 163... completed MCMC of 200000 steps in 505.9 seconds; inference converged (run difference of 0.000366).
+
+Performing inference for site 164... completed MCMC of 200000 steps in 502.5 seconds; inference converged (run difference of 0.00443).
+
+Performing inference for site 165... completed MCMC of 200000 steps in 504.6 seconds; inference converged (run difference of 0.00705).
+
+Performing inference for site 166... completed MCMC of 200000 steps in 499.1 seconds; inference converged (run difference of 0.00413).
+
+Performing inference for site 167... completed MCMC of 200000 steps in 493.4 seconds; inference converged (run difference of 0.00479).
+
+Performing inference for site 168... completed MCMC of 200000 steps in 509.9 seconds; inference converged (run difference of 0.00595).
+
+Performing inference for site 169... completed MCMC of 200000 steps in 478.9 seconds; inference converged (run difference of 0.00543).
+
+Performing inference for site 170... completed MCMC of 200000 steps in 474.5 seconds; inference converged (run difference of 0.00832).
+
+Performing inference for site 171... completed MCMC of 200000 steps in 468.0 seconds; inference converged (run difference of 0.00547).
+
+Performing inference for site 172... completed MCMC of 200000 steps in 482.6 seconds; inference converged (run difference of 0.0054).
+
+Performing inference for site 173... completed MCMC of 200000 steps in 503.3 seconds; inference converged (run difference of 0.00314).
+
+Performing inference for site 174... completed MCMC of 200000 steps in 476.1 seconds; inference converged (run difference of 0.00809).
+
+Performing inference for site 175... completed MCMC of 200000 steps in 472.4 seconds; inference FAILED to converge (run difference of 0.0124).
+Trying again with 4-fold more steps... this time MCMC converged in 1908.1 seconds (run difference of 0.0044).
+
+Performing inference for site 176... completed MCMC of 200000 steps in 490.2 seconds; inference converged (run difference of 0.00661).
+
+Performing inference for site 177... completed MCMC of 200000 steps in 466.0 seconds; inference converged (run difference of 0.0098).
+
+Performing inference for site 178... completed MCMC of 200000 steps in 471.8 seconds; inference converged (run difference of 0.00471).
+
+Performing inference for site 179... completed MCMC of 200000 steps in 482.7 seconds; inference FAILED to converge (run difference of 0.0156).
+Trying again with 4-fold more steps... this time MCMC converged in 1914.8 seconds (run difference of 0.00426).
+
+Performing inference for site 180... completed MCMC of 200000 steps in 453.1 seconds; inference FAILED to converge (run difference of 0.0192).
+Trying again with 4-fold more steps... this time MCMC converged in 1860.1 seconds (run difference of 0.00442).
+
+Performing inference for site 181... completed MCMC of 200000 steps in 492.1 seconds; inference converged (run difference of 0.0019).
+
+Performing inference for site 182... completed MCMC of 200000 steps in 466.8 seconds; inference converged (run difference of 0.00295).
+
+Performing inference for site 183... completed MCMC of 200000 steps in 483.9 seconds; inference converged (run difference of 0.0022).
+
+Performing inference for site 184... completed MCMC of 200000 steps in 472.4 seconds; inference converged (run difference of 0.00596).
+
+Performing inference for site 185... completed MCMC of 200000 steps in 478.4 seconds; inference converged (run difference of 0.00174).
+
+Performing inference for site 186... completed MCMC of 200000 steps in 500.0 seconds; inference converged (run difference of 0.00183).
+
+Performing inference for site 187... completed MCMC of 200000 steps in 480.5 seconds; inference converged (run difference of 0.00428).
+
+Performing inference for site 188... completed MCMC of 200000 steps in 469.8 seconds; inference FAILED to converge (run difference of 0.0102).
+Trying again with 4-fold more steps... this time MCMC converged in 1914.0 seconds (run difference of 0.00306).
+
+Performing inference for site 189... completed MCMC of 200000 steps in 467.0 seconds; inference FAILED to converge (run difference of 0.0144).
+Trying again with 4-fold more steps... this time MCMC converged in 1875.9 seconds (run difference of 0.00734).
+
+Performing inference for site 190... completed MCMC of 200000 steps in 485.4 seconds; inference FAILED to converge (run difference of 0.0139).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1894.2 seconds (run difference of 0.01).
+
+Performing inference for site 191... completed MCMC of 200000 steps in 443.9 seconds; inference converged (run difference of 0.00312).
+
+Performing inference for site 192... completed MCMC of 200000 steps in 458.9 seconds; inference converged (run difference of 0.00419).
+
+Performing inference for site 193... completed MCMC of 200000 steps in 467.9 seconds; inference converged (run difference of 0.00524).
+
+Performing inference for site 194... completed MCMC of 200000 steps in 455.3 seconds; inference converged (run difference of 0.00733).
+
+Performing inference for site 195... completed MCMC of 200000 steps in 483.6 seconds; inference FAILED to converge (run difference of 0.0178).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1970.3 seconds (run difference of 0.013).
+
+Performing inference for site 196... completed MCMC of 200000 steps in 458.1 seconds; inference FAILED to converge (run difference of 0.0159).
+Trying again with 4-fold more steps... this time MCMC converged in 1875.4 seconds (run difference of 0.00449).
+
+Performing inference for site 197... completed MCMC of 200000 steps in 471.4 seconds; inference converged (run difference of 0.004).
+
+Performing inference for site 198... completed MCMC of 200000 steps in 436.6 seconds; inference FAILED to converge (run difference of 0.0282).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1809.2 seconds (run difference of 0.011).
+
+Performing inference for site 199... completed MCMC of 200000 steps in 424.8 seconds; inference converged (run difference of 0.00834).
+
+Performing inference for site 200... completed MCMC of 200000 steps in 434.1 seconds; inference FAILED to converge (run difference of 0.0173).
+Trying again with 4-fold more steps... this time MCMC converged in 1815.7 seconds (run difference of 0.00572).
+
+Performing inference for site 201... completed MCMC of 200000 steps in 443.0 seconds; inference converged (run difference of 0.00884).
+
+Performing inference for site 202... completed MCMC of 200000 steps in 466.9 seconds; inference FAILED to converge (run difference of 0.277).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1909.1 seconds (run difference of 0.25).
+
+Performing inference for site 203... completed MCMC of 200000 steps in 464.4 seconds; inference FAILED to converge (run difference of 0.0106).
+Trying again with 4-fold more steps... this time MCMC converged in 1855.0 seconds (run difference of 0.00581).
+
+Performing inference for site 204... completed MCMC of 200000 steps in 469.0 seconds; inference converged (run difference of 0.00443).
+
+Performing inference for site 205... completed MCMC of 200000 steps in 439.3 seconds; inference converged (run difference of 0.00956).
+
+Performing inference for site 206... completed MCMC of 200000 steps in 455.7 seconds; inference FAILED to converge (run difference of 0.0116).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1937.2 seconds (run difference of 0.011).
+
+Performing inference for site 207... completed MCMC of 200000 steps in 458.2 seconds; inference converged (run difference of 0.00753).
+
+Performing inference for site 208... completed MCMC of 200000 steps in 470.7 seconds; inference FAILED to converge (run difference of 0.0117).
+Trying again with 4-fold more steps... this time MCMC converged in 1876.7 seconds (run difference of 0.00206).
+
+Performing inference for site 209... completed MCMC of 200000 steps in 435.4 seconds; inference converged (run difference of 0.00961).
+
+Performing inference for site 210... completed MCMC of 200000 steps in 437.4 seconds; inference converged (run difference of 0.00759).
+
+Performing inference for site 211... completed MCMC of 200000 steps in 479.4 seconds; inference converged (run difference of 0.00399).
+
+Performing inference for site 212... completed MCMC of 200000 steps in 449.9 seconds; inference converged (run difference of 0.00638).
+
+Performing inference for site 213... completed MCMC of 200000 steps in 450.9 seconds; inference FAILED to converge (run difference of 0.0134).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1858.1 seconds (run difference of 0.011).
+
+Performing inference for site 214... completed MCMC of 200000 steps in 438.8 seconds; inference FAILED to converge (run difference of 0.0219).
+Trying again with 4-fold more steps... this time MCMC converged in 1852.1 seconds (run difference of 0.00771).
+
+Performing inference for site 215... completed MCMC of 200000 steps in 457.4 seconds; inference FAILED to converge (run difference of 0.0142).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1882.1 seconds (run difference of 0.014).
+
+Performing inference for site 216... completed MCMC of 200000 steps in 444.4 seconds; inference converged (run difference of 0.00923).
+
+Performing inference for site 217... completed MCMC of 200000 steps in 451.2 seconds; inference converged (run difference of 0.00882).
+
+Performing inference for site 218... completed MCMC of 200000 steps in 447.5 seconds; inference FAILED to converge (run difference of 0.011).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1848.6 seconds (run difference of 0.018).
+
+Performing inference for site 219... completed MCMC of 200000 steps in 434.9 seconds; inference FAILED to converge (run difference of 0.0127).
+Trying again with 4-fold more steps... this time MCMC converged in 1831.7 seconds (run difference of 0.00783).
+
+Performing inference for site 220... completed MCMC of 200000 steps in 432.5 seconds; inference FAILED to converge (run difference of 0.0424).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1823.2 seconds (run difference of 0.015).
+
+Performing inference for site 221... completed MCMC of 200000 steps in 437.0 seconds; inference FAILED to converge (run difference of 0.0144).
+Trying again with 4-fold more steps... this time MCMC converged in 1838.0 seconds (run difference of 0.00548).
+
+Performing inference for site 222... completed MCMC of 200000 steps in 443.2 seconds; inference FAILED to converge (run difference of 0.0202).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1884.9 seconds (run difference of 0.015).
+
+Performing inference for site 223... completed MCMC of 200000 steps in 466.7 seconds; inference FAILED to converge (run difference of 0.127).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1974.5 seconds (run difference of 0.07).
+
+Performing inference for site 224... completed MCMC of 200000 steps in 462.8 seconds; inference FAILED to converge (run difference of 0.0459).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1953.3 seconds (run difference of 0.05).
+
+Performing inference for site 225... completed MCMC of 200000 steps in 459.3 seconds; inference FAILED to converge (run difference of 0.0575).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1928.9 seconds (run difference of 0.038).
+
+Performing inference for site 226... completed MCMC of 200000 steps in 425.4 seconds; inference FAILED to converge (run difference of 0.0244).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1793.8 seconds (run difference of 0.024).
+
+Performing inference for site 227... completed MCMC of 200000 steps in 423.9 seconds; inference FAILED to converge (run difference of 0.0174).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1794.4 seconds (run difference of 0.021).
+
+Performing inference for site 228... completed MCMC of 200000 steps in 430.6 seconds; inference FAILED to converge (run difference of 0.0133).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1828.7 seconds (run difference of 0.013).
+
+Performing inference for site 229... completed MCMC of 200000 steps in 427.7 seconds; inference FAILED to converge (run difference of 0.0278).
+Trying again with 4-fold more steps... this time MCMC converged in 1817.7 seconds (run difference of 0.00828).
+
+Performing inference for site 230... completed MCMC of 200000 steps in 429.9 seconds; inference FAILED to converge (run difference of 0.0139).
+Trying again with 4-fold more steps... this time MCMC converged in 1831.2 seconds (run difference of 0.00758).
+
+Performing inference for site 231... completed MCMC of 200000 steps in 454.2 seconds; inference FAILED to converge (run difference of 0.0205).
+Trying again with 4-fold more steps... this time MCMC converged in 1917.2 seconds (run difference of 0.00971).
+
+Performing inference for site 232... completed MCMC of 200000 steps in 462.9 seconds; inference FAILED to converge (run difference of 0.0115).
+Trying again with 4-fold more steps... this time MCMC converged in 1921.2 seconds (run difference of 0.00832).
+
+Performing inference for site 233... completed MCMC of 200000 steps in 483.8 seconds; inference converged (run difference of 0.00898).
+
+Performing inference for site 234... completed MCMC of 200000 steps in 451.6 seconds; inference FAILED to converge (run difference of 0.0378).
+Trying again with 4-fold more steps... this time MCMC converged in 1843.7 seconds (run difference of 0.00744).
+
+Performing inference for site 235... completed MCMC of 200000 steps in 432.6 seconds; inference FAILED to converge (run difference of 0.0145).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1807.8 seconds (run difference of 0.01).
+
+Performing inference for site 236... completed MCMC of 200000 steps in 442.0 seconds; inference FAILED to converge (run difference of 0.0297).
+Trying again with 4-fold more steps... this time MCMC converged in 1864.7 seconds (run difference of 0.00717).
+
+Performing inference for site 237... completed MCMC of 200000 steps in 480.6 seconds; inference converged (run difference of 0.00383).
+
+Performing inference for site 238... completed MCMC of 200000 steps in 488.6 seconds; inference FAILED to converge (run difference of 0.0104).
+Trying again with 4-fold more steps... this time MCMC converged in 1980.3 seconds (run difference of 0.00532).
+
+Performing inference for site 239... completed MCMC of 200000 steps in 480.4 seconds; inference converged (run difference of 0.00835).
+
+Performing inference for site 240... completed MCMC of 200000 steps in 452.3 seconds; inference converged (run difference of 0.0087).
+
+Performing inference for site 241... completed MCMC of 200000 steps in 496.2 seconds; inference converged (run difference of 0.0034).
+
+Performing inference for site 242... completed MCMC of 200000 steps in 484.4 seconds; inference FAILED to converge (run difference of 0.0102).
+Trying again with 4-fold more steps... this time MCMC converged in 1998.0 seconds (run difference of 0.00372).
+
+Performing inference for site 243... completed MCMC of 200000 steps in 495.3 seconds; inference converged (run difference of 0.00217).
+
+Performing inference for site 244... completed MCMC of 200000 steps in 457.2 seconds; inference converged (run difference of 0.00765).
+
+Performing inference for site 245... completed MCMC of 200000 steps in 502.6 seconds; inference converged (run difference of 0.00755).
+
+Performing inference for site 246... completed MCMC of 200000 steps in 446.8 seconds; inference converged (run difference of 0.00705).
+
+Performing inference for site 247... completed MCMC of 200000 steps in 473.4 seconds; inference converged (run difference of 0.00519).
+
+Performing inference for site 248... completed MCMC of 200000 steps in 446.7 seconds; inference converged (run difference of 0.00835).
+
+Performing inference for site 249... completed MCMC of 200000 steps in 485.4 seconds; inference converged (run difference of 0.00339).
+
+Performing inference for site 250... completed MCMC of 200000 steps in 484.9 seconds; inference converged (run difference of 0.00649).
+
+Performing inference for site 251... completed MCMC of 200000 steps in 439.3 seconds; inference FAILED to converge (run difference of 0.0143).
+Trying again with 4-fold more steps... this time MCMC converged in 1841.5 seconds (run difference of 0.00449).
+
+Performing inference for site 252... completed MCMC of 200000 steps in 461.4 seconds; inference FAILED to converge (run difference of 0.0113).
+Trying again with 4-fold more steps... this time MCMC converged in 1989.1 seconds (run difference of 0.00951).
+
+Performing inference for site 253... completed MCMC of 200000 steps in 433.6 seconds; inference FAILED to converge (run difference of 0.0198).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1821.7 seconds (run difference of 0.025).
+
+Performing inference for site 254... completed MCMC of 200000 steps in 432.3 seconds; inference FAILED to converge (run difference of 0.0608).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1816.3 seconds (run difference of 0.044).
+
+Performing inference for site 255... completed MCMC of 200000 steps in 440.6 seconds; inference FAILED to converge (run difference of 0.0145).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1818.4 seconds (run difference of 0.014).
+
+Performing inference for site 256... completed MCMC of 200000 steps in 482.9 seconds; inference converged (run difference of 0.00384).
+
+Performing inference for site 257... completed MCMC of 200000 steps in 469.9 seconds; inference FAILED to converge (run difference of 0.0175).
+Trying again with 4-fold more steps... this time MCMC converged in 1969.5 seconds (run difference of 0.00546).
+
+Performing inference for site 258... completed MCMC of 200000 steps in 460.7 seconds; inference converged (run difference of 0.00389).
+
+Performing inference for site 259... completed MCMC of 200000 steps in 462.0 seconds; inference converged (run difference of 0.00507).
+
+Performing inference for site 260... completed MCMC of 200000 steps in 428.9 seconds; inference FAILED to converge (run difference of 0.0169).
+Trying again with 4-fold more steps... this time MCMC converged in 1815.6 seconds (run difference of 0.00662).
+
+Performing inference for site 261... completed MCMC of 200000 steps in 432.6 seconds; inference FAILED to converge (run difference of 0.0254).
+Trying again with 4-fold more steps... this time MCMC converged in 1810.1 seconds (run difference of 0.00635).
+
+Performing inference for site 262... completed MCMC of 200000 steps in 479.1 seconds; inference converged (run difference of 0.00726).
+
+Performing inference for site 263... completed MCMC of 200000 steps in 453.0 seconds; inference converged (run difference of 0.00399).
+
+Performing inference for site 264... completed MCMC of 200000 steps in 498.0 seconds; inference converged (run difference of 0.00713).
+
+Performing inference for site 265... completed MCMC of 200000 steps in 479.3 seconds; inference converged (run difference of 0.00282).
+
+Performing inference for site 266... completed MCMC of 200000 steps in 456.9 seconds; inference converged (run difference of 0.00605).
+
+Performing inference for site 267... completed MCMC of 200000 steps in 455.9 seconds; inference FAILED to converge (run difference of 0.152).
+Trying again with 4-fold more steps... this time MCMC converged in 1909.1 seconds (run difference of 0.00255).
+
+Performing inference for site 268... completed MCMC of 200000 steps in 454.9 seconds; inference FAILED to converge (run difference of 0.0151).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1863.6 seconds (run difference of 0.015).
+
+Performing inference for site 269... completed MCMC of 200000 steps in 445.6 seconds; inference FAILED to converge (run difference of 0.0137).
+Trying again with 4-fold more steps... this time MCMC converged in 1817.1 seconds (run difference of 0.00854).
+
+Performing inference for site 270... completed MCMC of 200000 steps in 443.0 seconds; inference FAILED to converge (run difference of 0.0107).
+Trying again with 4-fold more steps... this time MCMC converged in 1838.5 seconds (run difference of 0.00862).
+
+Performing inference for site 271... completed MCMC of 200000 steps in 451.9 seconds; inference converged (run difference of 0.0093).
+
+Performing inference for site 272... completed MCMC of 200000 steps in 480.7 seconds; inference converged (run difference of 0.00759).
+
+Performing inference for site 273... completed MCMC of 200000 steps in 486.0 seconds; inference converged (run difference of 0.00355).
+
+Performing inference for site 274... completed MCMC of 200000 steps in 492.5 seconds; inference converged (run difference of 0.00181).
+
+Performing inference for site 275... completed MCMC of 200000 steps in 500.2 seconds; inference converged (run difference of 0.00164).
+
+Performing inference for site 276... completed MCMC of 200000 steps in 457.4 seconds; inference converged (run difference of 0.00974).
+
+Performing inference for site 277... completed MCMC of 200000 steps in 469.2 seconds; inference FAILED to converge (run difference of 0.0123).
+Trying again with 4-fold more steps... this time MCMC converged in 1988.6 seconds (run difference of 0.00262).
+
+Performing inference for site 278... completed MCMC of 200000 steps in 479.1 seconds; inference converged (run difference of 0.00343).
+
+Performing inference for site 279... completed MCMC of 200000 steps in 435.8 seconds; inference converged (run difference of 0.00837).
+
+Performing inference for site 280... completed MCMC of 200000 steps in 483.7 seconds; inference FAILED to converge (run difference of 0.046).
+Trying again with 4-fold more steps... this time MCMC converged in 2057.4 seconds (run difference of 0.00313).
+
+Performing inference for site 281... completed MCMC of 200000 steps in 469.4 seconds; inference converged (run difference of 0.00587).
+
+Performing inference for site 282... completed MCMC of 200000 steps in 455.3 seconds; inference converged (run difference of 0.00427).
+
+Performing inference for site 283... completed MCMC of 200000 steps in 517.9 seconds; inference converged (run difference of 0.00155).
+
+Performing inference for site 284... completed MCMC of 200000 steps in 466.0 seconds; inference FAILED to converge (run difference of 0.0119).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1970.8 seconds (run difference of 0.017).
+
+Performing inference for site 285... completed MCMC of 200000 steps in 466.4 seconds; inference FAILED to converge (run difference of 0.0183).
+Trying again with 4-fold more steps... this time MCMC converged in 1911.1 seconds (run difference of 0.00712).
+
+Performing inference for site 286... completed MCMC of 200000 steps in 429.0 seconds; inference FAILED to converge (run difference of 0.0156).
+Trying again with 4-fold more steps... this time MCMC converged in 1827.3 seconds (run difference of 0.00977).
+
+Performing inference for site 287... completed MCMC of 200000 steps in 456.6 seconds; inference FAILED to converge (run difference of 0.197).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1931.7 seconds (run difference of 0.064).
+
+Performing inference for site 288... completed MCMC of 200000 steps in 425.5 seconds; inference FAILED to converge (run difference of 0.0322).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1812.1 seconds (run difference of 0.028).
+
+Performing inference for site 289... completed MCMC of 200000 steps in 465.8 seconds; inference FAILED to converge (run difference of 0.162).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1970.8 seconds (run difference of 0.2).
+
+Performing inference for site 290... completed MCMC of 200000 steps in 429.8 seconds; inference FAILED to converge (run difference of 0.0126).
+Trying again with 4-fold more steps... this time MCMC converged in 1830.4 seconds (run difference of 0.00715).
+
+Performing inference for site 291... completed MCMC of 200000 steps in 445.8 seconds; inference converged (run difference of 0.00837).
+
+Performing inference for site 292... completed MCMC of 200000 steps in 466.0 seconds; inference FAILED to converge (run difference of 0.0247).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1970.7 seconds (run difference of 0.012).
+
+Performing inference for site 293... completed MCMC of 200000 steps in 461.4 seconds; inference FAILED to converge (run difference of 0.0168).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1923.0 seconds (run difference of 0.016).
+
+Performing inference for site 294... completed MCMC of 200000 steps in 474.8 seconds; inference FAILED to converge (run difference of 0.181).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1984.4 seconds (run difference of 0.28).
+
+Performing inference for site 295... completed MCMC of 200000 steps in 427.9 seconds; inference FAILED to converge (run difference of 0.0221).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1841.6 seconds (run difference of 0.013).
+
+Performing inference for site 296... completed MCMC of 200000 steps in 447.4 seconds; inference FAILED to converge (run difference of 0.0127).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1837.4 seconds (run difference of 0.01).
+
+Performing inference for site 297... completed MCMC of 200000 steps in 444.1 seconds; inference converged (run difference of 0.00473).
+
+Performing inference for site 298... completed MCMC of 200000 steps in 443.4 seconds; inference converged (run difference of 0.00724).
+
+Performing inference for site 299... completed MCMC of 200000 steps in 457.5 seconds; inference converged (run difference of 0.00561).
+
+Performing inference for site 300... completed MCMC of 200000 steps in 468.9 seconds; inference converged (run difference of 0.00773).
+
+Performing inference for site 301... completed MCMC of 200000 steps in 487.8 seconds; inference converged (run difference of 0.00277).
+
+Performing inference for site 302... completed MCMC of 200000 steps in 480.9 seconds; inference converged (run difference of 0.00959).
+
+Performing inference for site 303... completed MCMC of 200000 steps in 462.3 seconds; inference FAILED to converge (run difference of 0.0108).
+Trying again with 4-fold more steps... this time MCMC converged in 1949.4 seconds (run difference of 0.00193).
+
+Performing inference for site 304... completed MCMC of 200000 steps in 453.6 seconds; inference FAILED to converge (run difference of 0.0106).
+Trying again with 4-fold more steps... this time MCMC converged in 1864.5 seconds (run difference of 0.00235).
+
+Performing inference for site 305... completed MCMC of 200000 steps in 459.9 seconds; inference FAILED to converge (run difference of 0.0105).
+Trying again with 4-fold more steps... this time MCMC converged in 1875.4 seconds (run difference of 0.0053).
+
+Performing inference for site 306... completed MCMC of 200000 steps in 453.2 seconds; inference converged (run difference of 0.00813).
+
+Performing inference for site 307... completed MCMC of 200000 steps in 477.6 seconds; inference converged (run difference of 0.00945).
+
+Performing inference for site 308... completed MCMC of 200000 steps in 462.6 seconds; inference FAILED to converge (run difference of 0.035).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1986.9 seconds (run difference of 0.044).
+
+Performing inference for site 309... completed MCMC of 200000 steps in 474.3 seconds; inference converged (run difference of 0.0092).
+
+Performing inference for site 310... completed MCMC of 200000 steps in 485.1 seconds; inference converged (run difference of 0.00534).
+
+Performing inference for site 311... completed MCMC of 200000 steps in 485.8 seconds; inference converged (run difference of 0.00943).
+
+Performing inference for site 312... completed MCMC of 200000 steps in 469.7 seconds; inference converged (run difference of 0.00197).
+
+Performing inference for site 313... completed MCMC of 200000 steps in 489.1 seconds; inference converged (run difference of 0.00849).
+
+Performing inference for site 314... completed MCMC of 200000 steps in 479.7 seconds; inference converged (run difference of 0.00738).
+
+Performing inference for site 315... completed MCMC of 200000 steps in 493.5 seconds; inference converged (run difference of 0.00325).
+
+Performing inference for site 316... completed MCMC of 200000 steps in 475.9 seconds; inference converged (run difference of 0.00397).
+
+Performing inference for site 317... completed MCMC of 200000 steps in 472.2 seconds; inference FAILED to converge (run difference of 0.011).
+Trying again with 4-fold more steps... this time MCMC converged in 1930.4 seconds (run difference of 0.00415).
+
+Performing inference for site 318... completed MCMC of 200000 steps in 489.1 seconds; inference converged (run difference of 0.00267).
+
+Performing inference for site 319... completed MCMC of 200000 steps in 520.8 seconds; inference converged (run difference of 0.00383).
+
+Performing inference for site 320... completed MCMC of 200000 steps in 462.9 seconds; inference converged (run difference of 0.0095).
+
+Performing inference for site 321... completed MCMC of 200000 steps in 467.7 seconds; inference converged (run difference of 0.00303).
+
+Performing inference for site 322... completed MCMC of 200000 steps in 498.4 seconds; inference converged (run difference of 0.00124).
+
+Performing inference for site 323... completed MCMC of 200000 steps in 462.4 seconds; inference converged (run difference of 0.00303).
+
+Performing inference for site 324... completed MCMC of 200000 steps in 474.4 seconds; inference converged (run difference of 0.00337).
+
+Performing inference for site 325... completed MCMC of 200000 steps in 433.9 seconds; inference FAILED to converge (run difference of 0.0148).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1825.9 seconds (run difference of 0.014).
+
+Performing inference for site 326... completed MCMC of 200000 steps in 423.9 seconds; inference FAILED to converge (run difference of 0.0373).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1827.6 seconds (run difference of 0.019).
+
+Performing inference for site 327... completed MCMC of 200000 steps in 457.0 seconds; inference converged (run difference of 0.00624).
+
+Performing inference for site 328... completed MCMC of 200000 steps in 488.6 seconds; inference converged (run difference of 0.00795).
+
+Performing inference for site 329... completed MCMC of 200000 steps in 494.8 seconds; inference converged (run difference of 0.00701).
+
+Performing inference for site 330... completed MCMC of 200000 steps in 490.1 seconds; inference converged (run difference of 0.00497).
+
+Performing inference for site 331... completed MCMC of 200000 steps in 500.7 seconds; inference FAILED to converge (run difference of 0.0201).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 2050.0 seconds (run difference of 0.024).
+
+Performing inference for site 332... completed MCMC of 200000 steps in 492.8 seconds; inference converged (run difference of 0.00243).
+
+Performing inference for site 333... completed MCMC of 200000 steps in 490.0 seconds; inference converged (run difference of 0.00391).
+
+Performing inference for site 334... completed MCMC of 200000 steps in 462.2 seconds; inference converged (run difference of 0.00339).
+
+Performing inference for site 335... completed MCMC of 200000 steps in 484.1 seconds; inference converged (run difference of 0.00331).
+
+Performing inference for site 336... completed MCMC of 200000 steps in 484.5 seconds; inference converged (run difference of 0.00457).
+
+Performing inference for site 337... completed MCMC of 200000 steps in 444.7 seconds; inference converged (run difference of 0.01).
+
+Performing inference for site 338... completed MCMC of 200000 steps in 453.2 seconds; inference FAILED to converge (run difference of 0.0197).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1918.3 seconds (run difference of 0.01).
+
+Performing inference for site 339... completed MCMC of 200000 steps in 427.9 seconds; inference FAILED to converge (run difference of 0.019).
+Trying again with 4-fold more steps... this time MCMC converged in 1808.2 seconds (run difference of 0.00609).
+
+Performing inference for site 340... completed MCMC of 200000 steps in 441.1 seconds; inference FAILED to converge (run difference of 0.0102).
+Trying again with 4-fold more steps... this time MCMC converged in 1882.2 seconds (run difference of 0.00703).
+
+Performing inference for site 341... completed MCMC of 200000 steps in 439.2 seconds; inference FAILED to converge (run difference of 0.0229).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1831.2 seconds (run difference of 0.024).
+
+Performing inference for site 342... completed MCMC of 200000 steps in 442.6 seconds; inference FAILED to converge (run difference of 0.0113).
+Trying again with 4-fold more steps... this time MCMC converged in 1862.9 seconds (run difference of 0.00305).
+
+Performing inference for site 343... completed MCMC of 200000 steps in 454.5 seconds; inference FAILED to converge (run difference of 0.02).
+Trying again with 4-fold more steps... this time MCMC converged in 1889.9 seconds (run difference of 0.00913).
+
+Performing inference for site 344... completed MCMC of 200000 steps in 450.5 seconds; inference converged (run difference of 0.0073).
+
+Performing inference for site 345... completed MCMC of 200000 steps in 459.8 seconds; inference FAILED to converge (run difference of 0.0158).
+Trying again with 4-fold more steps... this time MCMC converged in 1963.6 seconds (run difference of 0.00285).
+
+Performing inference for site 346... completed MCMC of 200000 steps in 454.1 seconds; inference converged (run difference of 0.00984).
+
+Performing inference for site 347... completed MCMC of 200000 steps in 442.3 seconds; inference FAILED to converge (run difference of 0.0175).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1832.8 seconds (run difference of 0.014).
+
+Performing inference for site 348... completed MCMC of 200000 steps in 455.0 seconds; inference FAILED to converge (run difference of 0.0104).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 2000.0 seconds (run difference of 0.013).
+
+Performing inference for site 349... completed MCMC of 200000 steps in 436.6 seconds; inference FAILED to converge (run difference of 0.0229).
+Trying again with 4-fold more steps... this time MCMC converged in 1834.0 seconds (run difference of 0.00967).
+
+Performing inference for site 350... completed MCMC of 200000 steps in 433.3 seconds; inference FAILED to converge (run difference of 0.0104).
+Trying again with 4-fold more steps... this time MCMC converged in 1888.4 seconds (run difference of 0.00709).
+
+Performing inference for site 351... completed MCMC of 200000 steps in 441.5 seconds; inference FAILED to converge (run difference of 0.013).
+Trying again with 4-fold more steps... this time MCMC converged in 1840.5 seconds (run difference of 0.00953).
+
+Performing inference for site 352... completed MCMC of 200000 steps in 453.0 seconds; inference converged (run difference of 0.00689).
+
+Performing inference for site 353... completed MCMC of 200000 steps in 458.0 seconds; inference FAILED to converge (run difference of 0.0682).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1928.3 seconds (run difference of 0.015).
+
+Performing inference for site 354... completed MCMC of 200000 steps in 439.7 seconds; inference FAILED to converge (run difference of 0.0116).
+Trying again with 4-fold more steps... this time MCMC converged in 1857.6 seconds (run difference of 0.0033).
+
+Performing inference for site 355... completed MCMC of 200000 steps in 423.9 seconds; inference FAILED to converge (run difference of 0.0362).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1806.8 seconds (run difference of 0.018).
+
+Performing inference for site 356... completed MCMC of 200000 steps in 431.2 seconds; inference FAILED to converge (run difference of 0.0316).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1852.7 seconds (run difference of 0.028).
+
+Performing inference for site 357... completed MCMC of 200000 steps in 433.9 seconds; inference FAILED to converge (run difference of 0.0252).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1829.8 seconds (run difference of 0.016).
+
+Performing inference for site 358... completed MCMC of 200000 steps in 447.0 seconds; inference converged (run difference of 0.00873).
+
+Performing inference for site 359... completed MCMC of 200000 steps in 460.8 seconds; inference FAILED to converge (run difference of 0.0271).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1929.5 seconds (run difference of 0.015).
+
+Performing inference for site 360... completed MCMC of 200000 steps in 436.8 seconds; inference converged (run difference of 0.00336).
+
+Performing inference for site 361... completed MCMC of 200000 steps in 435.2 seconds; inference converged (run difference of 0.00448).
+
+Performing inference for site 362... completed MCMC of 200000 steps in 427.7 seconds; inference FAILED to converge (run difference of 0.0131).
+Trying again with 4-fold more steps... this time MCMC converged in 1856.6 seconds (run difference of 0.00369).
+
+Performing inference for site 363... completed MCMC of 200000 steps in 447.1 seconds; inference converged (run difference of 0.0096).
+
+Performing inference for site 364... completed MCMC of 200000 steps in 451.6 seconds; inference converged (run difference of 0.00976).
+
+Performing inference for site 365... completed MCMC of 200000 steps in 447.8 seconds; inference FAILED to converge (run difference of 0.0109).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1878.9 seconds (run difference of 0.013).
+
+Performing inference for site 366... completed MCMC of 200000 steps in 435.2 seconds; inference FAILED to converge (run difference of 0.0151).
+Trying again with 4-fold more steps... this time MCMC converged in 1816.1 seconds (run difference of 0.00419).
+
+Performing inference for site 367... completed MCMC of 200000 steps in 438.2 seconds; inference converged (run difference of 0.00863).
+
+Performing inference for site 368... completed MCMC of 200000 steps in 430.9 seconds; inference converged (run difference of 0.00445).
+
+Performing inference for site 369... completed MCMC of 200000 steps in 445.2 seconds; inference FAILED to converge (run difference of 0.0332).
+Trying again with 4-fold more steps... this time MCMC converged in 1855.6 seconds (run difference of 0.00889).
+
+Performing inference for site 370... completed MCMC of 200000 steps in 447.6 seconds; inference FAILED to converge (run difference of 0.0307).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1869.8 seconds (run difference of 0.014).
+
+Performing inference for site 371... completed MCMC of 200000 steps in 471.3 seconds; inference FAILED to converge (run difference of 0.017).
+Trying again with 4-fold more steps... this time MCMC converged in 1940.2 seconds (run difference of 0.00307).
+
+Performing inference for site 372... completed MCMC of 200000 steps in 440.3 seconds; inference FAILED to converge (run difference of 0.0412).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1824.1 seconds (run difference of 0.018).
+
+Performing inference for site 373... completed MCMC of 200000 steps in 474.2 seconds; inference converged (run difference of 0.00894).
+
+Performing inference for site 374... completed MCMC of 200000 steps in 471.1 seconds; inference converged (run difference of 0.00931).
+
+Performing inference for site 375... completed MCMC of 200000 steps in 458.4 seconds; inference FAILED to converge (run difference of 0.0112).
+Trying again with 4-fold more steps... this time MCMC converged in 1911.0 seconds (run difference of 0.00539).
+
+Performing inference for site 376... completed MCMC of 200000 steps in 453.1 seconds; inference converged (run difference of 0.00918).
+
+Performing inference for site 377... completed MCMC of 200000 steps in 486.1 seconds; inference converged (run difference of 0.00673).
+
+Performing inference for site 378... completed MCMC of 200000 steps in 460.0 seconds; inference converged (run difference of 0.0099).
+
+Performing inference for site 379... completed MCMC of 200000 steps in 446.1 seconds; inference converged (run difference of 0.00561).
+
+Performing inference for site 380... completed MCMC of 200000 steps in 448.3 seconds; inference FAILED to converge (run difference of 0.143).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1872.5 seconds (run difference of 0.15).
+
+Performing inference for site 381... completed MCMC of 200000 steps in 456.8 seconds; inference FAILED to converge (run difference of 0.0113).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1886.8 seconds (run difference of 0.01).
+
+Performing inference for site 382... completed MCMC of 200000 steps in 470.1 seconds; inference converged (run difference of 0.00966).
+
+Performing inference for site 383... completed MCMC of 200000 steps in 487.1 seconds; inference FAILED to converge (run difference of 0.0103).
+Trying again with 4-fold more steps... this time MCMC converged in 2012.2 seconds (run difference of 0.00348).
+
+Performing inference for site 384... completed MCMC of 200000 steps in 494.5 seconds; inference FAILED to converge (run difference of 0.0128).
+Trying again with 4-fold more steps... this time MCMC converged in 2028.9 seconds (run difference of 0.00805).
+
+Performing inference for site 385... completed MCMC of 200000 steps in 478.5 seconds; inference converged (run difference of 0.00575).
+
+Performing inference for site 386... completed MCMC of 200000 steps in 487.6 seconds; inference converged (run difference of 0.0093).
+
+Performing inference for site 387... completed MCMC of 200000 steps in 468.9 seconds; inference FAILED to converge (run difference of 0.0116).
+Trying again with 4-fold more steps... this time MCMC converged in 1922.5 seconds (run difference of 0.00891).
+
+Performing inference for site 388... completed MCMC of 200000 steps in 486.1 seconds; inference converged (run difference of 0.00239).
+
+Performing inference for site 389... completed MCMC of 200000 steps in 455.4 seconds; inference converged (run difference of 0.0092).
+
+Performing inference for site 390... completed MCMC of 200000 steps in 483.6 seconds; inference converged (run difference of 0.00638).
+
+Performing inference for site 391... completed MCMC of 200000 steps in 481.3 seconds; inference converged (run difference of 0.00268).
+
+Performing inference for site 392... completed MCMC of 200000 steps in 480.4 seconds; inference converged (run difference of 0.00507).
+
+Performing inference for site 393... completed MCMC of 200000 steps in 487.9 seconds; inference converged (run difference of 0.00905).
+
+Performing inference for site 394... completed MCMC of 200000 steps in 460.6 seconds; inference converged (run difference of 0.00383).
+
+Performing inference for site 395... completed MCMC of 200000 steps in 497.1 seconds; inference converged (run difference of 0.00166).
+
+Performing inference for site 396... completed MCMC of 200000 steps in 511.4 seconds; inference converged (run difference of 0.00273).
+
+Performing inference for site 397... completed MCMC of 200000 steps in 505.9 seconds; inference converged (run difference of 0.00431).
+
+Performing inference for site 398... completed MCMC of 200000 steps in 478.5 seconds; inference converged (run difference of 0.00465).
+
+Performing inference for site 399... completed MCMC of 200000 steps in 521.0 seconds; inference FAILED to converge (run difference of 0.013).
+Trying again with 4-fold more steps... this time MCMC converged in 2113.0 seconds (run difference of 0.00347).
+
+Performing inference for site 400... completed MCMC of 200000 steps in 474.7 seconds; inference converged (run difference of 0.00465).
+
+Performing inference for site 401... completed MCMC of 200000 steps in 482.9 seconds; inference FAILED to converge (run difference of 0.0134).
+Trying again with 4-fold more steps... this time MCMC converged in 2021.4 seconds (run difference of 0.00638).
+
+Performing inference for site 402... completed MCMC of 200000 steps in 465.1 seconds; inference converged (run difference of 0.00694).
+
+Performing inference for site 403... completed MCMC of 200000 steps in 505.5 seconds; inference converged (run difference of 0.0082).
+
+Performing inference for site 404... completed MCMC of 200000 steps in 493.8 seconds; inference converged (run difference of 0.00778).
+
+Performing inference for site 405... completed MCMC of 200000 steps in 445.8 seconds; inference converged (run difference of 0.00699).
+
+Performing inference for site 406... completed MCMC of 200000 steps in 434.5 seconds; inference FAILED to converge (run difference of 0.0102).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1825.4 seconds (run difference of 0.014).
+
+Performing inference for site 407... completed MCMC of 200000 steps in 439.7 seconds; inference FAILED to converge (run difference of 0.0758).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1879.6 seconds (run difference of 0.015).
+
+Performing inference for site 408... completed MCMC of 200000 steps in 431.9 seconds; inference FAILED to converge (run difference of 0.102).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1844.5 seconds (run difference of 0.076).
+
+Performing inference for site 409... completed MCMC of 200000 steps in 482.6 seconds; inference converged (run difference of 0.00332).
+
+Performing inference for site 410... completed MCMC of 200000 steps in 463.8 seconds; inference converged (run difference of 0.00897).
+
+Performing inference for site 411... completed MCMC of 200000 steps in 480.5 seconds; inference FAILED to converge (run difference of 0.0101).
+Trying again with 4-fold more steps... this time MCMC converged in 2037.2 seconds (run difference of 0.00414).
+
+Performing inference for site 412... completed MCMC of 200000 steps in 440.4 seconds; inference converged (run difference of 0.00403).
+
+Performing inference for site 413... completed MCMC of 200000 steps in 491.1 seconds; inference converged (run difference of 0.00378).
+
+Performing inference for site 414... completed MCMC of 200000 steps in 488.1 seconds; inference FAILED to converge (run difference of 0.0209).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1946.7 seconds (run difference of 0.011).
+
+Performing inference for site 415... completed MCMC of 200000 steps in 479.5 seconds; inference FAILED to converge (run difference of 0.0143).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 2002.6 seconds (run difference of 0.023).
+
+Performing inference for site 416... completed MCMC of 200000 steps in 493.8 seconds; inference converged (run difference of 0.00318).
+
+Performing inference for site 417... completed MCMC of 200000 steps in 466.2 seconds; inference FAILED to converge (run difference of 0.0101).
+Trying again with 4-fold more steps... this time MCMC converged in 1935.0 seconds (run difference of 0.00477).
+
+Performing inference for site 418... completed MCMC of 200000 steps in 453.1 seconds; inference converged (run difference of 0.00589).
+
+Performing inference for site 419... completed MCMC of 200000 steps in 492.7 seconds; inference converged (run difference of 0.00508).
+
+Performing inference for site 420... completed MCMC of 200000 steps in 505.1 seconds; inference converged (run difference of 0.0039).
+
+Performing inference for site 421... completed MCMC of 200000 steps in 506.2 seconds; inference converged (run difference of 0.00387).
+
+Performing inference for site 422... completed MCMC of 200000 steps in 471.1 seconds; inference FAILED to converge (run difference of 0.0125).
+Trying again with 4-fold more steps... this time MCMC converged in 1974.0 seconds (run difference of 0.00736).
+
+Performing inference for site 423... completed MCMC of 200000 steps in 475.5 seconds; inference converged (run difference of 0.00418).
+
+Performing inference for site 424... completed MCMC of 200000 steps in 514.7 seconds; inference converged (run difference of 0.000984).
+
+Performing inference for site 425... completed MCMC of 200000 steps in 496.4 seconds; inference converged (run difference of 0.00576).
+
+Performing inference for site 426... completed MCMC of 200000 steps in 502.3 seconds; inference converged (run difference of 0.00821).
+
+Performing inference for site 427... completed MCMC of 200000 steps in 515.7 seconds; inference converged (run difference of 0.00146).
+
+Performing inference for site 428... completed MCMC of 200000 steps in 461.2 seconds; inference converged (run difference of 0.00532).
+
+Performing inference for site 429... completed MCMC of 200000 steps in 497.2 seconds; inference converged (run difference of 0.00372).
+
+Performing inference for site 430... completed MCMC of 200000 steps in 487.1 seconds; inference converged (run difference of 0.00607).
+
+Performing inference for site 431... completed MCMC of 200000 steps in 500.0 seconds; inference converged (run difference of 0.00352).
+
+Performing inference for site 432... completed MCMC of 200000 steps in 513.9 seconds; inference converged (run difference of 0.0023).
+
+Performing inference for site 433... completed MCMC of 200000 steps in 492.8 seconds; inference converged (run difference of 0.00289).
+
+Performing inference for site 434... completed MCMC of 200000 steps in 517.0 seconds; inference converged (run difference of 0.00139).
+
+Performing inference for site 435... completed MCMC of 200000 steps in 502.4 seconds; inference converged (run difference of 0.0021).
+
+Performing inference for site 436... completed MCMC of 200000 steps in 502.2 seconds; inference converged (run difference of 0.00293).
+
+Performing inference for site 437... completed MCMC of 200000 steps in 486.6 seconds; inference converged (run difference of 0.00358).
+
+Performing inference for site 438... completed MCMC of 200000 steps in 496.2 seconds; inference converged (run difference of 0.00584).
+
+Performing inference for site 439... completed MCMC of 200000 steps in 481.1 seconds; inference converged (run difference of 0.0073).
+
+Performing inference for site 440... completed MCMC of 200000 steps in 507.5 seconds; inference converged (run difference of 0.00439).
+
+Performing inference for site 441... completed MCMC of 200000 steps in 452.9 seconds; inference FAILED to converge (run difference of 0.25).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1857.8 seconds (run difference of 0.23).
+
+Performing inference for site 442... completed MCMC of 200000 steps in 490.1 seconds; inference converged (run difference of 0.00382).
+
+Performing inference for site 443... completed MCMC of 200000 steps in 451.1 seconds; inference converged (run difference of 0.00721).
+
+Performing inference for site 444... completed MCMC of 200000 steps in 500.3 seconds; inference converged (run difference of 0.00278).
+
+Performing inference for site 445... completed MCMC of 200000 steps in 464.3 seconds; inference converged (run difference of 0.00229).
+
+Performing inference for site 446... completed MCMC of 200000 steps in 493.1 seconds; inference FAILED to converge (run difference of 0.0248).
+Trying again with 4-fold more steps... this time MCMC converged in 2081.1 seconds (run difference of 0.00426).
+
+Performing inference for site 447... completed MCMC of 200000 steps in 515.2 seconds; inference converged (run difference of 0.00211).
+
+Performing inference for site 448... completed MCMC of 200000 steps in 477.5 seconds; inference converged (run difference of 0.00394).
+
+Performing inference for site 449... completed MCMC of 200000 steps in 475.7 seconds; inference converged (run difference of 0.00345).
+
+Performing inference for site 450... completed MCMC of 200000 steps in 484.7 seconds; inference converged (run difference of 0.00711).
+
+Performing inference for site 451... completed MCMC of 200000 steps in 501.6 seconds; inference converged (run difference of 0.00667).
+
+Performing inference for site 452... completed MCMC of 200000 steps in 460.9 seconds; inference converged (run difference of 0.00766).
+
+Performing inference for site 453... completed MCMC of 200000 steps in 467.0 seconds; inference converged (run difference of 0.00811).
+
+Performing inference for site 454... completed MCMC of 200000 steps in 473.9 seconds; inference FAILED to converge (run difference of 0.126).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1994.2 seconds (run difference of 0.11).
+
+Performing inference for site 455... completed MCMC of 200000 steps in 478.0 seconds; inference FAILED to converge (run difference of 0.0107).
+Trying again with 4-fold more steps... this time MCMC converged in 1990.0 seconds (run difference of 0.00265).
+
+Performing inference for site 456... completed MCMC of 200000 steps in 484.6 seconds; inference converged (run difference of 0.00213).
+
+Performing inference for site 457... completed MCMC of 200000 steps in 492.6 seconds; inference converged (run difference of 0.00207).
+
+Performing inference for site 458... completed MCMC of 200000 steps in 505.7 seconds; inference converged (run difference of 0.00191).
+
+Performing inference for site 459... completed MCMC of 200000 steps in 508.6 seconds; inference converged (run difference of 0.00309).
+
+Performing inference for site 460... completed MCMC of 200000 steps in 476.3 seconds; inference converged (run difference of 0.00403).
+
+Performing inference for site 461... completed MCMC of 200000 steps in 488.7 seconds; inference FAILED to converge (run difference of 0.01).
+Trying again with 4-fold more steps... this time MCMC converged in 1966.8 seconds (run difference of 0.00811).
+
+Performing inference for site 462... completed MCMC of 200000 steps in 506.3 seconds; inference converged (run difference of 0.00139).
+
+Performing inference for site 463... completed MCMC of 200000 steps in 519.3 seconds; inference converged (run difference of 0.00164).
+
+Performing inference for site 464... completed MCMC of 200000 steps in 516.7 seconds; inference converged (run difference of 0.00136).
+
+Performing inference for site 465... completed MCMC of 200000 steps in 480.3 seconds; inference converged (run difference of 0.00454).
+
+Performing inference for site 466... completed MCMC of 200000 steps in 516.5 seconds; inference converged (run difference of 0.00105).
+
+Performing inference for site 467... completed MCMC of 200000 steps in 505.8 seconds; inference converged (run difference of 0.00523).
+
+Performing inference for site 468... completed MCMC of 200000 steps in 479.7 seconds; inference converged (run difference of 0.00524).
+
+Performing inference for site 469... completed MCMC of 200000 steps in 470.7 seconds; inference FAILED to converge (run difference of 0.0269).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1949.4 seconds (run difference of 0.045).
+
+Performing inference for site 470... completed MCMC of 200000 steps in 494.5 seconds; inference converged (run difference of 0.00274).
+
+Performing inference for site 471... completed MCMC of 200000 steps in 500.2 seconds; inference converged (run difference of 0.0044).
+
+Performing inference for site 472... completed MCMC of 200000 steps in 455.1 seconds; inference FAILED to converge (run difference of 0.0237).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1854.1 seconds (run difference of 0.011).
+
+Performing inference for site 473... completed MCMC of 200000 steps in 470.1 seconds; inference FAILED to converge (run difference of 0.0133).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1960.0 seconds (run difference of 0.011).
+
+Performing inference for site 474... completed MCMC of 200000 steps in 445.3 seconds; inference FAILED to converge (run difference of 0.0146).
+Trying again with 4-fold more steps... this time MCMC converged in 1878.2 seconds (run difference of 0.00806).
+
+Performing inference for site 475... completed MCMC of 200000 steps in 455.9 seconds; inference converged (run difference of 0.00369).
+
+Performing inference for site 476... completed MCMC of 200000 steps in 470.7 seconds; inference converged (run difference of 0.00767).
+
+Performing inference for site 477... completed MCMC of 200000 steps in 487.7 seconds; inference converged (run difference of 0.0075).
+
+Performing inference for site 478... completed MCMC of 200000 steps in 501.6 seconds; inference converged (run difference of 0.00502).
+
+Performing inference for site 479... completed MCMC of 200000 steps in 465.1 seconds; inference FAILED to converge (run difference of 0.0169).
+Trying again with 4-fold more steps... this time MCMC converged in 1946.8 seconds (run difference of 0.00582).
+
+Performing inference for site 480... completed MCMC of 200000 steps in 466.3 seconds; inference FAILED to converge (run difference of 0.0145).
+Trying again with 4-fold more steps... this time MCMC converged in 1942.9 seconds (run difference of 0.00514).
+
+Performing inference for site 481... completed MCMC of 200000 steps in 482.4 seconds; inference converged (run difference of 0.00461).
+
+Performing inference for site 482... completed MCMC of 200000 steps in 439.5 seconds; inference FAILED to converge (run difference of 0.0201).
+Trying again with 4-fold more steps... this time MCMC converged in 1833.7 seconds (run difference of 0.0039).
+
+Performing inference for site 483... completed MCMC of 200000 steps in 439.6 seconds; inference FAILED to converge (run difference of 0.0177).
+Trying again with 4-fold more steps... this time MCMC converged in 1842.9 seconds (run difference of 0.00927).
+
+Performing inference for site 484... completed MCMC of 200000 steps in 467.3 seconds; inference FAILED to converge (run difference of 0.0115).
+Trying again with 4-fold more steps... this time MCMC converged in 1960.3 seconds (run difference of 0.00807).
+
+Performing inference for site 485... completed MCMC of 200000 steps in 451.9 seconds; inference FAILED to converge (run difference of 0.136).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1929.4 seconds (run difference of 0.12).
+
+Performing inference for site 486... completed MCMC of 200000 steps in 449.5 seconds; inference converged (run difference of 0.00827).
+
+Performing inference for site 487... completed MCMC of 200000 steps in 433.8 seconds; inference FAILED to converge (run difference of 0.0347).
+Trying again with 4-fold more steps... this time MCMC converged in 1805.4 seconds (run difference of 0.00511).
+
+Performing inference for site 488... completed MCMC of 200000 steps in 443.5 seconds; inference converged (run difference of 0.00842).
+
+Performing inference for site 489... completed MCMC of 200000 steps in 433.0 seconds; inference FAILED to converge (run difference of 0.0102).
+Trying again with 4-fold more steps... this time MCMC converged in 1878.9 seconds (run difference of 0.00849).
+
+Performing inference for site 490... completed MCMC of 200000 steps in 467.3 seconds; inference FAILED to converge (run difference of 0.014).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1922.9 seconds (run difference of 0.014).
+
+Performing inference for site 491... completed MCMC of 200000 steps in 468.5 seconds; inference converged (run difference of 0.00528).
+
+Performing inference for site 492... completed MCMC of 200000 steps in 445.0 seconds; inference FAILED to converge (run difference of 0.0221).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 1845.2 seconds (run difference of 0.025).
+
+Performing inference for site 493... completed MCMC of 200000 steps in 480.1 seconds; inference FAILED to converge (run difference of 0.0301).
+Trying again with 4-fold more steps... MCMC still FAILED to converge in 2017.1 seconds (run difference of 0.019).
+
+Performing inference for site 494... completed MCMC of 200000 steps in 475.3 seconds; inference FAILED to converge (run difference of 0.0186).
+Trying again with 4-fold more steps... this time MCMC converged in 2010.6 seconds (run difference of 0.00505).
+
+Performing inference for site 495... completed MCMC of 200000 steps in 489.3 seconds; inference FAILED to converge (run difference of 0.0113).
+Trying again with 4-fold more steps... this time MCMC converged in 2082.8 seconds (run difference of 0.00693).
+
+Performing inference for site 496... completed MCMC of 200000 steps in 463.1 seconds; inference converged (run difference of 0.00712).
+
+Performing inference for site 497... completed MCMC of 200000 steps in 502.5 seconds; inference FAILED to converge (run difference of 0.0285).
+Trying again with 4-fold more steps... this time MCMC converged in 2157.9 seconds (run difference of 0.00328).
+
+Performing inference for site 498... completed MCMC of 200000 steps in 513.4 seconds; inference converged (run difference of 0.0041).
+
+
+Execution completed at Sun Jan 19 10:32:15 2014.

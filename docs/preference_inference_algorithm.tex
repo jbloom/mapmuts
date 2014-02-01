@@ -1,0 +1,349 @@
+% Use only LaTeX2e, calling the article.cls class and 12-point type.
+
+\documentclass[12pt,draft]{article}
+
+% Users of the {thebibliography} environment or BibTeX should use the
+% scicite.sty package, downloadable from *Science* at
+% www.sciencemag.org/about/authors/prep/TeX_help/ .
+% This package should properly format in-text
+% reference calls and reference-list numbers.
+
+% Use times if you have the font installed; otherwise, comment out the
+% following line.
+
+\usepackage{times}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+% The preamble here sets up a lot of new/revised commands and
+% environments.  It's annoying, but please do *not* try to strip these
+% out into a separate .sty file (which could lead to the loss of some
+% information when we convert the file to other formats).  Instead, keep
+% them in the preamble of your main LaTeX source file.
+
+
+% The following parameters seem to provide a reasonable page setup.
+
+\topmargin 0.0cm
+\oddsidemargin 0.2cm
+\textwidth 16cm 
+\textheight 21cm
+\footskip 1.0cm
+
+
+%The next command sets up an environment for the abstract to your paper.
+
+\newenvironment{sciabstract}{%
+\begin{quote} \bf}
+{\end{quote}}
+
+% Jesse Bloom's commands for symbols
+\DeclareMathOperator{\multinomial}{Mult}
+\DeclareMathOperator{\dirichlet}{Dir}
+\DeclareMathOperator{\wt}{wt}
+\DeclareMathOperator{\picodonvec}{\overrightarrow{\mathcal{C}}}
+
+\newcommand{\naa}{\mbox{$n_{\rm{aa}}$}}
+\newcommand{\ncodon}{\mbox{$n_{\rm{codon}}$}}
+
+\newcommand{\Nrdna}{\mbox{$N_r^{\rm \scriptscriptstyle DNA}$}}
+\newcommand{\Nrmutdna}{\mbox{$N_r^{\rm \scriptscriptstyle mut DNA}$}}
+\newcommand{\Nrrna}{\mbox{$N_r^{\rm \scriptscriptstyle RNA}$}}
+\newcommand{\Nrmutvirus}{\mbox{$N_r^{\rm \scriptscriptstyle mut virus}$}}
+
+\newcommand{\nrdnai}{\mbox{$n_{r, i}^{\rm \scriptscriptstyle DNA}$}}
+\newcommand{\nrdnaone}{\mbox{$n_{r, 1}^{\rm \scriptscriptstyle DNA}$}}
+\newcommand{\nrdnancodon}{\mbox{$n_{r, \ncodon}^{\rm \scriptscriptstyle DNA}$}}
+\newcommand{\nrmutdnai}{\mbox{$n_{r, i}^{\rm \scriptscriptstyle mut DNA}$}}
+\newcommand{\nrrnai}{\mbox{$n_{r, i}^{\rm \scriptscriptstyle  RNA}$}}
+\newcommand{\nrmutvirusi}{\mbox{$n_{r, i}^{\rm \scriptscriptstyle mut virus}$}}
+
+\newcommand{\nrdnavec}{\mbox{$\overrightarrow{n_{r}^{\rm \scriptscriptstyle DNA}}$}}
+\newcommand{\nrmutdnavec}{\mbox{$\overrightarrow{n_{r}^{\rm \scriptscriptstyle mut DNA}}$}}
+\newcommand{\nrrnavec}{\mbox{$\overrightarrow{n_{r}^{\rm \scriptscriptstyle  RNA}}$}}
+\newcommand{\nrmutvirusvec}{\mbox{$\overrightarrow{n_{r}^{\rm \scriptscriptstyle mut virus}}$}}
+
+\newcommand{\eri}{\mbox{$\epsilon_{r,i}$}}
+\newcommand{\erwtr}{\mbox{$\epsilon_{r,\wt\left(r\right)}$}}
+\newcommand{\ervec}{\mbox{$\overrightarrow{\epsilon_{r}}$}}
+\newcommand{\sri}{\mbox{$\phi_{r,i}$}}
+\newcommand{\rri}{\mbox{$\rho_{r,i}$}}
+\newcommand{\rrwtr}{\mbox{$\rho_{r,\wt\left(r\right)}$}}
+\newcommand{\rrvec}{\mbox{$\overrightarrow{\rho_{r}}$}}
+\newcommand{\mri}{\mbox{$\mu_{r,i}$}}
+\newcommand{\mrwtr}{\mbox{$\mu_{r,\wt\left(r\right)}$}}
+\newcommand{\mrvec}{\mbox{$\overrightarrow{\mu_{r}}$}}
+\newcommand{\sra}{\mbox{$\phi_{r,a}$}}
+\newcommand{\gammar}{\mbox{$\gamma_r$}}
+
+\newcommand{\deltarvec}{\mbox{$\overrightarrow{\delta_r}$}}
+
+\newcommand{\betae}{\mbox{$\beta_{\epsilon}$}}
+\newcommand{\betas}{\mbox{$\beta_{\phi}$}}
+\newcommand{\betar}{\mbox{$\beta_{\rho}$}}
+\newcommand{\betam}{\mbox{$\beta_{\mu}$}}
+
+\newcommand{\pira}{\mbox{$\pi_{r,a}$}}
+\newcommand{\piri}{\mbox{$\pi_{r,\mathcal{A}\left(i\right)}$}}
+\newcommand{\piraprime}{\mbox{$\pi_{r,a'}$}}
+\newcommand{\pirvec}{\mbox{$\overrightarrow{\pi_r}$}}
+\newcommand{\hr}{\mbox{$h_r$}}
+
+\newcommand{\mavgunselected}{\mbox{$\langle m \rangle_{\rm unselected}$}}
+\newcommand{\mavgselected}{\mbox{$\langle m \rangle_{\rm selected}$}}
+
+\newcommand{\degreeC}{\mbox{$^\circ \rm{C}$}}
+
+\newcommand{\ul}{\mbox{$\mu\rm{l}$}}
+\newcommand{\uM}{\mbox{$\mu\rm{M}$}}
+\newcommand{\ug}{\mbox{$\mu\rm{g}$}}
+
+\newcommand{\mutrate}{\mbox{$u$}}
+\newcommand{\codonratexy}{\mbox{$Q_{xy}$}}
+\newcommand{\ntratemn}{\mbox{$R_{m \rightarrow n}$}}
+\newcommand{\ntratemcnc}{\mbox{$R_{m_c \rightarrow n_c}$}}
+\newcommand{\ntratenm}{\mbox{$R_{n \rightarrow m}$}}
+\newcommand{\ntratencmc}{\mbox{$R_{n_c \rightarrow m_c}$}}
+
+\newcommand{\Prxy}{\mbox{$P_{r,xy}$}}
+\newcommand{\Prxz}{\mbox{$P_{r,xz}$}}
+\newcommand{\Prxx}{\mbox{$P_{r,xx}$}}
+\newcommand{\Prmatrix}{\mbox{$\mathbf{P_r}$}}
+\newcommand{\I}{\mbox{$\mathbf{I}$}}
+
+\newcommand{\Frxy}{\mbox{$F_{r,xy}$}}
+\newcommand{\Fryx}{\mbox{$F_{r,yx}$}}
+
+\newcommand{\prt}{\mbox{$\mathbf{p}_{\mathbf{r}, t}$}}
+\newcommand{\pro}{\mbox{$\mathbf{p}_{\mathbf{r},0}$}}
+\newcommand{\prinfty}{\mbox{$\mathbf{p}_{\mathbf{r},\infty}$}}
+
+\newcommand{\aax}{\mbox{$\mathcal{A}\left(x\right)$}}
+\newcommand{\aay}{\mbox{$\mathcal{A}\left(y\right)$}}
+
+\newcommand{\piraax}{\mbox{$\pi_{r,{\mathcal{A}\left(x\right)}}$}}
+\newcommand{\piraay}{\mbox{$\pi_{r,{\mathcal{A}\left(y\right)}}$}}
+
+\newcommand{\E}{\mbox{$\mathbb{E}$}}
+
+
+% Jesse's additional floats
+\usepackage{amsmath}
+\usepackage[labelfont=bf]{caption}
+\usepackage{nameref}
+\usepackage{rotating}
+\usepackage{color}
+\usepackage{float}
+\renewcommand{\figurename}{{Fig.}}
+\renewcommand{\thefigure}{{\arabic{figure}}}
+
+\newfloat{suppfile}{h}{}
+\floatname{suppfile}{{Supplementary file}}
+\renewcommand{\thesuppfile}{{S\arabic{suppfile}}}
+
+\newfloat{suppfig}{h}{}
+\floatname{suppfig}{{Supplementary figure}}
+\renewcommand{\thesuppfig}{{S\arabic{suppfig}}}
+
+\newfloat{supptable}{h}{}
+\floatname{supptable}{{Supplementary table}}
+\renewcommand{\thesupptable}{{S\arabic{supptable}}}
+
+% If your reference list includes text notes as well as references,
+% include the following line; otherwise, comment it out.
+
+\renewcommand\refname{References and Notes}
+
+% The following lines set up an environment for the last note in the
+% reference list, which commonly includes acknowledgments of funding,
+% help, etc.  It's intended for users of BibTeX or the {thebibliography}
+% environment.  Users who are hand-coding their references at the end
+% using a list environment such as {enumerate} can simply add another
+% item at the end, and it will be numbered automatically.
+
+\newcounter{lastnote}
+\newenvironment{scilastnote}{%
+\setcounter{lastnote}{\value{enumiv}}%
+\addtocounter{lastnote}{+1}%
+\begin{list}%
+{\arabic{lastnote}.}
+{\setlength{\leftmargin}{.22in}}
+{\setlength{\labelsep}{.5em}}}
+{\end{list}}
+
+
+% Include your paper's title here
+
+\title{Algorithm for enrichment of equilibrium preferences} 
+
+
+% Place the author information here.  Please hand-code the contact
+% information and notecalls; do *not* use \footnote commands.  Let the
+% author contact information appear immediately below the author names
+% as shown.  We would also prefer that you don't change the type-size
+% settings shown here.
+
+\author
+{Jesse D. Bloom$^{1\ast}$\\
+\\
+\normalsize{$^{1}$Division of Basic Sciences and Computational Biology Program,}\\
+\normalsize{Fred Hutchinson Cancer Research Center, Seattle, WA 98109, USA}\\
+\\
+\normalsize{$^\ast$To whom correspondence should be addressed; E-mail:  jbloom@fhcrc.org.}
+}
+
+% Include the date command, but leave its argument blank.
+
+\date{}
+
+
+
+%%%%%%%%%%%%%%%%% END OF PREAMBLE %%%%%%%%%%%%%%%%
+
+
+
+\begin{document} 
+
+\maketitle
+
+\subsection*{Quantifying the preference for amino acids at different sites}
+Conceptually, our approach is based on the idea that there is an inherent preference for each amino acid at each site in the protein. For now, we assume that these preferences are entirely at the amino-acid level and are indifferent to the specific codon (this assumption is probably not completely accurate, and the study of differential preferences for  synonymous codons is an interesting area for future work). We denote the preference of site $r$ for amino-acid $a$ as \pira, where these equilibrium preferences are subject to the constraint
+\begin{equation}
+\label{eq:pirasum}
+\sum\limits_{a} \pira = 1,
+\end{equation}
+and where $a$ can range over the $\naa = 21$ values corresponding to all amino acids plus a stop codon (although in general we expect stop codons to be highly disfavored within the protein). We define the ratio $\pira / \piraprime$ to be the expected ratio of amino-acid $a$ to amino-acid $a'$ after viral growth if both are initially introduced into the mutant library at equal frequency. Mutations that enhance viral growth will have larger values of \pira, while mutations that hamper viral growth will have lower values of \pira. However, note that $\pira / \piraprime$ cannot be simply interpreted as the fitness effect of mutating site $r$ from $a$ to $a'$: because most clones in our mutant libraries have multiple mutations, this ratio summarizes the effect of a mutation in the wildtype gene and a variety of closely related mutants. A mutation can therefore have a ratio greater than one due to its inherent effect on viral growth or its effect on the tolerance of the protein for other mutations (or a combination of both). The analysis here does not separate these two factors, but note that previous experimental work has shown that it is fairly common for one mutation in NP to alter the protein's tolerance to a subsequent mutation.
+
+The most naive approach is to set \pira\ proportional to the frequency of amino-acid $a$ in the {\bf mutvirus-p1} library divided by the frequency of the mutation in the {\bf mutDNA} library, and then apply the normalization condition in Equation \ref{eq:pirasum} to get the proportionality constant. However, such an approach is problematic for several reasons. First, it fails to account for other sources of error and mutation (PCR, reverse-transcription, etc) that inflate the observed frequencies of some mutations. Second, the libraries contain finite numbers of counts, and estimating ratios by dividing counts from finite samples is a notoriously statistically biased approach. For example, in the limiting case where a mutation is counted once in the {\bf mutvirus-p1} library and not at all in the {\bf mutDNA} library, the ratio is infinity  -- yet in practice such low counts give us little confidence that the enough variants have been assayed to estimate the true effect of the mutation.
+
+To circumvent these problems, we use a Bayesian approach that explicitly accounts for the sampling statistics. We begin with prior estimates that the error and mutation rates for each site are equal to the library averages. We specify likelihood functions that give the probability of observing a set of counts given the \pira\ values for that site and the various error and mutation rates. We then estimate the posterior distribution of the \pira\ values by MCMC. This approach accounts for sources of error and avoids overfitting \pira\ when the number counts is low. 
+
+We use the counts in the {\bf DNA} library to quantify errors due to PCR and sequencing. We use the counts in the {\bf RNA} library to quantify errors due to reverse-transcription. We assume that transcription of the viral genes from the reverse-genetics plasmids and subsequent replication of these genes by the influenza polymerase introduces a negligible number of new mutations relative to the number already present in the plasmid mutant library. The second of these assumptions is supported by the fact that the total mutation frequency in the {\bf virus-p1} libraries is close to that in the {\bf RNA} libraries. The first of these assumptions is supported by the fact that stop codons are no more frequent in the {\bf RNA} libraries than in the {\bf virus-p1} libraries  -- deleterious stop codons arising during transcription will be purged during viral growth, while those arising from reverse-transcription and sequencing errors will not.
+
+At each codon site $r$, there are $\ncodon = 64$ codons, which we index by $i = 1, 2,  \ldots \ncodon$. Let $\wt\left(r\right)$ denote the wildtype codon at site $r$. Let \Nrdna\ be the total number of sequencing reads at site $r$ in the {\bf DNA} library, and let \nrdnai\ be the number of these reads that report codon $i$ at site $r$, so that $\sum\limits_{i} \nrdnai = \Nrdna$. Similarly, let \Nrmutdna, \Nrrna, and \Nrmutvirus\ be the total number of reads at site $r$ and let \nrmutdnai, \nrrnai, and \nrmutvirusi\ be the total number of these reads that report codon $i$ at site $r$ in the {\bf mutDNA}, {\bf RNA}, and {\bf mutvirus-p1}, respectively. 
+
+We first consider the rate at which site $r$ is erroneously read to be some incorrect identity due to PCR or sequencing errors. Such errors are the only source of non-wildtype reads in the sequencing of the {\bf DNA} library. For all $i \ne \wt\left(r\right)$, we define \eri\ as the rate at which site $r$ is erroneously read as codon $i$ in the {\bf DNA} library. We define $\erwtr = 1 - \sum\limits_{i \ne \wt\left(r\right)} \eri$ to be the rate at which site $r$ is correctly read as its wildtype identity of $\wt\left(r\right)$ in the {\bf DNA} library. We therefore have $\eri = \E\left[\nrdnai / \Nrdna\right]$ where \E\ denotes the expectation value. If we define $\ervec = \left(\epsilon_{r,1}, \ldots, \epsilon_{r,\ncodon}\right)$ and $\nrdnavec = \left(\nrdnaone, \ldots, \nrdnancodon \right)$ as vectors of the \eri\ and \nrdnai\ values, then the likelihood of observing \nrdnavec\ given \ervec\ and \Nrdna\ is
+\begin{equation}
+\label{eq:nrdnaveclikelihood}
+\Pr\left(\nrdnavec \mid \Nrdna, \ervec\right) = \multinomial\left(\nrdnavec; \Nrdna, \ervec\right)
+\end{equation}
+where $\multinomial$ denotes the multinomial distribution.
+
+We next consider the rate at which site $r$ is erroneously copied during reverse transcription. These reverse-transcription errors combine with the PCR / sequencing errors defined by \ervec\ to create non-wildtype reads in the  {\bf RNA} library. For all $i \ne \wt\left(r\right)$, we define \rri\ as the rate at which site $r$ is miscopied to codon $i$ during reverse transcription. We define $\rrwtr = 1 - \sum\limits_{i \ne \wt\left(r\right)} \rri$ as the rate at which site $r$ is correctly reverse transcribed. If we ignore as negligibly rare the possibility that a site is subject to both a reverse-transcription and sequencing / PCR error within the same clone (a reasonable assumption as both \eri\ and \rri\ are very small for $i \ne \wt\left(r\right)$), then $\eri + \rri - \delta_{i,\wt\left(r\right)} = \E\left[\nrrnai / \Nrrna\right]$ where $\delta_{i,\wt\left(r\right)}$ is the Kronecker delta (equal to one if $i = \wt\left(r\right)$ and zero otherwise). The likelihood of observing \nrrnavec\ given \rrvec, \ervec, and \Nrrna\ is
+\begin{equation}
+\label{eq:nrrnaveclikelihood}
+\Pr\left(\nrrnavec \mid \Nrrna, \rrvec, \ervec\right) = \multinomial\left(\nrrnavec; \Nrrna, \ervec + \rrvec - \deltarvec\right).
+\end{equation}
+where $\deltarvec = \left(\delta_{1,\wt\left(r\right)}, \ldots, \delta_{\ncodon,\wt\left(r\right)}\right)$ is a vector that is all zeros except for the element corresponding to $\wt\left(r\right)$.
+
+We next consider the rate at which site $r$ is mutated to some other codon in the plasmid mutant library. These mutations combine with the PCR / sequencing errors defined by \ervec\ to create non-wildtype reads in the {\bf mutDNA} library. For all $i \ne \wt\left(r\right)$, we define \mri\ as the rate at which site $r$ is mutated to codon $i$ in the mutant library. We define $\mrwtr = 1 - \sum\limits_{i \ne \wt\left(r\right)} \mri$ as the rate at which site $r$ is not mutated. If we ignore as negligibly rare the possibility that a site is subject to both a mutation and a sequencing / PCR error within the same clone, then $\mri + \eri - \delta_{i,\wt\left(r\right)} = \E\left[\nrmutdnai / \Nrmutdna\right]$. The likelihood of observing \nrmutdnavec\ given \mrvec, \ervec, and \Nrmutdna\ is
+\begin{equation}
+\label{eq:nrmutdnaveclikelihood}
+\Pr\left(\nrmutdnavec \mid \Nrmutdna, \mrvec, \ervec\right) = \multinomial\left(\nrmutdnavec; \Nrmutdna, \mrvec + \ervec - \deltarvec\right).
+\end{equation}
+
+Finally, we consider the effect of the preferences of each site $r$ for different amino acids, as denoted by the \pira\ values. Selection due to these preferences is manifested in the {\bf mutvirus} library. This selection acts on the mutations in the mutant library (\mri), although the actual counts in the {\bf mutvirus} library are also affected by the sequencing / PCR errors (\eri) and reverse-transcription errors (\rri). We again ignore as negligibly rare the possibility that a site is subject to more than one of these sources of mutation and error within a single clone. Let $\mathcal{A}\left(i\right)$ denote the amino acid encoded by codon $i$.  Let \pirvec\ be the vector of \pira\ values. Define the vector-valued function $\picodonvec$ as 
+\begin{equation}
+\label{eq:picodonvec}
+\picodonvec\left(\pirvec\right) = \left(\pi_{r,\mathcal{A}\left(1\right)}, \ldots, \pi_{r,\mathcal{A}\left(\ncodon\right)}\right),
+\end{equation}
+so that this function returns a \ncodon-element vector constructed from \pirvec. Because the selection in the {\bf mutvirus} library due to the preferences \piri\ occurs after the mutagenesis \mri\ but before the reverse-transcription errors \rri\ and the sequencing / PCR errors \eri, we have $\E\left[\nrmutvirusi / \Nrmutvirus\right] = \eri + \rri + \gammar \times \piri \times \mri - 2 \times \delta_{i,\wt\left(r\right)}$ where $\gammar = \left(\sum\limits_i \piri \mri \right)^{-1} = \left(\picodonvec\left(\pirvec\right) \cdot \mrvec\right)^{-1}$ (where $\cdot$ denotes the dot product) is a normalization factor that  accounts for the fact that changes in the frequency of one variant due to selection will influence the observed frequency of other variants. The likelihood of observing \nrmutvirusvec\ given \mrvec, \ervec, \rrvec, \pirvec, and \Nrmutvirus\ is therefore
+\begin{equation}
+\label{eq:nrmutvirusveclikelihood}
+\Pr\left(\nrmutvirusvec \mid \mrvec, \ervec, \rrvec, \pirvec, \Nrmutvirus \right) = \multinomial\left(\nrmutvirusvec; \Nrmutvirus, \ervec + \rrvec + \frac{\picodonvec\left(\pirvec\right) \circ \mrvec}{\picodonvec\left(\pirvec\right) \cdot \mrvec} - 2 \deltarvec \right).
+\end{equation}
+where $\circ$ is the Hademard (entry-wise) product.
+
+We specify priors over \ervec, \rrvec, \mrvec, and \pirvec\ in the form of Dirichlet distributions (denoted here by $\dirichlet$). For the priors over the mutation rates \mrvec, we choose Dirichlet-distribution parameters such that the mean of the prior expectation for the mutation rate at each site $r$ and codon $i$ is proportional to the average value for all sites. The average fraction of mutated codons in the {\bf mutDNA} library minus the background from the {\bf DNA} library is $6.1 \times 10^{-3}$, so the average mutation rate is $\overline{\mu} = 6.1 \times 10^{-3} / 63 = 9.7 \times 10^{-5}$. So we use a prior of
+\begin{equation}
+\Pr\left(\mrvec\right) = \dirichlet\left(\mrvec; \ncodon \cdot \sigma_{\mu} \cdot \overrightarrow{\alpha_{\mu,r}}\right)
+\end{equation}
+where $\overrightarrow{\alpha_{\mu,r}}$ is the \ncodon-element vector with elements $\alpha_{\mu,r,i} = \overline{\mu} + \delta_{i,\wt\left(r\right)}\left(1 - \ncodon\overline{\mu} \right)$ and $\sigma_{\mu}$ is the scalar concentration parameter. For a symmetric Dirichlet distribution (which $\Pr\left(\mrvec\right)$ will in general {\em not} be), choosing $\sigma_{\mu} = 1$ makes the distribution completely uniform. 
+
+For the priors over \eri\ and \rri, the Dirichlet-distribution parameters again represent the average value for all sites, but now also depend on the number of nucleotide changes in the codon mutation since sequencing / PCR and reverse-transcription errors are far more likely to lead to single-nucleotide codon changes than multiple-nucleotide codon changes. Let $\mathcal{M}\left(\wt\left(r\right), i\right)$ be the number of nucleotide changes in the mutation from codon $\wt\left(r\right)$ to codon $i$. For example, $\mathcal{M}\left(\texttt{GCA}, \texttt{ACA}\right) = 1$ and $\mathcal{M}\left(\texttt{GCA}, \texttt{ATA}\right) = 2$. The average error rate (estimated from the {\bf DNA} library) is $\overline{\epsilon_1} = 5.8\times 10^{-4} / 9 = 6.4\times 10^{-5}$ for single-nucleotide codon mutations, $\overline{\epsilon_2} = 8.7\times 10^{-6} / 27 = 3.2\times 10^{-7}$ for two-nucleotide codon mutations, and $\overline{\epsilon_3} = 4.0\times 10^{-6} / 27 = 1.5\times 10^{-7}$ for three-nucleotide codon mutations. So we use a prior of
+\begin{equation}
+\Pr\left(\ervec\right) = \dirichlet\left(\ervec; \ncodon \cdot \sigma_{\epsilon} \cdot \overrightarrow{\alpha_{\epsilon,r}}\right)
+\end{equation}
+where $\overrightarrow{\alpha_{\epsilon,r}}$ is the \ncodon-element vector with elements $\alpha_{\epsilon,r,i} = \overline{\epsilon_{\mathcal{M}\left(\wt\left(r\right), i\right)}}$ where we define $\overline{\epsilon_0} = 1 - 9 \times \overline{\epsilon_1} - 27 \times \overline{\epsilon_2} - 27 \times \overline{\epsilon_3}$ (for any codon, there are 9 one-nucleotide mutations, 27 two-nucleotide mutations, and 27 three-nucleotide mutations), and where $\sigma_{\epsilon}$ is the scalar concentration parameter.
+
+Similarly, the average reverse-transcription error rates (estimated from the {\bf RNA} library minus the {\bf DNA} library) are $\overline{\rho_1} = 1.9 \times 10^{-4} / 9 = 2.1\times 10^{-5}$, $\overline{\rho_2} = 1.5 \times 10^{-5} / 27 = 5.6\times 10^{-7}$, and $\overline{\rho_3} = 2.8 \times 10^{-6} / 27 = 1.0 \times 10^{-7}$ for one-, two-, and three-nucleotide codon mutations, respectively. So we use a prior of
+\begin{equation}
+\Pr\left(\rrvec\right) = \dirichlet\left(\rrvec; \ncodon \cdot \sigma_{\rho} \cdot \overrightarrow{\alpha_{\rho,r}}\right)
+\end{equation}
+where $\overrightarrow{\alpha_{\rho,r}}$ is the \ncodon-element vector with elements $\alpha_{\rho,r,i} = \overline{\rho_{\mathcal{M}\left(\wt\left(r\right),i\right)}}$ where we define $\overline{\rho_0} = 1 - 9 \times \overline{\rho_1} - 27 \times \overline{\rho_2} - 27 \times \overline{\rho_3}$, and where $\sigma_{\rho}$ is the scalar concentration parameter.
+
+We specify a symmetric Dirichlet-distribution prior over \pirvec\ (note that any other prior, such as one that favored the wildtype identity, would implicitly favor certain identities based empirically on the wildtype protein sequence, and so would not be in the spirit of the parameter-free derivation of the \pira\ values employed here). Specifically, we use a prior of
+\begin{equation}
+\Pr\left(\pirvec\right) = \dirichlet\left(\pirvec; \sigma_{\pi} \cdot \overrightarrow{1} \right)
+\end{equation}  
+where $\overrightarrow{1}$ is the \naa-element vector that is all ones, and $\sigma_{\pi}$ is the scalar concentration parameter. Setting $\sigma_{\pi} = 1$ gives a uniform prior over all \pirvec\ values, while smaller values favor peaked distribution and larger values favor equal values for all \pira\ elements.
+
+We can now write expressions for the likelihoods and posterior probabilities. Let $\mathcal{N}_r = \left\{\nrdnavec, \nrmutdnavec, \nrrnavec, \nrmutvirusvec, \Nrdna, \Nrmutdna, \Nrrna, \Nrmutvirus\right\}$ denote the full set of counts for site $r$. The likelihood of $\mathcal{N}_r$ given values for the equilibrium preferences and mutation / error rates is 
+\begin{eqnarray}
+\label{eq:likelihood}
+ \Pr\left(\mathcal{N}_r \mid \pirvec, \ervec, \rrvec, \mrvec \right) &=&  
+\Pr\left(\nrdnavec \mid \Nrdna, \ervec\right) \times
+\Pr\left(\nrrnavec \mid \Nrrna, \ervec, \rrvec\right)  \times \nonumber \\
+&& \Pr\left(\nrmutdnavec \mid \Nrmutdna, \ervec, \mrvec\right) 
+\times \nonumber \\
+&& \Pr\left(\nrmutvirusvec \mid \Nrmutvirus, \ervec, \rrvec, \mrvec, \pirvec\right) 
+\end{eqnarray}
+where the likelihoods that compose Equation \ref{eq:likelihood} are defined by Equations \ref{eq:nrdnaveclikelihood}, \ref{eq:nrrnaveclikelihood}, \ref{eq:nrmutdnaveclikelihood}, and \ref{eq:nrmutvirusveclikelihood}. The posterior probability of a specific value for the equilibrium preferences and mutation / error rates is
+\begin{eqnarray}
+\label{eq:posterior}
+ \Pr\left(\pirvec, \ervec, \rrvec, \mrvec \mid \mathcal{N}_{r} \right) &=& 
+C_r \times 
+ \Pr\left(\mathcal{N}_r \mid \pirvec, \ervec, \rrvec, \mrvec \right) \times \\
+&& \Pr\left(\ervec\right) \times \Pr\left(\rrvec\right) \times \Pr\left(\mrvec\right) \times \Pr\left(\pirvec\right)
+\end{eqnarray}
+where $C_r$ is a normalization constant that does not need to be explicitly calculated in the MCMC approach used here. The posterior over the equilibrium preferences \pirvec\ can be calculated by integrating over Equation \ref{eq:posterior} to give
+\begin{eqnarray}
+\label{eq:pirposterior}
+\Pr\left(\pirvec \mid \mathcal{N}_r \right) = \int \int\ \int \Pr\left(\pirvec, \ervec, \rrvec, \mrvec \mid \mathcal{N}_{r} \right) d\ervec d\rrvec d\mrvec,
+\end{eqnarray}
+where the integration is performed by MCMC. 
+
+Equation \ref{eq:pirposterior} infers \pirvec\ for a single replicate of the experiment. In practice, we have performed $\mathcal{R} = 4$ replicates (WT-1, WT-2, N334H-1, N334H-2). Let $\mathcal{N}_r^k$ denote the set of experimentally observed counts for replicate $k$. The full set of data for all $\mathcal{R}$ replicates is then $\left\{\mathcal{N}_r^k\mid 1 \le k \le \mathcal{R} \right\}$. We use the same equilibrium preferences \pirvec\ for all replicates, since these preferences are a property of the protein rather than the experiment. However, the error and mutation rates \ervec, \mrvec, and \rrvec\ are specific to each replicate (denote the replicate-specific vectors by $\ervec^k$, $\mrvec^k$, and $\rrvec^k$),  with the replicate-specific prior vectors $\overrightarrow{\alpha_{\mu,r}}^k$, $\overrightarrow{\alpha_{\epsilon,r}}^k$, and $\overrightarrow{\alpha_{\rho,r}}^k$ determined from the library averages for that replicate. The reason for making these three vectors and their priors replicate specific is that each replicate could have different error and mutation rates. The posterior probability of \pirvec\ and the mutation / error rates for all experimental replicates is
+\begin{eqnarray}
+\label{eq:posteriormulti}
+ \Pr\left(\pirvec, \ervec, \rrvec, \mrvec \mid \left\{\mathcal{N}_r^k \mid 1 \le k \le \mathcal{R}\right\} \right) &=& 
+C_r' \times  \prod\limits_{k=1}^{\mathcal{R}} \left[ \Pr\left(\mathcal{N}_r^k \mid \pirvec, \ervec^k, \rrvec^k, \mrvec^k \right) \times \right. \nonumber \\ && \left. \Pr\left(\ervec^k\right) \Pr\left(\rrvec^k\right) \Pr\left(\mrvec^k\right)\right] \Pr\left(\pirvec\right),
+\end{eqnarray}
+where each of the individual likelihoods for the $\mathcal{N}_r^k$ counts are calculated using Equation \ref{eq:likelihood} and $C_r'$ is a normalization constant that does not need to be calculated when using MCMC. The posterior over the equilibrium preferences \pirvec\ can be calculated by using MCMC to integrate over Equation \ref{eq:posteriormulti} to give
+\begin{eqnarray}
+\label{eq:pirposteriormulti}
+\Pr\left(\pirvec \mid \left\{\mathcal{N}_r^k \mid 1 \le k \le \mathcal{R}\right\} \right) = \int \cdots \int \Pr\left(\pirvec, \ervec, \rrvec, \mrvec \mid \left\{\mathcal{N}_r^k \mid 1 \le k \le \mathcal{R}\right\} \right) \prod\limits_{k=1}^{\mathcal{R}} d\ervec^k d\rrvec^k d\mrvec^k.
+\end{eqnarray}
+We summarize the posterior calculated from Equation \ref{eq:pirposteriormulti} by its mean, 
+\begin{equation}
+\label{eq:meanpir}
+\langle \pirvec \rangle = \int \pirvec \times \Pr\left(\pirvec \mid \left\{\mathcal{N}_r^k \mid 1 \le k \le \mathcal{R}\right\} \right) d\pirvec.
+\end{equation}
+
+
+\bibliography{/Users/jbloom/references/references.bib}
+\bibliographystyle{Science}
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
