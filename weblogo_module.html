@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>weblogo Module &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python modules" href="pythonapi.html" />
+    <link rel="next" title="Shortcomings" href="shortcomings.html" />
+    <link rel="prev" title="dssp Module" href="dssp_module.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="shortcomings.html" title="Shortcomings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dssp_module.html" title="dssp Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-weblogo">
+<span id="weblogo-module"></span><h1><a class="reference internal" href="#module-weblogo" title="weblogo"><tt class="xref py py-mod docutils literal"><span class="pre">weblogo</span></tt></a> Module<a class="headerlink" href="#module-weblogo" title="Permalink to this headline">¶</a></h1>
+<p>Module for making sequence logos with <tt class="docutils literal"><span class="pre">weblogo</span></tt>.</p>
+<p>This module uses <tt class="docutils literal"><span class="pre">weblogo</span></tt> (<a class="reference external" href="http://weblogo.threeplusone.com/">http://weblogo.threeplusone.com/</a>). It has been
+tested with <tt class="docutils literal"><span class="pre">weblogo</span></tt> version 3.3. It is not guaranteed to work with
+other version of <tt class="docutils literal"><span class="pre">weblogo</span></tt>.</p>
+<p>Before running any function in this module, you can run <em>WebLogoAvailable()</em>
+to test if the <tt class="docutils literal"><span class="pre">weblogo</span></tt> executable can be found. If this function returns
+<em>False</em>, then you need to get the weblogo executable in the current search
+path before running other functions in the module.</p>
+<p>If you are using an overlay on the sequence logo, the package <tt class="docutils literal"><span class="pre">pyPdf</span></tt>
+(<a class="reference external" href="http://pybrary.net/pyPdf/">http://pybrary.net/pyPdf/</a>) is also required. You can test this with
+<em>PyPdfAvailable()</em>.</p>
+<p>Written by Jesse Bloom.</p>
+<div class="section" id="list-of-functions">
+<h2>List of functions<a class="headerlink" href="#list-of-functions" title="Permalink to this headline">¶</a></h2>
+<p><em>WebLogoAvailable</em> : tests whether <tt class="docutils literal"><span class="pre">weblogo</span></tt> can be run from the current search path.</p>
+<p><em>ConvertAvailable</em> : tests whether <tt class="docutils literal"><span class="pre">convert</span></tt> utility from ImageMagick is available.</p>
+<p><em>PyPdfAvailable</em> : tests whether <em>pyPdf</em> package is available.</p>
+<p><em>EquilibriumFreqsLogo</em> : plots a sequence logo of equilibrium amino-acid preferences.</p>
+</div>
+<div class="section" id="documentation-for-functions">
+<h2>Documentation for functions<a class="headerlink" href="#documentation-for-functions" title="Permalink to this headline">¶</a></h2>
+<p>Documentation for individual functions is provided in their definitions below.</p>
+<dl class="function">
+<dt id="weblogo.ConvertAvailable">
+<tt class="descclassname">weblogo.</tt><tt class="descname">ConvertAvailable</tt><big>(</big><big>)</big><a class="headerlink" href="#weblogo.ConvertAvailable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <em>True</em> if and only if <tt class="docutils literal"><span class="pre">convert</span></tt> is in the current search path.</p>
+<p>Returns <em>True</em> if <tt class="docutils literal"><span class="pre">convert</span></tt> can be run using the <em>os</em> system commands
+for running external programs, and <em>False</em> otherwise.</p>
+<p><tt class="docutils literal"><span class="pre">convert</span></tt> is the command-line access to the ImageMagick suite.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="weblogo.EquilibriumFreqsLogo">
+<tt class="descclassname">weblogo.</tt><tt class="descname">EquilibriumFreqsLogo</tt><big>(</big><em>sites</em>, <em>pi_d</em>, <em>plotfile</em>, <em>nperline</em>, <em>overlay</em><big>)</big><a class="headerlink" href="#weblogo.EquilibriumFreqsLogo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a sequence logo showing amino-acid equilibrium preferences.</p>
+<p>The heights of each amino-acid letter are equal to the preference of
+that site for the amino acid.</p>
+<p>Note that stop codons may or may not be included in the logo
+depending on whether they are present in <em>pi_d</em> as detailed in the
+explanation of that calling parameter. So if you do not want to
+include stop codons as a potential letter in the logo, then first
+remove them by calling <em>mapmuts.bayesian.PreferencesRemoveStop</em>
+on <em>pi_d</em>. Otherwise if stop codons are present, they are plotted
+using a black <em>X</em> character &#8211; we are not able to use the normal
+asterisk character for these codons as <tt class="docutils literal"><span class="pre">weblogo</span></tt> does not appear
+to allow that.</p>
+<p>This function uses <tt class="docutils literal"><span class="pre">weblogo</span></tt>. It will raise an exception if
+<em>not WebLogoAvailable()</em>.</p>
+<p>CALLING VARIABLES:</p>
+<ul>
+<li><p class="first"><em>sites</em> is a list of integers giving all of the sites that
+are being included in the logo. They must be consecutive,
+so that <em>sites = [i for i in range(sites[0], sites[-1] + 1)]</em>.</p>
+</li>
+<li><p class="first"><em>pi_d</em> is a dictionary that has a key for every integer in
+<em>sites</em>. The value of <em>pi_d[isite]</em> is itself a dictionary,
+which has keys &#8216;PI_A&#8217;, &#8216;PI_C&#8217;, &#8216;PI_D&#8217;, etc for all 20
+one-letter upper-case amino acid codes. The values
+for these keys are the equilibrium preference of that
+amino acid at that site. So <em>pi_d[isite][&#8216;PI_M&#8217;]</em> is
+the equilibrium preference for methionine at site <em>isite</em>.
+<em>pi_d</em> is allowed to either contain or not contain stop codons.
+If it contains stop codons, then there should be a key
+&#8216;PI_*&#8217; giving the preference for a stop codon for each
+dictionary <em>pi_d[isite]</em>. However, we only check that there
+are actually stop codons by looking to see if there
+is a key &#8216;PI_*&#8217; in <em>pi_d[sites[0]]</em> &#8211; if there is not,
+then we don&#8217;t look for stop codons at any other sites either.
+Note that even though stop codons are denoted by an asterisk
+in <em>pi_d</em>, they are plotted using an <em>X</em> character in the 
+sequence logo.</p>
+</li>
+<li><p class="first"><em>plotfile</em> is a string giving the name of the PDF file containing
+the heat map plot. It must end in the extension <tt class="docutils literal"><span class="pre">.pdf</span></tt>.</p>
+</li>
+<li><p class="first"><em>nperline</em> is the number of sites per line. You will get a good
+appearance with values in the range from 40 to 80.</p>
+</li>
+<li><p class="first"><em>overlay</em> specifies that we also overlay a bar showing the hydrophobicity
+scale for the sequence logo colors, as well as bars showing the relative
+solvent accessibility (RSA) and the secondary structure (SS). This 
+requires <em>mapmuts.plot.PylabAvailable()</em> to be <em>True</em>, and also
+requires <em>PyPdfAvailable()</em> to be <em>True</em>. If you do not want to
+do the overlaying, set <em>overlay</em> to <em>False</em>. If you do want to do
+the overlaying, then set <em>overlay</em> to a list. The list must be
+composed as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">overlay</span> <span class="o">=</span> <span class="p">[</span><span class="n">rsa_d</span><span class="p">,</span> <span class="n">ss_d</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><em>rsa_d</em> is a dictionary giving the RSA values. It is keyed by the
+integer site numbers: <em>rsa_d[site]</em> gives a float with the RSA
+for residue <em>site</em>. If <em>site</em> is not in RSA d, the value is
+shown in white.</li>
+<li><em>ss_d</em> is like <em>rsa_d</em> except that it gives the codes for the 
+secondary structures. Allowed values are &#8216;helix&#8217;, &#8216;strand&#8217;, 
+and &#8216;loop&#8217;.</li>
+</ul>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="weblogo.PyPdfAvailable">
+<tt class="descclassname">weblogo.</tt><tt class="descname">PyPdfAvailable</tt><big>(</big><big>)</big><a class="headerlink" href="#weblogo.PyPdfAvailable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <em>True</em> if and only if <tt class="docutils literal"><span class="pre">pyPdf</span></tt> is available for import.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="weblogo.WebLogoAvailable">
+<tt class="descclassname">weblogo.</tt><tt class="descname">WebLogoAvailable</tt><big>(</big><big>)</big><a class="headerlink" href="#weblogo.WebLogoAvailable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if <tt class="docutils literal"><span class="pre">weblogo</span></tt> is in the current search path.</p>
+<p>Returns <em>False</em> if <tt class="docutils literal"><span class="pre">weblogo</span></tt> cannot be run using the <em>os</em> system commands
+for running external programs. Otherwise returns a non-empty string
+giving the current <tt class="docutils literal"><span class="pre">weblogo</span></tt> version in the search path. This string
+evaluates to <em>True</em> using <em>bool(WebLogoAvailable())</em>.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">weblogo</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
+<li><a class="reference internal" href="#documentation-for-functions">Documentation for functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dssp_module.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">dssp</span></tt> Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="shortcomings.html"
+                        title="next chapter">Shortcomings</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/weblogo_module.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="shortcomings.html" title="Shortcomings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dssp_module.html" title="dssp Module"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

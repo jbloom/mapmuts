@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_parsecounts.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_parsesummaryplots.py" href="mapmuts_parsesummaryplots.html" />
+    <link rel="prev" title="mapmuts_alignmentsummaryplot.py" href="mapmuts_alignmentsummaryplot.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_parsesummaryplots.html" title="mapmuts_parsesummaryplots.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_alignmentsummaryplot.html" title="mapmuts_alignmentsummaryplot.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-parsecounts-py">
+<span id="id1"></span><h1>mapmuts_parsecounts.py<a class="headerlink" href="#mapmuts-parsecounts-py" title="Permalink to this headline">¶</a></h1>
+<p>Parses counts from alignments in the <tt class="docutils literal"><span class="pre">*_alignments.txt.gz</span></tt> file built by <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> into
+two text output files giving the counts of different nucleotide and codon identities.</p>
+<p>To run this script from the prompt, first create a text infile of the
+format described below. Then simply type <a class="reference internal" href="#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>
+followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+type:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_parsecounts.py infile.txt
+</pre></div>
+</div>
+<p>The overlapping paired-end read alignments are used to call nucleotide
+identities. Nucleotides are called as follows:</p>
+<ul class="simple">
+<li>If both reads agree on the identity and neither relevant read position
+is in the exclusion lists specified in the input file (<cite>r1exclude</cite> or <cite>r2exclude</cite>), then the
+nucleotide is called at that identity using upper-case nucleotides,
+for example &#8216;A&#8217; or &#8216;T&#8217;.</li>
+<li>If one read specifies an identity and the other read gives an &#8216;N&#8217;
+or is at an excluded position, the identity is called to the
+lower-case value of the read the specifies an identity. For
+example, a position might be called to &#8216;a&#8217; or &#8216;t&#8217;.</li>
+<li>If the two reads specify different identities, or if both specify
+an N or have the position excluded, a position is called to &#8216;N&#8217;</li>
+</ul>
+<p>Codons are called to the constituent nucleotides using the
+aforementioned scheme. Codons for which only partial nucleotide
+coverage is achieved are not called.</p>
+<p>If <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> are available, summary plots are also
+generated. If <a class="reference external" href="http://www.tug.org/applications/pdftex/">pdflatex</a> is available, these plots are merged
+into a summary PDF document as well.</p>
+<div class="section" id="input-file-format">
+<h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
+<p>The input file specifies <cite>key</cite> / <cite>value</cite> pairs on individual lines in the format:</p>
+<div class="highlight-python"><div class="highlight"><pre>key1 value1
+key2 value2
+</pre></div>
+</div>
+<p>Blank lines or lines
+that begin with # are ignored (i.e. as comment lines). The input file
+should contain the following keys:</p>
+<ul class="simple">
+<li><cite>alignmentfile</cite> specifies the name of a <tt class="docutils literal"><span class="pre">*_alignments.txt.gz</span></tt> file
+built by running <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a>.</li>
+<li><cite>fullgenefile</cite> specifies the name of the file containing the full target
+amplicon to which the reads were aligned. This should be a FASTA file
+containing a single sequence. This should be the same sequence used when
+running <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> to make <cite>alignmentfile</cite>.</li>
+<li><cite>generange</cite> specifies region of the amplicon that contains the
+the coding sequence. This should be two number specifying the
+first and last nucleotide of the sequence in <cite>fullgenefile</cite> that
+are part of the coding sequence in 1, 2, ... numbering. This should
+be the same value of <cite>generange</cite> used when running <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a>.
+to make <cite>alignmentfile</cite>.
+The gene must be a valid coding sequence that can be translated; the terminal
+stop codon should not be included.</li>
+<li><cite>upcase</cite> specifies how we handle possible upper / lower case differences
+in nucleotide codes. This is crucial because of the case-dependent coding
+of nucleotide identities (with upper-case indicating definitively called
+by both reads, and lower case indicating called by just one read). If <cite>upcase</cite>
+is <cite>True</cite>, then all sequences are converted to upper case before alignment.
+This is the safest option, but is also the slowest since it requires
+so many case conversions. If <cite>upcase</cite> is test, then the gene sequence is
+converted to upper case, and the alignment file is tested to make sure
+the first entry is upper case. If the first entry is upper case,
+no case conversion is done on the alignments, which will be
+faster. If the first entry is not upper case, then an exception
+is raised, and you wil probably have to switch this option to <cite>True</cite>.</li>
+<li><cite>r1exclude</cite> specifies read position in the R1 read that are excluded
+from the analysis. You might want to exclude a position of the results
+of <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> make clear that certain read positions have
+very high error rates (numbers of mismatches) relative to other positions.
+If no positions are being excluded, enter <cite>None</cite>. If positions are being
+excluded, list the numbers separated by spaces of the positions to exclude
+in 1, 2, ... numbering.</li>
+<li><cite>r2exclude</cite> is like <cite>r1exclude</cite>, but for the R2 read.</li>
+<li><cite>outfileprefix</cite> specifies the prefix appended to all file names created
+by this method. The specific files and their suffixes are described in the
+section on the output files below. Any existing output files are overwritten.</li>
+<li><cite>samplename</cite> specifies the name of the sample for this run of the
+script. Name are allowed to contain spaces.</li>
+</ul>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># Example input file to mapmuts_parsecounts.py
+alignmentfile sample_1_alignments.txt.gz
+fullgenefile Aichi68-NP_amplicon.fasta
+generange 62 1555
+upcase test
+r1exclude None
+r2exclude 2 3 48 49
+outfileprefix example_run
+samplename example run
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-files">
+<h2>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
+<p>Running this script produces a series of output files. The names of these files
+consist of the prefix specified by <cite>outfileprefix</cite> in the input file, then the
+indicated suffix. Any existing files are overwritten. The output files:</p>
+<ul>
+<li><p class="first"><cite>outfileprefix</cite>_parsecounts_log.txt : a text file that tracks the output of this script.</p>
+</li>
+<li><p class="first"><cite>outfileprefix</cite>_ntcounts.txt : A file listing the number of occurrences of each nucleotide
+at each position. Has the following columns:</p>
+<blockquote>
+<div><ul class="simple">
+<li>POSITION : the nucleotide position in 1, 2, ... numbering.</li>
+<li>WT : wildtype nucleotide identity, upper case</li>
+<li>COUNTS : total number of times this position is covered by an
+an aligned read pair in <cite>alignmentfile</cite>.</li>
+<li>all nucleotide codes (A, T, C, G, a, t, c, g, N) : number of times
+the reads call the nucleotide to each of these identities. A,
+T, C, and G represent nucleotides called to the same identity
+by both reads. a, t, c, and g represent nucleotides called by
+one read, with the other ambiguous or in the <cite>r1exclude</cite> or
+<cite>r2exclude</cite> list for that read position. N represents nucleotides
+called to conflicting values by both reads, or ambiguous or
+excluded in both reads.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><cite>outfileprefix</cite>_codoncounts.txt : A file like <cite>outfileprefix</cite>_ntcounts.txt
+but for codon positions.
+Codons are called to identities of their substituent nucleotides.
+If some of the nucleotides in a codon are not called, no identity
+is called for the codon.</p>
+</li>
+<li><p class="first"><cite>outfileprefix</cite>_aacounts.txt : A file giving the number of occurrences of each amino
+acid among the definitively called codon (both reads agree, indicated by
+upper case codon in <cite>outfileprefix</cite>_codoncounts.txt) for each position.</p>
+</li>
+<li><p class="first"><cite>outfileprefix</cite>_codondepth.pdf : Created if <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is available, a graphical
+summary of read depth at each codon position.</p>
+</li>
+<li><p class="first"><cite>outfileprefix</cite>_syn-ns-dist.pdf : Created if <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is available, a graphical
+summary of distribution of synonymous and nonsynonymous
+mutations among all definitively called (by both reads)
+mutations.</p>
+</li>
+<li><p class="first"><cite>outfileprefix</cite>_nmutspercodon-dist.pdf : Created if <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is available, a graphical summary of the distribution of number of nucleotide mutations per codon mutations among all definitively called (by both reads) codons.</p>
+</li>
+<li><p class="first"><cite>outfileprefix</cite>_parsesummary.pdf : Created if <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> and <a class="reference external" href="http://www.tug.org/applications/pdftex/">pdflatex</a> are available, an
+overall graphical summary of the results of the alignment parsing.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="example-summary-plot">
+<h2>Example summary plot<a class="headerlink" href="#example-summary-plot" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example of the summary created as <cite>outfileprefix</cite>_parsesummary.pdf.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/parsecounts_example.jpg"><img alt="parsecounts_summary.jpg" src="_images/parsecounts_example.jpg" style="width: 70%;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_parsecounts.py</a><ul>
+<li><a class="reference internal" href="#input-file-format">Input file format</a></li>
+<li><a class="reference internal" href="#output-files">Output files</a></li>
+<li><a class="reference internal" href="#example-summary-plot">Example summary plot</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_alignmentsummaryplot.html"
+                        title="previous chapter">mapmuts_alignmentsummaryplot.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_parsesummaryplots.html"
+                        title="next chapter">mapmuts_parsesummaryplots.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_parsecounts.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_parsesummaryplots.html" title="mapmuts_parsesummaryplots.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_alignmentsummaryplot.html" title="mapmuts_alignmentsummaryplot.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

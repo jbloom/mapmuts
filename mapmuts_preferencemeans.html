@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_preferencemeans.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_siteprofileplots.py" href="mapmuts_siteprofileplots.html" />
+    <link rel="prev" title="mapmuts_preferencescorrelate.py" href="mapmuts_preferencescorrelate.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_siteprofileplots.html" title="mapmuts_siteprofileplots.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_preferencescorrelate.html" title="mapmuts_preferencescorrelate.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-preferencemeans-py">
+<span id="id1"></span><h1>mapmuts_preferencemeans.py<a class="headerlink" href="#mapmuts-preferencemeans-py" title="Permalink to this headline">¶</a></h1>
+<p>This is a simple script that computes the mean of the amino acid preferences inferred by several runs of <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>.</p>
+<p>Briefly, for each residue <em>r</em> in a protein, the script <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a> computes the preference of that site for each amino acid <em>a</em>, which is denoted as <span class="math">\(\pi_{r,a}\)</span>. These preferences sum to one, so <span class="math">\(1 = \sum_a \pi_{r,a}\)</span>. It is possible that you have run several replicates of <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>, such as for several different replicates of an experiment. You then might want to compute the average preference for each amino acid taken over the replicates. This script does that, and writes the output to a file.</p>
+<p>Specifically, let <span class="math">\(\pi_{r,a}^i\)</span> denote the preference for amino acid <em>a</em> at site <em>r</em> computed for replicate <em>i</em>, where <span class="math">\(i = 1, \ldots N\)</span> where <em>N</em> is the number of replicates. Then the mean preference of site <em>r</em> for amino acid <em>a</em> is <span class="math">\(\langle \pi_{r,a} \rangle = \frac{1}{N} \sum_i \pi_{r,a}^i\)</span>. Note that because the preferences sum to one for each individual library, it will also be the case that <span class="math">\(1 = \sum_a \langle \pi_{r,a} \rangle\)</span>.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>This script has no dependencies outside of <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> and the standard <a class="reference external" href="http://www.python.org/">Python</a> library.</p>
+</div>
+<div class="section" id="running-the-script">
+<h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
+<p>To run this script from the prompt, first create a text infile of the
+format described below. Then simply run the script with the single text file as the argument, as in:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_preferencemeans.py infile.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-file">
+<h2>Input file<a class="headerlink" href="#input-file" title="Permalink to this headline">¶</a></h2>
+<p>The input file is a text file with a series of <em>key</em> / <em>value</em> pairs. The required keys are indicated below. The values should not include spaces.</p>
+<p>Lines beginning with # and empty lines are ignored.</p>
+<p>Keys for the input file:</p>
+<ul>
+<li><p class="first"><em>preferencefiles</em> : The input data for this script are the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files created by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. You must specify at least two such files (if there were just one, you wouldn&#8217;t need to run this script). So this key should be followed by a list of two or more <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files. These files will have a format as follows (and as detailed in the documentation for <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre>#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*
+1   M   0.885694    0.000680047 0.00185968  8.48048e-06 0.00128217  0.0289946   0.000654589 0.0212144   0.0205306   0.0021597   0.00056726  0.876551    0.00130602  0.000789781 0.00144568  0.000414457 0.00071164  0.00126055  0.00167084  0.0352283   0.00176486  0.000905383
+2   A   1.1671  0.709575    0.00177747  3.79503e-05 0.00298854  0.00390524  0.00131246  0.00379599  0.000913006 0.00121497  0.000535209 0.00276335  0.00140061  0.000694694 0.0032134   0.00464972  0.000463924 0.000908368 0.254241    0.00335749  0.00137437  0.000876985
+3   N   3.2593  0.129992    0.000540239 4.2514e-06  0.00171887  0.0212062   0.0006086   0.102743    0.0431489   0.00524637  0.0771062   0.021714    0.0641921   0.00338082  0.0149898   0.0106522   0.13886 0.0247841   0.00607319  0.0500692   0.282389    0.000581555
+</pre></div>
+</div>
+</li>
+</ul>
+<blockquote>
+<div>Note that it is optional whether a preference is specified for stop codons (indicated by a * character) in the last column. But all files specified here must be consistent &#8211; they either all must specify a preference for a stop codon, or all must not specify a preference for a stop codon.</div></blockquote>
+<ul>
+<li><p class="first"><em>outfile</em> is the name of the created output file. This output file is in the same format as the input files in <em>preferencefiles</em>, but now contains the average preference.</p>
+</li>
+<li><p class="first"><em>includestop</em> specifies whether we include stop codons (denoted by a * character) as possible amino acids in the generated <em>outfile</em>. If the input <em>preferencesfiles</em> do not specify stop codons as an amino acid, then no stop codons are ever included in <em>outfile</em> and this option is meaningless. But the input <em>preferencesfiles</em> do specify stop codon preferences, the <em>includestop</em> is meaningful. In this case:</p>
+<blockquote>
+<div><ul class="simple">
+<li>If <em>includestop</em> is <em>True</em> then <em>outfile</em> also contains these stop codons as possible amino acids.</li>
+<li>If <em>includestop</em> is <em>False</em>, then stop codons are not included as possible amino acids. In this case, the <span class="math">\(\pi_{r,a}\)</span> values for the 20 non-stop amino acids are normalized so that they sum to one.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="example-input-file">
+<h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_preferencemeans.py
+preferencefiles WT-1_equilibriumpreferences.txt WT-2_equilibriumpreferences.txt N334H-1_equilibriumpreferences.txt N334H-2_equilibriumpreferences.txt
+outfile mean_equilibriumpreferences.txt
+includestop False
+</pre></div>
+</div>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>The script writes some brief output to standard output.</p>
+<p>The file specified by <em>outfile</em> is created (or overwritten if it already exists). This file has the exact same format as the input files listed in <em>preferencefiles</em>, except the indicated preferences are now the <span class="math">\(\langle \pi_{r,a} \rangle\)</span> average preferences (this format matches that for the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files described in the documentation for <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. The entropies (third column) are recomputed based on the average preferences as <span class="math">\(h_r = \sum_a \langle \pi_{r,a} \rangle \log_2 \langle \pi_{r,a}\rangle\)</span>. The entries for the wildtype amino acid (second column, <em>WT_AA</em>) show either the single wildtype amino acid (if identical in all <em>preferencefiles</em>) or a comma delimited list of all wildtype amino acids in the different <em>preferencefiles</em> (such as <em>N,N,H,H</em> if the <em>preferencefiles</em> have wildtype amino acids <em>N</em>, <em>N</em>, <em>H</em>, and <em>H</em> for four such files).</p>
+<p>The <em>outfile</em> created by this script is valid input to <a class="reference internal" href="mapmuts_siteprofileplots.html#mapmuts-siteprofileplots-py"><em>mapmuts_siteprofileplots.py</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_preferencemeans.py</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#running-the-script">Running the script</a></li>
+<li><a class="reference internal" href="#input-file">Input file</a></li>
+<li><a class="reference internal" href="#example-input-file">Example input file</a></li>
+<li><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_preferencescorrelate.html"
+                        title="previous chapter">mapmuts_preferencescorrelate.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_siteprofileplots.html"
+                        title="next chapter">mapmuts_siteprofileplots.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_preferencemeans.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_siteprofileplots.html" title="mapmuts_siteprofileplots.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_preferencescorrelate.html" title="mapmuts_preferencescorrelate.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

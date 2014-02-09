@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>stats Module &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python modules" href="pythonapi.html" />
+    <link rel="next" title="simulate Module" href="simulate_module.html" />
+    <link rel="prev" title="io Module" href="io_module.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="simulate_module.html" title="simulate Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="io_module.html" title="io Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-stats">
+<span id="stats-module"></span><h1><a class="reference internal" href="#module-stats" title="stats"><tt class="xref py py-mod docutils literal"><span class="pre">stats</span></tt></a> Module<a class="headerlink" href="#module-stats" title="Permalink to this headline">¶</a></h1>
+<p>Performs statistics operations for <tt class="docutils literal"><span class="pre">mapmuts</span></tt> package.</p>
+<p>Written by Jesse Bloom.</p>
+<div class="section" id="list-of-functions">
+<h2>List of functions<a class="headerlink" href="#list-of-functions" title="Permalink to this headline">¶</a></h2>
+<p><cite>Median</cite> : returns the median of a list of numbers.</p>
+<p><cite>Mean</cite> : returns the mean of a list of numbers.</p>
+</div>
+<div class="section" id="documentation-for-individual-functions">
+<h2>Documentation for individual functions<a class="headerlink" href="#documentation-for-individual-functions" title="Permalink to this headline">¶</a></h2>
+<p>Documentation for individual functions is provided in their
+definitions below.</p>
+<dl class="function">
+<dt id="stats.Mean">
+<tt class="descclassname">stats.</tt><tt class="descname">Mean</tt><big>(</big><em>numlist</em><big>)</big><a class="headerlink" href="#stats.Mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the mean of a list of numbers.</p>
+<p><cite>numlist</cite> : a list of numbers.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&quot;</span><span class="si">%.3f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">Mean</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">1.833</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="stats.Median">
+<tt class="descclassname">stats.</tt><tt class="descname">Median</tt><big>(</big><em>xlist</em><big>)</big><a class="headerlink" href="#stats.Median" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the median of a list of numbers.</p>
+<p><cite>xlist</cite> : a list of numbers for which to calculate the median. Note
+that the entries in this list will be sorted upon completion of
+this function.</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">xlist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">4.1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&quot;</span><span class="si">%.3f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">Median</span><span class="p">(</span><span class="n">xlist</span><span class="p">)</span>
+<span class="go">2.500</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">stats</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
+<li><a class="reference internal" href="#documentation-for-individual-functions">Documentation for individual functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="io_module.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">io</span></tt> Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="simulate_module.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">simulate</span></tt> Module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/stats_module.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="simulate_module.html" title="simulate Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="io_module.html" title="io Module"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

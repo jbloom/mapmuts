@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_preferencescorrelate.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_preferencemeans.py" href="mapmuts_preferencemeans.html" />
+    <link rel="prev" title="mapmuts_inferpreferences.py" href="mapmuts_inferpreferences.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_preferencemeans.html" title="mapmuts_preferencemeans.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-preferencescorrelate-py">
+<span id="id1"></span><h1>mapmuts_preferencescorrelate.py<a class="headerlink" href="#mapmuts-preferencescorrelate-py" title="Permalink to this headline">¶</a></h1>
+<p>This is an analysis script for the output produced by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. It makes plots of the correlation between the amino-acid preferences (<span class="math">\(\pi_{r,a}\)</span>) for all amino acids <em>a</em> at all sites <em>r</em> for multiple analyses or samples. So the typical goal of running this script would be to compare the amino-acid preferences inferred for two different samples to examine the similarity of the inferred values.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>This script requires <a class="reference external" href="http://matplotlib.org/">matplotlib</a> to make the plots. It will raise an error if <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is not available. This script also requires <a class="reference external" href="http://www.scipy.org/">scipy</a> in order to calculate correlation coefficients. However, you can still use the script if <a class="reference external" href="http://www.scipy.org/">scipy</a> is unavailable &#8211; you just won&#8217;t get any correlation coefficients.</p>
+</div>
+<div class="section" id="running-the-script">
+<h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
+<p>To run this script, simply create an input file with the format described below. If you name your input file <tt class="docutils literal"><span class="pre">preferencescorrelate_infile.txt</span></tt>, then run the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_preferencescorrelate.py preferencescorrelate_infile.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-file">
+<h2>Input file<a class="headerlink" href="#input-file" title="Permalink to this headline">¶</a></h2>
+<p>The input file is a text file with a series of <em>key</em> / <em>value</em> pairs. The required keys are indicated below. The values should not include spaces.</p>
+<p>Lines beginning with # and empty lines are ignored.</p>
+<p>Keys for the input file:</p>
+<ul class="simple">
+<li><em>preferencesfiles</em> : A listing of the equilibrium preferences files generated as <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. You must list at least two files here (otherwise there is nothing to correlate), but can list more than two if you also want to look at pairwise correlations between larger sets of samples. The files must exist, and the filenames cannot contain any spaces. To list multiple files, just separate them by spaces. The files must be consistent in whether they contain stop codons as possible amino acids &#8211; either they all must do so, or none of them must do so.</li>
+<li><em>samplenames</em> : A listing of the sample names for each of the files specified by <em>preferencesfiles</em>. These are the names that are given to the samples in plots that compare across multiple samples. You must specify the same number of sample names here as you specify files under <em>preferencesfiles</em>, so there is one name for each corresponding sample. The sample names can NOT contain spaces, and different sample names are separated by spaces. However, if you include an underscore in the sample name then it is converted to a space in the actual plots.</li>
+<li><em>plotdir</em> specifies the directory where we place the plots. If you want them to be in the current directory, just make this <tt class="docutils literal"><span class="pre">./</span></tt>. Otherwise specify some other directory, such as <tt class="docutils literal"><span class="pre">preferences_correlations/</span></tt>. Directories specified by this prefix must already exist &#8211; nonexistent directories are NOT created, and an error will be raised if you specify a directory that does not already exist.</li>
+<li><em>alpha</em> is an optional argument. It specifies the transparency of the points in the correlation plot. A value of <em>alpha</em> equal to one corresponds to no transparency. A value of <em>alpha &lt; 1</em> makes the points somewhat transparent. This might be useful if you want to better visualize the density of points and many points fall on top of each other. You must set <em>alpha</em> &gt; 0 and &lt;= 1. In general, the maximum intensity at a spot on the plot will not be obtained until there are <em>1.0 / alpha</em> points on that spot. If you do not specify a value of <em>alpha</em>, it defaults to one.</li>
+</ul>
+</div>
+<div class="section" id="example-input-file">
+<h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_preferencescorrelate.py
+preferencesfiles WT-1_equilibriumpreferences.txt WT-2_equilibriumpreferences.txt N334H-1_equilibriumpreferences.txt N334H-2_equilibriumpreferences.txt
+samplenames WT-1 WT-2 N334H-1 N334H-2
+plotdir preferences_correlations/
+alpha 0.1
+</pre></div>
+</div>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>This script will write some brief output to standard out (<em>sys.stdout</em>) describing its progress. However, the main output is the plots created in <em>plotdir</em>. There is a plot for each pair of samples specified by <em>preferencesfiles</em> and <em>samplenames</em>.
+The plots are PDFs generated with <a class="reference external" href="http://matplotlib.org/">matplotlib</a>, and they show the Pearson correlation coefficients if <a class="reference external" href="http://www.scipy.org/">scipy</a> is available. The plots are created in <em>plotdir</em>. For the example input file shown above, the following plots would be created in <em>plotdir</em>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">WT-1_vs_WT-2.pdf</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WT-1_vs_N334H-1.pdf</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WT-1_vs_N334H-2.pdf</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WT-2_vs_N334H-1.pdf</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WT-2_vs_N334H-2.pdf</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WT-1_vs_WT-2.pdf</span></tt></li>
+</ul>
+</div></blockquote>
+<p>Here is an example of a plot with <em>alpha</em> set to 0.1.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_A_p1_vs_replicate_B_p1.jpg"><img alt="example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_A_p1_vs_replicate_B_p1.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_A_p1_vs_replicate_B_p1.jpg" style="width: 30%;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_preferencescorrelate.py</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#running-the-script">Running the script</a></li>
+<li><a class="reference internal" href="#input-file">Input file</a></li>
+<li><a class="reference internal" href="#example-input-file">Example input file</a></li>
+<li><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_inferpreferences.html"
+                        title="previous chapter">mapmuts_inferpreferences.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_preferencemeans.html"
+                        title="next chapter">mapmuts_preferencemeans.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_preferencescorrelate.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_preferencemeans.html" title="mapmuts_preferencemeans.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

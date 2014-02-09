@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_parsesummaryplots.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_countparsedmuts.py" href="mapmuts_countparsedmuts.html" />
+    <link rel="prev" title="mapmuts_parsecounts.py" href="mapmuts_parsecounts.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_countparsedmuts.html" title="mapmuts_countparsedmuts.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_parsecounts.html" title="mapmuts_parsecounts.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-parsesummaryplots-py">
+<span id="id1"></span><h1>mapmuts_parsesummaryplots.py<a class="headerlink" href="#mapmuts-parsesummaryplots-py" title="Permalink to this headline">¶</a></h1>
+<p>Makes summary plots after several runs of <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>.</p>
+<p>This script creates stacked bar graphs giving the fraction of all sites that
+have specific nucleotide mutation types (i.e. A-&gt;T, etc) and specific
+codon mutation types (i.e. nonsynonymous, synonymous, stop codon; or one versus two versus three nucleotide mutations per mutant codon) for
+several samples that have been analyzed by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. This allows you to compare the mutation frequencies and
+distributions among samples.</p>
+<p>To run this script from the prompt, first create a text infile of the
+format described below. Then simply type <a class="reference internal" href="#mapmuts-parsesummaryplots-py"><em>mapmuts_parsesummaryplots.py</em></a>
+followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+type:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_parsesummaryplots.py infile.txt
+</pre></div>
+</div>
+<p>This script will only work if <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> are available.</p>
+<div class="section" id="input-file-format">
+<h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
+<p>This script is designed to be run after you have already run
+<a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a> on several samples. Each run of that program
+generates a <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> and a <tt class="docutils literal"><span class="pre">*_ntcounts.txt</span></tt> file. This script reads
+those files and creates a stacked bar graph that summarizes the output
+for the several samples.</p>
+<p>The input file should have the following format:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">It should first have two or more lines listing the samples that are being analyzed. Each of these lines should begin with the prefix for the <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> and the <tt class="docutils literal"><span class="pre">*_ntcounts.txt</span></tt> files for a sample, as generated by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. For example, if these files have the paths <tt class="docutils literal"><span class="pre">dir1/sample1_codoncounts.txt</span></tt> and <tt class="docutils literal"><span class="pre">dir1/sample1_ntcounts.txt</span></tt> then the first entry on the line should be <em>dir1/sample1</em>. Note that this prefix cannot contain any spaces. It should then be followed by the name assigned to that sample in the plot &#8211; this name can contain spaces.</p>
+</li>
+<li><p class="first">You can then add as many instances as you want of the keys <em>manual_ntfracs</em> or <em>manual_codontypes</em>, <em>manual_codonnmuts</em>. These are optional, so you do not have to specify any lines with this key. These keys allow you to specify the plotting of additional manually specified bars &#8211; typically you might want to do this if you also want to display an analysis by Sanger sequencing. If a line begins with this key, then it should be followed by the following values:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><em>manual_ntfracs</em> should be followed by a listing of the fraction of mutations of the following types (in order): A-&gt;T / T-&gt;A, A-&gt;C / G-&gt;T, A-&gt;G / C-&gt;T, T-&gt;C / G-&gt;A, T-&gt;G / C-&gt; A, C -&gt; G / G -&gt; C. You should then list the name given to this sample in the plot. For instance:</p>
+<div class="highlight-python"><div class="highlight"><pre>manual_ntfracs 0.000042 0.000042 0.000835 0.000793 0.000021 0.000084 Sanger
+</pre></div>
+</div>
+</li>
+<li><p class="first"><em>manual_codontype</em> should be followed by a listing of the fractions of different types of mutations per codon. The fractions should be (in order): synonymous mutations, nonsynonymous mutations, stop codon. You should then list the name given to this sample in the plot. For instance:</p>
+<div class="highlight-python"><div class="highlight"><pre>manual_codontypes 0.001253 0.003945 0.000251 Sanger
+</pre></div>
+</div>
+</li>
+<li><p class="first"><em>manual_codonnmuts</em> should be followed by a listing of the fractions of the codons with mutations containing (in order) one, two, or three nucleotide mutations. You should then list the name given to this sample in the plot. For instance:</p>
+<div class="highlight-python"><div class="highlight"><pre>manual_codonnmuts 0.00431 0.00321 0.00259 Sanger
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">The next line should begin with the key <em>plotfileprefix</em>, and the value should specify the prefix given to the plots that are created by this script.</p>
+</li>
+<li><p class="first">The next line should begin with the key <em>writefracs</em>, and the value should be either <em>True</em> or <em>False</em>. If <em>True</em> then we write the numerical fractions of mutations in different categories abouve the bars in the plot; if <em>False</em> then we don&#8217;t. These numbers are only written for the plots of <tt class="docutils literal"><span class="pre">*_codontypes.pdf</span></tt> and <tt class="docutils literal"><span class="pre">*_codonnmuts.pdf</span></tt>.</p>
+</li>
+<li><p class="first">You can then optionally specify an explicit figure width (rather than the standard default) by giving the key <em>figwidth</em> followed by the explicit figure width in inches, such as:</p>
+<div class="highlight-python"><div class="highlight"><pre>figwidth 8.5
+</pre></div>
+</div>
+</li>
+<li><p class="first">You can then optionally specify the key <em>textwritefracs</em>. If the value of this key is <em>False</em> or <em>None</em>, it is equivalent to having not included the key at all. Otherwise, the key should be followed by the prefix of the name of a file that you want to create. File with this prefix followed by <tt class="docutils literal"><span class="pre">_codontypes.txt</span></tt> and <tt class="docutils literal"><span class="pre">_codonnmuts.txt</span></tt> are then created that list in tab-separated format the fraction of mutations in the different categories.</p>
+</li>
+<li><p class="first">You can then optionally specify the key <em>pairedcodonplot</em>. If this key is not present, or if the value is <em>False</em> or <em>None</em>, then nothing is done. Otherwise set the value of this key to <em>True</em>. If it is <em>True</em>, a PDF bar graph with paired bars showing the codon types and number of nucleotide changes per codon mutation is created as detailed in the output file description below. Manual fractions are only shown if both <em>manual_codontypes</em> and <em>manual_codonnmuts</em> are specified with the same sample name.</p>
+</li>
+</ul>
+</div></blockquote>
+<p>Blank lines or lines that begin with # are ignored (i.e. as comment lines).</p>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># Input file to mapmuts_parsesummaryplots.py
+sample_1 sample 1
+sample_2 sample 2
+manual_ntfracs 0.000042 0.000042 0.000835 0.000793 0.000021 0.000084 Sanger
+manual_codontypes 0.001253 0.003945 0.000251 Sanger
+manual_codonnmuts 0.00431 0.00321 0.00259 Sanger
+plotfileprefix parsesummary
+writefracs True
+textwritefracs False
+pairedcodonplot False
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-files">
+<h2>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
+<p>This script generates three different PDF bar graph plots. All three plots begin with the prefix <em>plotfileprefix</em> and then have the following suffixes and contents:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">*_ntfracs.pdf</span></tt> is a plot of the frequencies of the different types of nucleotide mutations (A-&gt;T / T-&gt;A, A-&gt;C / G-&gt;T, A-&gt;G / C-&gt;T, T-&gt;C / G-&gt;A, T-&gt;G / C-&gt; A, C -&gt; G / G -&gt; C).</li>
+<li><tt class="docutils literal"><span class="pre">*_codontypes.pdf</span></tt> is a plot of the frequencies of the different types of codon mutations (synonymous, nonsynonymous, stop codon).</li>
+<li><tt class="docutils literal"><span class="pre">*_codonnmuts.pdf</span></tt> is a plot of the frequences of one, two, and three nucleotide codon mutations.</li>
+<li>If <em>pairedcodonplot</em> is set to <em>True</em>, a plot <tt class="docutils literal"><span class="pre">*_codon_types_and_nmuts.pdf</span></tt> is created with shows paired bars giving both the codon mutation types and the number of nucleotide changes per codon mutation.</li>
+</ul>
+</div></blockquote>
+<p>Examples of the first three plots are shown below:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/parsesummary_codonnmuts.jpg"><img alt="parsesummary_codonnmuts.jpg" src="_images/parsesummary_codonnmuts.jpg" style="width: 55%;" /></a>
+<p class="caption">Example <tt class="docutils literal"><span class="pre">*_codonnmuts.pdf</span></tt> plot.</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/parsesummary_codontypes.jpg"><img alt="parsesummary_codontypes.jpg" src="_images/parsesummary_codontypes.jpg" style="width: 55%;" /></a>
+<p class="caption">Example <tt class="docutils literal"><span class="pre">*_codontypes.pdf</span></tt> plot.</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/parsesummary_ntfracs.jpg"><img alt="parsesummary_ntfracs.jpg" src="_images/parsesummary_ntfracs.jpg" style="width: 55%;" /></a>
+<p class="caption">Example <tt class="docutils literal"><span class="pre">*_ntfracs.pdf</span></tt> plot.</p>
+</div>
+<p>If the <em>textwritefracs</em> option is used, the specified text files containing the fractions will also be created.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_parsesummaryplots.py</a><ul>
+<li><a class="reference internal" href="#input-file-format">Input file format</a></li>
+<li><a class="reference internal" href="#output-files">Output files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_parsecounts.html"
+                        title="previous chapter">mapmuts_parsecounts.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_countparsedmuts.html"
+                        title="next chapter">mapmuts_countparsedmuts.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_parsesummaryplots.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_countparsedmuts.html" title="mapmuts_countparsedmuts.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_parsecounts.html" title="mapmuts_parsecounts.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

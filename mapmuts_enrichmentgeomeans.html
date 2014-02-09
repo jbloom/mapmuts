@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_enrichmentgeomeans.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="mapmuts_enrichmentcorrelate.py" href="mapmuts_enrichmentcorrelate.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_enrichmentcorrelate.html" title="mapmuts_enrichmentcorrelate.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-enrichmentgeomeans-py">
+<span id="id1"></span><h1>mapmuts_enrichmentgeomeans.py<a class="headerlink" href="#mapmuts-enrichmentgeomeans-py" title="Permalink to this headline">¶</a></h1>
+<p>This script is designed to be used after you have inferred the enrichment ratios for several libraries using <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a>. This script then computes the geometric means of the enrichment ratios for each library, and then uses those geometric mean enrichment ratios to calculate equilibrium frequencies and site entropies.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>This script requires <a class="reference external" href="http://matplotlib.org/">matplotlib</a> for plotting.</p>
+</div>
+<div class="section" id="background-and-nomenclature">
+<h2>Background and nomenclature<a class="headerlink" href="#background-and-nomenclature" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a> program calculates posterior mean enrichment ratios <em>phi</em> for mutations using MCMC, and stores them in <tt class="docutils literal"><span class="pre">*_enrichmentratios.txt</span></tt> files. If you have several library replicates, you might want to somehow average these enrichment ratios. In principle, you can run the MCMC over several libraries, but in practice this seems to lead to inflated enrichment ratios in cases where one library has a very large value of <em>phi</em> but the others do not.</p>
+<p>A good way of getting an &#8220;average&#8221; enrichment ratio is therefore to take the geometric mean of the enrichment ratios for the individual libraries &#8211; that is what this script does. In general you would want to apply it to several replicates of identical libraries, although there is also an option (specified by the <em>excludesite</em> option) to use information from libraries only closely related mutants of a protein.</p>
+<p>The output of this script is the geometric mean of the enrichment ratios, as well as site entropies and equilibrium frequencies (these concepts are described in more detail in the <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a> documentation) computed from these geometric mean enrichment ratios. Also see the following PDF file, which describes the net computations performed by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a> and this script:
+<a class="reference download internal" href="_downloads/enrichment_inference_algorithm.pdf"><tt class="xref download docutils literal"><span class="pre">enrichment_inference_algorithm.pdf</span></tt></a></p>
+</div>
+<div class="section" id="running-the-script">
+<h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
+<p>To run this script from the prompt, first create a text infile of the
+format described below. Then simply type <a class="reference internal" href="#mapmuts-enrichmentgeomeans-py"><em>mapmuts_enrichmentgeomeans.py</em></a>
+followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+type:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_enrichmentgeomeans.py infile.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-file">
+<h2>Input file<a class="headerlink" href="#input-file" title="Permalink to this headline">¶</a></h2>
+<p>The input file is a text file with a series of <em>key</em> / <em>value</em> pairs. The required keys are indicated below. The values should not include spaces.</p>
+<p>Lines beginning with # and empty lines are ignored.</p>
+<p>Keys for the input file:</p>
+<ul>
+<li><p class="first"><em>enrichmentratios</em> : A listing of the enrichment ratio files generated as <tt class="docutils literal"><span class="pre">*_enrichmentratios.txt</span></tt> by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a>. You must list at least one file here, but can list more than one if you also want to look at correlations between pairs of samples. The files must exist, and the filenames cannot contain any spaces. To list multiple files, just separate them by spaces.</p>
+</li>
+<li><p class="first"><em>excludesite_NNN</em> : This is an optional key that does not have to appear at all. You would use this key if you want to exclude a particular site from just one of multiple libraries specified by <em>enrichmentratios</em>. For instance, imagine that key specify four files. Imagine that the first two and last two files differ in identity at residue 334, so that only two of the libraries (say the first two) would be used for the inference at this site. You would then set:</p>
+<div class="highlight-python"><div class="highlight"><pre>excludesite_334 use use exclude exclude
+</pre></div>
+</div>
+<p>In this usage, the key <em>excludesite_</em> has a suffix giving a site number. There then should be a number of entries equal to the number of files specified for <em>enrichmentratios</em>, etc. In order, put <em>use</em> if that file is used for that site and <em>exclude</em> if that file is excluded for that site. Note, however, that at least one file must be <em>use</em> for each site. If you don&#8217;t want to exclude any sites from particular libraries, then just don&#8217;t include this key. If you want to exclude more than one residue, then have multiple entries of the key.</p>
+</li>
+<li><p class="first"><em>enrichmentratio_plots</em> is the directory to which we write plots showing the enrichment ratios for all mutations at a site. This is the geometric mean of the various individual library enrichment ratios. If you set this to the string <em>None</em>, then no such plots are created. Otherwise, if <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is available, then files with the prefix specified by <em>outfileprefix</em> and the suffix corresponding to the mutation (such as <em>M1A.pdf</em> or <em>N334H.pdf</em>) are created in the directory <em>enrichmentratio_plots</em>. Note that this directory must already exist; it is NOT created.</p>
+</li>
+<li><p class="first"><em>equilibriumfreqs_plots</em> is the directory to which we write plots showing the equilibrium frequencies for all amino acids at a site. This is the equilibrium frequency calculated from the geometric means of the various individual library enrichment ratios. If you set this to the string <em>None</em>, then no such plots are created. Otherwise, if <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is available, then files with the prefix specified by <em>outfileprefix</em> and the suffix corresponding to the residue (such as <em>M1.pdf</em> or <em>N334.pdf</em>) are created in the directory <em>equilibriumfreqs_plots</em>. Note that this directory must already exist; it is NOT created.</p>
+</li>
+<li><p class="first"><em>outfileprefix</em> is a string giving the prefix for the output files as described below.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="example-input-file">
+<h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_enrichmentgeomeans.py
+enrichmentratios WT-1/WT-1_enrichmentratios.txt WT-2/WT-2_enrichmentratios.txt N334H-1/N334H-1_enrichmentratios.txt N334H-2/N334H-2_enrichmentratios.txt
+excludesite_334 use use exclude exclude
+outfileprefix combined_geomean
+enrichmentratio_plots enrichmentratio_plots/
+equilibriumfreqs_plots equilibriumfreqs_plots/
+</pre></div>
+</div>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>Output files are created with the prefix specified by <em>outfileprefix</em>. If any of these files already exist, they are overwritten. These files are:</p>
+<ul>
+<li><p class="first"><em>outfileprefix</em>_enrichmentratios.txt : a text file giving the geometric mean of the posterior mean of the inferred enrichment ratios for all libraries specified by <em>enrichmentratios</em>. The file has the following columns (separated by tabs):</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>MUTATION</em> : mutation name, such as <em>M1A</em>.</li>
+<li><em>GEOMEAN_PHI</em> : the geometric mean of the inferred enrichment ratio posterior means fro all of the libraries specified by <em>enrichmentratios</em>.</li>
+</ul>
+</div></blockquote>
+<p>Here is an example of a few lines:</p>
+<div class="highlight-python"><div class="highlight"><pre>#MUTATION GEOMEAN_PHI
+M1A 0.171246
+M1C 0.249930
+M1D 0.249028
+M1E 0.246096
+M1F 0.245388
+M1G 0.172780
+M1H 0.234997
+M1I 0.113813
+M1K 0.255940
+</pre></div>
+</div>
+</li>
+<li><p class="first"><em>outfileprefix</em>_equilibriumfreqs.txt : a text file giving the equilibrium frequencies for each amino acid at each site. Stop codons are NOT included as possible identities for these frequencies. The equilibrium frequency <em>pi</em> for an amino acid is calculated from the geometric mean enrichment ratio <em>phi</em>. Essentially, this gives the probability that an amino acid would have some identity if all residues were present at relative frequencies specified by the enrichment ratios. We also calculate a site entropy <em>h</em> for each site as the entropy (log base 2, units of bits) for a hypothetical situation in which each amino acid is present at its equilibrium frequency. All of this information is written to this text file. The first column gives the residue number, the second column gives the wildtype amino acid, the third column gives the site entropy, and the remaining columns give the equilibrium frequencies for all of the amino acids in the order indicated by the header (which is alphabetical order). Here is an example of a few lines:</p>
+<div class="highlight-python"><div class="highlight"><pre>#SITE WT_AA SITE_ENTROPY PI_A PI_C PI_D PI_E PI_F PI_G PI_H PI_I PI_K PI_L PI_M PI_N PI_P PI_Q PI_R PI_S PI_T PI_V PI_W PI_Y
+1   M   4.063980    0.035380    0.051636    0.051450    0.050844    0.050698    0.035697    0.048551    0.023514    0.052878    0.029298    0.206602    0.052339    0.036233    0.049689    0.028100    0.026248    0.037069    0.026387    0.056218    0.051170
+2   A   2.916478    0.493120    0.025100    0.025514    0.043860    0.029769    0.012059    0.012405    0.020354    0.026235    0.007163    0.118429    0.020809    0.003767    0.016877    0.006905    0.009597    0.011775    0.051123    0.041176    0.023962
+3   S   3.368413    0.039375    0.010811    0.008294    0.012489    0.160579    0.007068    0.021544    0.014624    0.011574    0.253193    0.035198    0.014573    0.006610    0.017904    0.010872    0.154344    0.023793    0.013304    0.054196    0.129656
+4   Q   3.206882    0.014669    0.010812    0.001101    0.007597    0.233611    0.007712    0.001347    0.104908    0.003885    0.207108    0.006095    0.126407    0.000240    0.016678    0.001580    0.088960    0.045545    0.011868    0.041575    0.068301
+</pre></div>
+</div>
+</li>
+<li><p class="first">The plots showing the geometric mean enrichment ratio for each mutation at a site. These plots are are PDFs in the directory specified by <em>enrichmentratio_plots</em>. The plots have the prefix given by <em>outfileprefix</em> followed by an underscore and the residue wildtype identity and number, such as <em>_M1.pdf</em>.</p>
+</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/enrichmentratio_combined_geomean_N334.jpg"><img alt="enrichmentratio_combined_geomean_N334.jpg" src="_images/enrichmentratio_combined_geomean_N334.jpg" style="width: 60%;" /></a>
+</div>
+<ul class="simple">
+<li>The plots showing the equilibrium frequencies for each amino acid at a site. These plots are are PDFs in the directory specified by <em>equilibriumfreqs_plots</em>. The plots have the prefix given by <em>outfileprefix</em> followed by an underscore and the residue wildtype identity and number, such as <em>_M1.pdf</em>. Here is an example of such a plot:</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/equilibriumfreqs_combined_geomean_N334.jpg"><img alt="equilibriumfreqs_combined_geomean_N334.jpg" src="_images/equilibriumfreqs_combined_geomean_N334.jpg" style="width: 60%;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_enrichmentgeomeans.py</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#background-and-nomenclature">Background and nomenclature</a></li>
+<li><a class="reference internal" href="#running-the-script">Running the script</a></li>
+<li><a class="reference internal" href="#input-file">Input file</a></li>
+<li><a class="reference internal" href="#example-input-file">Example input file</a></li>
+<li><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_enrichmentcorrelate.html"
+                        title="previous chapter">mapmuts_enrichmentcorrelate.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="examples.html"
+                        title="next chapter">Examples</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_enrichmentgeomeans.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="Examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_enrichmentcorrelate.html" title="mapmuts_enrichmentcorrelate.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

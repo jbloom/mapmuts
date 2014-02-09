@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dssp Module &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python modules" href="pythonapi.html" />
+    <link rel="next" title="weblogo Module" href="weblogo_module.html" />
+    <link rel="prev" title="bayesian Module" href="bayesian_module.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="weblogo_module.html" title="weblogo Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="bayesian_module.html" title="bayesian Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-dssp">
+<span id="dssp-module"></span><h1><a class="reference internal" href="#module-dssp" title="dssp"><tt class="xref py py-mod docutils literal"><span class="pre">dssp</span></tt></a> Module<a class="headerlink" href="#module-dssp" title="Permalink to this headline">¶</a></h1>
+<p>Reads output from DSSP program.</p>
+<p>DSSP is a program for classifying secondary structures and solvent
+accessibility from protein structures. This module contains functions
+that process the output.</p>
+<p>These functions have been tested on output from the DSSP webserver
+(<a class="reference external" href="http://swift.cmbi.ru.nl/gv/dssp/">http://swift.cmbi.ru.nl/gv/dssp/</a>) using the version available
+as of May-24-2013.</p>
+<p>This module was written by Jesse Bloom.</p>
+<div class="section" id="list-of-functions">
+<h2>List of functions<a class="headerlink" href="#list-of-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><em>MaxASA</em> : Maximum accessible surface area for amino acids.</li>
+<li><em>ReadDSSP</em> : reads secondary structures and RSA from DSSP output.</li>
+</ul>
+</div>
+<div class="section" id="documentation-for-individual-functions">
+<h2>Documentation for individual functions<a class="headerlink" href="#documentation-for-individual-functions" title="Permalink to this headline">¶</a></h2>
+<p>Documentation for individual functions is provided in their
+definitions below.</p>
+<dl class="function">
+<dt id="dssp.MaxASA">
+<tt class="descclassname">dssp.</tt><tt class="descname">MaxASA</tt><big>(</big><em>scale</em><big>)</big><a class="headerlink" href="#dssp.MaxASA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the maximum accessible surface area for amino acids.</p>
+<p>This function returns the maximum accessible surface area (ASA)
+for the amino acids in units of square angstroms. These ASAs
+are necessary for calculating the relative solvent accessibility
+of a residue.</p>
+<p>There are a large variety of estimates for the exact ASA for each
+amino acid. The calling variable <em>scale</em> specifies which scale to
+use. Allowed values are the following strings:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8216;Tien2013&#8217; : The values provided by Tien et al (Maximum
+allowed solvent accessibilities of residues in proteins),
+as defined in Table 1 in the column labeled &#8220;Theoretical&#8221;
+at <a class="reference external" href="http://www.plosone.org/article/info:doi/10.1371/journal.pone.0080635">http://www.plosone.org/article/info:doi/10.1371/journal.pone.0080635</a></li>
+</ul>
+</div></blockquote>
+<p>The returned variable is a dictionary <em>asa</em> keyed by each 
+upper-case one-letter amino-acid code, with the values
+being the ASA for that residue.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">asa</span> <span class="o">=</span> <span class="n">MaxASA</span><span class="p">(</span><span class="s">&#39;Tien2013&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">asa</span><span class="p">)</span> <span class="o">==</span> <span class="mi">20</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">asa</span> <span class="o">==</span> <span class="p">{</span><span class="s">&#39;A&#39;</span><span class="p">:</span><span class="mf">129.0</span><span class="p">,</span> <span class="s">&#39;R&#39;</span><span class="p">:</span><span class="mf">274.0</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">:</span><span class="mf">195.0</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">:</span><span class="mf">193.0</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="mf">167.0</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">:</span><span class="mf">223.0</span><span class="p">,</span> <span class="s">&#39;Q&#39;</span><span class="p">:</span><span class="mf">225.0</span><span class="p">,</span> <span class="s">&#39;G&#39;</span><span class="p">:</span><span class="mf">104.0</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">:</span><span class="mf">224.0</span><span class="p">,</span> <span class="s">&#39;I&#39;</span><span class="p">:</span><span class="mf">197.0</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">:</span><span class="mf">201.0</span><span class="p">,</span> <span class="s">&#39;K&#39;</span><span class="p">:</span><span class="mf">236.0</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">:</span><span class="mf">224.0</span><span class="p">,</span> <span class="s">&#39;F&#39;</span><span class="p">:</span><span class="mf">240.0</span><span class="p">,</span> <span class="s">&#39;P&#39;</span><span class="p">:</span><span class="mf">159.0</span><span class="p">,</span> <span class="s">&#39;S&#39;</span><span class="p">:</span><span class="mf">155.0</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">:</span><span class="mf">172.0</span><span class="p">,</span> <span class="s">&#39;W&#39;</span><span class="p">:</span><span class="mf">285.0</span><span class="p">,</span> <span class="s">&#39;Y&#39;</span><span class="p">:</span><span class="mf">263.0</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">:</span><span class="mf">174.0</span><span class="p">}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="dssp.ReadDSSP">
+<tt class="descclassname">dssp.</tt><tt class="descname">ReadDSSP</tt><big>(</big><em>infile</em>, <em>asa_scale</em>, <em>chain=None</em><big>)</big><a class="headerlink" href="#dssp.ReadDSSP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads secondary structure and ASA from DSSP output.</p>
+<p>DSSP is a program that calculates secondary structure and
+absolute solvent accessibility (ASA) on a per-residue
+basis from a PDB protein structure file.</p>
+<p>These functions have been tested on output from the DSSP webserver
+(<a class="reference external" href="http://swift.cmbi.ru.nl/gv/dssp/">http://swift.cmbi.ru.nl/gv/dssp/</a>) using the version available
+as of May-24-2013.</p>
+<p><strong>NOTE</strong> that this function currently does not process DSSP output
+from PDB structures where the residue numbers have letter suffixes
+(such as residue 25A). It will raise an error if such residue
+numbers exist in the DSSP output.</p>
+<p>CALLLING VARIABLES:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>infile</em> : name of a text file containing the output of a 
+DSSP analysis.</li>
+<li><em>asa_scale</em> : calculation of relative solvent accessiblity (RSA)
+from the absolute solvent accessibility (ASA) returned by DSSP
+requires normalization by the maximum solvent accessibility
+of each residue. <em>asa_scale</em> specifies those maximum values.
+It should be a string that is passable to <em>MaxASA</em> as
+its single calling paramter &#8211; those maximum ASAs are used
+to normalize the DSSP ASAs to RSAs.</li>
+<li><em>chain</em> is an optional variable. If the PDB structure used to 
+run DSSP has only one chain, then this variable can just have
+its default value of <em>None</em>. Otherwise it should provide a
+letter specifying the protein chain from which we read
+the ASA values. If there are multiple chains, this variable
+must be set to a value matching one of those chains.</li>
+</ul>
+</div></blockquote>
+<p>RETURN VARIABLE:</p>
+<p>The return variable is a dictionary <em>dssp</em>. For each residue
+number in the original PDB analyzed by DSSP, there is an
+integer key in <em>dssp</em>. The value for each of these residues
+is in turn a dictionary which has the following string keys:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><em>ASA</em> : the value is absolute solvent accessibility in
+square angstroms.</p>
+</li>
+<li><p class="first"><em>RSA</em> : the value is the relative solvent accessiblity.</p>
+</li>
+<li><p class="first"><em>SS</em> : the DSSP secondary structure code, which can be
+the following letters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>G</em> : 3-10 helix</li>
+<li><em>H</em> : alpha helix</li>
+<li><em>I</em> : pi helix</li>
+<li><em>B</em> : beta bridge</li>
+<li><em>E</em> : beta bulge</li>
+<li><em>T</em> : turn</li>
+<li><em>S</em> : high curvature</li>
+<li><em>_</em> : loop</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><em>SS_CLASS</em> : the larger secondary structure classes, which 
+are defined by the following strings based on <em>SS</em>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>helix</em> : a <em>SS</em> value of <em>G</em>, <em>H</em>, or <em>I</em></li>
+<li><em>strand</em> : a <em>SS</em> value of <em>B</em> or <em>E</em></li>
+<li><em>loop</em> : any of the other <em>SS</em> values.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">dssp</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
+<li><a class="reference internal" href="#documentation-for-individual-functions">Documentation for individual functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="bayesian_module.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">bayesian</span></tt> Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="weblogo_module.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">weblogo</span></tt> Module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/dssp_module.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="weblogo_module.html" title="weblogo Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="bayesian_module.html" title="bayesian Module"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

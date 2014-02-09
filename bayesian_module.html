@@ -1,0 +1,715 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bayesian Module &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python modules" href="pythonapi.html" />
+    <link rel="next" title="dssp Module" href="dssp_module.html" />
+    <link rel="prev" title="latex Module" href="latex_module.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dssp_module.html" title="dssp Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="latex_module.html" title="latex Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bayesian">
+<span id="bayesian-module"></span><h1><a class="reference internal" href="#module-bayesian" title="bayesian"><tt class="xref py py-mod docutils literal"><span class="pre">bayesian</span></tt></a> Module<a class="headerlink" href="#module-bayesian" title="Permalink to this headline">¶</a></h1>
+<p>Module for performing Bayesian inference for the <tt class="docutils literal"><span class="pre">mapmuts</span></tt> package.</p>
+<p>This module uses the <tt class="docutils literal"><span class="pre">pymc</span></tt> package, and has been tested with version 2.2
+and 2.3. It works with both, but will be faster with version 2.3.</p>
+<p>The <tt class="docutils literal"><span class="pre">pymc</span></tt> package also requires <tt class="docutils literal"><span class="pre">numpy</span></tt>. Many functions 
+in this module will therefore fail if <tt class="docutils literal"><span class="pre">pymc</span></tt> and <tt class="docutils literal"><span class="pre">numpy</span></tt> are not available
+for import. Before running any function in this module, you can use the
+<em>PymcAvailable</em> function to determine if they are available.</p>
+<p>In addition, some functions perform better if <tt class="docutils literal"><span class="pre">scipy</span></tt> is available, although
+this is not strictly required.</p>
+<p>Written by Jesse Bloom, 2013.</p>
+<div class="section" id="list-of-functions">
+<h2>List of functions<a class="headerlink" href="#list-of-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><em>PymcAvailable</em> : returns <em>True</em> if and only if <tt class="docutils literal"><span class="pre">numpy</span></tt> / <tt class="docutils literal"><span class="pre">pymc</span></tt> are available.</li>
+<li><em>ScipyAvailable</em> : returns <em>True</em> if and only if <tt class="docutils literal"><span class="pre">scipy</span></tt> is available.</li>
+<li><em>Seed</em> : seeds the random number generator.</li>
+<li><em>InferEnrichmentMCMC</em> : infers enrichment ratio from MCMC over posterior.</li>
+<li><em>InferEnrichmentMCMC_2</em> : faster (usually) version of <em>InferEnrichmentMCMC_2</em>.</li>
+<li><em>InferPreferencesMCMC</em> : infers equilibrium amino-acid preferences using MCMC.</li>
+<li><em>EquilibriumFracs</em> : calculates equilibrium preferences for amino acids.</li>
+<li><em>CredibleInterval</em> : computes median-centered credible interval.</li>
+<li><em>SiteEntropy</em> : calculates site entropy from equilibrium fractions.</li>
+<li><em>ShannonJensenDivergence</em> : calculates Shannon-Jensen Divergence.</li>
+<li><em>PreferencesRemoveStop</em> : removes stop codon as possible amino acid from preferences.</li>
+</ul>
+</div>
+<div class="section" id="details-of-functions">
+<h2>Details of functions<a class="headerlink" href="#details-of-functions" title="Permalink to this headline">¶</a></h2>
+<p>Documentation for functions is provided in their individual docstrings below.</p>
+<dl class="function">
+<dt id="bayesian.CredibleInterval">
+<tt class="descclassname">bayesian.</tt><tt class="descname">CredibleInterval</tt><big>(</big><em>a</em>, <em>interval</em><big>)</big><a class="headerlink" href="#bayesian.CredibleInterval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the median-centered credible interval from a <tt class="docutils literal"><span class="pre">numpy</span></tt> array of samples.</p>
+<p><em>a</em> is a numpy array of dimension 1 that lists samples from the posterior.</p>
+<p><em>interval</em> is a number &lt;= 1 and &gt;= 0 that gives the credible interval. 
+For example, 0.95 corresponds to a 95% credible interval.</p>
+<p>This function returns a <tt class="docutils literal"><span class="pre">numpy</span></tt> array of length 2 giving the lower and
+upper bounds to the credible interval.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.DirectEnrichmentRatio">
+<tt class="descclassname">bayesian.</tt><tt class="descname">DirectEnrichmentRatio</tt><big>(</big><em>library_stats</em><big>)</big><a class="headerlink" href="#bayesian.DirectEnrichmentRatio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Directly calculates enrichment ratio from counts.</p>
+<p>The function <em>InferEnrichmentMCMC</em> infers the enrichment ratio
+<em>phi</em> from experimental counts in four different samples
+(<em>DNA</em>, <em>RNA</em>, <em>mutDNA</em>, and <em>mutvirus</em>) using a Bayesian approach.
+This function takes the much simpler approach of just calculating
+this ratio directly.</p>
+<p>It is simply done by calculating the frequencies of the mutation in
+each of the four samples, and then estimating <em>phi</em> as
+<em>(mutDNA - DNA) / (mutvirus - RNA)</em> for the different frequencies.
+If the denominator is zero and the numerator is zero, returns zero.
+Otherwise if the denominator is zero returns <em>float(&#8220;inf&#8221;)</em> if the
+numerator is &gt; 0 and <em>-float(&#8220;inf&#8221;)</em> if the numerator is &gt; 0.</p>
+<p>The calling variable is the list <em>library_stats</em> which should have
+the same properties as the calling variable of the same name
+to <em>InferEnrichmentMCMC</em>.</p>
+<p>The returned variable is the following 2-tuple: <em>(direct_ratio, mutdnacounts)</em>
+where <em>direct_ratio</em> is the ratio calculated as described above
+and <em>mutdnacounts</em> is the total number of counts for this mutations in the
+<em>mutDNA</em> library.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.EquilibriumFracs">
+<tt class="descclassname">bayesian.</tt><tt class="descname">EquilibriumFracs</tt><big>(</big><em>wt</em>, <em>phi</em><big>)</big><a class="headerlink" href="#bayesian.EquilibriumFracs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the equilibrium preference for an amino acid at a site.</p>
+<p>Most of the functions in this module are designed to calculate the
+enrichment ratio <em>phi</em> of some mutant amino acid relative to the wildtype
+amino acid at a site. Here we use the collection of all of these mutant
+amino acids enrichment ratios to calculate the equilibrium preference
+<em>pi</em> for each amino acid.</p>
+<p>For each amino acid <em>aa</em> that is not equal to the wildtype amino acid
+<em>wt</em>, we define:</p>
+<div class="highlight-python"><div class="highlight"><pre>pi[aa] = phi[aa] / (1.0 + sum_j phi[j])
+</pre></div>
+</div>
+<p>where the sum is taken over all non-wildtype amino acids <em>j</em>. For <em>wt</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre>pi[wt] = 1.0 / (1.0 + sum_j phi[j])
+</pre></div>
+</div>
+<p>In other words, <em>pi</em> is the expected probability that a site would have 
+some identity in a hypothetical equilibration to all of the enrichment
+ratios.</p>
+<p>CALLING VARIABLES:</p>
+<ul class="simple">
+<li><em>wt</em> : the one-letter amino acid code for the wildtype amino acid.</li>
+<li><em>phi</em> : a dictionary keyed be each of the non-wildtype amino acids,
+and with the values being the enrichment ratio for that amino acid.
+No strict checking is done to make sure that all of the non-wildtype
+amino acids are present, or even that the keys actually correspond
+to valid amino acid codes.</li>
+</ul>
+<p>RETURN VARIABLE:</p>
+<p>The return variable is the dictionary <em>pi</em>. It is keyed by all of the keys
+in <em>phi</em> (should be all non-wildtype amino acids) plus <em>wt</em> (should
+be the wildtype amino acid), and the values for each key is the 
+equilibrium preference for that amino acid.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.InferEnrichmentMCMC">
+<tt class="descclassname">bayesian.</tt><tt class="descname">InferEnrichmentMCMC</tt><big>(</big><em>alpha</em>, <em>phi_prior</em>, <em>wtcodon</em>, <em>codons</em>, <em>library_stats</em>, <em>nruns</em>, <em>nsteps</em>, <em>burn</em>, <em>thin</em>, <em>pickle=None</em>, <em>loadfrompickle=False</em>, <em>convergence=None</em>, <em>plot_phi_traces=False</em>, <em>plot_title=''</em>, <em>progress_bar=False</em><big>)</big><a class="headerlink" href="#bayesian.InferEnrichmentMCMC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Infers enrichment ratio <em>phi</em> from MCMC over posterior.</p>
+<p>The function <em>InferEnrichmentMCMC_2</em> is preferred as it performs
+the same MCMC more quickly, particularly if <tt class="docutils literal"><span class="pre">scipy</span></tt> is available.</p>
+<p>Utilizes <tt class="docutils literal"><span class="pre">pymc</span></tt> to perform the MCMC.</p>
+<p>This function uses MCMC to infer the enrichment ratio at a specific site. 
+This enrichment ratio
+is the change in the frequency of a codon or amino acid in a selected library
+of mutants versus an unselected input library. Enrichment values &gt; 1 indicate
+mutations that are favorable, and values &lt; 1 indicate unfavorable. The values
+are calculated using four samples, named as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>DNA</em> : this sample measures the sequencing error rate. Variants from
+wildtype in this library are due to sequencing errors.</li>
+<li><em>mutDNA</em> : this sample is the unselected library of mutants. Variants
+from wildtype in this library are due to the underlying rate of
+mutagenesis in the mutant library plus sequencing errors.</li>
+<li><em>RNA</em> : this sample measure any additional sources of error that affect
+the selected library. It is named based on what would be expected for
+selections performed with RNA viruses, where the genes must be reverse-
+transcribed which introduces additional errors. Variants from wildtype
+therefore arising from the sequencing errors plus these additional
+reverse-transcription errors.</li>
+<li><em>mutvirus</em> : this sample measures the frequency of variants in the
+selected library. Variants here arise due to selection on the initial
+mutants in the unselected library, and then there are the sequencing
+and reverse-transcription errors.</li>
+</ul>
+</div></blockquote>
+<p>For each non-wildtype codon at the site, the following rates are inferred:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>epsilon</em> : the sequencing error rate, as measured by variants in
+the <em>DNA</em> library.</li>
+<li><em>mu</em> : the mutagenesis rate, as measured by variants in the <em>mutDNA</em>
+library minus <em>epsilon</em>.</li>
+<li><em>rho</em> : the reverse-transcription error rate, as measured by variants
+in the <em>RNA</em> library minus <em>epsilon</em>.</li>
+<li><em>phi</em> : constrained to be the same for all codons in <em>codons</em>, this
+is the enrichment ratio in the <em>mutvirus</em> library relative to the
+<em>mutDNA</em> library after correcting for sequencing errors.</li>
+</ul>
+</div></blockquote>
+<p>The inference is done in a Bayesian fashion. A gamma distribution prior is
+used over each of the four unknown rates. The distributions all have the
+same shape parameter <em>alpha</em>, and the rate parameter is chosen so that
+the mean over the prior is equal to <em>phi_prior</em> for <em>phi</em>, and to the
+values specified in <em>library_stats</em> for that codon for <em>epsilon</em>, <em>mu</em>,
+and <em>rho</em>. The likelihood functions are Poisson likelihoods for observing
+the actual number of counts (specified in <em>library_stats</em> given the
+rates.</p>
+<p>The enrichment ratio <em>phi</em> for a given amino acid is calculated for
+multiple codons if <em>codons</em> has more than one entry. In that case,
+each mutant codon is constrained to have the same value of <em>phi</em>,
+but has different values of <em>epsilon</em>, <em>mu</em>, and <em>rho</em>. If there
+are multiple libraries in <em>library_stats</em>, then the enrichment is
+calculated for multiple libraries as well. Again, both libraries 
+share the same <em>phi</em>, but can have different values of the other
+three rate parameters for each codon.</p>
+<p>The MCMC over the posterior is performed using <tt class="docutils literal"><span class="pre">pymc</span></tt>. The
+parameters <em>nruns</em>, <em>nsteps</em>, <em>burn</em>, and <em>thin</em> specify the MCMC
+parameters. You can use the <em>convergence</em> option to check for
+convergence.</p>
+<p>CALLING VARIABLES:</p>
+<ul class="simple">
+<li><em>alpha</em> is the gamma distribution shape parameter used for the
+priors. It must be a number &gt; 0. The same shape parameter is
+used for all priors.</li>
+<li><em>phi_prior</em> is the prior estimate for the enrichment ratio <em>phi</em>.
+We use a gamma-distribution prior over <em>phi</em> with shape parameter
+<em>alpha</em> and mean <em>phi_prior</em>. It must be a number &gt; 0.</li>
+<li><em>wtcodon</em> is a string giving the identity of the wildtype
+codon at the site for which we are computing the enrichment ratio.
+Should be upper case, for example &#8216;GCA&#8217;.</li>
+<li><em>codons</em> is a list of the codons for the identity being inferred.
+For example, <em>[&#8216;GGG&#8217;, &#8216;GGA&#8217;, &#8216;GGT&#8217;, &#8216;GGC&#8217;]</em> for an inferring an
+enrichment ratio for glycine. There is not actually a strict
+enforcement that these represent the real genetic code,
+rather <em>codons</em> just must be a list with at least one entry that
+specifies the codon keys used for the statistics in <em>library_stats</em>.
+So if you want to infer the enrichment ratio for just one codon,
+just put that in <em>codons</em>. All strings should be upper case.</li>
+<li><em>library_stats</em> is a list of statistics for each independent library
+that is being used to calculate the enrichment <em>phi</em>. If there is only
+one library, then there will just be one entry in <em>library_stats</em>. Each
+entry itself in the list is a dictionary with the following keys:<ul>
+<li>&#8216;mu_prior&#8217; : number &gt; 0 giving prior estimate for the mutation rate
+in the mutDNA library.</li>
+<li>&#8216;epsilon_prior&#8217; : a dictionary keyed by the integers 1, 2, and 3.
+<em>epsilon_prior[i]</em> gives the prior estimate for the sequencing
+error rate fo mutant codons with <em>i</em> nucleotide changes.</li>
+<li>&#8216;rho_prior&#8217; : a dictionary keyed by the integers 1, 2, and 3.
+<em>rho_prior[i]</em> gives the prior estimate for the reverse-transcription
+error rate for mutant codons with <em>i</em> nucleotide changes.</li>
+<li>&#8216;Nrdna&#8217; : integer giving the total number of counts for the DNA sample
+at the position in question.</li>
+<li>&#8216;Nrrna&#8217; : integer giving the total number of counts for the RNA sample
+at the position in question.</li>
+<li>&#8216;Nrmutdna&#8217; : integer giving the total number of counts for the mutDNA
+sample at the position in question.</li>
+<li>&#8216;Nrmutvirus&#8217; : integer giving the total number of counts for the 
+mutant virus sample at the position in question.</li>
+<li>&#8216;nrdna_list&#8217; : a list of the same length as <em>codons</em>, with entry <em>i</em>
+giving the number of counts for <em>codons[i]</em> in the DNA sample at the
+position in question.</li>
+<li>&#8216;nrrna_list&#8217; : a list of the same length as <em>codons</em>, with entry <em>i</em>
+giving the number of counts for <em>codons[i]</em> in the RNA sample at the
+position in question.</li>
+<li>&#8216;nrmutdna_list&#8217; : a list of the same length as <em>codons</em>, with entry <em>i</em>
+giving the number of counts for <em>codons[i]</em> in the mutDNA sample at the
+position in question.</li>
+<li>&#8216;nrmutvirus_list&#8217; : a list of the same length as <em>codons</em>, with entry <em>i</em>
+giving the number of counts for <em>codons[i]</em> in the mutvirus sample at the
+position in question.</li>
+</ul>
+</li>
+<li><em>nruns</em> is the number of MCMC runs to perform, each starting from 
+different random values of the variables. Should be an integer &gt;= 1.
+Each MCMC run is <em>nsteps</em>, with a burn-in of <em>burn</em> and thining of
+<em>thin</em>.</li>
+<li><em>nsteps</em> is an integer giving the number of MCMC steps to perform per run.
+Typically you might want values of 1e4 to 1e6 (depending on the chain
+is converging).</li>
+<li><em>burn</em> is a number giving the number of burn-in steps to perform per run
+before saving the MCMC values. Typically you might want a value
+equal to 10 to 20% of <em>nsteps</em>.</li>
+<li><em>thin</em> specifies the thinning of steps to perform (i.e. only sample
+every <em>thin</em> steps. Typicall you might want a value of 10 to 100.
+<em>thin</em> must be set so that <em>burn</em> and <em>nsteps</em> are both multiples
+of <em>thin</em>.</li>
+<li><em>pickle</em> specifies whether we save the entire <tt class="docutils literal"><span class="pre">pymc</span></tt> MCMC sampler using the
+Python <em>Pickle</em> database. It is <em>None</em> by default, which means
+that no such saving is done. If it is set to another value, then it
+should be the name of the file to which we want to save the sampler.
+This is the argument passed as <em>dbname</em> to the <em>pymc.MCMC</em> object
+created here. Typically you would want this file to have an extension
+of <em>.pickle</em>, although this is not required. If this file already exists,
+then it is overwritten if <em>loadfrompickle</em> is <em>False</em>. If <em>loadfrompickle</em>
+is not <em>False</em>, then no MCMC is run (see description of that option).</li>
+<li><em>loadfrompickle</em> is a Boolean switch that is meaningful only if <em>pickle</em>
+is set to some option other than <em>None</em>. In this case, if <em>loadfrompickle</em>
+is <em>True</em> and if the file specified by <em>pickle</em> already exists, then we
+do not re-run the MCMC but instead simply load the results already saved
+in the file <em>pickle</em>. Note that no checking is done to make sure that
+the calling arguments to this function match the ones used to create
+<em>pickle</em>, so only use this option if you know the origin of the data
+in <em>pickle</em>. However, this option can save you from re-running an MCMC
+whose results are already saved.</li>
+<li><em>convergence</em> is an option that lets you test for convergence of the
+MCMC. By default, it is <em>None</em>, meaning that no testing for convergence
+is done. However, if you set <em>nruns</em> to a value &gt; 1, you can then test
+for MCMC convergence (this is recommended). Note however to setting
+<em>convergence</em> to a value other than <em>None</em> if <em>nruns</em> is 1 will
+raise an exception. To use this option for <em>nruns</em> &gt; 1, set <em>convergence</em>
+to a number (typically you will want something between 1.0 and 1.1, a
+reasonable recommendation is 1.05). For the multiple runs, the Gelman-Rubin
+statistic for <em>phi</em> (the enrichment ratio)
+is computed (this statistic is theoretically 1.0 for perfect
+convergence). If this statistic is &lt; <em>convergence</em>, then the chain is 
+considered to have converged.</li>
+<li><em>plot_phi_traces</em> is an optional argument that can be used to generate
+PDF plots of the trace of <em>phi</em> as a function of the number of steps
+after thinning and burn-in (so there will be 900 points if <em>nsteps</em>
+is 1e4, <em>burn</em> is 1e3, and <em>thin</em> is 10) for each of the <em>nruns</em> runs.
+This PDF plot depends on <tt class="docutils literal"><span class="pre">pylab</span></tt>, and so can only be created
+if this package is available (can be checked with 
+<em>mapmutsplot.PylabAvailable()</em>).
+By default <em>plot_phi_traces</em> is <em>None</em>, meaning no plot is created.
+If it is set to another value, it should be a string ending with the
+extension <tt class="docutils literal"><span class="pre">.pdf</span></tt> giving the name of the plot file to create. If you
+try to use this option when <tt class="docutils literal"><span class="pre">pylab</span></tt> is not available, an exception
+will be raised.</li>
+<li><em>plot_title</em> is an optional argument that is meaningful only if 
+<em>plot_phi_traces</em> is being used. In this case, <em>plot_title</em> is a string
+giving the name of the title placed above the plot in <em>plot_phi_traces</em>.</li>
+<li><em>progress_bar</em> is a Boolean switch specifying whether we display the
+MCMC progress bar.</li>
+</ul>
+<p>RETURN VARIABLES:</p>
+<p>This function returns the following 4-tuple: 
+<em>(phi_mean, phi_hpd95, phi_samples, converged)</em>
+In this tuple, the variables have the following meanings:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>phi_mean</em> is the mean enrichment ratio <em>phi</em> calculated
+over all of the <em>nruns</em> runs.</li>
+<li><em>phi_hpd95</em> is a tuple, list, or array with two entries:
+<em>phi_hpd95[0]</em> is the lower bound and <em>phi_hpd95[1]</em> is the
+upper bound of the highest posterior density 95% interval.</li>
+<li><em>phi_samples</em> is a list or array that gives all of the samples
+from the posterior distribution for the enrichment ratio <em>phi</em>
+after applying <em>burn</em> and <em>thin</em>.</li>
+<li><em>converged</em> specifies whether we have evidence that the
+chain converged. If <em>nruns</em> is 1 or <em>convergence</em> is <em>None</em>,
+this <em>converged</em> is <em>False</em>. Otherwise, <em>converged</em> is <em>True</em>
+if the criteria specified by <em>convergence</em> are met, and <em>False</em>
+if these criteria are not met.</li>
+</ul>
+</div></blockquote>
+<p>In addition, files might be created saving some of the MCMC results
+depending on the values of <em>pickle</em> and <em>plot_phi_traces</em>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.InferEnrichmentMCMC_2">
+<tt class="descclassname">bayesian.</tt><tt class="descname">InferEnrichmentMCMC_2</tt><big>(</big><em>alpha</em>, <em>phi_prior</em>, <em>wtcodon</em>, <em>codons</em>, <em>library_stats</em>, <em>nruns</em>, <em>nsteps</em>, <em>burn</em>, <em>thin</em>, <em>pickle=None</em>, <em>loadfrompickle=False</em>, <em>convergence=None</em>, <em>plot_phi_traces=False</em>, <em>plot_title=''</em>, <em>progress_bar=False</em><big>)</big><a class="headerlink" href="#bayesian.InferEnrichmentMCMC_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Infers enrichment ratio <em>phi</em> from MCMC over posterior.</p>
+<p>This function is identical to <em>InferEnrichmentMCMC</em> in the calling
+and return arguments, so see that docstrings. However, this 
+function is faster because it places the variables in arrays
+which speeds the computations.</p>
+<p>It is especially superior if <tt class="docutils literal"><span class="pre">scipy</span></tt> is available, as
+<tt class="docutils literal"><span class="pre">scipy</span></tt> is then used to estimate maximum a posteriori
+values (in an empirical Bayes fashion) for key parameters
+prior to beginning the MCMC. Although it is not strictly
+required, it is HIGHLY ADVISED to install <tt class="docutils literal"><span class="pre">scipy</span></tt>
+before running this function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.InferPreferencesMCMC">
+<tt class="descclassname">bayesian.</tt><tt class="descname">InferPreferencesMCMC</tt><big>(</big><em>library_stats</em>, <em>pi_concentration</em>, <em>epsilon_concentration</em>, <em>mu_concentration</em>, <em>rho_concentration</em>, <em>nruns</em>, <em>nsteps</em>, <em>burn</em>, <em>npreburns</em>, <em>thin</em>, <em>progress_bar=False</em>, <em>minvalue=1e-07</em>, <em>debugging=False</em><big>)</big><a class="headerlink" href="#bayesian.InferPreferencesMCMC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Infers equilibrium amino-acid preferences <span class="math">\(\pi_{r,a}\)</span> by MCMC.</p>
+<p>This function utilizes <tt class="docutils literal"><span class="pre">pymc</span></tt> for the inference.</p>
+<p>This function infers the equilibrium preference <span class="math">\(\pi_{r,a}\)</span> for
+all amino acids <em>a</em> for a given site <em>r</em>. There are 21 possible values
+for <em>a</em> since we allow all 20 amino acids plus a stop codon (denoted
+by the * character). The preferences sum to one:
+<span class="math">\(\sum_a \pi_{r,a} = 1\)</span>. Higher values of <span class="math">\(\pi_{r,a}\)</span>
+correspond to a larger preference for <em>a</em> at site <em>r</em>.</p>
+<p>The full inference algorithm is described in the documentation for
+the <tt class="docutils literal"><span class="pre">mapmuts</span></tt> function, and so it not recapitulated here.</p>
+<p>CALLING VARIABLES:</p>
+<ul>
+<li><p class="first"><em>library_stats</em> is a list of statistics for each replicate of
+the libraries. There must be at least one replicate, but there
+can be more. Each entry in the list is a dictionary giving the
+statistics for that replicate. This dictionary has the following
+strings for keys:</p>
+<ul class="simple">
+<li><em>wtcodon</em> is a string giving the wildtype codon at the site. Should
+be an upper-case string, such as <em>GGC</em>.</li>
+<li><em>mu_prior</em> : a number giving the prior estimate for the probability
+that the site is mutated from its wildtype codon to some specific other
+codon in the <em>mutDNA</em> library. Note that this is the probability to
+be mutated to a <strong>specific</strong> codon, and so is the overall
+codon mutation rate divided by 63 (since there are 63 other codons).</li>
+<li><em>epsilon_prior</em> : a dictionary keyed by the integers 1, 2, and 3
+giving the prior estimate for the probability that the site is
+erroneously read as some other <strong>specific</strong> codon in the <em>DNA</em>
+library. The value for the key of 1 is the probability to be
+mutated to some other specific codon that differs by 1 nucleotide,
+the value for the key of 2 is the probability to be mutated to 
+some other specific codon that differs by 2 nucleotides, etc.</li>
+<li><em>rho_prior</em> : like <em>epsilon_prior</em>, but the probabilities for
+reverse-transcription errors in the <em>RNA</em> library.</li>
+<li><em>nrdna_counts</em> : keyed by all 64 codons (upper-case strings), with values
+being the number of codons with that identity in the <em>DNA</em> library.
+The sum of entries should equal <em>Nrdna</em>.</li>
+<li><em>nrrna_counts</em> : like <em>nrdna_counts</em> but for the <em>RNA</em> library.</li>
+<li><em>nrmutdna_counts</em> : like <em>nrdna_counts</em> but for the <em>mutDNA</em> library.</li>
+<li><em>nrmutvirus_counts</em> : like <em>nrdna_counts</em> but for the <em>mutvirus</em> library.</li>
+</ul>
+</li>
+<li><p class="first"><em>pi_concentration</em> is the concentration parameter (<span class="math">\(\sigma_{\pi}\)</span>)
+for the symmetric Dirichlet-distribution prior over the <span class="math">\(\pi_{r,a}\)</span> 
+values.</p>
+</li>
+<li><p class="first"><em>epsilon_concentration</em> is the concentration parameter
+(:math: <cite>sigma_{epsilon}</cite>) for the Dirichlet-distribution prior
+over error rate in the <em>DNA</em> library.</p>
+</li>
+<li><p class="first"><em>mu_concentration</em> is the concentration parameter (<span class="math">\(\sigma_{\mu}\)</span>)
+for the Dirichlet-distribution prior over the mutagenesis rate in
+the <em>mutDNA</em> library.</p>
+</li>
+<li><p class="first"><em>rho_concentration</em> is the concentration parameter (<span class="math">\(\sigma_{\rho}\)</span>)
+for the Dirichlet-distribution prior over the reverse-transcription error
+rata in the <em>RNA</em> library.</p>
+</li>
+<li><p class="first"><em>nruns</em> is the number of MCMC runs to perform, each starting from 
+different random values of the variables. Should be an integer &gt;= 1.
+Each MCMC run is <em>nsteps</em>, with a burn-in of <em>burn</em> and thining of
+<em>thin</em>.</p>
+</li>
+<li><p class="first"><em>nsteps</em> is an integer giving the number of MCMC steps to perform per run.
+Typically you might want values of 1e4 to 1e6 (depending on the chain
+is converging).</p>
+</li>
+<li><p class="first"><em>burn</em> is a number giving the number of burn-in steps to perform per run
+before saving the MCMC values. Typically you might want a value
+equal to 10 to 20% of <em>nsteps</em>.</p>
+</li>
+<li><p class="first"><em>npreburns</em> is the number of &#8220;pre-burn&#8221; runs that are performed. 
+Setting this variable to at least one, and preferably two, is 
+<strong>strongly</strong> recommended. The MCMC becomes very inefficient as it
+approaches its maximum because the sampler currently does not choose
+the step sizes in the Dirichlet-distributed variables in a particularly
+intelligent way. This option specifies that <em>npreburns</em> MCMC runs of
+<em>burn</em> steps are performed before the main MCMC, with the results
+of these pre-burn runs used to tune the step sizes for the main
+MCMC. The other heuristic (which is always applied) is to place
+the wildtype codon as the last entry in the Dirichlet-distributed
+variable since it will typically be the largest entry. However, 
+it is still not clear if this is the most efficient way to do
+MCMC updates of Dirichlet variables, and it is possible that
+using a delta exchange type operator (as implemented in <tt class="docutils literal"><span class="pre">BEAST</span></tt>)
+might be substantially more efficient). In addition,
+the setting of the wildtype codon to the last entry is only done
+based on the entries in the first library in <em>library_stats</em> &#8211;
+so if there are multiple libraries, this efficiency is lost.</p>
+</li>
+<li><p class="first"><em>thin</em> specifies the thinning of steps to perform (i.e. only sample
+every <em>thin</em> steps. Typically you might want a value of 10 to 100.
+<em>thin</em> must be set so that <em>burn</em> and <em>nsteps</em> are both multiples
+of <em>thin</em>.</p>
+</li>
+<li><p class="first"><em>progress_bar</em> is a Boolean switch specifying whether we display the 
+MCMC progress bar.</p>
+</li>
+<li><p class="first"><em>minvalue</em> is the minimum value assigned to any of the priors (over <em>mu</em>,
+<em>rho</em>, <em>epsilon</em>) over the rates. This prevents the priors from being set to
+zero. A reasonable value is <em>1e-7</em> or <em>1e-8</em>. Set to <em>1e-7</em> by default.</p>
+</li>
+<li><p class="first"><em>debugging</em> is a Boolean switch specifying whether we display
+fairly extensive debugging information. Is <em>False</em> by
+default. If <em>True</em>, the following is done:</p>
+<blockquote>
+<div><ul class="simple">
+<li>MCMC is run with <em>verbose=2</em> rather than the default
+of <em>verbose=0</em>.</li>
+<li>Information about the pre-burn runs and the step methods
+are printed to standard output.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>RETURN VALUE:</p>
+<p>This function returns the following tuple:
+<em>(pi_mean, pi_cred95, pi_traces, run_diff)</em></p>
+<p>The tuple-elements are as follows:</p>
+<ul class="simple">
+<li><em>pi_mean</em> is a <tt class="docutils literal"><span class="pre">numpy</span></tt> array of length 21. Element <em>pi_mean[i]</em> holds
+the mean <span class="math">\(\pi_{r,a}\)</span> value over all non-burnin steps and all
+<em>nruns</em> runs for amino-acid <em>a</em>, where 
+<em>i = mapmuts.sequtils.AminoAcids(includestop=True).index(a)</em>.</li>
+<li><em>pi_cred95</em> gives the median-centered 95% credible interval.
+<em>pi_cred95[i]</em> is the interval corresponding to the estimate with 
+the mean of <em>pi_mean[i]</em>. The interval is represented such
+that <em>pi_cred95[i][0]</em> is the lower bound, and <em>pi_cred95[i][1]</em>
+is the upper bound. Overall, <em>pi_cred95</em> is a <tt class="docutils literal"><span class="pre">numpy</span></tt> array
+of dimension <em>(21, 2)</em>.</li>
+<li><em>pi_traces</em> is a <tt class="docutils literal"><span class="pre">numpy</span></tt> array of dimension 
+<em>(nruns, (nsteps - burn) / thin, 21)</em>. This give values of the
+<span class="math">\(\pi_{r,a}\)</span> values during the thinned non-burnin MCMC steps.
+Specifically, <em>pi_traces[irun][istep][iaa]</em> gives the value
+of <span class="math">\(\pi_{r,a}\)</span> for run <em>irun</em> (where <em>0 &lt;= irun &lt; nruns</em>)
+for step <em>istep</em> (where <em>0 &lt;= istep &lt; (nsteps - burn) / thin</em>)
+for amino acid <em>a</em> where 
+<em>iaa = mapmuts.sequtils.AminoAcids(includestop=True).index(a)</em>.</li>
+<li><em>run_diff</em> is a measure of the difference between the mean 
+<span class="math">\(\pi_{r,a}\)</span> values for all non-burnin steps between the
+<em>nruns</em> different runs. If <em>nruns</em> is 1, then this cannot be
+calculated, so <em>run_diff = None</em>. Otherwise, we calculate
+the Shannon-Jensen divergence between the <span class="math">\(\pi_{r,a}\)</span>
+values for each pair of runs, taking the logarithm to the base
+2. If the two runs are identical, this divergence is zero,
+while its maximum value is one. We then calculate the average
+of the pairwise Shannon-Jensen divergence for all pairs of
+runs, and return that as <em>run_diff</em>. If <em>run_diff</em> is close
+to zero (say less than 0.01), that indicates that the runs are converging
+to similar values. If <em>run_diff</em> is large (say &gt; 0.05), that indicates
+they are converging to different values &#8211; in that case,
+you might want to increase <em>nsteps</em> (and perhaps <em>burn</em>).</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.PreferencesRemoveStop">
+<tt class="descclassname">bayesian.</tt><tt class="descname">PreferencesRemoveStop</tt><big>(</big><em>preferences</em><big>)</big><a class="headerlink" href="#bayesian.PreferencesRemoveStop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes stop codon as a possible amino acid from site preferences.</p>
+<p>You should use this function if you have a set of amino acid
+<em>preferences</em> that include a stop codon (denoted by a * character) as a possibility,
+and you want to remove the possibility of that stop codon and
+renormalize all of the other preferences so that they sum to one.</p>
+<p><em>preferences</em> is a variable that stores the preferences of sites
+for specific amino acids. Typically, these would be the values 
+written by <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt> or <tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt>
+as the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> or <tt class="docutils literal"><span class="pre">*_equilibriumfreqs.txt</span></tt> files,
+and then read by <em>mapmuts.io.ReadEntropyAndEquilFreqs</em>. So
+<em>preferences</em> is a dictionary keyed by site number <em>r</em>, and for each
+site <em>r</em>, <em>preferences[r]</em> is in turn a dictionary. This dictionary
+has the string keys &#8216;WT_AA&#8217;, &#8216;SITE_ENTROPY&#8217;, and then &#8216;PI_A&#8217;, &#8216;PI_C&#8217;,
+&#8216;PI_D&#8217;, etc. The &#8216;PI_A&#8217; entry gives the preference for amino acid
+<em>A</em>, etc. There may be 20 entries for the preferences for all 20 amino
+acids, or there may be 21 entries for all 20 amino acids plus for a 
+stop codon (this would be indicated by &#8216;PI_*&#8217;).</p>
+<p>This script goes through all sites <em>r</em> that key <em>preferences</em>. For a site,
+if there is <strong>not</strong> a stop codon key (&#8216;PI_*&#8217;) in <em>preferences[r]</em>, then
+nothing is done. But if there is a stop codon entry, then the key
+&#8216;PI_*&#8217; is removed from the dictionary and all of the other preferences
+are renormalized so that they stay proportional to their old values
+but now sum to one.</p>
+<p>These changes are made to <em>preferences</em> in place, and there is no
+return value. Because <em>preferences</em> is a dictionary, it is mutable,
+so that is why the changes can be made in place.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.PymcAvailable">
+<tt class="descclassname">bayesian.</tt><tt class="descname">PymcAvailable</tt><big>(</big><big>)</big><a class="headerlink" href="#bayesian.PymcAvailable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if <tt class="docutils literal"><span class="pre">numpy</span></tt> and <tt class="docutils literal"><span class="pre">pymc</span></tt> are available.</p>
+<p>Returns <em>True</em> if these packages can be imported, and <em>False</em> otherwise.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.ScipyAvailable">
+<tt class="descclassname">bayesian.</tt><tt class="descname">ScipyAvailable</tt><big>(</big><big>)</big><a class="headerlink" href="#bayesian.ScipyAvailable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if <tt class="docutils literal"><span class="pre">scipy</span></tt> is available.</p>
+<p>Returns <em>True</em> if <tt class="docutils literal"><span class="pre">scipy</span></tt> can be imported, and <em>False</em> otherwise.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.Seed">
+<tt class="descclassname">bayesian.</tt><tt class="descname">Seed</tt><big>(</big><em>seed</em><big>)</big><a class="headerlink" href="#bayesian.Seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seeds the random number generator used for the MCMC.</p>
+<p>If you want to make the output of <em>InferEnrichmentMCMC</em> reproducible,
+you can seed the random number generator. Only call this
+method if you have confirmed that <em>PymcAvailable() == True</em>.
+The generator (<em>numpy.random.seed</em>) is set to <em>seed</em>,
+as is <em>random.seed</em>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.ShannonJensenDivergence">
+<tt class="descclassname">bayesian.</tt><tt class="descname">ShannonJensenDivergence</tt><big>(</big><em>p1</em>, <em>p2</em><big>)</big><a class="headerlink" href="#bayesian.ShannonJensenDivergence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Shannon-Jensen divergence between <em>p1</em> and <em>p2</em>.</p>
+<p>Requires <tt class="docutils literal"><span class="pre">numpy</span></tt>, which is available if <em>PymcAvailable()</em> evaluates
+to <em>True</em>. Otherwise you will get an error.</p>
+<p><em>p1</em> and <em>p2</em> are two <em>numpy.ndarray</em> objects with elements that give
+the probability distributions for which we are computing the divergence.
+Specifically, <em>p1[i]</em> and <em>p2[i]</em> indicate the probability for state <em>i</em>
+in the two distributions. The constraints are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>p1</em> and <em>p2</em> should have dimension of one
+(<em>1 == len(p1.shape) == len(p2.shape)</em>).</li>
+<li><em>p1</em> and <em>p2</em> should have the same
+nonzero length (<em>len(p1) == len(p2) &gt; 0</em>)</li>
+<li><em>p1</em> and <em>p2</em> should both have entries that sum to one (since
+they are probability distributions), so
+<em>True == numpy.allclose(sum(p1), 1) == numpy.allclose(sum(p2), 1)</em></li>
+<li><em>p1</em> and <em>p2</em> should have all entries &gt;= 0, so 
+<em>True == numpy.all(p1 &gt;= 0) == numpy.all(p2 &gt;= 0)</em>.</li>
+</ul>
+</div></blockquote>
+<p>This function returns the Shannon-Jensen divergence between the 
+probability distributions specified by <em>p1</em> and <em>p2</em>. The logarithms
+are taken to the base 2, meaning that the returned divergence
+will always be between 0 and 1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.SiteEntropy">
+<tt class="descclassname">bayesian.</tt><tt class="descname">SiteEntropy</tt><big>(</big><em>pi</em><big>)</big><a class="headerlink" href="#bayesian.SiteEntropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a site entropy (in bits) based on equilibrium fractions.</p>
+<p>This function takes as a calling argument a single dictionary <em>pi</em>
+which has the format of the return variable from <em>EquilibriumFracs</em>.
+It then calculates a site entropy <em>h</em> which is a measure of how
+variable the site is in terms of its tolerance for various amino acids.
+This entropy is defined as:</p>
+<div class="highlight-python"><div class="highlight"><pre>h = - sum_aa pi[aa] * log2(pi[aa])
+</pre></div>
+</div>
+<p>where the sum is taken over all keys <em>aa</em> (presumably all amino acids)
+in <em>pi</em>, and <em>log2</em> indicates the logarithm to the base 2. The units
+on the returned site entropy are therefore bits.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">bayesian</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
+<li><a class="reference internal" href="#details-of-functions">Details of functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="latex_module.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">latex</span></tt> Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dssp_module.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">dssp</span></tt> Module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/bayesian_module.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dssp_module.html" title="dssp Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="latex_module.html" title="latex Module"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

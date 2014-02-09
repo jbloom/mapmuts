@@ -1,9 +1,0 @@
-# input file for running script mapmuts_parsecounts.py for parsecounts
-generange 62 1555
-samplename replicate_A, WT-1, DNA
-r1exclude None
-r2exclude None
-alignmentfile /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/DNA/replicate_A_WT-1_DNA_alignments.txt.gz
-outfileprefix replicate_A_WT-1_DNA
-upcase test
-fullgenefile /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/Aichi68-NP_amplicon.fasta

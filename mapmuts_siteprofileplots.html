@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_siteprofileplots.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_aafracsplots.py" href="mapmuts_aafracsplots.html" />
+    <link rel="prev" title="mapmuts_preferencemeans.py" href="mapmuts_preferencemeans.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_aafracsplots.html" title="mapmuts_aafracsplots.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_preferencemeans.html" title="mapmuts_preferencemeans.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-siteprofileplots-py">
+<span id="id1"></span><h1>mapmuts_siteprofileplots.py<a class="headerlink" href="#mapmuts-siteprofileplots-py" title="Permalink to this headline">¶</a></h1>
+<p>The primary output of this script is a sequence logo plot showing the preference <span class="math">\(\pi_{r,a}\)</span> of each protein site <em>r</em> for each amino acid <em>a</em>. The script can also overlay some information about aspects of protein structure (secondary structure and solvent accessibility).</p>
+<p>This script is designed to handle the output in the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files created by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>, although it can also be used to analyze the  <tt class="docutils literal"><span class="pre">*_equilibriumfreqs.txt</span></tt> files produced by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a>.</p>
+<p>Note that the sequence logo plot produced by this script isn&#8217;t the standard logo plot in which the stack height is scaled according to the site entropy. Rather, the height of each stack is the same, and the height of amino acid <em>a</em> within a stack is proportional to <span class="math">\(\pi_{r,a}\)</span>. So the heights of the letters given the preference of the site for that amino acid.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>This script requires:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://matplotlib.org/">matplotlib</a> to make the plots.</li>
+<li><a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> to make the sequence logo plots.</li>
+<li><a class="reference external" href="http://pybrary.net/pyPdf/">pyPdf</a> to overlay the secondary structure and solvent accessibility information onto the sequence logos plots.</li>
+<li>Optionally requires <a class="reference external" href="http://www.scipy.org/">scipy</a> to compute correlations (they will not be computed if <a class="reference external" href="http://www.scipy.org/">scipy</a> is not available).</li>
+</ul>
+</div>
+<div class="section" id="running-the-script">
+<h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
+<p>To run this script, simply create an input file with the format described below. If you name your input file <tt class="docutils literal"><span class="pre">siteprofileplots_infile.txt</span></tt>, then run the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_siteprofileplots.py siteprofileplots_infile.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-file">
+<h2>Input file<a class="headerlink" href="#input-file" title="Permalink to this headline">¶</a></h2>
+<p>The input file is a text file with a series of <em>key</em> / <em>value</em> pairs. The required keys are indicated below. The values should not include spaces.</p>
+<p>Lines beginning with # and empty lines are ignored.</p>
+<p>Keys for the input file:</p>
+<ul>
+<li><p class="first"><em>sitepreferences</em> : The name of the file giving the site preferences <span class="math">\(\pi_{r,a}\)</span>. Typically this would be the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> file created by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>, although it could also be the <tt class="docutils literal"><span class="pre">*_equilibriumfreqs.txt</span></tt> file created by created by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a> or <a class="reference internal" href="mapmuts_enrichmentgeomeans.html#mapmuts-enrichmentgeomeans-py"><em>mapmuts_enrichmentgeomeans.py</em></a>. The file has a header, and then for each site <em>r</em> there is a line giving the site entropy <span class="math">\(h_r\)</span> and all of the preferences <span class="math">\(\pi_{r,a}\)</span>. It is acceptable for a preference for a stop codon (denoted by a * character) to be either present or absent &#8211; but all other 20 amino acids must always be present. The site numbers listed in the file must be consecutive (i.e. there cannot be gaps) within <em>siterange</em>. Here is an example of a few lines of such a file:</p>
+<div class="highlight-python"><div class="highlight"><pre>#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*
+1   M   0.885694    0.000680047 0.00185968  8.48048e-06 0.00128217  0.0289946   0.000654589 0.0212144   0.0205306   0.0021597   0.00056726  0.876551    0.00130602  0.000789781 0.00144568  0.000414457 0.00071164  0.00126055  0.00167084  0.0352283   0.00176486  0.000905383
+2   A   1.1671  0.709575    0.00177747  3.79503e-05 0.00298854  0.00390524  0.00131246  0.00379599  0.000913006 0.00121497  0.000535209 0.00276335  0.00140061  0.000694694 0.0032134   0.00464972  0.000463924 0.000908368 0.254241    0.00335749  0.00137437  0.000876985
+3   N   3.2593  0.129992    0.000540239 4.2514e-06  0.00171887  0.0212062   0.0006086   0.102743    0.0431489   0.00524637  0.0771062   0.021714    0.0641921   0.00338082  0.0149898   0.0106522   0.13886 0.0247841   0.00607319  0.0500692   0.282389    0.000581555
+</pre></div>
+</div>
+</li>
+<li><p class="first"><em>outfileprefix</em> specifies the prefix affixed to each of the output files detailed below. <em>outfileprefix</em> can include a directory as part of the prefix (such as <tt class="docutils literal"><span class="pre">./plots/replicate-1_</span></tt>), but if such a directory is included in part of the prefix name then the directory must already exist or an error will be raised &#8211; this script does not create new directories. Any existing files that have the same names specified by <em>outfileprefix</em> will be overwritten.</p>
+</li>
+<li><p class="first"><em>siterange</em> specifies the range of residues that are included in the plot. The value should be two numbers giving the first and the last residues to include in the plots. You would use this option if you want to exclude certain residues (such as the first one in the example above). If you want to include all of the residues, just set to this to be the string <em>all</em>. There must be residue numbers in <em>sitepreferences</em> for all sites in <em>siterange</em>.</p>
+</li>
+<li><p class="first"><em>dsspfile</em> is an option that allows you to compare the observed site entropies and preferences to the relative solvent accessibility (RSA) and the secondary structure for the sites. This will only be useful if a crystal structure for your protein is available. You can then use the <a class="reference external" href="http://swift.cmbi.ru.nl/gv/dssp/">DSSP</a> webserver to calculate the secondary structures and the RSAs. If you do not want to use this option, just set <em>dsspfile</em> to <em>None</em>. If you do want to use this option, then run <a class="reference external" href="http://swift.cmbi.ru.nl/gv/dssp/">DSSP</a> on your protein structure &#8211; this script is tested against output from the <a class="reference external" href="http://swift.cmbi.ru.nl/gv/dssp/">DSSP</a> webserver, but should probably work on output from the standalone too. Then save the <a class="reference external" href="http://swift.cmbi.ru.nl/gv/dssp/">DSSP</a> output in a text file, and specify the path to that file as the value for <em>dsspfile</em>. This script does not currently have a robust ability to parse the <a class="reference external" href="http://swift.cmbi.ru.nl/gv/dssp/">DSSP</a> output, so you have to do some careful checks. In particular, you must make sure that residue numbers in the PDB file exactly match the residue numbering scheme used for the rest of this analysis (i.e. the same residue numbers found in <em>sitepreferences</em>, and that none of the residue numbers contain letter suffixes (such as 24A) as is sometimes the case in PDB files. It is not necessary that all of the residues be present in the PDB. If there are multiple PDB chains, you can specify them using the <em>dsspchain</em> option. <a class="reference external" href="http://swift.cmbi.ru.nl/gv/dssp/">DSSP</a> only calculates absolute accessible surface areas (ASAs); the RSAs are computed by normalizing by the maximum ASAs given by <a class="reference external" href="http://www.plosone.org/article/info:doi/10.1371/journal.pone.0080635">Tien et al, 2013</a>.</p>
+</li>
+<li><p class="first"><em>dsspchain</em> is an option that is only required if <em>dsspfile</em> is set to a value other than <em>None</em>. In this case, it should specify the chain in the PDB file that we want to use. If there is only one chain, you can set this option to <em>None</em>.</p>
+</li>
+<li><p class="first"><em>add_rsa</em> is an option that can be used if <em>dsspfile</em> is being used. This option specifies that the relative solvent accessibilities (RSAs) are shown in a color-coded bar above the sequence logo plot. If you do not want to do this, specify a value of <em>False</em>. If you do want to show the RSA bar, then specify a value of <em>True</em>. The RSAs are the fractional solvent accessibilities.</p>
+</li>
+<li><p class="first"><em>add_ss</em> is an option that can be used if <em>dsspfile</em> is being used. This option specifies that the sequence logo plot contains a bar showing the secondary structure. If you do not want to do this, specify a value of <em>False</em>. If you do want to show the secondary structure bar, then specify a value of <em>True</em>. The secondary structures are classified as <em>helix</em> (DSSP categories G, H, and I), <em>strand</em> (DSSP categories B and E) or <em>loop</em> (any other DSSP category).</p>
+</li>
+<li><p class="first"><em>nperline</em> specifies how many sites are included per line in the sequence logo plot. For example, if you have a protein of length 500 and you set <em>nperline</em> to 100, then the sequence logo plot will span 5 lines each showing 100 sites. In general, reasonable values are probably in the range from 50 to 100, but you might adjust based on the size of your protein.</p>
+</li>
+<li><p class="first"><em>includestop</em> specifies whether we include stop codons as possible amino acid identities if they are specified in <em>sitepreferences</em>. If <em>sitepreferences</em> comes from <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt>, then it may contain stop codons (denoted by a * character) as a possible amino acid. If <em>includestop</em> is <em>False</em>, then these stop codons are <strong>not</strong> considered a possible amino acid in the plots created here, and all of the other preferences are normalized so that the <span class="math">\(\pi_{r,a}\)</span> values for all 20 non-stop amino acids <em>a</em> sum to one. If <em>includestop</em> is <em>True</em>, then stop codons <strong>are</strong> considered a possible amino acid for the plots created here &#8211; but not that they are assigned a preference of zero if no preference is assigned in <em>sitepreferences</em>. In the sequence logo plot, stop codons are indicated with a black <em>X</em> character rather than an asterisk.</p>
+<p>Often, you will not really be interested in stop codons as a potential amino acid at a site because you will assume that they are not viable amino acids as they truncate the protein. This could provide a justification for setting <em>includestop</em> to <em>False</em>. On the other hand, checking to see that stop codons have very low preferences can be a good sanity check to make sure that the overall analysis is giving reasonable inferences &#8211; in that case, you might set <em>includestop</em> to <em>True</em> and then check that you don&#8217;t have lots of black <em>X</em> characters in the logo plot.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="example-input-file">
+<h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_siteprofileplots
+sitepreferences combined_equilibriumpreferences.txt
+outfileprefix WT-1_
+siterange 2 498
+dsspfile ./DSSP_analysis/2IQH_monomerC.dssp
+dsspchain C
+add_rsa True
+add_ss True
+nperline 83
+includestop True
+</pre></div>
+</div>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>This script will write some brief output to standard out (<em>sys.stdout</em>) describing its progress.</p>
+<p>It will then generate the following plots, each of which has the indicated suffix preceded by <em>outfileprefix</em>:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">site_preferences_logoplot.pdf</span></tt> : A sequence logo plot showing the preference for each amino acid. The height of each letter is proportional to the preference for that amino acid, <span class="math">\(\pi_{r,a}\)</span>. The amino-acid letters are colored according to the Kyte-Doolittle hydrophobicity scale. The plot will show site RSAs and SSs in colored bars if <em>add_rsa</em> and <em>add_ss</em> are <em>True</em> &#8211; sites that lack this information in <em>dsspfile</em> are white. Here is an example:</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_p1_site_preferences_logoplot.jpg"><img alt="example_2013Analysis_Influenza_NP_Aichi68_p1_site_preferences_logoplot.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_p1_site_preferences_logoplot.jpg" style="width: 85%;" /></a>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">site_entropy_plot.pdf</span></tt> : A plot of the site entropy as a function of the residue position in the primary sequence.</li>
+<li><tt class="docutils literal"><span class="pre">entropy_rsa_correlationplot.pdf</span></tt> : This plot is only produced if the <em>dsspfile</em> option is being used. In this case, it is a plot showing the correlation between the site entropy and the RSA (as calculated by <a class="reference external" href="http://swift.cmbi.ru.nl/gv/dssp/">DSSP</a>) for all sites for which both pieces of information are available. If <a class="reference external" href="http://www.scipy.org/">scipy</a> is available, the Pearson correlation coefficient is shown on the plot.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_siteprofileplots.py</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#running-the-script">Running the script</a></li>
+<li><a class="reference internal" href="#input-file">Input file</a></li>
+<li><a class="reference internal" href="#example-input-file">Example input file</a></li>
+<li><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_preferencemeans.html"
+                        title="previous chapter">mapmuts_preferencemeans.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_aafracsplots.html"
+                        title="next chapter">mapmuts_aafracsplots.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_siteprofileplots.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_aafracsplots.html" title="mapmuts_aafracsplots.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_preferencemeans.html" title="mapmuts_preferencemeans.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

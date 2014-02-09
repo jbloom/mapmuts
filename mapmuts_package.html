@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts Package &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python modules" href="pythonapi.html" />
+    <link rel="next" title="main Module" href="main_module.html" />
+    <link rel="prev" title="Python modules" href="pythonapi.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="main_module.html" title="main Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pythonapi.html" title="Python modules"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-__init__">
+<span id="mapmuts-package"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">mapmuts</span></tt> Package<a class="headerlink" href="#module-__init__" title="Permalink to this headline">¶</a></h1>
+<p>Package for mapping mutations for analysis of deep-sequencing libraries.</p>
+<div class="section" id="python-modules">
+<h2>Python modules<a class="headerlink" href="#python-modules" title="Permalink to this headline">¶</a></h2>
+<p>The package consists of the following Python modules:</p>
+<ul class="simple">
+<li>main</li>
+<li>align</li>
+<li>io</li>
+<li>latex</li>
+<li>sequtils</li>
+<li>plot</li>
+<li>simulate</li>
+<li>stats</li>
+<li>bayesian</li>
+<li>dssp</li>
+<li>weblogo</li>
+</ul>
+</div>
+<div class="section" id="c-extensions">
+<h2>C-extensions<a class="headerlink" href="#c-extensions" title="Permalink to this headline">¶</a></h2>
+<p>Some of the key functions in the Python modules are also coded in
+C-extensions for better performance. These C-extensions can be accessed
+directly through the Python functions, using options such as
+<cite>use_calign</cite> when you call the function, and so you typically would not need
+to address these C-extensions directly. The extensions are:</p>
+<ul class="simple">
+<li>calign</li>
+<li>csequtils</li>
+</ul>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">mapmuts</span></tt> is written by Jesse Bloom.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">mapmuts</span></tt> Package</a><ul>
+<li><a class="reference internal" href="#python-modules">Python modules</a></li>
+<li><a class="reference internal" href="#c-extensions">C-extensions</a></li>
+<li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pythonapi.html"
+                        title="previous chapter">Python modules</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="main_module.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">main</span></tt> Module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_package.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="main_module.html" title="main Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pythonapi.html" title="Python modules"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

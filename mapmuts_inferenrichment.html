@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_inferenrichment.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_enrichmentcorrelate.py" href="mapmuts_enrichmentcorrelate.html" />
+    <link rel="prev" title="mapmuts_aafracsplots.py" href="mapmuts_aafracsplots.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_enrichmentcorrelate.html" title="mapmuts_enrichmentcorrelate.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_aafracsplots.html" title="mapmuts_aafracsplots.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-inferenrichment-py">
+<span id="id1"></span><h1>mapmuts_inferenrichment.py<a class="headerlink" href="#mapmuts-inferenrichment-py" title="Permalink to this headline">¶</a></h1>
+<p>This script is designed to infer the enrichment or depletion of given amino-acid mutations in a selected versus unselected library, accounting for errors afflicting both. It does this using a Bayesian approach that uses MCMC (Markov chain Monte Carlo).</p>
+<p>Because this script implement MCMC algorithms, it takes a fairly long time to run &#8211; perhaps as long as several days depending on your computer and the specific problem.</p>
+<p>This script uses the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>, and so is designed to be run after you have completed the analysis with that script.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>This script requires <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> for the Bayesian inference, which in turn requires <a class="reference external" href="http://www.numpy.org/">numpy</a>. To get the plots, you also need <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. The MCMC is much more efficient if <a class="reference external" href="http://www.scipy.org/">scipy</a> is available, so installation of <a class="reference external" href="http://www.scipy.org/">scipy</a> is strongly recommended.</p>
+</div>
+<div class="section" id="background-and-nomenclature">
+<h2>Background and nomenclature<a class="headerlink" href="#background-and-nomenclature" title="Permalink to this headline">¶</a></h2>
+<p>This script is designed for the analysis of plasmid mutant libraries and viruses grown from those libraries. One can imagine that most of the mutations in the plasmid mutant library will be subject to selection upon viral growth: favorable mutations may increase in frequency, and deleterious mutations may decrease in frequency. The enrichment ratio for each amino acid, which we denote by <em>phi</em>, is the expected change in frequency of that mutation after accounting for various sources of errors and limited sampling. Favorable mutations with have <em>phi &gt; 1</em>, and unfavorable mutations will have <em>phi &lt; 1</em>.</p>
+<p>It is conceivably possible to calculate <em>phi</em> for codon, nucleotide, or amino-acid mutations. Here we calculate <em>phi</em> for amino-acid mutations from codon-level data. We assume that all codon mutations that lead to the same amino-acid change have the same value of <em>phi</em>, so that there is no differential selection on synonymous codons.</p>
+<p>We consider an experiment that contains the following four samples:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>DNA</em> : this sample is simply sequencing of the wildtype DNA. It measures the sequencing error rate.</li>
+<li><em>RNA</em> : this sample is simply sequencing of reverse-transcribed RNA generated from the wildtype DNA. It measures sequencing errors and reverse-transcription errors.</li>
+<li><em>mutDNA</em> : this sample is sequencing of the plasmid mutant library. It measures the underlying mutagenesis rate in the mutant library, plus any sequencing errors.</li>
+<li><em>mutvirus</em> : this sample is sequencing of the virus mutant library. It measures the selection on the mutations in the <em>mutDNA</em> library, plus any reverse-transcription and sequencing errors.</li>
+</ul>
+</div></blockquote>
+<p>Conceptually, if there were no sources of sequencing error, then <em>phi</em> would just be equal to the number of times a mutation occurred in the <em>mutvirus</em> library divided by the number of times that it occurred in the <em>mutDNA</em> library, although there would of course be sampling errors that would bias the estimate of <em>phi</em> for finite size libraries. This script accounts for sources of error, and estimates the posterior distribution of <em>phi</em> given the sampling errors.</p>
+<p>This script also defines another parameter, the equilibrium frequency <em>pi</em> of each amino-acid identity at a site. This can be thought of as the probability that a site would have some identity if the relative frequencies of the wildtype and mutant amino acids where those given by the enrichment ratios for all sites, and then normalized to sum to one. So <em>pi</em> for any particular amino-acid identity can be thought as the possibility that the site has that identity.</p>
+<p>Finally, sites are characterized by their site entropy <em>h</em>. This is the site entropy (log base 2, so units of bits) if the amino acids were found at the equilibrium frequencies <em>pi</em>.</p>
+</div>
+<div class="section" id="inference-algorithm">
+<h2>Inference algorithm<a class="headerlink" href="#inference-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>A full description of the inference algorithm, definition of likelihood and prior functions, etc, can be found in the following PDF file <a class="reference download internal" href="_downloads/enrichment_inference_algorithm.pdf"><tt class="xref download docutils literal"><span class="pre">enrichment_inference_algorithm.pdf</span></tt></a></p>
+</div>
+<div class="section" id="implementation-of-the-mcmc">
+<h2>Implementation of the MCMC<a class="headerlink" href="#implementation-of-the-mcmc" title="Permalink to this headline">¶</a></h2>
+<p>The posterior distribution for the enrichment ratio is estimated by MCMC using the <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> package. The script is designed to enable automatic testing for convergence using the <em>convergence</em> and <em>nruns</em> options. It is suggested that you use <em>nruns &gt; 1</em> and <em>stepincrease &gt; 1</em> so that you can try to ensure convergence. When multiple runs of MCMC are performed, they start from approximate maximum a posteriori estimates of the various parameters (made using an empirical Bayes strategy that may not find the true maximum, but is good enough to be useful) that are determined using <a class="reference external" href="http://www.scipy.org/">scipy</a>. If <a class="reference external" href="http://www.scipy.org/">scipy</a> is not available, then each run instead starts with random parameter values drawn from the prior. This takes longer to converge, which is why installation of <a class="reference external" href="http://www.scipy.org/">scipy</a> is strongly suggested.</p>
+</div>
+<div class="section" id="running-the-script">
+<h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
+<p>To run this script from the prompt, first create a text infile of the
+format described below. Then simply type <a class="reference internal" href="#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a>
+followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+type:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_inferenrichment.py infile.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-file">
+<h2>Input file<a class="headerlink" href="#input-file" title="Permalink to this headline">¶</a></h2>
+<p>The input file is a text file with a series of <em>key</em> / <em>value</em> pairs. The required keys are indicated below. The values should not include spaces.</p>
+<p>Lines beginning with # and empty lines are ignored.</p>
+<p>Keys for the input file:</p>
+<ul>
+<li><p class="first"><em>DNA_files</em> : The input data for this script are the <em>_codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. For each library being used for the inference (and you can combine data from multiple libraries), this key should be followed by a string giving the path to the <em>_codoncounts.txt</em> file for the <em>DNA</em> sample. The number of files listed here must be the same as the number listed for <em>RNA_files</em>, <em>mutDNA_files</em>, and <em>mutvirus_files</em> as all four files are needed for each library &#8211; they should also be listed in the same order (i.e. library 1, library 2, etc). Only definitively called codons (both reads agree, upper case in the <em>_codoncounts.txt</em> file) are used in the counts.</p>
+</li>
+<li><p class="first"><em>RNA_files</em> : like <em>DNA_files</em> but for the <em>RNA</em> samples.</p>
+</li>
+<li><p class="first"><em>mutDNA_files</em> : like <em>DNA_files</em> but for the <em>mutDNA</em> samples.</p>
+</li>
+<li><p class="first"><em>mutvirus_files</em> : like <em>DNA_files</em> but for the <em>mutvirus</em> samples.</p>
+</li>
+<li><p class="first"><em>excludesite_NNN</em> : This is an optional key that does not have to appear at all. You would use this key if you want to exclude a particular site from just one of multiple libraries specified by <em>DNA_files</em>, <em>RNA_files</em>, <em>mutDNA_files</em>, and <em>mutvirus_files</em>. For instance, imagine that those keys specify four files each. Imagine that the first two and last two files differ in identity at residue 334, so that only two of the libraries (say the first two) would be used for the inference at this site. You would then set:</p>
+<div class="highlight-python"><div class="highlight"><pre>excludesite_334 use use exclude exclude
+</pre></div>
+</div>
+<p>In this usage, the key <em>excludesite_</em> has a suffix giving a site number. There then should be a number of entries equal to the number of files specified for <em>DNA_files</em>, etc. In order, put <em>use</em> if that file is used for that site and <em>exclude</em> if that file is excluded for that site. Note, however, that at least one file must be <em>use</em> for each site. If you don&#8217;t want to exclude any sites from particular libraries, then just don&#8217;t include this key. If you want to exclude more than one residue, then have multiple entries of the key.</p>
+</li>
+<li><p class="first"><em>alpha</em> : a number &gt; 1 giving the shape parameter for the gamma distribution priors. A suggested value is 4. Larger values correspond to sharper priors, while smaller values correspond to broader priors.</p>
+</li>
+<li><p class="first"><em>phi_prior</em> : the mean of the prior distribution over <em>phi</em>. This should be your prior estimate for the enrichment ratio for a site before observing any data. Since most mutations will probably be deleterious, it is suggested to choose a value less than one, such as 0.1.</p>
+</li>
+<li><p class="first"><em>minbeta</em> : a number specifying the minimum beta value for the gamma distribution priors over the mutation and error rates (<em>mu</em>, <em>epsilon</em>, and <em>rho</em>), which are estimated from the library means. This keeps this number for being set to zero or negative for priors with very low means. A reasonable value is 1e-8.</p>
+</li>
+<li><p class="first"><em>seed</em> : integer seed for the random number generator. Runs with the same seed should generate exactly the same output. Otherwise the output may differ for different seeds as the MCMC uses random numbers.</p>
+</li>
+<li><p class="first"><em>nruns</em> : the number of independent MCMC runs. Must be at least one, but it is recommended that you use more (such as at least 2 and preferably 3) as this allows checks for MCMC convergence. When multiple runs are performed, the reported enrichment ratio comes from all three runs.</p>
+</li>
+<li><p class="first"><em>nsteps</em> : the number of steps for each MCMC run. A reasonable value is probably 10000. Larger values will give better posterior sampling but longer run times.</p>
+</li>
+<li><p class="first"><em>burn</em>  : the number of burn-in steps for each MCMC run. These burn-in steps are not counted towards the posterior as they are assumed to correspond to chain equilibration. In order to guarantee some steps that are informative, you must have <em>burn &lt; nsteps</em>. Typically, you might want to choose <em>burn</em> to be 20% of <em>nsteps</em>.</p>
+</li>
+<li><p class="first"><em>thin</em> : the posterior is only recorded every <em>thin</em> steps. If you want to record every value, then set <em>thin</em> to one. However, consecutive steps are usually correlated, so it is often preferable to set <em>thin</em> to a number greater than one. A suggested value is 10. Both <em>burn</em> and <em>nsteps</em> must be multiples of <em>thin</em>.</p>
+</li>
+<li><p class="first"><em>convergence</em> : the test applied to the MCMC runs to see if they converged. This option is only meaningful if <em>nruns</em> &gt; 1 (as it probably should be). The Gelman-Rubin statistic (which compares within run and between run variance) is calculated. If the MCMC is totally converged, this statistic should theoretically be one &#8211; incomplete convergence will make it greater than one. In this script, the chain is considered to have converged if this statistic is &lt; <em>convergence</em>. Typically, you might want to set <em>convergence</em> to a value of 1.05. If the chain has not converged, what is done next depends on the values of <em>stepincrease</em> and <em>convergencewarning</em>.</p>
+</li>
+<li><p class="first"><em>stepincrease</em> : If the chain fails to converge for a given enrichment ratio (according to the criterion of <em>convergence</em>), then the default action is to try to increase the number of steps to be equal to <em>stepincrease * nsteps</em>. We then test again for convergence for these longer MCMC runs. Typically increasing the step number might improve convergence. So <em>stepincrease</em> must be a number &gt;= 1. If it is one, that is equivalent to not doing any <em>stepincrease</em>, and nothing is tried and we proceed to the action specified by <em>convergencewarning</em>. If <em>stepincrease</em> is greater than one, we then try running the MCMC for <em>stepincrease * nsteps</em> steps for each run. If the chain then converges (according to <em>convergence</em>) the new inferences are used and nothing further is done. If it still does not converge, we still use the inferences from these longer runs, but then also proceed to the action specified by <em>convergencewarning</em>. Typically you might want to set <em>stepincrease</em> to a value of 5 or 10.</p>
+</li>
+<li><p class="first"><em>convergencewarning</em> : If the chain still fails to converge after <em>stepincrease</em>, this switch specifies whether we print a warning. If set to <em>True</em>, we print such a warning. If set to <em>False</em>, no warning is printed.</p>
+</li>
+<li><p class="first"><em>MCMC_traces</em> is the directory to which we write plots showing the traces of the enrichment ratio <em>phi</em> as a function of the number of MCMC steps after burnin and thinning. If you set this to the string <em>None</em>, then no such plots are created. Otherwise, if <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is available, then files with the prefix specified by <em>outfileprefix</em> and the suffix corresponding to the mutation (such as <em>M1A.pdf</em> or <em>N334H.pdf</em>) are created in the directory <em>MCMC_traces</em>. Note that this directory must already exist; it is NOT created.</p>
+</li>
+<li><p class="first"><em>enrichmentratio_plots</em> is the directory to which we write plots showing the enrichment ratios for all mutations at a site. Shown are the posterior mean and the 95% highest probability density of the posterior. If you set this to the string <em>None</em>, then no such plots are created. Otherwise, if <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is available, then files with the prefix specified by <em>outfileprefix</em> and the suffix corresponding to the mutation (such as <em>M1A.pdf</em> or <em>N334H.pdf</em>) are created in the directory <em>enrichmentratio_plots</em>. Note that this directory must already exist; it is NOT created.</p>
+</li>
+<li><p class="first"><em>equilibriumfreqs_plots</em> is the directory to which we write plots showing the equilibrium frequencies for all amino acids at a site. If you set this to the string <em>None</em>, then no such plots are created. Otherwise, if <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is available, then files with the prefix specified by <em>outfileprefix</em> and the suffix corresponding to the residue (such as <em>M1.pdf</em> or <em>N334.pdf</em>) are created in the directory <em>equilibriumfreqs_plots</em>. Note that this directory must already exist; it is NOT created.</p>
+</li>
+<li><p class="first"><em>outfileprefix</em> is a string giving the prefix for the output files described below.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="example-input-file">
+<h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_inferenrichment.py
+DNA_files DNA/WT-1_DNA_codoncounts.txt
+RNA_files RNA/WT-1_RNA_codoncounts.txt
+mutDNA_files mutDNA/WT-1_mutDNA_codoncounts.txt
+mutvirus_files mutvirus-p1/WT-1_mutvirus-p1_codoncounts.txt
+alpha 4.0
+phi_prior 0.1
+minbeta 1e-8
+seed 1
+nruns 3
+nsteps 10000
+burn 2000
+thin 10
+stepincrease 5
+convergence 1.05
+convergencewarning True
+MCMC_traces None
+enrichmentratio_plots enrichmentratio_plots/
+equilibriumfreqs_plots equilibriumfreqs_plots/
+outfileprefix WT-1
+</pre></div>
+</div>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>Output files are created with the prefix specified by <em>outfileprefix</em>. If any of these files already exist, they are overwritten. These files are:</p>
+<ul>
+<li><p class="first"><em>outfileprefix</em>_inferenrichment_log.txt : a text file logging the progress of this script as it proceeds.</p>
+</li>
+<li><p class="first"><em>outfileprefix</em>_enrichmentratios.txt : a text file giving the enrichment ratios at each site as estimated by the MCMC, as well as the values that would directly be inferred by simply taking the frequencies for that mutation in each sample as follows: <em>(mutvirus - RNA) / (mutDNA - DNA)</em>. The file has the following columns (separated by tabs):</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>MUTATION</em> : mutation name, such as <em>M1A</em>.</li>
+<li><em>PHI</em> : the inferred enrichment ratio as the posterior mean.</li>
+<li><em>PHI_HPD95_LOW</em> : the lower bound for the 95% highest probability density region of the posterior.</li>
+<li><em>PHI_HPD95_HIGH</em> : the lower bound for the 95% highest probability density region of the posterior.</li>
+<li><em>DIRECT_RATIO</em> : the ratio that would be directly inferred simply by taking the frequencies in each sample, as in <em>(mutvirus - RNA) / (mutDNA - DNA)</em>.</li>
+<li><em>MUTDNA_COUNTS</em> : the total number of counts for the mutation in the <em>mutDNA</em> library.</li>
+</ul>
+</div></blockquote>
+<p>Here is an example of a few lines:</p>
+<div class="highlight-python"><div class="highlight"><pre>#MUTATION PHI PHI_HPD95_LOW PHI_HPD95_HIGH DIRECT_RATIO MUTDNA_COUNTS
+G185V   0.026264    0.006302    0.050351    0.007457    317
+G185Y   0.033638    0.005914    0.068137    0.000000    117
+V186A   0.078486    0.038127    0.128140    0.087605    288
+V186C   0.127639    0.059663    0.201455    0.109420    110
+V186E   0.417777    0.289428    0.553911    0.450757    112
+V186D   0.062760    0.012822    0.119158    -0.070268   132
+V186G   0.024509    0.007273    0.044088    0.037411    413
+V186F   0.066532    0.010803    0.132563    -0.138370   87
+V186I   2.922233    2.530891    3.313716    3.699339    287
+V186H   0.057314    0.015062    0.101838    0.034704    125
+V186K   0.024061    0.004826    0.048173    0.000000    174
+</pre></div>
+</div>
+</li>
+<li><p class="first"><em>outfileprefix</em>_equilibriumfreqs.txt : a text file giving the equilibrium frequencies for each amino acid at each site. Stop codons are NOT included as possible identities for these frequencies. The equilibrium frequency <em>pi</em> for an amino acid is calculated from the posterior mean enrichment ratio <em>phi</em> as estimated by the MCMC. Essentially, this gives the probability that an amino acid would have some identity if all residues were present at relative frequencies specified by the enrichment ratios. We also calculate a site entropy <em>h</em> for each site as the entropy (log base 2, units of bits) for a hypothetical situation in which each amino acid is present at its equilibrium frequency. All of this information is written to this text file. The first column gives the residue number, the second column gives the wildtype amino acid, the third column gives the site entropy, and the remaining columns give the equilibrium frequencies for all of the amino acids in the order indicated by the header (which is alphabetical order). Here is an example of a few lines:</p>
+<div class="highlight-python"><div class="highlight"><pre>#SITE WT_AA SITE_ENTROPY PI_A PI_C PI_D PI_E PI_F PI_G PI_H PI_I PI_K PI_L PI_M PI_N PI_P PI_Q PI_R PI_S PI_T PI_V PI_W PI_Y
+1   M   3.952438    0.027276    0.057787    0.061477    0.0589700.058843    0.023888    0.050938    0.017797    0.062260    0.019259    0.216150    0.070343    0.029413    0.052597    0.018734    0.013009    0.025890    0.020677    0.058900    0.055793
+2   A   2.362402    0.537118    0.012475    0.013213    0.0258260.014365    0.008897    0.005926    0.009136    0.013902    0.003019    0.191576    0.010007    0.001631    0.007791    0.003013    0.004130    0.005614    0.099395    0.020214    0.012752
+3   S   2.745295    0.024799    0.002901    0.002167    0.0071370.311824    0.002504    0.022821    0.008849    0.004478    0.059771    0.015584    0.022394    0.005062    0.004390    0.006270    0.091925    0.014399    0.003761    0.048111    0.340854
+</pre></div>
+</div>
+</li>
+<li><p class="first">The plots showing the traces of the enrichment ratio during the MCMC, in the directory specified by <em>MCMC_traces</em> (if this option is being used). These plots are PDFs with the prefix given by <em>outfileprefix</em> followed by an underscore and the mutation name, such as <em>_M1A.pdf</em>. Here is an example of such a plot:</p>
+</li>
+<li><p class="first">The plots showing the enrichment ratios for each mutation at a site. Shown are the posterior means and 95% highest posterior density limits. These plots are are PDFs in the directory specified by <em>enrichmentratio_plots</em>. The plots have the prefix given by <em>outfileprefix</em> followed by an underscore and the residue wildtype identity and number, such as <em>_M1.pdf</em>.</p>
+</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/enrichmentratio_WT-1_N334.jpg"><img alt="enrichmentratio_WT-1_N334.jpg" src="_images/enrichmentratio_WT-1_N334.jpg" style="width: 60%;" /></a>
+</div>
+<ul class="simple">
+<li>The plots showing the equilibrium frequencies for each amino acid at a site. These plots are are PDFs in the directory specified by <em>equilibriumfreqs_plots</em>. The plots have the prefix given by <em>outfileprefix</em> followed by an underscore and the residue wildtype identity and number, such as <em>_M1.pdf</em>. Here is an example of such a plot:</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/equilibriumfreqs_WT-1_N334.jpg"><img alt="equilibriumfreqs_WT-1_N334.jpg" src="_images/equilibriumfreqs_WT-1_N334.jpg" style="width: 60%;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_inferenrichment.py</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#background-and-nomenclature">Background and nomenclature</a></li>
+<li><a class="reference internal" href="#inference-algorithm">Inference algorithm</a></li>
+<li><a class="reference internal" href="#implementation-of-the-mcmc">Implementation of the MCMC</a></li>
+<li><a class="reference internal" href="#running-the-script">Running the script</a></li>
+<li><a class="reference internal" href="#input-file">Input file</a></li>
+<li><a class="reference internal" href="#example-input-file">Example input file</a></li>
+<li><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_aafracsplots.html"
+                        title="previous chapter">mapmuts_aafracsplots.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_enrichmentcorrelate.html"
+                        title="next chapter">mapmuts_enrichmentcorrelate.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_inferenrichment.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_enrichmentcorrelate.html" title="mapmuts_enrichmentcorrelate.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_aafracsplots.html" title="mapmuts_aafracsplots.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

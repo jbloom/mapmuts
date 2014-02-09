@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Workflow &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="next" title="Scripts" href="scripts.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="scripts.html" title="Scripts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="workflow">
+<h1>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> can be run directly using
+scripts that should be executable from the command line if you have installed
+<a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> into a directory that is part of the search path. You therefore
+do not have to interface directly with the <a class="reference external" href="http://www.python.org/">Python</a> modules, but can just run these
+executable scripts.</p>
+<p>Typically you begin with a target gene and some FASTQ files from Illumina paired-end reads. This workflow progressively takes you through alignment of the reads, calling of identities and analysis of mutation frequencies, and finally Bayesian inference of the amino-acid preferences.</p>
+<p>Each script takes as input a single text file which specifies various input
+files and parameters. You will need to create these input files manually.</p>
+<ol class="arabic simple">
+<li>First, you will want to align the paired reads to the target gene
+using <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a>.  This script aligns paired Illumina reads to each other and then to a template gene according to various user specified parameters. It takes as input the FASTQ files giving the Illumina reads. If you are analyzing several samples, you will want to run this script on each of them.</li>
+<li>After you have made alignments for several different samples, you may want to
+compare the alignment statistics for them using <a class="reference internal" href="mapmuts_alignmentsummaryplot.html#mapmuts-alignmentsummaryplot-py"><em>mapmuts_alignmentsummaryplot.py</em></a>.
+This script will create a summary
+plot comparing the alignment statistics for the different samples.</li>
+<li>You will then want to parse the alignments into text files that give the
+number of nucleotide and codon mutations at each position. You can do this
+using <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. This script will give you a summary of the identities called definitively by both pairs of an Illumina read pair.</li>
+<li>If you parse alignments for several different samples, you may want to compare
+the mutation frequencies among these samples using <a class="reference internal" href="mapmuts_parsesummaryplots.html#mapmuts-parsesummaryplots-py"><em>mapmuts_parsesummaryplots.py</em></a>.</li>
+<li>If you want to check the completeness with which mutations are sampled, you can use <a class="reference internal" href="mapmuts_countparsedmuts.html#mapmuts-countparsedmuts-py"><em>mapmuts_countparsedmuts.py</em></a>.</li>
+<li>You may then want to infer the preference of each site for each of the amino acids using <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. This is done using MCMC to account for sampling errors and sequencing errors / mutations. This MCMC will take a while to run (up to a few days perhaps depending on your computer and the size of the data set).</li>
+<li>After you have inferred the preferences for several samples, you may want to examine the correlations among the inferred preferences using <a class="reference internal" href="mapmuts_preferencescorrelate.html#mapmuts-preferencescorrelate-py"><em>mapmuts_preferencescorrelate.py</em></a>.</li>
+<li>You may want to average inferences for several samples using <a class="reference internal" href="mapmuts_preferencemeans.html#mapmuts-preferencemeans-py"><em>mapmuts_preferencemeans.py</em></a>.</li>
+<li>You may want to summarize the preferences for the whole gene and create a sequence logo plot summarizing the results. This can be done using <a class="reference internal" href="mapmuts_siteprofileplots.html#mapmuts-siteprofileplots-py"><em>mapmuts_siteprofileplots.py</em></a>.</li>
+</ol>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="scripts.html"
+                        title="next chapter">Scripts</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/workflow.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="scripts.html" title="Scripts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

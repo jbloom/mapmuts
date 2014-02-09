@@ -1,5 +1,0 @@
-# input file for running script mapmuts_preferencescorrelate.py for preferencescorrelate_replicate_A_vs_replicate_B
-plotdir ./
-samplenames replicate_A_p1 replicate_B_p1
-preferencesfiles /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/replicate_A_p1_equilibriumpreferences.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_B/replicate_B_p1_equilibriumpreferences.txt
-alpha 0.1

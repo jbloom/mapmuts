@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_alignmentsummaryplot.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_parsecounts.py" href="mapmuts_parsecounts.html" />
+    <link rel="prev" title="mapmuts_makealignments.py" href="mapmuts_makealignments.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_parsecounts.html" title="mapmuts_parsecounts.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_makealignments.html" title="mapmuts_makealignments.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-alignmentsummaryplot-py">
+<span id="id1"></span><h1>mapmuts_alignmentsummaryplot.py<a class="headerlink" href="#mapmuts-alignmentsummaryplot-py" title="Permalink to this headline">¶</a></h1>
+<p>Makes summary plot after several runs of <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a>.</p>
+<p>This script creates a stacked bar graph that summarizes the overall
+number of reads for each sample and how many reads were retained
+and removed during the alignment process.</p>
+<p>To run this script from the prompt, first create a text infile of the
+format described below. Then simply type <a class="reference internal" href="#mapmuts-alignmentsummaryplot-py"><em>mapmuts_alignmentsummaryplot.py</em></a>
+followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+type:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_alignmentsummaryplot.py infile.txt
+</pre></div>
+</div>
+<p>This script is designed to be run after you have already run
+<a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> on several samples. Each run of that program
+generates an <tt class="docutils literal"><span class="pre">*_alignmentstatistics.txt</span></tt> file. This script reads in
+those files and creates a stacked bar graph that summarizes the output
+of the various samples.</p>
+<p>This script will only work if <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> are available.</p>
+<div class="section" id="input-file-format">
+<h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
+<p>The input file should specify all of the <tt class="docutils literal"><span class="pre">*_alignmentstatistics.txt</span></tt> files created by <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> along with the sample names these are assigned. Each entry should be on a separate line, with the file name (no spaces allowed) followed by a space and then the sample name used in the plot (spaces are allowed). There must be at least two such entries.</p>
+<p>There should then be a line with the initial word <em>plotfile</em> and then the name of the PDF plot that is created. This file is overwritten if it alread exits.</p>
+<p>Blank lines and lines beginning with # are ignored.</p>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># Input file to mapmuts_alignmentsummaryplot.py
+sample_1_alignmentstatistics.txt sample 1
+sample_2_alignmentstatistics.txt sample 2
+plotfile alignmentstatistics_plot.pdf
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-of-script">
+<h2>Output of script<a class="headerlink" href="#output-of-script" title="Permalink to this headline">¶</a></h2>
+<p>The result of this script is the creation of the output PDF file specified by <em>plotfile</em>. Here is an example of such a plot:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_alignmentsummaryplot.jpg"><img alt="example_2013Analysis_Influenza_NP_Aichi68_replicate_A_alignmentsummaryplot.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_alignmentsummaryplot.jpg" style="width: 60%;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_alignmentsummaryplot.py</a><ul>
+<li><a class="reference internal" href="#input-file-format">Input file format</a></li>
+<li><a class="reference internal" href="#output-of-script">Output of script</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_makealignments.html"
+                        title="previous chapter">mapmuts_makealignments.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_parsecounts.html"
+                        title="next chapter">mapmuts_parsecounts.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_alignmentsummaryplot.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_parsecounts.html" title="mapmuts_parsecounts.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_makealignments.html" title="mapmuts_makealignments.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

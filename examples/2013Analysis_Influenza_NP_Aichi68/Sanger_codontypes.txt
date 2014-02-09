@@ -1,1 +1,0 @@
-manual_codontypes 0.00040 0.00468 0.00027 Sanger

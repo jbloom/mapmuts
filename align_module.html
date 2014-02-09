@@ -1,0 +1,1365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>align Module &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python modules" href="pythonapi.html" />
+    <link rel="next" title="sequtils Module" href="sequtils_module.html" />
+    <link rel="prev" title="main Module" href="main_module.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sequtils_module.html" title="sequtils Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="main_module.html" title="main Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-align">
+<span id="align-module"></span><h1><a class="reference internal" href="#module-align" title="align"><tt class="xref py py-mod docutils literal"><span class="pre">align</span></tt></a> Module<a class="headerlink" href="#module-align" title="Permalink to this headline">¶</a></h1>
+<p>Module for performing sequence and read alignment operations.</p>
+<p>This module is part of the <tt class="docutils literal"><span class="pre">mapmuts</span></tt> package.</p>
+<p>Written by Jesse Bloom.</p>
+<div class="section" id="list-of-functions">
+<h2>List of functions<a class="headerlink" href="#list-of-functions" title="Permalink to this headline">¶</a></h2>
+<p><cite>AlignReads</cite> : Aligns overlapping ungapped paired-end reads with known adaptors.</p>
+<p><cite>AlignReadToGene</cite> : aligns read to a gene, does not handle gaps.</p>
+<p><cite>Needle</cite> : runs the EMBOSS needle program.</p>
+<p><cite>AddDots</cite> : adds dots at identities for two sequences.</p>
+<p><cite>RemoveDots</cite> : inverse of <cite>AddDots</cite>.</p>
+<p><cite>ReadToGeneMismatches</cite> : finds mismatches between aligned read and gene.</p>
+<p><cite>ParsePairedAlignment</cite> : parses alignment returned by <cite>io.IterateAlignmentFile</cite>.</p>
+</div>
+<div class="section" id="list-of-classes">
+<h2>List of classes<a class="headerlink" href="#list-of-classes" title="Permalink to this headline">¶</a></h2>
+<p><cite>ReadPairToGeneAligner</cite> : aligns overlapping paired-end reads with known adaptors to a gene.</p>
+</div>
+<div class="section" id="list-of-c-extensions">
+<h2>List of C-extensions<a class="headerlink" href="#list-of-c-extensions" title="Permalink to this headline">¶</a></h2>
+<p>Some of the functions in this module are implemented in faster format
+the C extension module <cite>calign</cite>. Calling these functions cause them to 
+in turn call the faster C implementations, assuming that <cite>calign</cite> can
+be imported. This is done for the following functions unless they are
+called with <cite>use_calign set</cite> to <cite>False</cite>:</p>
+<ul class="simple">
+<li><cite>AlignReads</cite></li>
+<li><cite>AlignReadToGene</cite></li>
+<li><cite>AddDots</cite></li>
+<li><cite>ReadToGeneMismatches</cite></li>
+<li><cite>ParsePairedAlignment</cite></li>
+</ul>
+</div>
+<div class="section" id="documentation-for-functions-and-classes">
+<h2>Documentation for functions and classes<a class="headerlink" href="#documentation-for-functions-and-classes" title="Permalink to this headline">¶</a></h2>
+<p>Documentation for individual functions and classes is provided
+in their definitions below.</p>
+<dl class="function">
+<dt id="align.AddDots">
+<tt class="descclassname">align.</tt><tt class="descname">AddDots</tt><big>(</big><em>s1</em>, <em>s2</em>, <em>use_calign=True</em><big>)</big><a class="headerlink" href="#align.AddDots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds dots at identities for two aligned sequences.</p>
+<p>Take as input two string <cite>s1</cite> and <cite>s2</cite> that represent aligned
+sequences. Adds a dot to every position of <cite>s2</cite> that is identical to
+the corresponding position of <cite>s1</cite>. Upper and lower case letter are
+treated differently. Then returns the copy of <cite>s2</cite> with the dots added.</p>
+<p><cite>s1</cite> : a string giving the first sequence aligned to <cite>s2</cite></p>
+<p><cite>s2</cite> : a string giving the second sequence aligned to <cite>s1</cite></p>
+<p><cite>use_calign</cite> : specifies that we actually perform the calculations
+using the implementation of this function in <cite>calign</cite>. This 
+dramatically speeds the computation. The <cite>calign</cite> extension
+is used assuming that it is available and that this
+parameter is set to its default value of <cite>True</cite>. If <cite>use_calign</cite>
+is set to <cite>False</cite>, or if <cite>calign</cite> is unavailable, then the 
+computations instead use the pure Python implementation.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="s">&#39;ATGACATAGACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="s">&#39;ATGACTTACACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AddDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+<span class="go">&#39;.....T..C...&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="s">&#39;ATGNATAGACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="s">&#39;ATGCANAGACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AddDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+<span class="go">&#39;...C.N.....&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="s">&#39;ATGACATAGACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="s">&#39;aTGACTTACACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AddDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+<span class="go">&#39;a....T..C...&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="s">&#39;ATGACATA-ACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="s">&#39;-TGACTTACACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AddDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+<span class="go">&#39;-....T..C...&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="align.AlignReadToGene">
+<tt class="descclassname">align.</tt><tt class="descname">AlignReadToGene</tt><big>(</big><em>r</em>, <em>gene</em>, <em>gene_rc</em>, <em>maxm</em>, <em>upcase</em>, <em>n_is_mismatch=False</em>, <em>use_calign=True</em><big>)</big><a class="headerlink" href="#align.AlignReadToGene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aligns a read to a gene.</p>
+<p>This function is designed to align a short read to a gene
+sequence. The read can align with either the gene or its
+reverse complement. This is not a true alignment, but rather a
+search to see if the read occurs in the gene with &lt;= some specified
+number of mismatches. If there are multiple ways that the read
+aligns with the gene with &lt;= the specified mismatches, just 
+returns the first (not necessarily the best) one. Also, gaps are
+not allowed, so if there are any gaps the alignment will not be 
+found. Basically, we are searching for the read being a substring
+allowing some number of mismatches.</p>
+<p><cite>r</cite> : a string giving the read.</p>
+<p><cite>gene</cite> : a string giving the gene sequence</p>
+<p><cite>gene_rc</cite> : a string giving the reverse-complement of gene
+so <tt class="docutils literal"><span class="pre">gene_rc</span> <span class="pre">=</span> <span class="pre">sequtils.ReverseComplement(gene)</span></tt></p>
+<p><cite>maxm</cite> : the maximum number of mismatches that are allowed 
+in the alignment of <cite>r</cite> with <cite>gene</cite> or <cite>gene_rc</cite>. If <cite>maxm</cite>
+is not less than <cite>len(r)</cite>, then obviously any position
+will be an alignment, so in general this function is only
+meaningful if <cite>maxm &lt;&lt; len(r)</cite>. We only consider an alignment
+to be valid if the number of mismatches is &lt;= <cite>maxm</cite>.</p>
+<p><cite>upcase</cite> : argument specifying whether we convert all sequences to
+upper case. If <cite>True</cite>, the results will be upper case and
+that the alignment is case-insensitive. If
+<cite>False</cite>, the alignments will be case-sensitive, with &#8216;a&#8217; and &#8216;A&#8217;
+considered a mismatch, and in this case, the results will be
+returned with the original case. In general, the method will
+run faster if upcase is <cite>False</cite>, since that avoids converting
+sequences to new cases. So if you are able to guarantee
+that all of the sequences that you are examining are the
+same case, set this to <cite>False</cite>.</p>
+<p><cite>n_is_mismatch</cite> : a Boolean switch specifying that we consider &#8216;N&#8217;
+or &#8216;n&#8217; nucleotides to be mismatches if they align with something
+else. By default this is <cite>False</cite>, meaning that an &#8216;N&#8217; or &#8216;n&#8217;
+nucleotide is not considered to be a mismatch regardless of
+what it aligns with. If set to <cite>True</cite>, then an &#8216;N&#8217; or &#8216;n&#8217; is 
+considered a mismatch unless it aligns with the same character.</p>
+<p><cite>use_calign</cite> : specifies that we actually perform the calculations
+using the implementation of this function in <cite>calign</cite>. This 
+dramatically speeds the computation. The <cite>calign</cite> extension
+is used assuming that it is available and that this
+parameter is set to its default value of <cite>True</cite>. If <cite>use_calign</cite>
+is set to <cite>False</cite>, or if <cite>calign</cite> is unavailable, then the 
+computations instead use the pure Python implementation.</p>
+<p>If the function is unable to find an alignment of <cite>r</cite> with either
+<cite>gene</cite> or <cite>gene_rc</cite>, then the return value is <cite>False</cite>. If it does align,
+returns a 3-tuple <cite>(ipos, isrc, nm)</cite> where the elements have
+the following meanings:</p>
+<p><cite>ipos</cite> : the position in <cite>gene</cite> or <cite>gene_rc</cite> to which <cite>r</cite> aligns in
+0, 1, 2, ... numbering. Specifically, <cite>r</cite> aligns with
+<tt class="docutils literal"><span class="pre">gene[ipos</span> <span class="pre">:</span> <span class="pre">ipos</span> <span class="pre">+</span> <span class="pre">len(r)]</span></tt> (if <cite>isrc</cite> is <cite>False</cite>) or with
+<tt class="docutils literal"><span class="pre">gene_rc[ipos</span> <span class="pre">:</span> <span class="pre">ipos</span> <span class="pre">+</span> <span class="pre">len(r)]</span></tt> (if <cite>isrc</cite> is <cite>True</cite>). Since
+<cite>r</cite> must be a substring, we have the constraint that
+<tt class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">ipos</span> <span class="pre">&lt;</span> <span class="pre">len(gene)</span> <span class="pre">-</span> <span class="pre">len(r)</span></tt>.</p>
+<p><cite>isrc</cite> : a Boolean argument specifying whether the read is
+the reverse complement of the gene. If <cite>False</cite>, it means
+that <cite>r</cite> aligns with <cite>gene</cite>. If <cite>True</cite>, it means that <cite>r</cite> aligns
+with <cite>gene_rc</cite>.</p>
+<p><cite>nm</cite> : the number of mismatches in the alignment. This will be
+an integer with <tt class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">nm</span> <span class="pre">&lt;=</span> <span class="pre">maxm</span></tt>.</p>
+<p>In this example, <cite>r1</cite> aligns exactly to gene, <cite>r2</cite> aligns with one mismatch,
+<cite>r3</cite> does not align because it is not a substring.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gene</span> <span class="o">=</span> <span class="s">&#39;ATGATACTAGATAGATATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_rc</span> <span class="o">=</span> <span class="n">mapmuts</span><span class="o">.</span><span class="n">sequtils</span><span class="o">.</span><span class="n">ReverseComplement</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ATGATACT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;ATGATTCT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r3</span> <span class="o">=</span> <span class="s">&#39;CATGATACT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(0, False, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(0, False, 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r3</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>In this examle, two reads that do not align because they are not
+substrings, but they do align when the last nucleotide is removed to
+make them no longer substrings.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gene</span> <span class="o">=</span> <span class="s">&#39;ATGATACTAGATAGATATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_rc</span> <span class="o">=</span> <span class="n">mapmuts</span><span class="o">.</span><span class="n">sequtils</span><span class="o">.</span><span class="n">ReverseComplement</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;GATATAT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;GTATCATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(13, False, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">[</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(12, True, 0)</span>
+</pre></div>
+</div>
+<p>In this example, read aligns in internal position</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gene</span> <span class="o">=</span> <span class="s">&#39;ATGATACTAGATAGATATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_rc</span> <span class="o">=</span> <span class="n">mapmuts</span><span class="o">.</span><span class="n">sequtils</span><span class="o">.</span><span class="n">ReverseComplement</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="s">&#39;CTAGATAGATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(6, False, 0)</span>
+</pre></div>
+</div>
+<p>In this example, reads do not align due to gaps</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gene</span> <span class="o">=</span> <span class="s">&#39;ATGATACTAGATAGATATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_rc</span> <span class="o">=</span> <span class="n">mapmuts</span><span class="o">.</span><span class="n">sequtils</span><span class="o">.</span><span class="n">ReverseComplement</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ATGTACTA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;TAGATTAGA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r3</span> <span class="o">=</span> <span class="s">&#39;GATATAT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r3</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>In this example, read aligns in reverse complement</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gene</span> <span class="o">=</span> <span class="s">&#39;TAGACTAGATAGATAGCTAT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_rc</span> <span class="o">=</span> <span class="n">mapmuts</span><span class="o">.</span><span class="n">sequtils</span><span class="o">.</span><span class="n">ReverseComplement</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ATAGCTATCT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(0, True, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;TATCTATCTTG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(5, True, 1)</span>
+</pre></div>
+</div>
+<p>Examples of <cite>upcase</cite> usage</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gene</span> <span class="o">=</span> <span class="s">&#39;TGCATGACTAATAGACATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_rc</span> <span class="o">=</span> <span class="n">mapmuts</span><span class="o">.</span><span class="n">sequtils</span><span class="o">.</span><span class="n">ReverseComplement</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;tgcatgact&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;TGCATGAaT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">(0, False, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(0, False, 1)</span>
+</pre></div>
+</div>
+<p>Example of <cite>n_is_mismatch</cite> usage</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gene</span> <span class="o">=</span> <span class="s">&#39;ATGATACTAGATAGATATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_rc</span> <span class="o">=</span> <span class="n">mapmuts</span><span class="o">.</span><span class="n">sequtils</span><span class="o">.</span><span class="n">ReverseComplement</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;NTGATACT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;NTGATTCT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(0, False, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(0, False, 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">n_is_mismatch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">n_is_mismatch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">(0, False, 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">n_is_mismatch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReadToGene</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">gene</span><span class="p">,</span> <span class="n">gene_rc</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">n_is_mismatch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">(0, False, 2)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="align.AlignReads">
+<tt class="descclassname">align.</tt><tt class="descname">AlignReads</tt><big>(</big><em>r1</em>, <em>r2</em>, <em>a1</em>, <em>a2</em>, <em>minoverlap</em>, <em>maxrm</em>, <em>maxa1m</em>, <em>maxa2m</em>, <em>upcase</em>, <em>n_is_mismatch=False</em>, <em>use_calign=True</em><big>)</big><a class="headerlink" href="#align.AlignReads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aligns overlapping paired-end reads with known adaptors.</p>
+<p>This function rapidly aligns overlapping paired-end reads <cite>r1</cite>
+and <cite>r2</cite>. These reads cover the same template sequence in opposite
+directions with possible overlap, such as would be generated when
+sequencing a short Illumina insert. Gaps in the read overlap are
+currently not handled, so the presence of any gap will prevent
+alignment.</p>
+<p>This is NOT an alignment method that will necessarily find the
+optimal alignment. Instead, it searches rapidly for the first match
+that meets the specified criteria, and returns this. So be careful
+if you set lenient values for <cite>minoverlap</cite>, <cite>maxrm</cite>, <cite>maxa1m</cite>, and <cite>maxa2m</cite>.
+However, this method is fast!</p>
+<p><cite>r1</cite> : the first read (a string).</p>
+<p><cite>r2</cite> : the second read, should already be reverse complemented (a
+string).</p>
+<p><cite>a1</cite> : the adaptor sequence that is at the 3&#8217; end of <cite>r1</cite> after the
+target sequence (a string).</p>
+<p><cite>a2</cite> : the adaptor sequence that is at the 5&#8217; end of <cite>r2</cite> before the
+target sequence. Note that in the actual sequence read it will
+be at the 3&#8217; end of the read, but since <cite>r2</cite> is already reverse
+complemented it is now at the 5&#8217; end, and itself should be
+reverse complemented from the actual adaptor (a string).</p>
+<p><cite>minoverlap</cite> : the minimum amount of overlap between <cite>r1</cite> and <cite>r2</cite>,
+representing their joint coverage of the target sequence (an
+integer &gt;= 1).</p>
+<p><cite>maxrm</cite> : the number of mismatches allowed in the overlap of <cite>r1</cite> and
+<cite>r2</cite> (an integer &gt;= 0).</p>
+<p><cite>maxa1m</cite> : the maximum number of mismatches allowed in the overlap of
+<cite>r1</cite> with <cite>a1</cite> (an integer &gt;= 0).</p>
+<p><cite>maxa2m</cite> : the maximum number of mismatches allowed in the overlap of
+<cite>r2</cite> with <cite>a2</cite> (an integer &gt;= 0).</p>
+<p><cite>upcase</cite> : argument specifying whether we convert all sequences to
+upper case. If <cite>True</cite>, the results will be upper case and
+that the alignment is case-insensitive. If
+<cite>False</cite>, the alignments will be case-sensitive, with &#8216;a&#8217; and &#8216;A&#8217;
+considered a mismatch, and in this case, the results will be
+returned with the original case. In general, the method will
+run faster if upcase is <cite>False</cite>, since that avoids converting
+sequences to new cases. So if you are able to guarantee
+that all of the sequences that you are examining are the
+same case, set this to <cite>False</cite>.</p>
+<p><cite>n_is_mismatch</cite> : a Boolean switch specifying that we consider &#8216;N&#8217;
+or &#8216;n&#8217; nucleotides to be mismatches if they align with something
+else. By default this is <cite>False</cite>, meaning that an &#8216;N&#8217; or &#8216;n&#8217;
+nucleotide is not considered to be a mismatch regardless of
+what it aligns with. If set to <cite>True</cite>, then an &#8216;N&#8217; or &#8216;n&#8217; is 
+considered a mismatch unless it aligns with the same character.</p>
+<p><cite>use_calign</cite> : specifies that we actually perform the calculations
+using the implementation of this function in <cite>calign</cite>. This 
+dramatically speeds the computation. The <cite>calign</cite> extension
+is used assuming that it is available and that this
+parameter is set to its default value of <cite>True</cite>. If <cite>use_calign</cite>
+is set to <cite>False</cite>, or if calign is unavailable, then the 
+computations instead use the pure Python implementation.</p>
+<p>If the reads cannot be aligned with the specified overlap and
+mismatch parameters, returns <cite>False</cite>. If they can be aligned, returns
+the following tuple:
+<cite>(r1overlap, r2overlap, nmismatches, r1a, r2a)</cite>
+where <cite>r1overlap</cite> and <cite>r2overlap</cite> are 2-tuples of integers such that
+<tt class="docutils literal"><span class="pre">r1[r1overlap[0]</span> <span class="pre">:</span> <span class="pre">r1overlap[1]]</span></tt> gives the portion of <cite>r1</cite> that overlaps
+with <cite>r2</cite>, and <tt class="docutils literal"><span class="pre">r2[r2overlap[0]</span> <span class="pre">:</span> <span class="pre">r2overlap[1]]</span></tt> gives the portion of <cite>r2</cite>
+that overlaps with <cite>r1</cite>. The length of the overlap is therefore
+<tt class="docutils literal"><span class="pre">r1overlap[1]</span> <span class="pre">-</span> <span class="pre">r1overlap[0]</span> <span class="pre">=</span> <span class="pre">r2overlap[1]</span> <span class="pre">-</span> <span class="pre">r2overlap[0]</span></tt>.
+The number of mismatches in the overlapping regions of <cite>r1</cite> and <cite>r2</cite>
+is given by the integer nmismatches. The integers <cite>r1a</cite> and <cite>r2a</cite>
+specify where in the reads the adaptor sequence begins.
+Specifically, <cite>r1a</cite> gives the length of <cite>r1</cite> before adaptor begins (it
+is just <cite>len(r1)</cite> if there is no adaptor). Similarly, <cite>r2a</cite> gives the
+length of <cite>r2</cite> before the adaptor, keeping in mind that <cite>r2</cite> is reverse
+complemented so the length begins at the end of the string and moves
+backward.</p>
+<p>If the read extends longer than the specified adaptor sequence, it
+does not matter if the remaining read sequence past the adaptor can be 
+aligned anything.</p>
+<p>If the settings are not sufficiently stringent to guarantee a unique
+alignment (i.e. <cite>minoverlap</cite> is too small and <cite>maxrm</cite>, <cite>maxa1m</cite>, and <cite>maxa2m</cite>
+are too large), then simply returns the first alignment found that
+meets the specifications. Note that this may not be the optimal
+alignment.</p>
+<p>Example of alignment of sequences with exact overlap, succeeds when
+when minoverlap is 9 but not when it is 10.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;AGACTGAACGAATCGCA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;GCATAGTCAGACTGAAC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;GAATCGCAC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;CGCATAGTC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">((0, 9), (8, 17), 0, 9, 9)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="mi">9</span><span class="p">]</span> <span class="o">==</span> <span class="n">r2</span><span class="p">[</span><span class="mi">8</span> <span class="p">:</span> <span class="mi">17</span><span class="p">]</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Another example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;GTGAGCGGCATAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;CGGCATAGCGGTG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">((5, 13), (0, 8), 0, 13, 13)</span>
+</pre></div>
+</div>
+<p>Example of alignment of sequences with one mismatch in overlap,
+succeeds when maxrm is 1 but not when it is 0. Also succeeds when
+minoverlap is 10, but not when it is 15.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;AGATCAGCATGCAGACTGA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;GCATAAGACCAGCATGCAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;ACTG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;CATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">((0, 14), (5, 19), 1, 14, 14)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="mi">14</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;AGATCAGCATGCAG&#39;</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span><span class="p">[</span><span class="mi">5</span> <span class="p">:</span> <span class="mi">19</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;AGACCAGCATGCAG&#39;</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Example of alignment when there is mismatch in the adaptor
+sequences.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;AGATCAGCATGCAGACTGA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;GCATAAGACCAGCATGCAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;GCTG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;CTTA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">((0, 14), (5, 19), 1, 14, 14)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Another example with a mismatch, this time as the first character.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;CTGTACTAGCAGTCGACTA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;ATGTACTAGCAGTCGACTA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">((0, 19), (0, 19), 1, 19, 19)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Example of alignment of sequences with a gap. The alignment fails
+even though the sequences are otherwise exact matches. Note that
+this is the case even though the gap is the first nucleotide of <cite>r1</cite></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;GACTGAACGAATCGCA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;GCATAGTCAGACTGAAC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;GAATCGCAC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;CGCATAGTC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Example of use of upcase. Differences in upper and lower case
+prevent alignment if <cite>upcase</cite> is set to <cite>False</cite>, but not when a mismatch
+is allowed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;AGACTGAAcgaatcgca&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;gcatagtcAGACTGAAC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;gaatcgcac&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;cgcatagtc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">((0, 9), (8, 17), 0, 9, 9)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">((0, 9), (8, 17), 1, 9, 9)</span>
+</pre></div>
+</div>
+<p>Another example of use of <cite>upcase</cite>. Cases match in both reads, so
+alignment is not prevented.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;AGACTGAAcgaatcgca&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;gcatagtcAGACTGAAc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;gaatcgcac&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;cgcatagtc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">((0, 9), (8, 17), 0, 9, 9)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">((0, 9), (8, 17), 0, 9, 9)</span>
+</pre></div>
+</div>
+<p>Example of <cite>n_is_mismatch</cite> usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;NGACTGAACGNATCGCA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;GCATAGTCAGACTGAAC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;GAATCGCAC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;CGCATAGTC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">((0, 9), (8, 17), 0, 9, 9)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">n_is_mismatch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">((0, 9), (8, 17), 0, 9, 9)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AlignReads</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">n_is_mismatch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">((0, 9), (8, 17), 1, 9, 9)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="align.Needle">
+<tt class="descclassname">align.</tt><tt class="descname">Needle</tt><big>(</big><em>s1</em>, <em>s2</em>, <em>needlecmd</em>, <em>seqtype</em>, <em>outfile</em>, <em>gapopen=10.0</em>, <em>gapextend=0.5</em>, <em>outformat='fasta'</em>, <em>overwriteoutfile=False</em>, <em>endweight=False</em><big>)</big><a class="headerlink" href="#align.Needle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Needleman-Wunsch pairwise alignment using EMBOSS <tt class="docutils literal"><span class="pre">needle</span></tt>.</p>
+<p>This function uses the Needleman-Wunsch algorithm as implemented in
+EMBOSS by the <tt class="docutils literal"><span class="pre">needle</span></tt> program to perform a pairwise alignment of one
+or more sequences. One target sequence (<cite>s1</cite>) is pairwise aligned with
+one or more other sequences (<cite>s2</cite>). The results are written to a
+specified output file.</p>
+<p>The return value is <cite>None</cite>, but <cite>outfile</cite> is created.</p>
+<p>This function is currently tested with <tt class="docutils literal"><span class="pre">needle</span></tt> from EMBOSS 6.5.7.0,
+although it should run with many versions.</p>
+<p><cite>s1</cite> : string giving the first input sequence, to which all sequences
+in <cite>s2</cite> are aligned.</p>
+<p><cite>s2</cite> : specifies the second input sequence(s) to which we are
+aligning <cite>s1</cite>. It can be:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a string giving the second input sequence to align to <cite>s1</cite> (if we
+are aligning just one pair)</li>
+<li>a list of strings giving all input sequences to align to <cite>s1</cite>
+(if we are making multiple pairwise alignments).</li>
+<li>a 2-tuple specifying that we read <cite>s2</cite> from an existing file. In
+this case, the 2-tuple should be <cite>(filename, fileformat)</cite>
+where <cite>filename</cite> is a string giving the filename, and
+<cite>fileformat</cite> is a string giving the file format (such as
+&#8216;fasta&#8217; or &#8216;fastq&#8217;).</li>
+</ul>
+</div></blockquote>
+<p><cite>needlecmd</cite> : string giving executable path for <tt class="docutils literal"><span class="pre">needle</span></tt>. For example,
+this can be a full pathname (such as <tt class="docutils literal"><span class="pre">/Users/jbloom/EMBOSS-6.5.7/emboss/needle</span></tt>) 
+or if <tt class="docutils literal"><span class="pre">needle</span></tt> is installed in a directory in the current search path it might 
+just be the name of the program (i.e. &#8216;needle&#8217;).</p>
+<p><cite>seqtype</cite> : string specifying the sequence type. Can be either 
+&#8216;nucleotide&#8217; or &#8216;protein&#8217;.</p>
+<p><cite>outfile</cite> : string giving the name of the file to which we write the
+output alignment. The format is specified by <cite>outformat</cite>, and
+whether we overwrite any existing outfile is specified by
+<cite>overwriteoutfile</cite>.</p>
+<p><cite>gapopen</cite> : the gap opening penalty, 10.0 by default.</p>
+<p><cite>gapextend</cite> : the gap extension penalty, 0.5 by default.</p>
+<p><cite>outformat</cite> : string specifying the format of the output alignment.
+Is &#8216;fasta&#8217; by default.</p>
+<p><cite>overwriteoutfile</cite> : Boolean switch specifying whether we overwrite
+any existing output files of this name. If <cite>True</cite>, we overwrite
+existing files. If <cite>False</cite>, we raise an <cite>IOError</cite> if there is
+already an existing file with the name of <cite>outfile</cite>.</p>
+<p><cite>endweight</cite> : the weight applied against gaps at the end of the
+alignment. Is <cite>False</cite> by default, meaning that no end gap penalty
+is applied. If it is set to some other value, it should be the
+2-tuple <cite>(endopen, endextend)</cite> where <cite>endopen</cite> is the penalty for
+opening an end gap, and endextend is the penalty for extending
+an end gap.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="align.ParsePairedAlignment">
+<tt class="descclassname">align.</tt><tt class="descname">ParsePairedAlignment</tt><big>(</big><em>aligntup</em>, <em>r1exclude</em>, <em>r2exclude</em>, <em>use_calign=True</em><big>)</big><a class="headerlink" href="#align.ParsePairedAlignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses nucleotide identities from paired-read alignment.</p>
+<p><cite>aligntup</cite> : a tuple specifying the alignment of a gene
+with the overlapping region of two paired-end reads. In the
+format returned by <cite>io.IterateAlignmentFile</cite>. Specifically, this
+is the tuple
+<cite>(gstart, gend, gseq, r1start, r1end, r1seq, r2start, r2end, r2seq)</cite>
+This method assumes that the strings specified in the alignment
+are upper case, but does not check this (in the interest of time).
+So you want to make sure that such tests are somehow built in
+elsewhere. Acceptable nucleotide codes are &#8216;A&#8217;, &#8216;T&#8217;, &#8216;C&#8217;, &#8216;G&#8217;,
+and &#8216;N&#8217; (for ambiguous).</p>
+<p><cite>r1exclude</cite> -&gt; a set that specifies the integer
+positions of any sites in the R1 reads that are excluded from
+being considered, in 1, 2, ... numbering. Note that this must be
+a set for the C-extension in <cite>calign</cite> to work.</p>
+<p><cite>r2exclude</cite> : like <cite>r1exclude</cite>, but for the R2 reads.</p>
+<p><cite>use_calign</cite> : specifies that we use fast C extension implemented
+in <cite>calign</cite>.</p>
+<p>For each position in the alignment, calls the
+nucleotide. A nucleotide is definitively called if both the R1 and
+R2 reads in <cite>aligntup</cite> have the same identity. In this case, the nucleotide
+is called as the upper case value: for example, if both reads have &#8216;A&#8217;
+then the call is &#8216;A&#8217;. If one read gives &#8216;N&#8217; or is excluded (by
+<cite>r1exclude</cite> or <cite>r2exclude</cite>) while the other gives a value, then the
+nucleotide is called as the lower case value. For example,
+&#8216;A&#8217; and &#8216;N&#8217; are called as &#8216;a&#8217;. If both are called to different 
+non-&#8216;N&#8217; values, or both are &#8216;N&#8217;, or both are excluded,
+or one is &#8216;N&#8217; and the other is excluded, then it is called as &#8216;N&#8217;.</p>
+<p>All position numbering is done using 1, 2, ... indexing.</p>
+<p>The returned variable is the 2-tuple <cite>(ntstartindex, ntidentities)</cite>
+In this 2-tuple, <cite>ntstartindex</cite> is the index of the first nucleotide position
+in the gene that can be called.
+<cite>ntidentities</cite> is a string giving all of the called nucleotides.
+So <cite>ntindices[0]</cite> gives the value called for <cite>ntstartindex</cite>,
+and <cite>ntindices[j]</cite> gives the value called for <cite>ntstartindex + j</cite>,
+for <tt class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">j</span> <span class="pre">&lt;</span> <span class="pre">len(ntidentities)</span></tt>.</p>
+<p>An example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aligntup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="s">&#39;ATAGATACTAGAT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="s">&#39;.....C.....T.&#39;</span><span class="p">,</span> 
+<span class="gp">... </span>      <span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;.....C.......&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ntstartindex</span><span class="p">,</span> <span class="n">ntidentities</span><span class="p">)</span> <span class="o">=</span> <span class="n">ParsePairedAlignment</span><span class="p">(</span><span class="n">aligntup</span><span class="p">,</span> <span class="nb">set</span><span class="p">([]),</span> <span class="nb">set</span><span class="p">([]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ntstartindex</span> <span class="o">==</span> <span class="mi">14</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ntidentities</span> <span class="o">==</span> <span class="s">&#39;ATAGACACTAGNT&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Examples with excluded nucleotides</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aligntup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="s">&#39;ATAGATACTAGAT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="s">&#39;.....C.....T.&#39;</span><span class="p">,</span> 
+<span class="gp">... </span>      <span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;.....C.......&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ntstartindex</span><span class="p">,</span> <span class="n">ntidentities</span><span class="p">)</span> <span class="o">=</span> <span class="n">ParsePairedAlignment</span><span class="p">(</span><span class="n">aligntup</span><span class="p">,</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">13</span><span class="p">]),</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ntstartindex</span> <span class="o">==</span> <span class="mi">14</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ntidentities</span> <span class="o">==</span> <span class="s">&#39;aTaGACACTAgNN&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Example with N nucleotides</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aligntup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="s">&#39;ATAGATACTAGAT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="s">&#39;N.N..C....NT.&#39;</span><span class="p">,</span> 
+<span class="gp">... </span>      <span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;N....C.......&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ntstartindex</span><span class="p">,</span> <span class="n">ntidentities</span><span class="p">)</span> <span class="o">=</span> <span class="n">ParsePairedAlignment</span><span class="p">(</span><span class="n">aligntup</span><span class="p">,</span> <span class="nb">set</span><span class="p">([]),</span> <span class="nb">set</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ntstartindex</span> <span class="o">==</span> <span class="mi">14</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ntidentities</span> <span class="o">==</span> <span class="s">&#39;NTaGACACTANtT&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="align.ReadPairToGeneAligner">
+<em class="property">class </em><tt class="descclassname">align.</tt><tt class="descname">ReadPairToGeneAligner</tt><big>(</big><em>fullgene</em>, <em>generange</em>, <em>a1</em>, <em>a2</em>, <em>maxn</em>, <em>minoverlap</em>, <em>maxrm</em>, <em>maxa1m</em>, <em>maxa2m</em>, <em>maxgenem</em>, <em>upcase</em>, <em>use_cext=True</em><big>)</big><a class="headerlink" href="#align.ReadPairToGeneAligner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Aligns overlapping paired-end reads with known adaptors to gene.</p>
+<p>This class is designed to process data from the following situation.
+We are interested in accurate sequencing of a gene, as from a PCR
+amplicon. That gene, possibly with some extensions on the termini
+(as from primers), is sheared to create short inserts. These reads
+then have known adaptors ligated onto each end, and are then
+sequenced using a paired-end technology (such as Illumina 50 nt PE).
+If the insert length is similar to the read length, the reads
+overlap, providing double coverage of part of the read. This class
+is designed to align the paired reads to identify the adaptors and
+overlapping read, and then align these to the full gene. Certain
+requirements are imposed for the maximal number of mismatches and
+the minimal amount of overlap. Once an aligner object is created, it
+can be used to process many read pairs. It keeps track of the
+alignment statistics for these reads.</p>
+<p>Note that gaps are not handled by the alignment methods used here.
+Any reads with gaps relative to each other, the adaptors, or the
+gene to which they are being aligned will not be handled, and no
+alignment will be returned.</p>
+<p>Also, N / n nucleotides are not treated as mismatches, rather a
+limit is put on the number of allowed N / n nucleotides by the
+initialization argument maxn.</p>
+<p>Note that this method will only be computationally effective for
+relatively short genes (such as no more than a few thousand
+nucleotides), since it uses the <cite>AlignReadToGene</cite> function, which is
+not efficient for very long alignment templates.</p>
+<p>To use an objects from this class, create an aligner as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span>
+    <span class="n">maxn</span><span class="p">,</span> <span class="n">minoverlap</span><span class="p">,</span> <span class="n">maxrm</span><span class="p">,</span> <span class="n">maxa1m</span><span class="p">,</span> <span class="n">maxa2m</span><span class="p">,</span> <span class="n">maxgenem</span><span class="p">,</span> <span class="n">upcase</span><span class="p">,</span>
+    <span class="n">use_cext</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The initialization arguments have the following meanings:</p>
+<p><cite>fullgene</cite> : a string giving the full sequence of the gene that is
+being sequenced. Note that this full sequence might be longer
+than the actual gene range of interest &#8211; this would be the case
+for example if PCR adds extra terminal sequences to the
+sequenced gene. The substring of fullgene that is of interest
+is defined by generange, and is denoted by gene in the remaining
+documentation.</p>
+<p><cite>generange</cite> : a 2-tuple of the form <cite>(gstart, gend)</cite>. This tuple
+specifies the portion of <cite>fullgene</cite> that contains the actual
+sequence of interest (for example, it might be the coding
+region). Specifically, the region of interest is given by
+<tt class="docutils literal"><span class="pre">gene</span> <span class="pre">=</span> <span class="pre">fullgene[gstart</span> <span class="pre">:</span> <span class="pre">gend]</span></tt>, where we have the constraints
+that <tt class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">gstart</span> <span class="pre">&lt;</span> <span class="pre">gend</span> <span class="pre">&lt;=</span> <span class="pre">len(fullgene)</span></tt>.</p>
+<p><cite>a1</cite> : the adaptor sequence that is at the 3&#8217; end of read 1 (<cite>r1</cite>)
+after the target sequence (a string).</p>
+<p><cite>a2</cite> : the adaptor sequence that is at the 5&#8217; end of the reverse
+complement of read 2 (<cite>r2</cite>) before the target sequence.
+Note that in the actual sequencing read it will be at the 3&#8217;
+end of the read, but is specified as the reverse complement 
+since <cite>r2</cite> is assumed to be reverse complemented</p>
+<p><cite>maxn</cite> : the maximum number of N / n nucleotides that a read
+can contain. Read pairs where either read has &gt; <cite>maxn</cite> 
+N / n nucleotides are discarded.</p>
+<p><cite>minoverlap</cite> -&gt; the minimum amount of overlap between <cite>r1</cite> and <cite>r2</cite>,
+representing their joint coverage of the target sequence (an
+integer &gt;= 1). All of this joint coverage must also align to
+gene.</p>
+<p><cite>maxrm</cite> : the number of mismatches allowed in the overlap of <cite>r1</cite> and
+<cite>r2</cite> (an integer &gt;= 0). N / n nucleotides do not count as 
+mismatches.</p>
+<p><cite>maxa1m</cite> : the maximum number of mismatches allowed in the overlap of
+<cite>r1</cite> with <cite>a1</cite> (an integer &gt;= 0). N / n nucleotides do not count as
+mismatches.</p>
+<p><cite>maxa2m</cite> : the maximum number of mismatches allowed in the overlap of
+<cite>r2</cite> with <cite>a2</cite> (an integer &gt;= 0). N / n nucleotides do not count as
+mismatches.</p>
+<p><cite>maxgenem</cite> : the maximum number of mismatches allowed in the
+alignment of the coverage region of either read with gene.
+N / n nucleotides do not count as mismatches.</p>
+<p><cite>upcase</cite> : argument specifying whether we convert all sequences to
+upper case. If <cite>True</cite>, the results will be upper case and
+that the alignment is case-insensitive. If
+<cite>False</cite>, the alignments will be case-sensitive, with &#8216;a&#8217; and &#8216;A&#8217;
+considered a mismatch, and in this case, the results will be
+returned with the original case. The functions will run
+faster if <cite>upcase</cite> is <cite>False</cite>, since that avoids converting
+sequences to new cases. So if you are able to guarantee
+that all of the sequences that you are examining are the
+same case, set this to <cite>False</cite>.</p>
+<p><cite>use_cext</cite> : specifies that we use any C extensions available in
+speed computations. This is <cite>True</cite> by default. If you
+set it to <cite>False</cite>, pure Python code will be used, and the
+functions will be much slower.</p>
+<p>Paired-reads are aligned by calling the method <cite>Align</cite> with
+reads <cite>r1</cite> and <cite>r2</cite>. Recall that <cite>r1</cite> is the read 1, while <cite>r2</cite> is actually
+the reverse complement of the read 2. This method does the following:</p>
+<ol class="arabic">
+<li><p class="first">If either <cite>r1</cite> or <cite>r2</cite> has &gt; <cite>maxn</cite> N / n nucleotides, the pair is
+discarded, and the method returns <em>(False, &#8216;excess_N&#8217;)</em>.</p>
+</li>
+<li><p class="first">Uses <cite>AlignReads</cite> function to see if <cite>r1</cite> and <cite>r2</cite> can be aligned to each 
+other using the adaptors <cite>a1</cite> and <cite>a2</cite>, with the parameters specified by
+<cite>minoverlap</cite>, <cite>maxrm</cite>, <cite>maxa1m</cite>, and <cite>maxa2m</cite>. If they cannot, returns
+a 2-tuple <em>(False, &#8216;unpaired&#8217;)</em>. Otherwise...</p>
+</li>
+<li><p class="first">Uses <cite>AlignReadToGene</cite> function to align the coverage (non-adaptor) 
+region of <cite>r1</cite> to <cite>fullgene</cite> or its reverse complement. If it can be aligned
+with &lt;= <cite>maxgenem</cite> mismatches, proceeds. If it cannot be aligned to <cite>fullgene</cite>
+or its reverse complement, returns a 2-tuple <em>(False, &#8216;unaligned_R1&#8217;)</em>. 
+Otherwise...</p>
+</li>
+<li><p class="first">Checks to make sure that <cite>r2</cite> also aligns to <cite>fullgene</cite> as would be
+expected based on the alignment of the overlapping region of <cite>r1</cite>.
+If it does not, returns 2-tuple <em>(False, &#8216;unaligned_R2&#8217;)</em>. Otherwise...</p>
+</li>
+<li><p class="first">Examines where the reads align to gene (the portion of <cite>fullgene</cite>
+specified by <cite>generange</cite>). If the alignment is entirely to a 
+portion of <cite>fullgene</cite> that is not in the range that constitutes
+<cite>gene</cite>, returns 2-tuple <em>(False, &#8216;outside_gene&#8217;)</em>. Otherwise, determines
+the region that overlaps with <cite>gene</cite> and...</p>
+</li>
+<li><p class="first">Returns information about the alignment to <cite>gene</cite> (the portion of
+<cite>fullgene</cite> specified by <cite>generange</cite>) in the form of an alignment
+string. This alignment string consists of three lines, spanning
+the overlapping portion of <cite>r1</cite> and <cite>r2</cite> that aligns to <cite>gene</cite> (note
+that this is <cite>gene</cite> as specified by <cite>generange</cite>, not <cite>fullgene</cite>). The
+alignment strings look like this when printed:</p>
+<div class="highlight-python"><div class="highlight"><pre>14 ATAGATACTAGAT 26
+ 1 .....C.....T. 13
+13 .....C.......  1
+</pre></div>
+</div>
+<p>where the first line is the number of the first nucleotide shown
+in <cite>gene</cite> in 1, 2, ... numbering, a space, the <cite>gene</cite> sequence, a
+space, and the number of the last nucleotide shown in <cite>gene</cite>. The
+second line is the same for <cite>r1</cite>, and the third line is the same
+for <cite>r2</cite> but with the numbering reversed so that it is for the
+true read and not the reverse complement passed to this method.</p>
+</li>
+</ol>
+<p>The class also has a <cite>Statistics</cite> method which keeps track of statistics
+about how many reads align successfully, the overall length of the 
+inserts being sequenced, the overall length of the overlapping
+coverage region, and the number and position of mismatches along
+the read sequence. These are the accumulated statistics for all reads
+aligned with a given object of this class. The returned variable is a
+dictionary with the following strings as keys, each keying the following
+values:</p>
+<p>&#8216;nattempted&#8217; : integer number of times the <cite>Align</cite> method has been called.</p>
+<p>&#8216;nexcessn&#8217; : integer number of read pairs discarded because one of
+the reads had too many N / n nucleotides.</p>
+<p>&#8216;npaired&#8217; : integer number of the number of times the reads used to
+call <cite>Align</cite> could be aligned to each other using <cite>AlignReads</cite> with the
+specified cutoffs.</p>
+<p>&#8216;nalignedfullgene&#8217; : integer number of times the paired reads could both
+be aligned to <cite>fullgene</cite> with the specified cutoffs.</p>
+<p>&#8216;nalignedgene&#8217; : integer number of times the paired reads could both
+be aligned to <cite>fullgene</cite> with the specified cutoffs, and this alignment
+possessed at least some overlap with the gene specified by <cite>generange</cite>
+to exist in <cite>fullgene</cite>. This is equivalent to the number of times
+that <cite>Align</cite> returned an alignment string, rather than <cite>False</cite>.</p>
+<p>&#8216;insertlength&#8217; : a dictionary giving the length of the inserts that
+the two reads are reading for all reads where the read pairs align. 
+This is the region between the adaptors. The shortest possible value
+will be <cite>minoverlap</cite>. The largest possible value will be the sum of
+the two read lengths minus <cite>minoverlap</cite>. This is because shorter or 
+longer inserts cannot be aligned with the specified value of
+<cite>minoverlap</cite>. The dictionary is keyed by integers, with values equal
+to the number of calling read pairs (to <cite>Align</cite> method) that have an 
+insert of that length. Insert lengths that are never found in calling
+reads have no keys. This statistic is for all reads that align
+with each other, regardless of whether they align to <cite>fullgene</cite>.</p>
+<p>&#8216;r1lengths&#8217; : a dictionary giving the length of the <cite>r1</cite> reads that aligns
+to <cite>fullgene</cite> (precedes the <cite>r1</cite> adaptor). The dictionary is keyed by
+integers equal to the number of calling <cite>r1</cite> reads to <cite>Align</cite>
+that have this length overlap with <cite>gene</cite>. Read lengths that are never
+found in the calling reads have no keys. This statistic is only 
+recorded <cite>r1</cite> / <cite>r2</cite> pairs in which both <cite>r1</cite> and <cite>r2</cite> align to gene with
+the specified mismatch cutoffs.</p>
+<p>&#8216;r2lengths&#8217; : like &#8216;r1lengths&#8217;, but for the <cite>r2</cite> reads.</p>
+<p>&#8216;r1mismatches&#8217; : for each <cite>r1</cite> / <cite>r2</cite> pair that aligns with <cite>fullgene</cite>, gives
+the indices in 1, 2, ... numbering of each position in <cite>r1</cite> that 
+differs from <cite>fullgene</cite>. The dictionary is keyed by integers with
+values equal to the number of times that position in the calling
+<cite>r1</cite> reads to <cite>Align</cite> have a mismatch at this position. Positions
+that never have mismatches have no keys. Note that N / n
+nucleotides do not count as mismatches regardless of what they
+are aligned with.</p>
+<p>&#8216;r2mismatches&#8217; : like &#8216;r1mismatches, but for mismatches between <cite>r2</cite>
+and <cite>fullgene</cite>.</p>
+<p>The <cite>Statistics</cite> method can also be called with the optional argument <cite>key</cite>
+set to one of the aforementioned string keys, in which case the return
+value is the value for that key in the statistics dictionary, rather than
+full dictionary.</p>
+<p>In the example below, the first set of reads align to the gene. The
+second set don&#8217;t because of a mismatch between the reads.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fullgene</span> <span class="o">=</span> <span class="s">&#39;CATATGGGCATAGCATAGAACT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generange</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;TACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;CATG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>    
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ATATGGGCATTACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;CATGATATGGGCAT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">1 ATGGGCAT  8</span>
+<span class="go">3 ........ 10</span>
+<span class="go">8 ........  1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ATATCGGCATTACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;CATGATATGGGCAT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">(False, &#39;unpaired&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;npaired&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedfullgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;insertlength&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The same reads that failed to align previously now align because we allow
+one mismatch</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>    
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">1 ATGGGCAT  8</span>
+<span class="go">3 ..C..... 10</span>
+<span class="go">8 ........  1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;npaired&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedfullgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;insertlength&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Now alignment fails because the overlap is not long enough</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>    
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">(False, &#39;unpaired&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;npaired&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedfullgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;insertlength&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>In the first example, the alignment succeeds. In the second, the reads
+align to each other, but fail to fully align to the gene, so the alignment
+fails (in the second, the regions before the overlap in read 1 don&#8217;t match
+the gene).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fullgene</span> <span class="o">=</span> <span class="s">&#39;CATATGAGCGGCATAGCATAGAACT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generange</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;ATGC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;AGTC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ATGAGCGGCATAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;CGGCATAGCATAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>    
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go"> 6 CGGCATAG 13</span>
+<span class="go"> 6 ........ 13</span>
+<span class="go">13 ........  6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;GTGAGCGGCATAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;CGGCATAGCATAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">(False, &#39;unaligned_R1&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;npaired&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedfullgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;insertlength&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">18</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">13</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">13</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Read aligns despite mismatches because of tolerant cutoffs.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>    
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ATGAGGGGCTTAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;GGGCATAGCATAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go"> 6 CGGCATAG 13</span>
+<span class="go"> 6 G...T... 13</span>
+<span class="go">13 G.......  6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;npaired&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedfullgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;insertlength&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">18</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">13</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">13</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">6</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">13</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Reads align to gene reverse complement</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fullgene</span> <span class="o">=</span> <span class="s">&#39;CATATGAGCGGCATAGCATAGAACT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generange</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;CTAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;GACC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>    
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;CTATGCTATG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;TATGCTATGC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go"> 9 CATAGCA 15</span>
+<span class="go">10 .......  4</span>
+<span class="go"> 2 .......  8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;TTCTATGCTATG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;TCTATGCTATGC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go"> 9 CATAGCA 15</span>
+<span class="go">12 .......  6</span>
+<span class="go"> 2 .......  8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;npaired&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedfullgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;insertlength&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">11</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Reads align to gene reverse complement</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fullgene</span> <span class="o">=</span> <span class="s">&#39;CATATGAGCGGCATAGCATAGAACT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generange</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;CTAG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;GACC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;CCGCTCATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;CGCTCATAT&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>    
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">1 ATGAGCG 7</span>
+<span class="go">8 ....... 2</span>
+<span class="go">3 ....... 9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;CGCTCATACTA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;ACCCGCTCATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">1 ATGAGCG 7</span>
+<span class="go">7 ....... 1</span>
+<span class="go">2 ....... 8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;npaired&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedfullgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;insertlength&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">9</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">9</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Here is an example in which the reads align, but it is outside
+of generange, and so False is returned. In the second example,
+we extend the reads one nucleotide into the gene, and then get
+a short returned alignment.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fullgene</span> <span class="o">=</span> <span class="s">&#39;CATGACATAGGCATGGGCATTGCAATGTAGAACCATAGCATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generange</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>    
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ACATAGGC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;ACATAGGC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">(False, &#39;outside_gene&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ACATAGGCA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;ACATAGGCA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">1 A 1</span>
+<span class="go">9 . 9</span>
+<span class="go">1 . 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;npaired&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedfullgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nalignedgene&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;insertlength&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">8</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">8</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2lengths&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">8</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Example of how <cite>maxn</cite> determines treatment of N / n nucleotides</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fullgene</span> <span class="o">=</span> <span class="s">&#39;CATGACATAGGCATGGGCATTGCAATGTAGAACCATAGCATA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generange</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a2</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>   
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r1</span> <span class="o">=</span> <span class="s">&#39;ATGNGCATTG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r2</span> <span class="o">=</span> <span class="s">&#39;ATGGGCNTTG&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go">(False, &#39;excess_N&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nexcessn&#39;</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">ReadPairToGeneAligner</span><span class="p">(</span><span class="n">fullgene</span><span class="p">,</span> <span class="n">generange</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">upcase</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">aligner</span><span class="o">.</span><span class="n">Align</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<span class="go"> 1 ATGGGCATTG 10</span>
+<span class="go"> 1 ...N...... 10</span>
+<span class="go">10 ......N...  1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nattempted&#39;</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;nexcessn&#39;</span><span class="p">)</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r1mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="s">&#39;r2mismatches&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="align.ReadPairToGeneAligner.Align">
+<tt class="descname">Align</tt><big>(</big><em>r1</em>, <em>r2</em><big>)</big><a class="headerlink" href="#align.ReadPairToGeneAligner.Align" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aligns paired reads, and then aligns their overlap to gene.</p>
+<p><cite>r1</cite> : the first read (R1) of a paired-end read.</p>
+<p><cite>r2</cite> : the reverse complement of the second read (R2) of a
+paired-end read.</p>
+<p>Performs the operations detailed in the main docstring for this
+class, using the mismatch and overlap settings specified at
+object initialization. If the alignment fails, returns
+a 2-tuple <em>(False, explanation)</em> where <em>explanation</em> is a string
+explaining why the alignment filed (see main docstring for this
+class). If the alignment succeeds, 
+returns the alignment string specified in the main
+docstring for this class.</p>
+<p>Also adds information to this alignment to the aligner&#8217;s
+statistics, which can be accessed via <cite>Statistics</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="align.ReadPairToGeneAligner.Statistics">
+<tt class="descname">Statistics</tt><big>(</big><em>key=None</em><big>)</big><a class="headerlink" href="#align.ReadPairToGeneAligner.Statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get statistics about attempted read alignments.</p>
+<p>This method returns statistics about all attempted alignments
+of reads using the current object. The statistics are returned
+in the form of a dictionary with the keys specified in the main
+documentation string for this class. If the optional argument
+<cite>key</cite> is set to a key string in this dictionary, then just returns
+that argument in the statistics dictionary rather than the full 
+dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="align.ReadToGeneMismatches">
+<tt class="descclassname">align.</tt><tt class="descname">ReadToGeneMismatches</tt><big>(</big><em>g</em>, <em>r</em>, <em>gi</em>, <em>maxmm</em>, <em>indexback=False</em>, <em>n_is_mismatch=False</em>, <em>use_calign=True</em><big>)</big><a class="headerlink" href="#align.ReadToGeneMismatches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of read positions that mismatch with a target gene.</p>
+<p>This function is designed to get a list of all positions where a read
+mismatches with a target gene, presuming that you already know the 
+position in the gene to which the read aligns.</p>
+<p><cite>r</cite> : a string giving the read sequence.</p>
+<p><cite>g</cite> : a string giving the gene sequence.</p>
+<p><cite>gi</cite> : the position in g where r aligns, in 0, 1, ... numbering. We 
+expect <cite>r</cite> to align to <tt class="docutils literal"><span class="pre">g[gi</span> <span class="pre">:</span> <span class="pre">gi</span> <span class="pre">+</span> <span class="pre">len(r)]</span></tt>.</p>
+<p><cite>maxmm</cite> : integer giving the maximum number of allowed mismatches.</p>
+<p><cite>indexback</cite> : a Boolean switch specifying that we count backwards
+from the end of the read when we label the mismatches, 
+rather than forward from the start.</p>
+<p><cite>n_is_mismatch</cite> : a Boolean switch specifying that we consider &#8216;N&#8217;
+or &#8216;n&#8217; nucleotides to be mismatches if they align with something
+else. By default this is <cite>False</cite>, meaning that an &#8216;N&#8217; or &#8216;n&#8217;
+nucleotide is not considered to be a mismatch regardless of
+what it aligns with. If set to <cite>True</cite>, then an &#8216;N&#8217; or &#8216;n&#8217; is 
+considered a mismatch unless it aligns with the same character.</p>
+<p><cite>use_calign</cite> : specifies that we actually perform the calculations
+using the implementation of this function in <cite>calign</cite>. This 
+dramatically speeds the computation. The <cite>calign</cite> extension
+is used assuming that it is available and that this
+parameter is set to its default value of <cite>True</cite>. If <cite>use_calign</cite>
+is set to <cite>False</cite>, or if <cite>calign</cite> is unavailable, then the 
+computations instead use the pure Python implementation.</p>
+<p>The read and the gene are assumed to be in the same orientation, so
+no checking for reverse-complement matching is done.</p>
+<p>If the read extends beyond the gene (<tt class="docutils literal"><span class="pre">gi</span> <span class="pre">+</span> <span class="pre">len(r)</span> <span class="pre">&gt;</span> <span class="pre">len(g)</span></tt>) then 
+returns <cite>False</cite>.  Otherwise, returns list of each position in the read 
+(in 1, 2, ... numbering) where <cite>r</cite> differs from the aligned position
+in <cite>g</cite>. Note that the matching is case-sensitive, and the treatment of
+&#8216;N&#8217; or &#8216;n&#8217; is determined by <cite>n_is_mismatch</cite>. If the number of mismatches is
+&gt; <cite>maxmm</cite>, returns False. If indexback is <cite>True</cite>, then the last position of
+<cite>r</cite> is considered 1, the second to last position is 2, etc.</p>
+<p>Example with perfect match, then too many mismatches as read misaligned.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="s">&#39;ATGGGCATGACCTGA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="s">&#39;CATGACC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gi</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maxmm</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">)</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">,</span> <span class="n">indexback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gi</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">,</span> <span class="n">indexback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Example with mismatches</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="s">&#39;ATGGGCATGACCTGA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="s">&#39;CATCACC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gi</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maxmm</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">)</span>
+<span class="go">[4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">,</span> <span class="n">indexback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="s">&#39;CATCACCA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">)</span>
+<span class="go">[4, 8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">,</span> <span class="n">indexback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[5, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="s">&#39;cATCACC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">)</span>
+<span class="go">[1, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">,</span> <span class="n">indexback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[7, 4]</span>
+</pre></div>
+</div>
+<p>Example where read extends beyond gene</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="s">&#39;ATGGGCATGACCTGA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="s">&#39;ATCACCTGA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gi</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maxmm</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">)</span>
+<span class="go">[3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="s">&#39;ATCACCTGAC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Example usage of <cite>n_is_mismatch</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="s">&#39;ATGGGCATGACCTGA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="s">&#39;ATCACCTNA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gi</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maxmm</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">)</span>
+<span class="go">[3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">,</span> <span class="n">n_is_mismatch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maxmm</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">,</span> <span class="n">n_is_mismatch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[3, 8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="s">&#39;ATGGGCNTGACCTGA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maxmm</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">)</span>
+<span class="go">[3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ReadToGeneMismatches</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gi</span><span class="p">,</span> <span class="n">maxmm</span><span class="p">,</span> <span class="n">n_is_mismatch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[1, 3, 8]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="align.RemoveDots">
+<tt class="descclassname">align.</tt><tt class="descname">RemoveDots</tt><big>(</big><em>s1</em>, <em>s2</em><big>)</big><a class="headerlink" href="#align.RemoveDots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes dots from identities for two aligned sequences.</p>
+<p>This function is the inverse of <cite>AddDots</cite>. Takes as input
+two strings <cite>s1</cite> and <cite>s2</cite> of the same length that represent
+aligned sequences with a dot at each position of <cite>s2</cite> that
+matches <cite>s1</cite>. Returns a copy of <cite>s2</cite> where these dots have
+been replaced with the actual identity at that position.</p>
+<p><cite>s1</cite> : a string giving the first sequence.</p>
+<p><cite>s2</cite> : a string giving the second sequence with dots added,
+as would be done by calling <tt class="docutils literal"><span class="pre">s2</span> <span class="pre">=</span> <span class="pre">AddDots(s1,</span> <span class="pre">s2a)</span></tt> where
+<cite>s2a</cite> is the original second sequence with all of the 
+nucleotide identities.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="s">&#39;ATGACATAGACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="s">&#39;ATGACTTACACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">==</span> <span class="n">RemoveDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">AddDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="s">&#39;ATGACATAGACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="s">&#39;aTGACTTACACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">==</span> <span class="n">RemoveDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">AddDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="s">&#39;ATGACATA-ACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="s">&#39;-TGACTTACACA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">==</span> <span class="n">RemoveDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">AddDots</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">align</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
+<li><a class="reference internal" href="#list-of-classes">List of classes</a></li>
+<li><a class="reference internal" href="#list-of-c-extensions">List of C-extensions</a></li>
+<li><a class="reference internal" href="#documentation-for-functions-and-classes">Documentation for functions and classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="main_module.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">main</span></tt> Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sequtils_module.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">sequtils</span></tt> Module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/align_module.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sequtils_module.html" title="sequtils Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="main_module.html" title="main Module"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

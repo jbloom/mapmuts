@@ -1,4 +1,0 @@
-# input file for running script mapmuts_preferencemeans.py for preferencemeans
-preferencefiles WT-1/p2_equilibriumpreferences.txt WT-2/p2_equilibriumpreferences.txt N334H-1/p2_equilibriumpreferences.txt N334H-2/p2_equilibriumpreferences.txt
-outfile replicate_A_p2_equilibriumpreferences.txt
-includestop False

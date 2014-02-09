@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>simulate Module &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python modules" href="pythonapi.html" />
+    <link rel="next" title="plot Module" href="plot_module.html" />
+    <link rel="prev" title="stats Module" href="stats_module.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plot_module.html" title="plot Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="stats_module.html" title="stats Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-simulate">
+<span id="simulate-module"></span><h1><a class="reference internal" href="#module-simulate" title="simulate"><tt class="xref py py-mod docutils literal"><span class="pre">simulate</span></tt></a> Module<a class="headerlink" href="#module-simulate" title="Permalink to this headline">¶</a></h1>
+<p>Module for simulating data for <tt class="docutils literal"><span class="pre">mapmuts</span></tt> package.</p>
+<p>This module contains function to simulate data that can be analyzed
+by the <tt class="docutils literal"><span class="pre">mapmuts</span></tt> package. This simulated data can be useful for
+testing the package&#8217;s performance.</p>
+<p>Use the <cite>Seed</cite> function if you want to ensure repeatable output.</p>
+<p>Written by Jesse Bloom.</p>
+<div class="section" id="list-of-functions">
+<h2>List of functions<a class="headerlink" href="#list-of-functions" title="Permalink to this headline">¶</a></h2>
+<p><cite>Seed</cite> : seeds random number generators used by module.</p>
+<p><cite>MutateNT</cite> : mutates a nucleotide.</p>
+<p><cite>SimulateIlluminaPE</cite> : simulates uniformly fragmented Illumina paired-end library.</p>
+<p><cite>SimulateCounts</cite> : simulates library counts for inference of enrichment ratio.</p>
+<p><cite>SimulatePreferences</cite> : simulates counts for inference of equilibrium preferences.</p>
+</div>
+<div class="section" id="documentation-for-functions">
+<h2>Documentation for functions<a class="headerlink" href="#documentation-for-functions" title="Permalink to this headline">¶</a></h2>
+<p>Documentation for individual functions is provided in their definitions below.</p>
+<dl class="function">
+<dt id="simulate.MutateNT">
+<tt class="descclassname">simulate.</tt><tt class="descname">MutateNT</tt><big>(</big><em>nt</em>, <em>mutrate</em><big>)</big><a class="headerlink" href="#simulate.MutateNT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mutates a nucleotide with probability <cite>mutrate</cite>.</p>
+<p><cite>nt</cite> : a DNA nucleotide character, either upper or lower case (i.e.
+&#8216;A&#8217;, &#8216;C&#8217;, &#8216;T&#8217;, &#8216;G&#8217;, &#8216;a&#8217;, &#8216;c&#8217;, &#8216;t&#8217;, &#8216;g&#8217;)</p>
+<p><cite>mutrate</cite> : the probability with which the nucleotide is randomly
+mutated to some other nucleotide, so <cite>0 &lt;= mutrate &lt;= 1</cite>.</p>
+<p>Returns a character giving the original nucleotide (with probability
+<cite>1 - mutrate</cite>) or one of the other three nucleotide (with probability
+<cite>mutrate</cite>). Nucleotides are mutated to any of the other three
+nucleotides with equal probability. If the original nucleotide
+is upper-case, the mutant will be too. If the original
+nucleotide is lower-case, the mutant will be too.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simulate.Seed">
+<tt class="descclassname">simulate.</tt><tt class="descname">Seed</tt><big>(</big><em>seed</em><big>)</big><a class="headerlink" href="#simulate.Seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seeds all random number generators used by this module.</p>
+<p>This function seeds all random number generators used by the
+functions in this module. This creates reproducible output if the
+seeding is done before calling other module functions.</p>
+<p><cite>seed</cite> : the integer seed used to seed the random number generators.</p>
+<p>Currently the generators that are seeded are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>random.seed</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="simulate.SimulateCounts">
+<tt class="descclassname">simulate.</tt><tt class="descname">SimulateCounts</tt><big>(</big><em>phi</em>, <em>mu</em>, <em>epsilon</em>, <em>rho</em>, <em>wtcodon</em>, <em>codons</em>, <em>libsize</em>, <em>nlibs</em>, <em>perturb</em><big>)</big><a class="headerlink" href="#simulate.SimulateCounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates library counts to test inference of enrichment ratio.</p>
+<p>This function is designed to simulate data for analysis by
+<em>mapmuts.bayesian.InferEnrichmentMCMC</em>. The variables and what is
+being simulated may be clearer after reading the documentation for that
+function.</p>
+<p>This function requires <tt class="docutils literal"><span class="pre">numpy</span></tt>, which is checked for by 
+<em>mapmuts.bayesian.PymcAvailable()</em>. Trying to run this function
+if that returns <em>False</em> will raise an exception, which is fine &#8211; 
+because this function is designed to test the Bayesian inference,
+you wouldn&#8217;t want to run it without being able to do the inference anyway!</p>
+<p>CALLING VARIABLES:</p>
+<ul class="simple">
+<li><em>phi</em> : the true enrichment ratio.</li>
+<li><em>mu</em> : the mutagenesis rate in the <em>mutDNA</em> library.</li>
+<li><em>epsilon</em> : a dictionary keyed by 1, 2, and 3 with <em>epsilon[i]</em>
+giving the sequencing error rate to codons with <em>i</em> differences from <em>wtcodon</em>.</li>
+<li><em>rho</em> : a dictionary keyed by 1, 2, and 3 with <em>rho[i]</em> giving
+the reverse-transcription rate to codons with <em>i</em> differences from <em>wtcodon</em>.</li>
+<li><em>wtcodon</em> : string giving the wild-type codon, such as <em>GCA</em>.</li>
+<li><em>codons</em> : a list of one or more mutant codons, such as
+<em>[GGC, GGG, GGA, GGT]</em></li>
+<li><em>libsize</em> : the number of sequences in each library.</li>
+<li><em>nlibs</em> : the number of libraries being analyzed.</li>
+<li><em>perturb</em> : a number specifying how much we perturb the values of <em>libsize</em>
+for each sample, and how much we perturb <em>epsilon</em>, <em>rho</em>, and <em>mu</em> for
+each mutant codon, away from the set values. For each simulation of one of
+these, we set the simulation value to the calling value plus a number
+drawn uniformly from the calling value divided <em>perturb</em> to the calling
+value plus <em>perturb</em>. So <em>perturb</em> must be &gt;= 1, and a reasonable value 
+might be 2.0. This tests if the inference still works even if the priors
+aren&#8217;t quite accurate.</li>
+</ul>
+<p>OPERATION AND RESULT:</p>
+<p>This function simulates the indicated number and sizes of libraries using
+the specified calling values, but perturbing the appropriate ones as
+specified by <em>perturb</em>. The returned variable is <em>library_stats</em> which
+has all of the values that you would need to pass this variable
+to <em>mapmuts.bayesian.InferEnrichmentMCMC</em> for inference. The priors
+for <em>mu</em>, <em>epsilon</em>, and <em>rho</em> are set to the calling values.</p>
+<p>The idea is that you can then apply the inference function to the results
+and test how well you actually infer the true enrichment ratio.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simulate.SimulateIlluminaPE">
+<tt class="descclassname">simulate.</tt><tt class="descname">SimulateIlluminaPE</tt><big>(</big><em>gene</em>, <em>r1_trim3</em>, <em>r2_trim3</em>, <em>readlength</em>, <em>insertlength</em>, <em>libsize</em>, <em>mutrate</em><big>)</big><a class="headerlink" href="#simulate.SimulateIlluminaPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates a uniformly fragmented Illumina paired-end library.</p>
+<p>This function simulates creating an Illumina paired-end read
+library. A target nucleotide sequence (given by <cite>gene</cite>) is randomly
+fragmented into small pieces as specified by <cite>insertlength</cite>. The
+inserts are then randomly reverse complemented with a probability of
+0.5. The adaptor sequence specified by <cite>r1_trim3</cite> is then appended to
+the 3&#8217; end of the fragment to generate the read 1 (R1) read. The
+read fragment is reverse complemented and the adaptor sequence
+specified by <cite>r2_trim3</cite> is then appended to the 3&#8217; of this fragment to
+generate the corresponding read 2 (R2 read). Each fragment-adaptor
+sequence is then subjected to random mutation as specified by
+<cite>mutrate</cite>. Finally, all fragment-adaptor sequences are truncated to
+the length specified by <cite>readlength</cite>. Overall, this creates data
+similar to that which would be expected from an Illumina PE read.</p>
+<p>If <cite>readlength</cite> exceeds the length of the gene fragment plus the
+adaptor sequence, random nucleotides are appended at the 3&#8217; end
+until <cite>readlength</cite> is reached.</p>
+<p>CALLING VARIABLES:</p>
+<p><cite>gene</cite> : a string of DNA nucleotides giving the sequence of the gene that
+is randomly fragmented.</p>
+<p><cite>r1_trim3</cite> : a string of DNA nucleotides giving the adaptor sequence that
+is appended to the 3&#8217; end of R1 fragments.</p>
+<p><cite>r2_trim3</cite> : a string of DNA nucleotides giving the adaptor sequence that
+is appended to the 3&#8217; end of R2 fragments.</p>
+<p><cite>readlength</cite> : the integer length of the Illumina reads.</p>
+<p><cite>insertlength</cite> : specifies the length of the inserts (fragments of
+<cite>gene</cite>) that are included in each read between the adaptors. This
+argument should be a 3-tuple. It is of the form <cite>(&#8216;uniform&#8217;,
+minlength, maxlength)</cite> where <cite>minlength</cite> and <cite>maxlength</cite> are
+integers. The inserts lengths are then drawn from uniformly from
+the distribution of lengths &gt;= <cite>minlength</cite> and &lt;= <cite>maxlength</cite>.</p>
+<p><cite>libsize</cite> : the number of read pairs to create.</p>
+<p><cite>mutrate</cite> : the probabily that each base in the total read
+(insert and adaptor) is randomly mutated to another nucleotide.
+This is designed to simulate sequencing errors. Each nucleotide
+is randomly mutated to any other nucleotide. The mutations are
+applied separately to each read. So for example, if there are
+two 50 nt reads (<cite>readlength == 50</cite>) and <cite>mutrate = 0.01</cite>, then
+there will be an average of one mutation total between the two
+reads (100 nt times 0.01 mutation rate).</p>
+<p>RETURN VARIABLE:</p>
+<p>The returned variable is a 2-tuples of lists, <cite>(r1_reads,
+r2_reads)</cite>. <cite>r1_reads</cite> and <cite>r2_reads</cite> are lists of the same length (with
+<tt class="docutils literal"><span class="pre">len(r1_reads)</span> <span class="pre">==</span> <span class="pre">len(r2_reads)</span> <span class="pre">==</span> <span class="pre">libsize</span></tt>). Element <cite>i</cite> of <cite>r1_reads</cite>
+is a string giving that R1 read, and element <cite>i</cite> of <cite>r2_reads</cite> is the
+corresponding string giving that R2 read. In the returned reads, the
+portion of the read that comes from the target gene is upper-case,
+while the portion that comes from the adaptor is lower-case,
+regardless of the case of the input variables for these sequences.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simulate.SimulatePreferences">
+<tt class="descclassname">simulate.</tt><tt class="descname">SimulatePreferences</tt><big>(</big><em>pi</em>, <em>mu</em>, <em>epsilon</em>, <em>rho</em>, <em>wtcodon</em>, <em>nlibs</em>, <em>libsize</em>, <em>perturb</em>, <em>seed=1</em><big>)</big><a class="headerlink" href="#simulate.SimulatePreferences" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates library counts to test inference of equilibrium preferences.</p>
+<p>This function simulates data for analysis by 
+<em>mapmuts.bayesian.InferPreferencesMCMC</em>. The variables and what is
+being simulated may be clearer after reading the documentation for
+that function.</p>
+<p>This function requires `` numpy`` and <tt class="docutils literal"><span class="pre">pymc</span></tt>, so trying to run this
+function if <em>mapmuts.bayesian.PymcAvailable() == False</em> will raise
+an exception.</p>
+<p>CALLING VARIABLES:</p>
+<ul class="simple">
+<li><em>pi</em> : a dictionary keyed by all 21 amino acids in 
+<em>mapmuts.sequtils.AminoAcids(includestop=True)</em>, with the
+values giving the preferences for each amino acid (must sum to one).</li>
+<li><em>mu</em> : the mutagenesis rate in the <em>mutDNA</em> library.</li>
+<li><em>epsilon</em> : a dictionary keyed by 1, 2, and 3 with <em>epsilon[i]</em>
+giving the sequencing error rate to codons with <em>i</em> differences from <em>wtcodon</em>.</li>
+<li><em>rho</em> : a dictionary keyed by 1, 2, and 3 with <em>rho[i]</em> giving
+the reverse-transcription rate to codons with <em>i</em> differences from <em>wtcodon</em>.</li>
+<li><em>wtcodon</em> : string giving the wild-type codon, such as <em>GCA</em>.</li>
+<li><em>nlibs</em> : the number of libraries being analyzed.</li>
+<li><em>libsize</em> : the number of sequences in each library.</li>
+<li><em>perturb</em> : a number specifying how much we perturb the values of <em>libsize</em>
+for each sample, and how much we perturb <em>epsilon</em>, <em>rho</em>, and <em>mu</em> for
+each mutant codon, away from the set values. For each simulation of one of
+these, we set the simulation value to the calling value plus a number
+drawn uniformly from the calling value divided <em>perturb</em> to the calling
+value plus <em>perturb</em>. So <em>perturb</em> must be &gt;= 1, and a reasonable value 
+might be 2.0. This tests if the inference still works even if the priors
+aren&#8217;t quite accurate.</li>
+<li><em>seed</em> random number seed, 1 by default. Used to seed <tt class="docutils literal"><span class="pre">numpy</span></tt> seed,
+which is not seeded by <em>mapmuts.simulate.Seed</em>.</li>
+</ul>
+<p>OPERATION AND RESULT:</p>
+<p>This function simulates the indicated number and sizes of libraries using
+the specified calling values, but perturbing the appropriate ones as
+specified by <em>perturb</em>. The returned variable is <em>library_stats</em> which
+has all of the values that you would need to pass this variable
+to <em>mapmuts.bayesian.InferPreferencesMCMC</em> for inference. The priors
+for <em>mu</em>, <em>epsilon</em>, and <em>rho</em> are set to the calling values.</p>
+<p>The idea is that you can then apply the inference function to the results
+and test how well you actually infer the true enrichment ratio.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">simulate</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
+<li><a class="reference internal" href="#documentation-for-functions">Documentation for functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="stats_module.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">stats</span></tt> Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="plot_module.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">plot</span></tt> Module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/simulate_module.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plot_module.html" title="plot Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="stats_module.html" title="stats Module"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

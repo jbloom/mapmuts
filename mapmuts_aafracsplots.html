@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_aafracsplots.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_inferenrichment.py" href="mapmuts_inferenrichment.html" />
+    <link rel="prev" title="mapmuts_siteprofileplots.py" href="mapmuts_siteprofileplots.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_inferenrichment.html" title="mapmuts_inferenrichment.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_siteprofileplots.html" title="mapmuts_siteprofileplots.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-aafracsplots-py">
+<span id="id1"></span><h1>mapmuts_aafracsplots.py<a class="headerlink" href="#mapmuts-aafracsplots-py" title="Permalink to this headline">¶</a></h1>
+<p>Makes plots summarizing fractions of each different mutant amino acid at each site.
+This script is designed to be run after you have already run
+<a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a> on several samples. Each run of that program
+generates a <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> file, which is used as input for this
+script.</p>
+<p>To run this script from the prompt, first create a text infile of the
+format described below. Then simply type <a class="reference internal" href="#mapmuts-aafracsplots-py"><em>mapmuts_aafracsplots.py</em></a>
+followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+type:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_aafracsplots.py infile.txt
+</pre></div>
+</div>
+<p>This script will only work if <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> are available.</p>
+<div class="section" id="input-file-format">
+<h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
+<p>The input file is a text file that should have the following entries. Blank lines or lines beginning with # are ignored (i.e. as comment lines).</p>
+<p>The first line should specify the key <em>plotfileprefix</em> followed by the prefix given to the plot for each site. For example, to place the plots in the directory <em>aafracsplots</em> with the prefix <em>WT-1_aafracs</em> you would use:</p>
+<div class="highlight-python"><div class="highlight"><pre>plotfileprefix aafracsplots/WT-1_aafracs
+</pre></div>
+</div>
+<p>This would then create files <tt class="docutils literal"><span class="pre">aafracsplots/WT-1_aafracs_M1.pdf</span></tt>, etc for all sites. Note that if <em>plotfileprefix</em> specifies a directory as part of the prefix, that directory must already exist (so in the above example, <tt class="docutils literal"><span class="pre">aafracsplots/</span></tt> must already exist).</p>
+<p>There should then be a list of lines specifying the locations of the <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. Each line should give the name / location of the file (no spaces allowed), followed by the name given to that sample in the plots.</p>
+<p>Finally, there should be a line with the key <em>printprogress</em> and the value being either <em>True</em> or <em>False</em>. If it is <em>True</em>, a progress line is printed as the script runs, indicating how many plots have been made already.</p>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># input file to mapmuts_aafracsplots.py
+plotfileprefix aafracsplots/WT-1_aafracs
+DNA/WT-1_DNA_codoncounts.txt WT-1 DNA
+mutDNA/WT-1_mutDNA_codoncounts.txt WT-1 mutDNA
+RNA/WT-1_RNA_codoncounts.txt WT-1 RNA
+virus-p1/WT-1_virus-p1_codoncounts.txt WT-1 virus-p1
+virus-p2/WT-1_virus-p2_codoncounts.txt WT-1 virus-p2
+mutvirus-p1/WT-1_mutvirus-p1_codoncounts.txt WT-1 mutvirus-p1
+mutvirus-p2/WT-1_mutvirus-p2_codoncounts.txt WT-1 mutvirus-p2
+printprogress True
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-files">
+<h2>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
+<p>This script will generate an output plot for each site in the protein. These sites will be named with the prefix given by <em>plotfileprefix</em> and the suffix being the wildtype identity at that site and then the site number. For example, assuming the first residue in methionine (M), the first plot for the above example input file would be <tt class="docutils literal"><span class="pre">aafracsplots/WT-1_aafracs_M1A.pdf</span></tt>.</p>
+<p>In general, there are going to be quite a few of these plots (for example, there will be 500 for a 500-residue protein). This is why you may want to specify a new directory with <em>plotfileprefix</em>.</p>
+<p>Here is an example plot:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/aafracsplot.jpg"><img alt="aafracsplot.jpg" src="_images/aafracsplot.jpg" style="width: 60%;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_aafracsplots.py</a><ul>
+<li><a class="reference internal" href="#input-file-format">Input file format</a></li>
+<li><a class="reference internal" href="#output-files">Output files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_siteprofileplots.html"
+                        title="previous chapter">mapmuts_siteprofileplots.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_inferenrichment.html"
+                        title="next chapter">mapmuts_inferenrichment.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_aafracsplots.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_inferenrichment.html" title="mapmuts_inferenrichment.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_siteprofileplots.html" title="mapmuts_siteprofileplots.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

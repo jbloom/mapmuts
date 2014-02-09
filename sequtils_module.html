@@ -1,0 +1,905 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sequtils Module &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python modules" href="pythonapi.html" />
+    <link rel="next" title="io Module" href="io_module.html" />
+    <link rel="prev" title="align Module" href="align_module.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="io_module.html" title="io Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="align_module.html" title="align Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sequtils">
+<span id="sequtils-module"></span><h1><a class="reference internal" href="#module-sequtils" title="sequtils"><tt class="xref py py-mod docutils literal"><span class="pre">sequtils</span></tt></a> Module<a class="headerlink" href="#module-sequtils" title="Permalink to this headline">¶</a></h1>
+<p>Module for reading / writing / processing sequences.</p>
+<p>This module is part of the <tt class="docutils literal"><span class="pre">mapmuts</span></tt> package.</p>
+<p>Written by Jesse Bloom.</p>
+<div class="section" id="list-of-functions">
+<h2>List of functions<a class="headerlink" href="#list-of-functions" title="Permalink to this headline">¶</a></h2>
+<p><cite>AminoAcids</cite> : returns a list of upper-case one-letter amino-acid codes.</p>
+<p><cite>Codons</cite> : returns a list of all upper-case codon strings.</p>
+<p><cite>OrderedAminoAcids</cite> : amino acids ordered by properties.</p>
+<p><cite>MutAAsCodons</cite> : returns all mutant amino acids and encoding codons.</p>
+<p><cite>NTMutTypes</cite> : returns a list of all possible nucleotide substitution types.</p>
+<p><cite>ClassifyNTMuts</cite> : classifies nucleotide mutation types.</p>
+<p><cite>ClassifyCodonCounts</cite> : classifies codon mutations.</p>
+<p><cite>TallyCodonCounts</cite> : tallies codon mutations for each site.</p>
+<p><cite>MeanQValueFromString</cite> : gets the mean Q-score from a string.</p>
+<p><cite>QValuesFromString</cite> : gets a list of Q-values from a string.</p>
+<p><cite>WriteFASTA</cite> : writes sequences to a FASTA file.</p>
+<p><cite>ReadFASTA</cite> : reads sequences from a FASTA file.</p>
+<p><cite>GetSequence</cite> : gets a particular sequence from a list based on header.</p>
+<p><cite>Translate</cite> : translates nucleotide sequences to proteins.</p>
+<p><cite>AmbiguousNTCodes</cite> : returns all possible nucleotides for ambiguous code.</p>
+<p><cite>PurgeAmbiguousDNA</cite> : removes sequences with ambiguous nucleotides.</p>
+<p><cite>GetEntries</cite> : gets entries from a potentially very large FASTA file.</p>
+<p><cite>AAThreeToOne</cite> : converts three-letter to one-letter amino acid code.</p>
+<p><cite>ReverseComplement</cite> : returns the reverse-complement of a nucleotide sequence.</p>
+<p><cite>FindMotifs</cite> : finds specific motifs in a nucleotide sequence</p>
+<p><cite>CondenseSeqs</cite> : removes nearly identical sequences.</p>
+<p><cite>KyteDoolittle</cite> : gets the Kyte-Doolittle hydrophobicity scale.</p>
+</div>
+<div class="section" id="list-of-c-extensions">
+<h2>List of C-extensions<a class="headerlink" href="#list-of-c-extensions" title="Permalink to this headline">¶</a></h2>
+<p>Some of the functions in this module are accelerated by using the 
+C extensions in <cite>csequtils</cite> if that C extension can be imported. This is
+done by default, and can be stopped by calling the relevant
+function with <cite>use_csequtils</cite> set to <cite>False</cite>. Note that you do not need to
+explicitly call the <cite>csequtils</cite> functions &#8211; they are automatically called
+by the functions in this module when available. Currently extensions are
+available for:</p>
+<ul class="simple">
+<li><cite>ReverseComplement</cite></li>
+<li><cite>MeanQValueFromString</cite></li>
+</ul>
+</div>
+<div class="section" id="documentation-for-individual-functions">
+<h2>Documentation for individual functions<a class="headerlink" href="#documentation-for-individual-functions" title="Permalink to this headline">¶</a></h2>
+<p>Documentation for individual functions is provided in their definitions
+below.</p>
+<dl class="function">
+<dt id="sequtils.AAThreeToOne">
+<tt class="descclassname">sequtils.</tt><tt class="descname">AAThreeToOne</tt><big>(</big><em>aathree</em><big>)</big><a class="headerlink" href="#sequtils.AAThreeToOne" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a three letter amino acid code into a one letter code.</p>
+<p>The single input argument <cite>aathree</cite> is the three letter amino acid code.
+It can be upper or lower case.</p>
+<p>This function returns, in upper case, the one letter amino acid code.
+It raises an exception if <cite>aathree</cite> is not a valid one letter code.
+&#8216;Xaa&#8217; is converted to &#8216;X&#8217;.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AAThreeToOne</span><span class="p">(</span><span class="s">&#39;Ala&#39;</span><span class="p">)</span>
+<span class="go">&#39;A&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AAThreeToOne</span><span class="p">(</span><span class="s">&#39;cys&#39;</span><span class="p">)</span>
+<span class="go">&#39;C&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AAThreeToOne</span><span class="p">(</span><span class="s">&#39;Xaa&#39;</span><span class="p">)</span>
+<span class="go">&#39;X&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AAThreeToOne</span><span class="p">(</span><span class="s">&#39;hi&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Invalid amino acid code of hi.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.AmbiguousNTCodes">
+<tt class="descclassname">sequtils.</tt><tt class="descname">AmbiguousNTCodes</tt><big>(</big><em>nt</em><big>)</big><a class="headerlink" href="#sequtils.AmbiguousNTCodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all possible nucleotides corresponding to an ambiguous code.</p>
+<p>This method takes as input a single nucleotide character, which is
+assumed to represent a nucleotide as one of the accepted
+codes for an ambiguous character.  Returns a list giving
+all possible codes for which a nucleotide might stand.  Raises
+an exception if <cite>nt</cite> is not a valid nucleotide code.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AmbiguousNTCodes</span><span class="p">(</span><span class="s">&#39;N&#39;</span><span class="p">)</span>
+<span class="go">[&#39;A&#39;, &#39;T&#39;, &#39;G&#39;, &#39;C&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AmbiguousNTCodes</span><span class="p">(</span><span class="s">&#39;R&#39;</span><span class="p">)</span>
+<span class="go">[&#39;A&#39;, &#39;G&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AmbiguousNTCodes</span><span class="p">(</span><span class="s">&#39;A&#39;</span><span class="p">)</span>
+<span class="go">[&#39;A&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AmbiguousNTCodes</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)</span>
+<span class="go">[&#39;-&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AmbiguousNTCodes</span><span class="p">(</span><span class="s">&#39;F&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Invalid nt code of &quot;F&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.AminoAcids">
+<tt class="descclassname">sequtils.</tt><tt class="descname">AminoAcids</tt><big>(</big><em>includestop=False</em><big>)</big><a class="headerlink" href="#sequtils.AminoAcids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all one-letter amino acid codes, upper case.</p>
+<p><em>includestop</em> is an optional argument that is <em>False</em> by default. If set
+to <em>True</em>, then we append the character * (for a stop codon) at the end of 
+list.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AminoAcids</span><span class="p">()</span>
+<span class="go">[&#39;A&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;P&#39;, &#39;Q&#39;, &#39;R&#39;, &#39;S&#39;, &#39;T&#39;, &#39;V&#39;, &#39;W&#39;, &#39;Y&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">AminoAcids</span><span class="p">())</span> <span class="o">==</span> <span class="mi">20</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AminoAcids</span><span class="p">(</span><span class="n">includestop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[&#39;A&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;P&#39;, &#39;Q&#39;, &#39;R&#39;, &#39;S&#39;, &#39;T&#39;, &#39;V&#39;, &#39;W&#39;, &#39;Y&#39;, &#39;*&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">AminoAcids</span><span class="p">(</span><span class="n">includestop</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span> <span class="o">==</span> <span class="mi">21</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.ClassifyCodonCounts">
+<tt class="descclassname">sequtils.</tt><tt class="descname">ClassifyCodonCounts</tt><big>(</big><em>codon_counts</em>, <em>recompute=False</em><big>)</big><a class="headerlink" href="#sequtils.ClassifyCodonCounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classifies codon mutations.</p>
+<p>CALLING VARIABLES:</p>
+<p><cite>codon_counts</cite> : dictionary as returned by <cite>mapmuts.io.ReadCodonCounts</cite></p>
+<p><cite>recompute</cite> : a Boolean switch specifying that we recompute
+any classification values that are already present. Is
+<cite>False</cite> by default, meaning that values are not recomputed.
+If set to <cite>True</cite>, they are recomputed. When checking if values
+need to be recomputed, we only look for the first key listed
+below (&#8216;PAIRED_COUNTS&#8217;) in the first codon value (<cite>codon_counts[1]</cite>)
+and if it is present and recompute is <cite>False</cite>, nothing further is done.</p>
+<p>RESULT OF CALLING THIS FUNCTION:</p>
+<p>The following keys are added to <cite>codon_counts[i]</cite> for all <cite>i</cite> if new
+values are being computed. Here are the added keys:</p>
+<p>&#8216;PAIRED_COUNTS&#8217; : total number of counts of codons that contain
+all nucleotides that were called by both reads (all nucleotides
+upper case, and not N).</p>
+<p>&#8216;SINGLE_COUNTS&#8217; : total number of counts of codons that contain at
+least one nucleotide that was only called by one read (at least
+one nucleotide lower case, but no N nucleotides).</p>
+<p>&#8216;AMBIGUOUS_COUNTS&#8217; : total number of counts of codons that contain
+at least one ambiguous nucleotide (containing an &#8216;N&#8217;).</p>
+<p>&#8216;N_WT&#8217; : total number of definitively called codons (all
+nucleotides upper case) that match &#8216;WT&#8217;, the wildtpe codon
+at this position.</p>
+<p>&#8216;N_NS&#8217; : total number of definitively called codons (all nucleotides
+upper case) that represent non-synonymous mutations from the
+wildtype codon. Mutations from stop codons to non-stop codons
+are classified as nonsynonymous. Mutations from non-stop codons
+to stop codons are not classified as nonsynonymous, instead look
+under &#8216;N_STOP&#8217;.</p>
+<p>&#8216;N_SYN&#8217; : total number of definitively called codons (all nucleotides
+upper case) that represent synonymous mutations from the wildtype
+codon. Mutations from stop codons to other stop codons are
+classified as synonymous.</p>
+<p>&#8216;N_1MUT&#8217;, &#8216;N_2MUT&#8217;, &#8216;N_3MUT&#8217; : the total number of definitively called
+mutant codons (all nucleotides upper case) that contain one, two, or
+three nucleotide mutations relative to the wildtype codon at the site.</p>
+<p><tt class="docutils literal"><span class="pre">'N_%s'</span> <span class="pre">%</span> <span class="pre">aa</span></tt> for all <tt class="docutils literal"><span class="pre">aa</span> <span class="pre">in</span> <span class="pre">AminoAcids()</span></tt> : total number of definitively
+called codons (all nucleotides upper case) that encode each amino
+acid in <cite>AminoAcids()</cite>.</p>
+<p>&#8216;N_STOP&#8217; : total number of definitively called codons (all nucleotides
+upper case) that encode stop codons.</p>
+<p>In addition, the following keys are added directly to <cite>codon_counts</cite>, and
+represent totals over all codon positions:</p>
+<p>&#8216;TOTAL_COUNTS&#8217; : total number of paired counts for all codons.</p>
+<p>&#8216;TOTAL_NS&#8217; : total number of &#8216;N_NS&#8217; for all codons.</p>
+<p>&#8216;TOTAL_SYN&#8217; : total number of &#8216;N_SYN&#8217; for all codons.</p>
+<p>&#8216;TOTAL_STOP&#8217; : total number of &#8216;N_STOP&#8217; for all codons.</p>
+<p>&#8216;TOTAL_MUT&#8217; : sum of &#8216;N_NS&#8217; + &#8216;N_SYN&#8217; + &#8216;N_STOP&#8217;, total number of mutations.</p>
+<p>&#8216;TOTAL_N_1MUT&#8217;, &#8216;TOTAL_N_2MUT&#8217;, &#8216;TOTAL_N_3MUT&#8217; : total number of
+&#8216;N_1MUT&#8217;, N_2MUT&#8217;, and &#8216;N_3MUT&#8217; for all codons.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.ClassifyNTMuts">
+<tt class="descclassname">sequtils.</tt><tt class="descname">ClassifyNTMuts</tt><big>(</big><em>nt_counts</em>, <em>recompute=False</em><big>)</big><a class="headerlink" href="#sequtils.ClassifyNTMuts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classifies nucleotide mutation types.</p>
+<p>There are six unique types of nucleotide mutations, as returned by
+<cite>NTMutTypes()</cite>. At each nucleotide position, and also over the whole gene,
+this function counts the number of occurrences of each of these nucleotide
+mutation types. Keys giving these counts are added to the calling dictionary
+<cite>nt_counts</cite>.</p>
+<p>CALLING VARIABLES:</p>
+<p><cite>nt_counts</cite> : dictionary of the type returned by <cite>mapmuts.io.ReadNTCounts</cite>.</p>
+<p><cite>recompute</cite> : Boolean switch specifying that we recompute
+any classification values that are already present. Is
+<cite>False</cite> by default, meaning that values are not recomputed.
+If set to <cite>True</cite>, they are recomputed. When checking if values
+need to be recomputed, we only look for the first key listed
+below <tt class="docutils literal"><span class="pre">('AT',</span> <span class="pre">'TA')</span></tt> in the first nucleotide value (<cite>nt_counts[1]</cite>)
+and if it is present and <cite>recompute</cite> is <cite>True</cite>, nothing further is done.</p>
+<p>RESULT OF THIS FUNCTION:</p>
+<p>The following keys are added both to the main dictionary <cite>nt_counts</cite> and
+to the dictionary <cite>nt_counts[i]</cite> for all <cite>i</cite>: a key corresponding to each
+mutation type returned by <cite>ClassifyNTMuts()</cite>. These keys give the number of
+occurrences of that particular mutation at that nucleotide (for the 
+<cite>codon_counts[i]</cite> keys) for over the whole gene (for the <cite>codon_counts</cite> keys).
+Only nucleotide identities specified by upper-case nucleotides are 
+considered, since these are the only ones that represent definitively
+called identities. In addition, a key &#8216;PAIRED_COUNTS&#8217; is added both
+to <cite>nt_counts</cite> and <cite>nt_counts[i]</cite> that gives the number of definitively
+called (upper case) nucleotide calls at each position and for all
+positions.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:{</span><span class="s">&#39;WT&#39;</span><span class="p">:</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;COUNTS&#39;</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;G&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="gp">... </span>     <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;t&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="mi">2</span><span class="p">:{</span><span class="s">&#39;WT&#39;</span><span class="p">:</span><span class="s">&#39;C&#39;</span><span class="p">,</span> <span class="s">&#39;COUNTS&#39;</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>     <span class="s">&#39;A&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;G&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;t&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ClassifyNTMuts</span><span class="p">(</span><span class="n">nt_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="s">&#39;PAIRED_COUNTS&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">10</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[(</span><span class="s">&#39;AT&#39;</span><span class="p">,</span> <span class="s">&#39;TA&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[(</span><span class="s">&#39;AC&#39;</span><span class="p">,</span> <span class="s">&#39;TG&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[(</span><span class="s">&#39;AG&#39;</span><span class="p">,</span> <span class="s">&#39;TC&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[(</span><span class="s">&#39;GA&#39;</span><span class="p">,</span> <span class="s">&#39;CT&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[(</span><span class="s">&#39;GT&#39;</span><span class="p">,</span> <span class="s">&#39;CA&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[(</span><span class="s">&#39;GC&#39;</span><span class="p">,</span> <span class="s">&#39;CG&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;PAIRED_COUNTS&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">][(</span><span class="s">&#39;AT&#39;</span><span class="p">,</span> <span class="s">&#39;TA&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">1</span> 
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">][(</span><span class="s">&#39;AC&#39;</span><span class="p">,</span> <span class="s">&#39;TG&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">][(</span><span class="s">&#39;AG&#39;</span><span class="p">,</span> <span class="s">&#39;TC&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span> 
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">][(</span><span class="s">&#39;GA&#39;</span><span class="p">,</span> <span class="s">&#39;CT&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">][(</span><span class="s">&#39;GT&#39;</span><span class="p">,</span> <span class="s">&#39;CA&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">][(</span><span class="s">&#39;GC&#39;</span><span class="p">,</span> <span class="s">&#39;CG&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s">&#39;PAIRED_COUNTS&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">6</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">2</span><span class="p">][(</span><span class="s">&#39;AT&#39;</span><span class="p">,</span> <span class="s">&#39;TA&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">2</span><span class="p">][(</span><span class="s">&#39;AC&#39;</span><span class="p">,</span> <span class="s">&#39;TG&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">2</span><span class="p">][(</span><span class="s">&#39;AG&#39;</span><span class="p">,</span> <span class="s">&#39;TC&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">2</span><span class="p">][(</span><span class="s">&#39;GA&#39;</span><span class="p">,</span> <span class="s">&#39;CT&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">2</span><span class="p">][(</span><span class="s">&#39;GT&#39;</span><span class="p">,</span> <span class="s">&#39;CA&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span><span class="p">[</span><span class="mi">2</span><span class="p">][(</span><span class="s">&#39;GC&#39;</span><span class="p">,</span> <span class="s">&#39;CG&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.Codons">
+<tt class="descclassname">sequtils.</tt><tt class="descname">Codons</tt><big>(</big><big>)</big><a class="headerlink" href="#sequtils.Codons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all codons as upper-case strings in alphabetical order.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">codons</span> <span class="o">=</span> <span class="n">Codons</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">codons</span><span class="p">)</span> <span class="o">==</span> <span class="mi">64</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">codons</span><span class="p">[</span> <span class="p">:</span> <span class="mi">4</span><span class="p">]</span>
+<span class="go">[&#39;AAA&#39;, &#39;AAC&#39;, &#39;AAG&#39;, &#39;AAT&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.CondenseSeqs">
+<tt class="descclassname">sequtils.</tt><tt class="descname">CondenseSeqs</tt><big>(</big><em>seqs</em>, <em>maxdiffs</em>, <em>exclude_positions</em><big>)</big><a class="headerlink" href="#sequtils.CondenseSeqs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes nearly identical protein sequences.</p>
+<p><cite>seqs</cite> : list of sequences as <cite>(head, seq)</cite> 2-tuples. The sequences
+are assumed to be aligned such that they are all of the same length..</p>
+<p><cite>maxdiffs</cite> : specifies the maximum number of differences that a sequence
+can have from another sequence in order to be removed.</p>
+<p><cite>exclude_positions</cite> : list of integers specifying positions at which
+sequence can NOT differ and still be removed.  These integers
+are for numbering the sequences as 1, 2, ...</p>
+<p>The method proceeds as follows:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>For the first sequence iterates through the rest of the sequences,
+and removes any that differ at &lt;= <cite>maxdiffs</cite> sites, and do not differ
+at the sites specified by <cite>exclude_position</cite>.</li>
+<li>Repeats this process for each of the remaining sequences. The
+returned variable is a copy of <cite>seqs</cite> with the removed sequences gone.</li>
+</ol>
+</div></blockquote>
+<p>EXAMPLES:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">seqs</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;s1&#39;</span><span class="p">,</span> <span class="s">&#39;ATGC&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;s2&#39;</span><span class="p">,</span> <span class="s">&#39;ATGA&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;s3&#39;</span><span class="p">,</span> <span class="s">&#39;ATC-&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;s4&#39;</span><span class="p">,</span> <span class="s">&#39;ATGC&#39;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CondenseSeqs</span><span class="p">(</span><span class="n">seqs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[])</span>
+<span class="go">[(&#39;s1&#39;, &#39;ATGC&#39;), (&#39;s2&#39;, &#39;ATGA&#39;), (&#39;s3&#39;, &#39;ATC-&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CondenseSeqs</span><span class="p">(</span><span class="n">seqs</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[])</span>
+<span class="go">[(&#39;s1&#39;, &#39;ATGC&#39;), (&#39;s3&#39;, &#39;ATC-&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CondenseSeqs</span><span class="p">(</span><span class="n">seqs</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+<span class="go">[(&#39;s1&#39;, &#39;ATGC&#39;), (&#39;s2&#39;, &#39;ATGA&#39;), (&#39;s3&#39;, &#39;ATC-&#39;)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.FindMotifs">
+<tt class="descclassname">sequtils.</tt><tt class="descname">FindMotifs</tt><big>(</big><em>seq</em>, <em>motif</em><big>)</big><a class="headerlink" href="#sequtils.FindMotifs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds occurrences of a specific motif in a nucleotide sequence.</p>
+<p><cite>seq</cite> is a string giving a nucleotide sequence.</p>
+<p><cite>motif</cite> is a string giving the motif that we are looking for.  It should
+be a string of valid nucleotide characters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>A   Adenine</li>
+<li>G   Guanine</li>
+<li>C   Cytosine</li>
+<li>T   Thymine</li>
+<li>U   Uracil</li>
+<li>R   Purine (A or G)</li>
+<li>Y   Pyrimidine (C or T)</li>
+<li>N   Any nucleotide</li>
+<li>W   Weak (A or T)</li>
+<li>S   Strong (G or C)</li>
+<li>M   Amino (A or C)</li>
+<li>K   Keto (G or T)</li>
+<li>B   Not A (G or C or T)</li>
+<li>H   Not G (A or C or T)</li>
+<li>D   Not C (A or G or T)</li>
+<li>V   Not T (A or G or C)</li>
+</ul>
+</div></blockquote>
+<p>The returned variable is a list <cite>motif_indices</cite> of the indices that
+each occurrence of <cite>motif</cite> in <cite>seq</cite> begins with.  For example,
+if there is a motif beginning at <cite>seq[7]</cite>, then 7 will be
+present in <cite>motif_indices</cite>.  So the number of occurrences of
+the motif will be equal to <cite>len(motif_indices)</cite>.</p>
+<p>This function is not case sensitive, so nucleotides can be either upper
+or lower case.  In addition, T (thymine) and U (uracil) nucleotides
+are treated identically, so the function can handle either DNA
+or RNA sequences.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">FindMotifs</span><span class="p">(</span><span class="s">&#39;ATCGAA&#39;</span><span class="p">,</span> <span class="s">&#39;WCGW&#39;</span><span class="p">)</span>
+<span class="go">[1]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.GetEntries">
+<tt class="descclassname">sequtils.</tt><tt class="descname">GetEntries</tt><big>(</big><em>namelist</em>, <em>fastafile</em>, <em>allow_substring=False</em><big>)</big><a class="headerlink" href="#sequtils.GetEntries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets selected entries from a (potentially very large) FASTA file.</p>
+<p>This method is designed to extract sequences from a FASTA file.  It will work
+even if the FASTA file is very large, since it avoids reading the entire
+file into memory at once.</p>
+<p><cite>namelist</cite> : specifies names of the sequences that we want to extract from
+the FASTA file.  The name of a sequence is the string immediately following
+the &#8220;&gt;&#8221; in the FASTA file header for a sequence, terminated by a space character
+(space, tab, or return).  So for example, the header:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;E_coli_thioredoxin: the thioredoxin protein from E. coli
+</pre></div>
+</div>
+<p>would correspond to a name of &#8220;E_coli_thioredoxin&#8221;.  <cite>namelist</cite> specifies
+a list of these names.</p>
+<p><cite>fastafile</cite> : name of a FASTA file that contains the sequences we are searching
+for.  For this method to be guaranteed to work properly, each sequence in the FASTA
+file must contain a unique name, where a &#8220;name&#8221; is as defined above.  Note that this
+uniqueness of names is not rigorously checked for, so if there are not unique names,
+the function may raise an exception, or it may continue along and give no hint of
+the problem.</p>
+<p><cite>allow_substring</cite> : Boolean switch that specifies that the name given in
+<cite>namelist</cite> need only be a substring of the first entry in the <cite>fastafile</cite> header.</p>
+<p>The function expects to find exactly one entry in <cite>fastafile</cite> for each name in
+<cite>namelist</cite>.  If it does not, it will raise an exception.  The returned variable
+is a list composed of 2-tuples.  Element <cite>i</cite> of this list corresponds to the name
+given by <cite>namelist[i]</cite>.  Each 2-tuple has the form <cite>(header, sequence)</cite> where
+<cite>header</cite> is the full FASTA header, but with the leading &#8220;&gt;&#8221; character and any trailing
+linebreaks/spaces removed.  <cite>sequence</cite> is a string giving the sequence, again with the
+trailing linebreak removed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.GetSequence">
+<tt class="descclassname">sequtils.</tt><tt class="descname">GetSequence</tt><big>(</big><em>header</em>, <em>headers_sequences</em><big>)</big><a class="headerlink" href="#sequtils.GetSequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a particular sequence based on its header name.</p>
+<p><cite>header</cite> : the name of a sequence&#8217;s FASTA header.</p>
+<p><cite>headers_sequences</cite> : list of tuples <cite>(head, seq)</cite> as would
+be returned by <cite>Read</cite>.</p>
+<p>This function searches through <cite>headers_sequences</cite> and returns the
+sequence corresponding to the first header found that matches
+the calling argument <cite>header</cite>.  If no such header is found,
+raises an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.KyteDoolittle">
+<tt class="descclassname">sequtils.</tt><tt class="descname">KyteDoolittle</tt><big>(</big><em>aa</em><big>)</big><a class="headerlink" href="#sequtils.KyteDoolittle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the hydrophobicity of an amino acid based on the Kyte Doolittle scale.</p>
+<p>&#8216;aa&#8217; is the one letter code for an amino acid.</p>
+<p>The returned value is a number giving the hydrophobicity, as defined by Kyte
+and Doolittle in:</p>
+<div class="highlight-python"><div class="highlight"><pre>J. Kyte &amp; R. F. Doolittle: 
+&quot;A simple method for displaying the hydropathic character of a protein.&quot; 
+J Mol Biol, 157, 105-132
+</pre></div>
+</div>
+<p>More positive values indicate higher hydrophobicity, while more negative values
+indicate lower hydrophobicity.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">round</span><span class="p">(</span><span class="n">KyteDoolittle</span><span class="p">(</span><span class="s">&#39;F&#39;</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">2.8</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">round</span><span class="p">(</span><span class="n">KyteDoolittle</span><span class="p">(</span><span class="s">&#39;N&#39;</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">-3.5</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">round</span><span class="p">(</span><span class="n">KyteDoolittle</span><span class="p">(</span><span class="s">&#39;X&#39;</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">ValueError</span>: <span class="n">Invalid amino acid code of X.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.MeanQValueFromString">
+<tt class="descclassname">sequtils.</tt><tt class="descname">MeanQValueFromString</tt><big>(</big><em>qstring</em>, <em>use_csequtils=True</em><big>)</big><a class="headerlink" href="#sequtils.MeanQValueFromString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets mean Q-value from string.</p>
+<p>CALLING VARIABLES:</p>
+<p><cite>qstring</cite> : string giving Q-values, encoded by single characters
+according to the Sanger format (this is the same format used by
+Illumina 1.8). A character is converted to its numeric Q-value
+using <tt class="docutils literal"><span class="pre">q</span> <span class="pre">=</span> <span class="pre">ord(qchar)</span> <span class="pre">-</span> <span class="pre">33</span></tt></p>
+<p><cite>use_csequtils</cite> : a Boolean switch specifying that we perform the
+calculation using the C-extension, which will be much faster.
+<cite>True</cite> by default. If you do not use this extension, this function
+is not any faster than
+<cite>mapmuts.stats.Mean(QValuesFromString(qstring))</cite></p>
+<p>RETURN VARIABLE:</p>
+<p>The return variable is the mean of all of the Q-values in the
+string.</p>
+<p>EXAMPLE:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&quot;</span><span class="si">%.3f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">MeanQValueFromString</span><span class="p">(</span><span class="s">&#39;!&quot;#;@Ih&#39;</span><span class="p">)</span>
+<span class="go">24.429</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.MutAAsCodons">
+<tt class="descclassname">sequtils.</tt><tt class="descname">MutAAsCodons</tt><big>(</big><em>wtcodon</em><big>)</big><a class="headerlink" href="#sequtils.MutAAsCodons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all mutant amino acids and their codons.</p>
+<p><em>wtcodon</em> should be a string giving a codon, such as GGG.</p>
+<p>The return variable is a list of twenty 2-tuples. The first entry
+is one of the 19 mutant amino acids relative to <em>wtcodon</em> or the stop
+codon. The second entry is a list of all codons that encode for that amino
+acid. For example, one entry might be <em>(&#8216;A&#8217;, [&#8216;GCT&#8217;, &#8216;GCC&#8217;, &#8216;GCA&#8217;, &#8216;GCG&#8217;])</em>.</p>
+<p>The * character is used to indicate stop codons. One-letter codes are used
+for amino acids. All strings are converted to upper case.</p>
+<p>This function is coded very inefficiently, so that might concern you if you
+start using a program that really it a very large number of times.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.NTMutTypes">
+<tt class="descclassname">sequtils.</tt><tt class="descname">NTMutTypes</tt><big>(</big><big>)</big><a class="headerlink" href="#sequtils.NTMutTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all possible nucleotide substitution types.</p>
+<p>If mutations are made on both strands of double-stranded DNA, there
+are six unique types of nucleotide mutations. For example, A-&gt;G, T-&gt;C
+are one type (they represent the same mutation on different strands).
+Returns a list of all such types as 2-tuples with two-letter upper-case
+strings of the wildtype and mutant nucleotide, for example: (&#8216;AG&#8217;, &#8216;TC&#8217;).</p>
+<p>EXAMPLE:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">NTMutTypes</span><span class="p">()</span>
+<span class="go">[(&#39;AT&#39;, &#39;TA&#39;), (&#39;AC&#39;, &#39;TG&#39;), (&#39;AG&#39;, &#39;TC&#39;), (&#39;GA&#39;, &#39;CT&#39;), (&#39;GC&#39;, &#39;CG&#39;), (&#39;GT&#39;, &#39;CA&#39;)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.OrderedAminoAcids">
+<tt class="descclassname">sequtils.</tt><tt class="descname">OrderedAminoAcids</tt><big>(</big><em>ordering</em><big>)</big><a class="headerlink" href="#sequtils.OrderedAminoAcids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the amino acid codes ordered according to physical properties.</p>
+<p>This function returns a list of all 20 amino-acid one-letter upper-case
+codes ordered according to physical properties.</p>
+<p>The parameter <em>ordering</em> specifies how they are ordered. Possible values
+are the following strings:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>icelogo</em> : the ordering used in the IceLogo heat maps
+as at <a class="reference external" href="http://iomics.ugent.be/icelogoserver/manual.pdf">http://iomics.ugent.be/icelogoserver/manual.pdf</a></li>
+<li><em>hydrophobicity</em> : ordering from most to least hydrophobic
+using the Kyte-Doolittle scale.</li>
+</ul>
+</div></blockquote>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aas</span> <span class="o">=</span> <span class="n">OrderedAminoAcids</span><span class="p">(</span><span class="s">&#39;icelogo&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aas</span> <span class="o">==</span> <span class="p">[</span><span class="s">&#39;G&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">,</span> <span class="s">&#39;S&#39;</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">,</span> <span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="s">&#39;K&#39;</span><span class="p">,</span> <span class="s">&#39;R&#39;</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="s">&#39;Q&#39;</span><span class="p">,</span><span class="s">&#39;N&#39;</span><span class="p">,</span> <span class="s">&#39;F&#39;</span><span class="p">,</span> <span class="s">&#39;Y&#39;</span><span class="p">,</span> <span class="s">&#39;W&#39;</span><span class="p">,</span> <span class="s">&#39;P&#39;</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">]</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">aas</span><span class="p">)</span> <span class="o">==</span> <span class="mi">20</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aas</span> <span class="o">=</span> <span class="n">OrderedAminoAcids</span><span class="p">(</span><span class="s">&#39;hydrophobicity&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aas</span> <span class="o">==</span> <span class="p">[</span><span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">,</span> <span class="s">&#39;F&#39;</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;W&#39;</span><span class="p">,</span> <span class="s">&#39;G&#39;</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="s">&#39;S&#39;</span><span class="p">,</span> <span class="s">&#39;Y&#39;</span><span class="p">,</span> <span class="s">&#39;P&#39;</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="s">&#39;Q&#39;</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="s">&#39;K&#39;</span><span class="p">,</span> <span class="s">&#39;R&#39;</span><span class="p">]</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">aas</span><span class="p">)</span> <span class="o">==</span> <span class="mi">20</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.PurgeAmbiguousDNA">
+<tt class="descclassname">sequtils.</tt><tt class="descname">PurgeAmbiguousDNA</tt><big>(</big><em>headers_sequences</em><big>)</big><a class="headerlink" href="#sequtils.PurgeAmbiguousDNA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all sequences with ambiguous positions from nucleotide sequences.</p>
+<p>This function takes a single calling argument <cite>headers_sequences</cite>, which
+is a list of tuples <cite>(header, seq)</cite> as would be returned by <cite>Read</cite>.
+These sequences should specify nucleotide sequences.  It returns
+a new list which is a copy of &#8216;headers_sequences&#8217;, except that all
+sequences that contain ambiguous nucleotide entries (i.e. characters
+that are not &#8216;A&#8217;, &#8216;T&#8217;, &#8216;C&#8217;, &#8216;G&#8217;, &#8216;a&#8217;, &#8216;t&#8217;, &#8216;c&#8217;, or &#8216;g&#8217;) have been
+removed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.QValuesFromString">
+<tt class="descclassname">sequtils.</tt><tt class="descname">QValuesFromString</tt><big>(</big><em>qstring</em><big>)</big><a class="headerlink" href="#sequtils.QValuesFromString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets list of Q-values from string.</p>
+<p>CALLING VARIABLE:</p>
+<p><cite>qstring</cite> : string of Q-values encoded by single characters
+according to the Sanger format (this is the same format used by
+Illumina 1.8). A character is converted to its numeric Q-value
+using:
+<tt class="docutils literal"><span class="pre">q</span> <span class="pre">=</span> <span class="pre">ord(qchar)</span> <span class="pre">-</span> <span class="pre">33</span></tt></p>
+<p>RETURN VARIABLE:</p>
+<p>The return variable is a list of Q-values as integers.</p>
+<p>EXAMPLE:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">QValuesFromString</span><span class="p">(</span><span class="s">&#39;!&quot;#;@Ih&#39;</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 26, 31, 40, 71]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.ReadFASTA">
+<tt class="descclassname">sequtils.</tt><tt class="descname">ReadFASTA</tt><big>(</big><em>fastafile</em><big>)</big><a class="headerlink" href="#sequtils.ReadFASTA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads sequences from a FASTA file.</p>
+<p>CALLING VARIABLE:</p>
+<p><cite>fastafile</cite> : specify the name of a FASTA file.</p>
+<p>RETURN VARIABLE:</p>
+<p>This function reads all sequences from the FASTA file.  It returns the
+list <cite>headers_seqs</cite>.  This list is composed of a 2-tuple <cite>(header, seq)</cite>
+for every sequence entry in <cite>fastafile</cite>. <cite>header</cite> is the header for
+a sequence, with the leading &#8220;&gt;&#8221; and any trailing spaces removed. <cite>seq</cite>
+is the corresponding sequence.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.ReverseComplement">
+<tt class="descclassname">sequtils.</tt><tt class="descname">ReverseComplement</tt><big>(</big><em>seqs</em>, <em>use_csequtils=True</em><big>)</big><a class="headerlink" href="#sequtils.ReverseComplement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts nucleotide sequences to their reverse complements.</p>
+<p>The input argument <cite>seqs</cite> specifies the sequence(s) to reverse
+complement. It can be:</p>
+<ul class="simple">
+<li>a string giving a single sequence</li>
+<li>a list of strings giving sequences</li>
+<li>a list of 2-tuples of the format <cite>(head, seq)</cite> where <cite>head</cite> is the
+header and <cite>seq</cite> is the sequence (both strings).</li>
+</ul>
+<p>The sequences should be nucleotides A, T, C, or G
+(or their lowercase equivalents). N nucleotides are
+are reverse-complemented to N nucleotides. Other nucleotide
+ambiguous nucleotide codes are currently not accepted.</p>
+<p>This function also takes an optional argument <cite>use_csequtils</cite>, which
+is <cite>True</cite> by default. This specifies that we use the fast C extension
+available in <cite>csequtils</cite> if it is available. Set this to <cite>False</cite> if you
+want to use only the pure Python code.</p>
+<p>The returned variable is a copy of <cite>seqs</cite> in which any headers
+are unchanged but the sequences are converted to reverse complements.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ReverseComplement</span><span class="p">([(</span><span class="s">&#39;seq1&#39;</span><span class="p">,</span> <span class="s">&#39;ATGCAA&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;atgGCA&#39;</span><span class="p">)])</span>
+<span class="go">[(&#39;seq1&#39;, &#39;TTGCAT&#39;), (&#39;seq2&#39;, &#39;TGCcat&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ReverseComplement</span><span class="p">([(</span><span class="s">&#39;seq1&#39;</span><span class="p">,</span> <span class="s">&#39;ATGCAA&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;ntgGNA&#39;</span><span class="p">)])</span>
+<span class="go">[(&#39;seq1&#39;, &#39;TTGCAT&#39;), (&#39;seq2&#39;, &#39;TNCcan&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ReverseComplement</span><span class="p">([(</span><span class="s">&#39;seq1&#39;</span><span class="p">,</span> <span class="s">&#39;ATGHAA&#39;</span><span class="p">)])</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">ValueError</span>: <span class="n">Invalid nucleotide code.</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ReverseComplement</span><span class="p">([</span><span class="s">&#39;ATGCA&#39;</span><span class="p">,</span> <span class="s">&#39;GCTga&#39;</span><span class="p">])</span>
+<span class="go">[&#39;TGCAT&#39;, &#39;tcAGC&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ReverseComplement</span><span class="p">(</span><span class="s">&#39;ATGACAGTA&#39;</span><span class="p">)</span>
+<span class="go">&#39;TACTGTCAT&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ReverseComplement</span><span class="p">(</span><span class="s">&#39;ATGAcaGTA&#39;</span><span class="p">)</span>
+<span class="go">&#39;TACtgTCAT&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.TallyCodonCounts">
+<tt class="descclassname">sequtils.</tt><tt class="descname">TallyCodonCounts</tt><big>(</big><em>codon_counts</em><big>)</big><a class="headerlink" href="#sequtils.TallyCodonCounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tallies codon mutations at each site.</p>
+<p><em>codon_counts</em> : a list with entries being dictionaries of the type returned by
+<em>mapmuts.io.ReadCodonCounts</em>. There must be at least one such dictionary 
+specified. If there are multiple dictionaries, they must all specify the
+same set of sites as their keys.</p>
+<p>For all sites <em>r</em> represented in <em>codon_counts</em> and for which all
+of the entries of <em>codon_counts</em> specify the same wildtype residue,
+this function iterates
+through all possible codon mutations (so there are <em>63 L</em> of these where <em>L</em>
+is the number of codons. It records the number of definitely called
+(all uppercase nucleotides) occurrences of each of these mutations. It then
+returns the following tuple:
+<em>(all_counts, multi_nt_all_counts, syn_counts, multi_nt_syn_counts)</em></p>
+<p>This tuple has the following elements:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>all_counts</em> is a list of <em>63 L</em> integers giving the number of
+occurrences of all <em>63 L</em> mutations. The order is arbitrary.</li>
+<li><em>multi_nt_all_counts</em> is like <em>all_counts</em> except that it just
+includes counts for the subset of all mutations that involve
+more than one nucleotide change to the codon.</li>
+<li><em>syn_counts</em> is like <em>all_counts</em> except it just includes
+counts for the subset of mutations that are synonymous.</li>
+<li><em>multi_nt_syn_counts</em> is like <em>all_counts</em> except that it just
+includes counts for the subset of mutations that are synonymous
+and involve multiple nucleotide changes to the codon.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.Translate">
+<tt class="descclassname">sequtils.</tt><tt class="descname">Translate</tt><big>(</big><em>headers_sequences</em>, <em>readthrough_n=False</em>, <em>readthrough_stop=False</em>, <em>truncate_incomplete=False</em>, <em>translate_gaps=False</em><big>)</big><a class="headerlink" href="#sequtils.Translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates a set of nucleotide sequences to amino acid sequences.</p>
+<p>CALLING VARIABLES:</p>
+<p><cite>headers_sequences</cite> : list of tuples <cite>(header, seq)</cite> as would be returned
+by <cite>Read</cite>.  The sequences should all specify valid coding nucleotide
+sequences.</p>
+<p>The returned variable is a new list in which
+all of the nucleotide sequences have been translated to their
+corresponding protein sequences, given by one letter codes.
+If any of the nucleotide sequences do not translate to
+valid protein sequences, an exception is raised.</p>
+<p><cite>readthrough_n</cite> : specifies that if any nucleotides
+in the sequence are equal to to an ambiguous nt code and cannot therefore
+be unambiguously translated into an amino acid, we simply translate through these 
+nucleotides by making the corresponding amino acid equal to &#8220;X&#8221;.  By
+default, this option is <cite>False</cite>.  Note that even when this option is <cite>False</cite>,
+certain ambiguous nucleotides may still be translatable if they all lead to 
+the same amino acid.</p>
+<p><cite>readthrough_stop</cite> : specifies that if we encounter any stop
+we simply translation them to &#8216;X&#8217;.  By default,
+this option is <cite>False</cite>, meaning that we instead raise an error
+of an incomplete stop codon.</p>
+<p><cite>truncate_incomplete</cite> : specifies that if the sequence
+length is not a multiple of three, we simply truncate off the one or two
+final nucleotides to make the length a multiple of three prior to translation.
+By default, this option is <cite>False</cite>, meaning that no such truncation is done.</p>
+<p><cite>translate_gaps</cite> : specifies that a codon of &#8216;&#8212;&#8217; is translated
+to &#8216;-&#8216;. Codons with one &#8216;-&#8216; are also translated to gaps.</p>
+<p>RETURN VARIABLE:</p>
+<p>The returned variable is a new list in which
+all of the nucleotide sequences have been translated to their
+corresponding protein sequences, given by one letter codes.
+If any of the nucleotide sequences do not translate to
+valid protein sequences, an exception is raised.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq1&#39;</span><span class="p">,</span> <span class="s">&#39;ATGTAA&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;gggtgc&#39;</span><span class="p">)])</span>
+<span class="go">[(&#39;seq1&#39;, &#39;M&#39;), (&#39;seq2&#39;, &#39;GC&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;GGNTGC&#39;</span><span class="p">)])</span>
+<span class="go">[(&#39;seq2&#39;, &#39;GC&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;NGGTGC&#39;</span><span class="p">)])</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Cannot translate codon NGG</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;NGGTGC&#39;</span><span class="p">)],</span> <span class="n">readthrough_n</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[(&#39;seq2&#39;, &#39;XC&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;TAATGC&#39;</span><span class="p">)])</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Premature stop codon</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;TAATGC&#39;</span><span class="p">)],</span> <span class="n">readthrough_stop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[(&#39;seq2&#39;, &#39;XC&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;TGCA&#39;</span><span class="p">)])</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Sequence length is not a multiple of three</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;TGCA&#39;</span><span class="p">)],</span> <span class="n">truncate_incomplete</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[(&#39;seq2&#39;, &#39;C&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;TGC---&#39;</span><span class="p">)])</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Cannot translate gap.</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Translate</span><span class="p">([(</span><span class="s">&#39;seq2&#39;</span><span class="p">,</span> <span class="s">&#39;TGC---&#39;</span><span class="p">)],</span> <span class="n">translate_gaps</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[(&#39;seq2&#39;, &#39;C-&#39;)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sequtils.WriteFASTA">
+<tt class="descclassname">sequtils.</tt><tt class="descname">WriteFASTA</tt><big>(</big><em>headers_seqs</em>, <em>filename</em>, <em>writable_file=False</em><big>)</big><a class="headerlink" href="#sequtils.WriteFASTA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes sequences to a FASTA file.</p>
+<p>CALLING VARIABLES:</p>
+<p><cite>headers_seqs</cite> : list of 2-tuples specifying sequences and their
+corresponding headers.  Each entry is the 2-tuple <cite>(header, seq)</cite>
+where <cite>header</cite> is a string giving the header (without the leading &#8220;&gt;&#8221;),
+and <cite>seq</cite> is the corresponding sequence.</p>
+<dl class="docutils">
+<dt><cite>filename</cite> <span class="classifier-delimiter">:</span> <span class="classifier">string that specifies the name of the file to which the</span></dt>
+<dd>headers and sequences should be written.  If this file already exists,
+it is overwritten.</dd>
+</dl>
+<p><cite>writable_file</cite> : Boolean switch specifying that rather than <cite>filename</cite>
+giving a string specifying the name of a file to which the sequences
+should be written, it instead specifies a writable file object to which
+the sequences should be written.</p>
+<p>RESULT OF THIS FUNCTION:</p>
+<p>The sequences are written to the file in the same order that they are specified
+in <cite>headers_seqs</cite>.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">sequtils</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
+<li><a class="reference internal" href="#list-of-c-extensions">List of C-extensions</a></li>
+<li><a class="reference internal" href="#documentation-for-individual-functions">Documentation for individual functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="align_module.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">align</span></tt> Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="io_module.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">io</span></tt> Module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sequtils_module.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="io_module.html" title="io Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="align_module.html" title="align Module"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_countparsedmuts.py &mdash; mapmuts 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_inferpreferences.py" href="mapmuts_inferpreferences.html" />
+    <link rel="prev" title="mapmuts_parsesummaryplots.py" href="mapmuts_parsesummaryplots.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_parsesummaryplots.html" title="mapmuts_parsesummaryplots.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-countparsedmuts-py">
+<span id="id1"></span><h1>mapmuts_countparsedmuts.py<a class="headerlink" href="#mapmuts-countparsedmuts-py" title="Permalink to this headline">¶</a></h1>
+<p>Determine the fraction of all and all syonymous mutations that are counted at least a certain number of times.</p>
+<p>This script is useful if you want to summarize how extensively you have sampled all mutations in a library.</p>
+<p>Specifically, for all codon mutations for all sites, determines the number of times the mutations are observed. Then determines the fraction of mutations that are observed at least <em>n</em> times for all <em>n</em> up the maximum occurrence of any mutation (or to the <em>maxn</em> value specified in the input file). The script does this for the following types of mutations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>All codon mutations.</li>
+<li>All codon mutations that involve more than one nucleotide change to the codon.</li>
+<li>All synonymous codon mutations.</li>
+<li>All synonymous codon mutations that involve more than one nucleotide change to the codon.</li>
+</ul>
+</div></blockquote>
+<p>The two categories for mutations involving multiple nucleotide changes to the same codon are useful for distinguishing true codon mutations from sequencing or reverse-transcription errors, as these only rarely induce multi-nucleotide codon changes.</p>
+<p>The distinction between all and synonymous is useful when looking at libraries that have been subjected to selection, since synonymous mutations are generally under much weaker selection than the typical mutations.</p>
+<p>This script is designed to be run after you have already run
+<a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a> on one or more sample. Each run of that program
+generates a <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> file. This script gathers its information about mutation counts from these <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> files. Note that only definitely called codons (those indicated in all uppercase without any <em>N</em> nucleotides) are considered here.</p>
+<p>This script also makes plots of the data shown in the aforementioned output files. Making these plots require that you have <a class="reference external" href="http://matplotlib.org/">matplotlib</a> installed.</p>
+<p>To run this script from the prompt, first create a text infile of the
+format described below. Then simply type <a class="reference internal" href="#mapmuts-countparsedmuts-py"><em>mapmuts_countparsedmuts.py</em></a>
+followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+type:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_countparsedmuts.py infile.txt
+</pre></div>
+</div>
+<div class="section" id="input-file-format">
+<h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
+<p>In the input file, blank lines or lines that begin with # are ignored (i.e. as comment lines).</p>
+<p>Other than these comments, the input file should have the following format:</p>
+<ul>
+<li><p class="first">The first line should have the key <em>plotfileprefix</em>, and be followed by a string giving the prefix that is preprended to the <a class="reference internal" href="#output-files">Output files</a>. This prefix can contain a directory path (i.e. <em>my_directory/my_prefix</em>) or just contain the file name prefix (<em>my_prefix</em>) as you prefer.</p>
+</li>
+<li><p class="first">The next line should have the key <em>maxn</em> and be followed either by an integer &gt;= 1 or <em>None</em>. For each value of <em>n</em> ranging from 0 to <em>maxn</em>, the script reports the fraction of mutations that occur at least that many times (occurrences <span class="math">\(\ge n\)</span>). If you specify <em>maxn</em>, then the script looks at values of <em>n</em> ranging from 0 up to and including <em>maxn</em>. If you assign <em>maxn</em> a value of <em>None</em>, then the script sets <em>maxn</em> to the maximum occurrence of any mutation (when looking at all mutations) or any synonymous mutation (when looking at synonymous mutations).</p>
+</li>
+<li><p class="first">The next line should have the key <em>legendloc</em> and be followed by either <em>bottom</em> or <em>right</em>. If it is <em>bottom</em>, then the legend is at the bottom of the plot. If it is <em>right</em>, then the legend is at the right of the plot.</p>
+</li>
+<li><p class="first">All of the subsequent lines should list the samples for which we count the mutations. These are listed as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>First, provide the name that you want to assign to the sample. This name can <strong>not</strong> contain any spaces.</li>
+<li>Next, list one or more <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> files of the type created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. These file names can <strong>not</strong> contain spaces.</li>
+</ul>
+</div></blockquote>
+<p>You have at least one line listing such samples, and you can provide more than one such line if you want to analyze multiple samples.</p>
+<p>If multiple <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> files are listed, then looks at each possible synonymous mutation <strong>only at sites where all files specify a sequence with the same wildtype codon.</strong> Then computes the total number of times that the mutation is found over all of the files listed.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="example-input-file">
+<h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># input file for running script mapmuts_countparsedmuts.py for countparsedmuts
+plotfileprefix countparsedmuts
+maxn 50
+legendloc right
+DNA /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/DNA/replicate_A_WT-1_DNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/DNA/replicate_A_WT-2_DNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/DNA/replicate_A_N334H-1_DNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/DNA/replicate_A_N334H-2_DNA_codoncounts.txt
+RNA /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/RNA/replicate_A_WT-1_RNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/RNA/replicate_A_WT-2_RNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/RNA/replicate_A_N334H-1_RNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/RNA/replicate_A_N334H-2_RNA_codoncounts.txt
+mutDNA /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/mutDNA/replicate_A_WT-1_mutDNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/mutDNA/replicate_A_WT-2_mutDNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/mutDNA/replicate_A_N334H-1_mutDNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/mutDNA/replicate_A_N334H-2_mutDNA_codoncounts.txt
+virus-p1 /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/virus-p1/replicate_A_WT-1_virus-p1_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/virus-p1/replicate_A_WT-2_virus-p1_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/virus-p1/replicate_A_N334H-1_virus-p1_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/virus-p1/replicate_A_N334H-2_virus-p1_codoncounts.txt
+virus-p2 /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/virus-p2/replicate_A_WT-1_virus-p2_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/virus-p2/replicate_A_WT-2_virus-p2_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/virus-p2/replicate_A_N334H-1_virus-p2_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/virus-p2/replicate_A_N334H-2_virus-p2_codoncounts.txt
+mutvirus-p1 /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/mutvirus-p1/replicate_A_WT-1_mutvirus-p1_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/mutvirus-p1/replicate_A_WT-2_mutvirus-p1_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/mutvirus-p1/replicate_A_N334H-1_mutvirus-p1_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/mutvirus-p1/replicate_A_N334H-2_mutvirus-p1_codoncounts.txt
+mutvirus-p2 /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/mutvirus-p2/replicate_A_WT-1_mutvirus-p2_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/mutvirus-p2/replicate_A_WT-2_mutvirus-p2_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/mutvirus-p2/replicate_A_N334H-1_mutvirus-p2_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/mutvirus-p2/replicate_A_N334H-2_mutvirus-p2_codoncounts.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-files">
+<h2>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
+<p>The following output files are created:</p>
+<ul>
+<li><p class="first">A text file giving the fraction of all of the multi-nucleotide codon mutations to a protein of length <em>L</em> that are found <span class="math">\(\ge n\)</span> times for <span class="math">\(0 \le n \le maxn\)</span> (these are codon mutations that involve more than one nucleotide change to the same codon). The name of this file begins with the prefix specified by <em>plotfileprefix</em> and is followed by the suffix <tt class="docutils literal"><span class="pre">_multi-nt-allcodonmutcounts.txt</span></tt>.</p>
+<p>The first two lines are headers beginning with a <em>#</em> character. After that, the first column gives <em>n</em> and the remaining columns (there are as many remaining columns are there are samples listed in the input file) give the fraction of mutations that are found <span class="math">\(\ge\)</span> that many times for each sample. The sample columns are in the same order that they are listed in the input file. The columns are tab delimited. Here are a few example lines:</p>
+<div class="highlight-python"><div class="highlight"><pre># File listing the fraction of multi-nt-all mutations that are found greater than or equal to n times.
+# There are 26892 total multi-nt-all mutations
+#n  DNA RNA mutDNA  mutvirus-p1 mutvirus-p2 virus-p1    virus-p2
+0   1.0000  1.0000  1.0000  1.0000  1.0000  1.0000  1.0000
+1   0.1936  0.2220  0.9981  0.8801  0.8510  0.2259  0.3395
+2   0.0750  0.0950  0.9972  0.7986  0.7448  0.0926  0.1451
+3   0.0468  0.0627  0.9964  0.7317  0.6689  0.0590  0.0862
+4   0.0340  0.0489  0.9955  0.6772  0.6082  0.0451  0.0624
+5   0.0272  0.0396  0.9948  0.6302  0.5591  0.0357  0.0483
+6   0.0223  0.0333  0.9939  0.5891  0.5173  0.0297  0.0391
+7   0.0193  0.0294  0.9927  0.5540  0.4836  0.0255  0.0329
+8   0.0161  0.0259  0.9922  0.5244  0.4544  0.0217  0.0287
+9   0.0141  0.0231  0.9911  0.4980  0.4299  0.0195  0.0248
+10  0.0124  0.0206  0.9901  0.4734  0.4087  0.0173  0.0219
+</pre></div>
+</div>
+</li>
+<li><p class="first">A text file like the <tt class="docutils literal"><span class="pre">_multi-nt-allcodonmutcounts.txt</span></tt>, but for all codon mutations (single and multi-nucleotide codon mutations). This file begins with the prefix specified by <em>plotfileprefix</em> and is followed by the suffix <tt class="docutils literal"><span class="pre">_allcodonmutcounts.txt</span></tt>.</p>
+</li>
+<li><p class="first">A text file like <tt class="docutils literal"><span class="pre">*_allcodonmutcounts.txt</span></tt> but just for synonymous mutations. This file begins with the prefix specified by <em>plotfileprefix</em> and is followed by the suffix <tt class="docutils literal"><span class="pre">_syncodonmutcounts.txt</span></tt>.</p>
+</li>
+<li><p class="first">A text file like <tt class="docutils literal"><span class="pre">*_multi-nt-allcodonmutcounts.txt</span></tt> but just for synonymous mutations that involve more than one nucleotide change in the codon mutation. This file begins with the prefix specified by <em>plotfileprefix</em> and is followed by the suffix <tt class="docutils literal"><span class="pre">_multi-nt-syncodonmutcounts.txt</span></tt>.</p>
+</li>
+<li><p class="first">A plot beginning with <em>plotfileprefix</em> and followed by the suffix <tt class="docutils literal"><span class="pre">_multi-nt-codonmutcounts.pdf</span></tt>. Here is an example of this plot:</p>
+<blockquote>
+<div><div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_countparsedmuts_multi-nt-codonmutcounts.jpg"><img alt="example_2013Analysis_Influenza_NP_Aichi68_replicate_A_countparsedmuts_multi-nt-codonmutcounts.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_countparsedmuts_multi-nt-codonmutcounts.jpg" style="width: 80%;" /></a>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">A plot like the <tt class="docutils literal"><span class="pre">_multi-nt-codonmutcounts.pdf</span></tt> but for all codon mutations regardless of whether or not they have multi-nucleotide changes. This plot has the suffix <tt class="docutils literal"><span class="pre">_codonmutcounts.pdf</span></tt>.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_countparsedmuts.py</a><ul>
+<li><a class="reference internal" href="#input-file-format">Input file format</a></li>
+<li><a class="reference internal" href="#example-input-file">Example input file</a></li>
+<li><a class="reference internal" href="#output-files">Output files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_parsesummaryplots.html"
+                        title="previous chapter">mapmuts_parsesummaryplots.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_inferpreferences.html"
+                        title="next chapter">mapmuts_inferpreferences.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_countparsedmuts.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_parsesummaryplots.html" title="mapmuts_parsesummaryplots.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>
