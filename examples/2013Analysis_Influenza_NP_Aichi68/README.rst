@@ -7,7 +7,7 @@
 
 Overview
 -----------
-This is a description of the analysis of mutagenesis and deep-sequencing of the nucleoprotein (NP) from the human H3N2 influenza strain A/Aichi/2/1968. The ultiamte goal is to infer the preference of each site for each possible amino acid.
+This is a description of the analysis of mutagenesis and deep-sequencing of the nucleoprotein (NP) from the human H3N2 influenza strain A/Aichi/2/1968. The ultimate goal is to infer the preference of each site for each possible amino acid.
 
 The overall conceptual approach of the experiments is similar to the strategy originally described by `Fowler et al`_.
 
