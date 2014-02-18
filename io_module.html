@@ -55,1072 +55,825 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-io">
-<span id="io-module"></span><h1><a class="reference internal" href="#module-io" title="io"><tt class="xref py py-mod docutils literal"><span class="pre">io</span></tt></a> Module<a class="headerlink" href="#module-io" title="Permalink to this headline">¶</a></h1>
-<p>The io module provides the Python interfaces to stream handling. The
-builtin open function is defined in this module.</p>
-<p>At the top of the I/O hierarchy is the abstract base class IOBase. It
-defines the basic interface to a stream. Note, however, that there is no
-separation between reading and writing to streams; implementations are
-allowed to throw an IOError if they do not support a given operation.</p>
-<p>Extending IOBase is RawIOBase which deals simply with the reading and
-writing of raw bytes to a stream. FileIO subclasses RawIOBase to provide
-an interface to OS files.</p>
-<p>BufferedIOBase deals with buffering on a raw byte stream (RawIOBase). Its
-subclasses, BufferedWriter, BufferedReader, and BufferedRWPair buffer
-streams that are readable, writable, and both respectively.
-BufferedRandom provides a buffered interface to random access
-streams. BytesIO is a simple stream of in-memory bytes.</p>
-<p>Another IOBase subclass, TextIOBase, deals with the encoding and decoding
-of streams into text. TextIOWrapper, which extends it, is a buffered text
-interface to a buffered raw stream (<cite>BufferedIOBase</cite>). Finally, StringIO
-is a in-memory stream for text.</p>
-<p>Argument names are not part of the specification, and only the arguments
-of open() are intended to be used as keyword arguments.</p>
-<p>data:</p>
-<p>DEFAULT_BUFFER_SIZE</p>
-<blockquote>
-<div>An int containing the default buffer size used by the module&#8217;s buffered
-I/O classes. open() uses the file&#8217;s blksize (as obtained by os.stat) if
-possible.</div></blockquote>
-<dl class="exception">
-<dt id="io.BlockingIOError">
-<em class="property">exception </em><tt class="descclassname">io.</tt><tt class="descname">BlockingIOError</tt><a class="headerlink" href="#io.BlockingIOError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.IOError</span></tt></p>
-<p>Exception raised when I/O would block on a non-blocking I/O stream</p>
-<dl class="attribute">
-<dt id="io.BlockingIOError.characters_written">
-<tt class="descname">characters_written</tt><a class="headerlink" href="#io.BlockingIOError.characters_written" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+  <div class="section" id="module-src.io">
+<span id="io-module"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">io</span></tt> Module<a class="headerlink" href="#module-src.io" title="Permalink to this headline">¶</a></h1>
+<p>Performs input/output operations for <tt class="docutils literal"><span class="pre">mapmuts</span></tt> package.</p>
+<p>Written by Jesse Bloom</p>
+<div class="section" id="list-of-functions">
+<h2>List of functions<a class="headerlink" href="#list-of-functions" title="Permalink to this headline">¶</a></h2>
+<p><cite>IteratePairedFASTQ</cite> : iterates over FASTQ files for paired-end reads.</p>
+<p><cite>IterateAlignmentFile</cite> : iterates over files written by <cite>main.MakeAlignments</cite>.</p>
+<p><cite>WriteInsertLengths</cite> : writes distribution of insert lengths.</p>
+<p><cite>ReadInsertLengths</cite> : reads data written by <cite>WriteInsertLengths</cite>.</p>
+<p><cite>WriteAlignmentStatistics</cite> : writes summary of alignment statistics.</p>
+<p><cite>ReadAlignmentStatistics</cite> : reads data written by <cite>WriteAlignmentStatistics</cite>.</p>
+<p><cite>WriteReadMismatches</cite> : writes distribution of mismatches along read.</p>
+<p><cite>ReadReadMismatches</cite> : reads data written by <cite>WriteReadMismatches</cite>.</p>
+<p><cite>WriteNTCounts</cite> : writes counts of nucleotide identities.</p>
+<p><cite>ReadNTCounts</cite> : reads output of <cite>WriteNTCounts</cite>.</p>
+<p><cite>WriteCodonCounts</cite> : writes counts of codon identities.</p>
+<p><cite>ReadCodonCounts</cite> : reads output of <cite>WriteCodonCounts</cite>.</p>
+<p><cite>ReadEnrichmentRatios</cite> : reads enrichment ratios from <tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt></p>
+<p><cite>ReadEntropyAndEquilFreqs</cite> : reads entropies / equilibrium freqs from 
+<tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt></p>
+<p><cite>WriteAAsFromCodonCounts</cite> : reads files created by <cite>WriteCodonCounts</cite>
+and writes the amino acid frequencies.</p>
+<p><cite>ParseInfile</cite> : reads key / value pairs from an input file.</p>
+<p><cite>ParseBoolValue</cite> : reads Boolean values from input dictionary.</p>
+<p><cite>ParseIntValue</cite> : reads integer values from input dictionary.</p>
+<p><cite>ParseFloatValue</cite> : reads float values from input dictionary.</p>
+<p><cite>ParseStringValue</cite> : reads string values from input dictionary.</p>
+<p><cite>ParseSeqValue</cite> : reads sequence from file specified by input dictionary.</p>
+<p><cite>ParseFileList</cite> : reads file list specified by input dictionary.</p>
+<p><cite>AllNTs</cite> : lists nucleotide codes accepted by <cite>WriteNTCounts</cite> / <cite>ReadNTCounts</cite>.</p>
+<p><cite>AllCodons</cite> : list codon codes accepted by <cite>WriteCodonCounts</cite> / <cite>ReadCodonCounts</cite>.</p>
+<p><cite>PrintVersions</cite> : prints version numbers of <em>mapmuts</em> and associated packages.</p>
+</div>
+<div class="section" id="documentation-for-individual-functions">
+<h2>Documentation for individual functions<a class="headerlink" href="#documentation-for-individual-functions" title="Permalink to this headline">¶</a></h2>
+<p>Documentation for individual functions is provided in their definitions below.</p>
+<dl class="function">
+<dt id="src.io.AllCodons">
+<tt class="descclassname">src.io.</tt><tt class="descname">AllCodons</tt><big>(</big><big>)</big><a class="headerlink" href="#src.io.AllCodons" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all codon codes for <cite>ReadCodonCounts</cite> / <cite>WriteCodonCounts</cite>.</p>
+<p>Returns a list of all codon codes in the scheme used by
+<cite>ReadCodonCounts</cite> / <cite>WriteCodonCounts</cite>. The order of entries in this list
+is important, and should be preserved to maintain compatibility
+for reading/writing files.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AllCodons</span><span class="p">()[</span> <span class="p">:</span> <span class="mi">9</span><span class="p">]</span>
+<span class="go">[&#39;AAA&#39;, &#39;AAT&#39;, &#39;AAC&#39;, &#39;AAG&#39;, &#39;AAa&#39;, &#39;AAt&#39;, &#39;AAc&#39;, &#39;AAg&#39;, &#39;AAN&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">AllCodons</span><span class="p">())</span> <span class="o">==</span> <span class="mi">9</span><span class="o">**</span><span class="mi">3</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
-<dt id="io.open">
-<tt class="descclassname">io.</tt><tt class="descname">open</tt><big>(</big><big>)</big><a class="headerlink" href="#io.open" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open file and return a stream.  Raise IOError upon failure.</p>
-<p>file is either a text or byte string giving the name (and the path
-if the file isn&#8217;t in the current working directory) of the file to
-be opened or an integer file descriptor of the file to be
-wrapped. (If a file descriptor is given, it is closed when the
-returned I/O object is closed, unless closefd is set to False.)</p>
-<p>mode is an optional string that specifies the mode in which the file
-is opened. It defaults to &#8216;r&#8217; which means open for reading in text
-mode.  Other common values are &#8216;w&#8217; for writing (truncating the file if
-it already exists), and &#8216;a&#8217; for appending (which on some Unix systems,
-means that all writes append to the end of the file regardless of the
-current seek position). In text mode, if encoding is not specified the
-encoding used is platform dependent. (For reading and writing raw
-bytes use binary mode and leave encoding unspecified.) The available
-modes are:</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="13%" />
-<col width="88%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Character</td>
-<td>Meaning</td>
-</tr>
-<tr class="row-even"><td>&#8216;r&#8217;</td>
-<td>open for reading (default)</td>
-</tr>
-<tr class="row-odd"><td>&#8216;w&#8217;</td>
-<td>open for writing, truncating the file first</td>
-</tr>
-<tr class="row-even"><td>&#8216;a&#8217;</td>
-<td>open for writing, appending to the end of the file if it exists</td>
-</tr>
-<tr class="row-odd"><td>&#8216;b&#8217;</td>
-<td>binary mode</td>
-</tr>
-<tr class="row-even"><td>&#8216;t&#8217;</td>
-<td>text mode (default)</td>
-</tr>
-<tr class="row-odd"><td>&#8216;+&#8217;</td>
-<td>open a disk file for updating (reading and writing)</td>
-</tr>
-<tr class="row-even"><td>&#8216;U&#8217;</td>
-<td>universal newline mode (for backwards compatibility; unneeded
-for new code)</td>
-</tr>
-</tbody>
-</table>
-<p>The default mode is &#8216;rt&#8217; (open for reading text). For binary random
-access, the mode &#8216;w+b&#8217; opens and truncates the file to 0 bytes, while
-&#8216;r+b&#8217; opens the file without truncation.</p>
-<p>Python distinguishes between files opened in binary and text modes,
-even when the underlying operating system doesn&#8217;t. Files opened in
-binary mode (appending &#8216;b&#8217; to the mode argument) return contents as
-bytes objects without any decoding. In text mode (the default, or when
-&#8216;t&#8217; is appended to the mode argument), the contents of the file are
-returned as strings, the bytes having been first decoded using a
-platform-dependent encoding or using the specified encoding if given.</p>
-<p>buffering is an optional integer used to set the buffering policy.
-Pass 0 to switch buffering off (only allowed in binary mode), 1 to select
-line buffering (only usable in text mode), and an integer &gt; 1 to indicate
-the size of a fixed-size chunk buffer.  When no buffering argument is
-given, the default buffering policy works as follows:</p>
-<ul class="simple">
-<li>Binary files are buffered in fixed-size chunks; the size of the buffer
-is chosen using a heuristic trying to determine the underlying device&#8217;s
-&#8220;block size&#8221; and falling back on <cite>io.DEFAULT_BUFFER_SIZE</cite>.
-On many systems, the buffer will typically be 4096 or 8192 bytes long.</li>
-<li>&#8220;Interactive&#8221; text files (files for which isatty() returns True)
-use line buffering.  Other text files use the policy described above
-for binary files.</li>
+<dt id="src.io.AllNTs">
+<tt class="descclassname">src.io.</tt><tt class="descname">AllNTs</tt><big>(</big><big>)</big><a class="headerlink" href="#src.io.AllNTs" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all nucleotide codes for <cite>ReadNTCounts</cite> / <cite>WriteNTCounts</cite>.</p>
+<p>Returns a list of all nucleotide codes in the scheme used by
+<cite>ReadNTCounts</cite> / <cite>WriteNTCounts</cite>. The order of entries in this list
+is important, and should be preserved to maintain compatibility
+for reading/writing files.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">AllNTs</span><span class="p">()</span>
+<span class="go">[&#39;A&#39;, &#39;T&#39;, &#39;C&#39;, &#39;G&#39;, &#39;a&#39;, &#39;t&#39;, &#39;c&#39;, &#39;g&#39;, &#39;N&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="src.io.IterateAlignmentFile">
+<tt class="descclassname">src.io.</tt><tt class="descname">IterateAlignmentFile</tt><big>(</big><em>filename</em>, <em>gzipped=True</em>, <em>usegzip=False</em><big>)</big><a class="headerlink" href="#src.io.IterateAlignmentFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates over alignment file written by main.MakeAlignments</p>
+<p><cite>filename</cite> : name of a file of the type written by <cite>main.MakeAlignments</cite>
+as the <tt class="docutils literal"><span class="pre">*_alignments.txt.gz</span></tt> file. Each entry
+in these alignment files consists of five lines, giving the
+read name, gene, read 1, read 2, blank line, as in:</p>
+<div class="highlight-python"><div class="highlight"><pre>@DH1DQQN1:241:C1433ACXX:2:1101:1623:2365
+14 ATAGATACTAGAT 26
+ 1 .....C.....T. 13
+13 .....C.......  1
+</pre></div>
+</div>
+<p><cite>gzipped</cite> : Boolean switch specifying whether the alignment
+file is gzipped. In general, this will be <cite>True</cite> since
+<cite>main.MakeAlignments</cite> writes gzipped files. Default
+value is <cite>True</cite>.</p>
+<p><cite>usegzip</cite> : a Boolean switch that is meaningful only if <cite>gzipped</cite> 
+is <cite>True</cite>. This specifies that we use the Python <tt class="docutils literal"><span class="pre">gzip</span></tt> module to 
+unzip the reads. Otherwise we use the system <tt class="docutils literal"><span class="pre">gzip</span> <span class="pre">-cd</span></tt> command,
+which may be faster. You should definitely specify
+<cite>usegzip</cite> to <cite>True</cite> if you are only reading a few lines, as with
+<cite>usegzip</cite> as <cite>False</cite> the entire file is unzipped before anything happens.
+<cite>False</cite> by default.</p>
+<p>The function will iterate over all alignment entries in
+filename. Each iteration returns the following tuple:
+<cite>(gstart, gend, gseq, r1start, r1end, r1seq, r2start, r2end, r2seq)</cite>
+The tuple entries have the following meanings:</p>
+<blockquote>
+<div><p><cite>gstart</cite> : index of first gene nt; 1, 2, ... numbering.</p>
+<p><cite>gend</cite> : index last gene nt; 1, 2, ... numbering.</p>
+<p><cite>gseq</cite> : aligned gene nucleotides.</p>
+<p><cite>r1start</cite> -&gt; index of first R1 nt; 1, 2, ... numbering.</p>
+<p><cite>r1end</cite> : index of last R1 nt; 1, 2, ... numbering.</p>
+<p><cite>r1seq</cite> : aligned R1 nucleotides, with dots at identities.</p>
+<p><cite>r2start</cite> : index of first R2 nt; 1, 2, ... numbering.</p>
+<p><cite>r2end</cite> : index of last R2 nt; 1, 2, ... numbering.</p>
+<p><cite>r2seq</cite> : aligned R2 nucleotides, with dots at identities.</p>
+</div></blockquote>
+<p>Note that the <cite>r1</cite> and <cite>r2</cite> indices are for the orientation in
+which the read aligns, so either <cite>r1start &lt;= r1end</cite> or
+<cite>r2start &lt;= r2end</cite>.</p>
+<p>For example, the alignment shown above under the filename
+option description would return:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="s">&#39;ATAGATACTAGAT&#39;</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;.....C.....T.&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="s">&#39;.....C.......&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="src.io.IteratePairedFASTQ">
+<tt class="descclassname">src.io.</tt><tt class="descname">IteratePairedFASTQ</tt><big>(</big><em>r1files</em>, <em>r2files</em>, <em>gzipped</em>, <em>applyfilter</em>, <em>usegzip=False</em><big>)</big><a class="headerlink" href="#src.io.IteratePairedFASTQ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates over FASTQ file pairs for paired-end sequencing reads.</p>
+<p>This function has been tested for its ability to read FASTQ files
+generated by the Illumina Casava 1.8 pipeline for paired-end reads.</p>
+<p>CALLING VARIABLES:</p>
+<p><cite>r1files</cite> : list of file name(s) containing the R1 reads.</p>
+<p><cite>r2files</cite> : list of file name(s) containing the R2 reads. The files
+specified here must specify the exact same number of reads as
+those in <cite>r1files</cite>, and they must be in the same sequence (i.e.
+the first R1 read found going through <cite>r1files</cite> in order must
+match the first R2 read found going through <cite>r2files</cite> in order,
+etc).</p>
+<p><cite>gzipped</cite> : Boolean switch specifying whether the FASTQ files
+specified by <cite>r1files</cite> and <cite>r2files</cite> are gzipped. If set to <cite>True</cite>,
+they are gzipped. This iterator will then read them without
+unzipping the files.</p>
+<p><cite>applyfilter</cite> : Boolean switch specifying whether we remove read
+pairs in which one or more of the reads failed the Illumina
+chastity filter. If <cite>True</cite>, the iterator simply returns <cite>False</cite>
+each time it encounters a read pair where the chastity filter is
+failed. The chastity filter is indicated by Y or N in the
+sequence header &#8211; values of Y indicate a failed filter.</p>
+<p><cite>usegzip</cite> : Boolean switch that is meaningful only if <cite>gzipped</cite>
+is <cite>True</cite>. This specifies that we use the Python <tt class="docutils literal"><span class="pre">gzip</span></tt> module to 
+unzip the reads. Otherwise we use the system <tt class="docutils literal"><span class="pre">gzip</span> <span class="pre">-cd</span> <span class="pre">command</span></tt>,
+which may be faster. You should definitely specify
+<cite>usegzip</cite> to <cite>True</cite> if you are only reading a few lines, as with
+<cite>usegzip</cite> set to <cite>False</cite> the entire file is unzipped before anything happens.
+<cite>False</cite> by default.</p>
+<p>RESULT OF THIS FUNCTION:</p>
+<p>The function will iterate over all read pairs in the indicated
+files. For each iteration, it will return:</p>
+<ul>
+<li><p class="first">The return variable is <cite>False</cite> if <tt class="docutils literal"><span class="pre">applyfilter</span> <span class="pre">==</span> <span class="pre">True</span></tt> and one of the
+reads in the pair failed the Illumina chastity filter.</p>
+</li>
+<li><p class="first">Otherwise the
+return variable is the following tuple:
+<cite>(name, r1, r2, q1avg, q2avg)</cite> where:</p>
+<p><cite>name</cite> : name of the read pair (a string)</p>
+<p><cite>r1</cite> : sequence of the first read R1 (a string)</p>
+<p><cite>r2</cite> : sequence of the second read R2 (a string)</p>
+<p><cite>q1avg</cite> : the mean Q-score for the R1 read (a float)</p>
+<p><cite>q2avg</cite> : the mean Q-score for the R2 read (a float)</p>
+</li>
 </ul>
-<p>encoding is the name of the encoding used to decode or encode the
-file. This should only be used in text mode. The default encoding is
-platform dependent, but any encoding supported by Python can be
-passed.  See the codecs module for the list of supported encodings.</p>
-<p>errors is an optional string that specifies how encoding errors are to
-be handled&#8212;this argument should not be used in binary mode. Pass
-&#8216;strict&#8217; to raise a ValueError exception if there is an encoding error
-(the default of None has the same effect), or pass &#8216;ignore&#8217; to ignore
-errors. (Note that ignoring encoding errors can lead to data loss.)
-See the documentation for codecs.register for a list of the permitted
-encoding error strings.</p>
-<p>newline controls how universal newlines works (it only applies to text
-mode). It can be None, &#8216;&#8217;, &#8216;n&#8217;, &#8216;r&#8217;, and &#8216;rn&#8217;.  It works as
-follows:</p>
-<ul class="simple">
-<li>On input, if newline is None, universal newlines mode is
-enabled. Lines in the input can end in &#8216;n&#8217;, &#8216;r&#8217;, or &#8216;rn&#8217;, and
-these are translated into &#8216;n&#8217; before being returned to the
-caller. If it is &#8216;&#8217;, universal newline mode is enabled, but line
-endings are returned to the caller untranslated. If it has any of
-the other legal values, input lines are only terminated by the given
-string, and the line ending is returned to the caller untranslated.</li>
-<li>On output, if newline is None, any &#8216;n&#8217; characters written are
-translated to the system default line separator, os.linesep. If
-newline is &#8216;&#8217;, no translation takes place. If newline is any of the
-other legal values, any &#8216;n&#8217; characters written are translated to
-the given string.</li>
-</ul>
-<p>If closefd is False, the underlying file descriptor will be kept open
-when the file is closed. This does not work when a file name is given
-and must be True in that case.</p>
-<p>open() returns a file object whose type depends on the mode, and
-through which the standard file operations such as reading and writing
-are performed. When open() is used to open a file in a text mode (&#8216;w&#8217;,
-&#8216;r&#8217;, &#8216;wt&#8217;, &#8216;rt&#8217;, etc.), it returns a TextIOWrapper. When used to open
-a file in a binary mode, the returned class varies: in read binary
-mode, it returns a BufferedReader; in write binary and append binary
-modes, it returns a BufferedWriter, and in read/write mode, it returns
-a BufferedRandom.</p>
-<p>It is also possible to use a string or bytearray as a file for both
-reading and writing. For strings StringIO can be used like a file
-opened in a text mode, and for bytes a BytesIO can be used like a file
-opened in a binary mode.</p>
 </dd></dl>
 
-<dl class="class">
-<dt id="io.IOBase">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">IOBase</tt><a class="headerlink" href="#io.IOBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._IOBase</span></tt></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="io.RawIOBase">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">RawIOBase</tt><a class="headerlink" href="#io.RawIOBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._RawIOBase</span></tt>, <a class="reference internal" href="#io.IOBase" title="io.IOBase"><tt class="xref py py-class docutils literal"><span class="pre">io.IOBase</span></tt></a></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="io.FileIO">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">FileIO</tt><a class="headerlink" href="#io.FileIO" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._RawIOBase</span></tt></p>
-<p>file(name: str[, mode: str]) -&gt; file IO object</p>
-<p>Open a file.  The mode can be &#8216;r&#8217;, &#8216;w&#8217; or &#8216;a&#8217; for reading (default),
-writing or appending.  The file will be created if it doesn&#8217;t exist
-when opened for writing or appending; it will be truncated when
-opened for writing.  Add a &#8216;+&#8217; to the mode to allow simultaneous
-reading and writing.</p>
-<dl class="method">
-<dt id="io.FileIO.close">
-<tt class="descname">close</tt><big>(</big><big>)</big> &rarr; None.  Close the file.<a class="headerlink" href="#io.FileIO.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>A closed file cannot be used for further I/O operations.  close() may be
-called more than once without error.  Changes the fileno to -1.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="io.FileIO.closed">
-<tt class="descname">closed</tt><a class="headerlink" href="#io.FileIO.closed" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if the file is closed</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="io.FileIO.closefd">
-<tt class="descname">closefd</tt><a class="headerlink" href="#io.FileIO.closefd" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if the file descriptor will be closed</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.fileno">
-<tt class="descname">fileno</tt><big>(</big><big>)</big> &rarr; int. &quot;file descriptor&quot;.<a class="headerlink" href="#io.FileIO.fileno" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is needed for lower-level file interfaces, such the fcntl module.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.isatty">
-<tt class="descname">isatty</tt><big>(</big><big>)</big> &rarr; bool.  True if the file is connected to a tty device.<a class="headerlink" href="#io.FileIO.isatty" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.FileIO.mode">
-<tt class="descname">mode</tt><a class="headerlink" href="#io.FileIO.mode" title="Permalink to this definition">¶</a></dt>
-<dd><p>String giving the file mode</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.read">
-<tt class="descname">read</tt><big>(</big><em>size: int</em><big>)</big> &rarr; bytes.  read at most size bytes, returned as bytes.<a class="headerlink" href="#io.FileIO.read" title="Permalink to this definition">¶</a></dt>
-<dd><p>Only makes one system call, so less data may be returned than requested
-In non-blocking mode, returns None if no data is available.
-On end-of-file, returns &#8216;&#8217;.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.readable">
-<tt class="descname">readable</tt><big>(</big><big>)</big> &rarr; bool.  True if file was opened in a read mode.<a class="headerlink" href="#io.FileIO.readable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.readall">
-<tt class="descname">readall</tt><big>(</big><big>)</big> &rarr; bytes.  read all data from the file, returned as bytes.<a class="headerlink" href="#io.FileIO.readall" title="Permalink to this definition">¶</a></dt>
-<dd><p>In non-blocking mode, returns as much as is immediately available,
-or None if no data is available.  On end-of-file, returns &#8216;&#8217;.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.readinto">
-<tt class="descname">readinto</tt><big>(</big><big>)</big> &rarr; Same as RawIOBase.readinto().<a class="headerlink" href="#io.FileIO.readinto" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.seek">
-<tt class="descname">seek</tt><big>(</big><em>offset: int</em><span class="optional">[</span>, <em>whence: int</em><span class="optional">]</span><big>)</big> &rarr; None.  Move to new file position.<a class="headerlink" href="#io.FileIO.seek" title="Permalink to this definition">¶</a></dt>
-<dd><p>Argument offset is a byte count.  Optional argument whence defaults to
-0 (offset from start of file, offset should be &gt;= 0); other values are 1
-(move relative to current position, positive or negative), and 2 (move
-relative to end of file, usually negative, although many platforms allow
-seeking beyond the end of a file).
-Note that not all file objects are seekable.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.seekable">
-<tt class="descname">seekable</tt><big>(</big><big>)</big> &rarr; bool.  True if file supports random-access.<a class="headerlink" href="#io.FileIO.seekable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.tell">
-<tt class="descname">tell</tt><big>(</big><big>)</big> &rarr; int.  Current file position<a class="headerlink" href="#io.FileIO.tell" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.truncate">
-<tt class="descname">truncate</tt><big>(</big><span class="optional">[</span><em>size: int</em><span class="optional">]</span><big>)</big> &rarr; None.  Truncate the file to at most size bytes.<a class="headerlink" href="#io.FileIO.truncate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Size defaults to the current file position, as returned by tell().The current file position is changed to the value of size.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.writable">
-<tt class="descname">writable</tt><big>(</big><big>)</big> &rarr; bool.  True if file was opened in a write mode.<a class="headerlink" href="#io.FileIO.writable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.FileIO.write">
-<tt class="descname">write</tt><big>(</big><em>b: bytes</em><big>)</big> &rarr; int.  Write bytes b to file, return number written.<a class="headerlink" href="#io.FileIO.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>Only makes one system call, so not all of the data may be written.
-The number of bytes actually written is returned.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="io.BytesIO">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">BytesIO</tt><a class="headerlink" href="#io.BytesIO" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._BufferedIOBase</span></tt></p>
-<p>BytesIO([buffer]) -&gt; object</p>
-<p>Create a buffered I/O implementation using an in-memory bytes
-buffer, ready for reading and writing.</p>
-<dl class="method">
-<dt id="io.BytesIO.close">
-<tt class="descname">close</tt><big>(</big><big>)</big> &rarr; None.  Disable all I/O operations.<a class="headerlink" href="#io.BytesIO.close" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BytesIO.closed">
-<tt class="descname">closed</tt><a class="headerlink" href="#io.BytesIO.closed" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if the file is closed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.flush">
-<tt class="descname">flush</tt><big>(</big><big>)</big> &rarr; None.  Does nothing.<a class="headerlink" href="#io.BytesIO.flush" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.getvalue">
-<tt class="descname">getvalue</tt><big>(</big><big>)</big> &rarr; bytes.<a class="headerlink" href="#io.BytesIO.getvalue" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve the entire contents of the BytesIO object.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.isatty">
-<tt class="descname">isatty</tt><big>(</big><big>)</big> &rarr; False.<a class="headerlink" href="#io.BytesIO.isatty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Always returns False since BytesIO objects are not connected
-to a tty-like device.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="io.BytesIO.next">
-<tt class="descname">next</tt><a class="headerlink" href="#io.BytesIO.next" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.next() -&gt; the next value, or raise StopIteration</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.read">
-<tt class="descname">read</tt><big>(</big><span class="optional">[</span><em>size</em><span class="optional">]</span><big>)</big> &rarr; read at most size bytes, returned as a string.<a class="headerlink" href="#io.BytesIO.read" title="Permalink to this definition">¶</a></dt>
-<dd><p>If the size argument is negative, read until EOF is reached.
-Return an empty string at EOF.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.read1">
-<tt class="descname">read1</tt><big>(</big><em>size</em><big>)</big> &rarr; read at most size bytes, returned as a string.<a class="headerlink" href="#io.BytesIO.read1" title="Permalink to this definition">¶</a></dt>
-<dd><p>If the size argument is negative or omitted, read until EOF is reached.
-Return an empty string at EOF.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.readable">
-<tt class="descname">readable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BytesIO.readable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.readinto">
-<tt class="descname">readinto</tt><big>(</big><em>bytearray</em><big>)</big> &rarr; int.  Read up to len(b) bytes into b.<a class="headerlink" href="#io.BytesIO.readinto" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns number of bytes read (0 for EOF), or None if the object
-is set not to block as has no data to read.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.readline">
-<tt class="descname">readline</tt><big>(</big><span class="optional">[</span><em>size</em><span class="optional">]</span><big>)</big> &rarr; next line from the file, as a string.<a class="headerlink" href="#io.BytesIO.readline" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retain newline.  A non-negative size argument limits the maximum
-number of bytes to return (an incomplete line may be returned then).
-Return an empty string at EOF.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.readlines">
-<tt class="descname">readlines</tt><big>(</big><span class="optional">[</span><em>size</em><span class="optional">]</span><big>)</big> &rarr; list of strings, each a line from the file.<a class="headerlink" href="#io.BytesIO.readlines" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call readline() repeatedly and return a list of the lines so read.
-The optional size argument, if given, is an approximate bound on the
-total number of bytes in the lines returned.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.seek">
-<tt class="descname">seek</tt><big>(</big><em>pos</em>, <em>whence=0</em><big>)</big> &rarr; int.  Change stream position.<a class="headerlink" href="#io.BytesIO.seek" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Seek to byte offset pos relative to position indicated by whence:</dt>
-<dd>0  Start of stream (the default).  pos should be &gt;= 0;
-1  Current position - pos may be negative;
-2  End of stream - pos usually negative.</dd>
-</dl>
-<p>Returns the new absolute position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.seekable">
-<tt class="descname">seekable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BytesIO.seekable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.tell">
-<tt class="descname">tell</tt><big>(</big><big>)</big> &rarr; current file position, an integer<a class="headerlink" href="#io.BytesIO.tell" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.truncate">
-<tt class="descname">truncate</tt><big>(</big><span class="optional">[</span><em>size</em><span class="optional">]</span><big>)</big> &rarr; int.  Truncate the file to at most size bytes.<a class="headerlink" href="#io.BytesIO.truncate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Size defaults to the current file position, as returned by tell().
-The current file position is unchanged.  Returns the new size.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.writable">
-<tt class="descname">writable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BytesIO.writable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.write">
-<tt class="descname">write</tt><big>(</big><em>bytes</em><big>)</big> &rarr; int.  Write bytes to file.<a class="headerlink" href="#io.BytesIO.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the number of bytes written.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.BytesIO.writelines">
-<tt class="descname">writelines</tt><big>(</big><em>sequence_of_strings</em><big>)</big> &rarr; None.  Write strings to the file.<a class="headerlink" href="#io.BytesIO.writelines" title="Permalink to this definition">¶</a></dt>
-<dd><p>Note that newlines are not added.  The sequence can be any iterable
-object producing strings. This is equivalent to calling write() for
-each string.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="io.StringIO">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">StringIO</tt><a class="headerlink" href="#io.StringIO" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._TextIOBase</span></tt></p>
-<p>Text I/O implementation using an in-memory buffer.</p>
-<p>The initial_value argument sets the value of object.  The newline
-argument is like the one of TextIOWrapper&#8217;s constructor.</p>
-<dl class="method">
-<dt id="io.StringIO.close">
-<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close the IO object. Attempting any further operation after the
-object is closed will raise a ValueError.</p>
-<p>This method has no effect if the file is already closed.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="io.StringIO.closed">
-<tt class="descname">closed</tt><a class="headerlink" href="#io.StringIO.closed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.StringIO.getvalue">
-<tt class="descname">getvalue</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.getvalue" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve the entire contents of the object.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="io.StringIO.line_buffering">
-<tt class="descname">line_buffering</tt><a class="headerlink" href="#io.StringIO.line_buffering" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.StringIO.newlines">
-<tt class="descname">newlines</tt><a class="headerlink" href="#io.StringIO.newlines" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.StringIO.next">
-<tt class="descname">next</tt><a class="headerlink" href="#io.StringIO.next" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.next() -&gt; the next value, or raise StopIteration</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.StringIO.read">
-<tt class="descname">read</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.read" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read at most n characters, returned as a string.</p>
-<p>If the argument is negative or omitted, read until EOF
-is reached. Return an empty string at EOF.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.StringIO.readable">
-<tt class="descname">readable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.readable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.StringIO.readline">
-<tt class="descname">readline</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.readline" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read until newline or EOF.</p>
-<p>Returns an empty string if EOF is hit immediately.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="io.StringIO.seek">
-<tt class="descname">seek</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.seek" title="Permalink to this definition">¶</a></dt>
-<dd><p>Change stream position.</p>
+<dl class="function">
+<dt id="src.io.ParseBoolValue">
+<tt class="descclassname">src.io.</tt><tt class="descname">ParseBoolValue</tt><big>(</big><em>d</em>, <em>key</em><big>)</big><a class="headerlink" href="#src.io.ParseBoolValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets Boolean argument from input dictionary.</p>
+<p><cite>d</cite> : a dictionary of key/value string pairs as returned by
+<cite>ParseInfile</cite>.</p>
 <dl class="docutils">
-<dt>Seek to character offset pos relative to position indicated by whence:</dt>
-<dd>0  Start of stream (the default).  pos should be &gt;= 0;
-1  Current position - pos must be 0;
-2  End of stream - pos must be 0.</dd>
+<dt><cite>key</cite> <span class="classifier-delimiter">:</span> <span class="classifier">a string in this dictionary that specifies a value that</span></dt>
+<dd>should be &#8216;True&#8217; or &#8216;False&#8217;.</dd>
 </dl>
-<p>Returns the new absolute position.</p>
+<p>Returns the Boolean truth value specified by <cite>key</cite>. Raises a <cite>ValueError</cite>
+if <cite>key</cite> does not exist in <cite>d</cite>, and a <cite>ValueError</cite> if it specifies
+something other than <cite>True</cite> or <cite>False</cite>.</p>
+<p>Here are some examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;gzipped&#39;</span><span class="p">:</span><span class="s">&#39;True&#39;</span><span class="p">,</span> <span class="s">&#39;applyfilter&#39;</span><span class="p">:</span><span class="s">&#39;False&#39;</span><span class="p">,</span> <span class="s">&#39;a1&#39;</span><span class="p">:</span><span class="s">&#39;a1.txt&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ParseBoolValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;gzipped&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ParseBoolValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;applyfilter&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ParseBoolValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;a1&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">value a1.txt for a1 is not True/False</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ParseBoolValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;otherkey&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">did not find a key for otherkey</span>
+</pre></div>
+</div>
 </dd></dl>
 
-<dl class="method">
-<dt id="io.StringIO.seekable">
-<tt class="descname">seekable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.seekable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.StringIO.tell">
-<tt class="descname">tell</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.tell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tell the current file position.</p>
+<dl class="function">
+<dt id="src.io.ParseFileList">
+<tt class="descclassname">src.io.</tt><tt class="descname">ParseFileList</tt><big>(</big><em>d</em>, <em>key</em><big>)</big><a class="headerlink" href="#src.io.ParseFileList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets list of files from input dictionary.</p>
+<p><cite>d</cite> : a dictionary of key/value string pairs as returned by
+<cite>ParseInfile</cite>.</p>
+<p><cite>key</cite> : a string in this dictionary that specifies a value that
+should give a list of one or more file names.</p>
+<p>Returns a list of the file names specified by <cite>key</cite>. If one or more of
+these files does not exist, raises and <cite>IOError</cite>. If <cite>key</cite> does not
+exist in <cite>d</cite>, raises an <cite>KeyError</cite>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="io.StringIO.truncate">
-<tt class="descname">truncate</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.truncate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Truncate size to pos.</p>
-<p>The pos argument defaults to the current file position, as
-returned by tell().  The current file position is unchanged.
-Returns the new absolute position.</p>
+<dl class="function">
+<dt id="src.io.ParseFloatValue">
+<tt class="descclassname">src.io.</tt><tt class="descname">ParseFloatValue</tt><big>(</big><em>d</em>, <em>key</em><big>)</big><a class="headerlink" href="#src.io.ParseFloatValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets float argument from input dictionary.</p>
+<p><cite>d</cite> : a dictionary of key/value string pairs as returned by
+<cite>ParseInfile</cite>.</p>
+<p><cite>key</cite> : a string in this dictionary that specifies a value that
+should be convertible to a float.</p>
+<p>Returns the float specified by <cite>key</cite>. Raises a <cite>ValueError</cite>
+if <cite>key</cite> does not exist in <cite>d</cite>, and a <cite>ValueError</cite> if it specifies
+something other than an integer.</p>
+<p>Here are some examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;maxn&#39;</span><span class="p">:</span><span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;minq&#39;</span><span class="p">:</span><span class="s">&#39;20.5&#39;</span><span class="p">,</span> <span class="s">&#39;string&#39;</span><span class="p">:</span><span class="s">&#39;hello&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&quot;</span><span class="si">%.1f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">ParseFloatValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;maxn&#39;</span><span class="p">)</span>
+<span class="go">2.0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&quot;</span><span class="si">%.1f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">ParseFloatValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;minq&#39;</span><span class="p">)</span>
+<span class="go">20.5</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ParseFloatValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;string&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">value hello for string is not float</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ParseFloatValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;otherkey&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">did not find a key for otherkey</span>
+</pre></div>
+</div>
 </dd></dl>
 
-<dl class="method">
-<dt id="io.StringIO.writable">
-<tt class="descname">writable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.writable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.StringIO.write">
-<tt class="descname">write</tt><big>(</big><big>)</big><a class="headerlink" href="#io.StringIO.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write string to file.</p>
-<p>Returns the number of characters written, which is always equal to
-the length of the string.</p>
+<dl class="function">
+<dt id="src.io.ParseInfile">
+<tt class="descclassname">src.io.</tt><tt class="descname">ParseInfile</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#src.io.ParseInfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads key / value pairs from an input file.</p>
+<p><cite>f</cite> : should be a readable file-like object.</p>
+<p>Starting at the current position in <cite>f</cite>, reads all remaining lines
+until the end of the file-like object. Any blank line or line
+beginning with a # character is disregarded (# indicates a comment
+line). All other lines should contain exactly two entries, the first
+being the key and the second being the value. The key is construed
+to be the first word, and cannot have any spaces. The value is all
+of the text that follows the key up to the newline.</p>
+<p>The key / value pairs are returned in a
+dictionary, as illustrated in the example below. If there is a
+duplicate key, and exception is raised.</p>
+<p>Example of successfully reading two key/value pairs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;# comment line followed by blank line</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;key1 first_value</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;# now another key with two values</span><span class="se">\n</span><span class="s">key2 2 value2&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ParseInfile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="s">&#39;key1&#39;</span><span class="p">:</span><span class="s">&#39;first_value&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span><span class="p">:</span><span class="s">&#39;2 value2&#39;</span><span class="p">}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Example of duplicate key name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;# comment line followed by blank line</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;key1 first_value</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;# now another key</span><span class="se">\n</span><span class="s">key2 2&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">key1 1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ParseInfile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="s">&#39;key1&#39;</span><span class="p">:</span><span class="s">&#39;first_value&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span><span class="p">:</span><span class="s">&#39;2&#39;</span><span class="p">}</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">ValueError: duplicate key</span>: <span class="n">key1</span>
+</pre></div>
+</div>
 </dd></dl>
 
+<dl class="function">
+<dt id="src.io.ParseIntValue">
+<tt class="descclassname">src.io.</tt><tt class="descname">ParseIntValue</tt><big>(</big><em>d</em>, <em>key</em><big>)</big><a class="headerlink" href="#src.io.ParseIntValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets integer argument from input dictionary.</p>
+<p><cite>d</cite> : a dictionary of key/value string pairs as returned by
+<cite>ParseInfile</cite>.</p>
+<p><cite>key</cite> : a string in this dictionary that specifies a value that
+should be an integer.</p>
+<p>Returns the integer specified by <cite>key</cite>. Raises a <cite>ValueError</cite>
+if <cite>key</cite> does not exist in <cite>d</cite>, and a <cite>ValueError</cite> if it specifies
+something other than an integer.</p>
+<p>Here are some examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;maxn&#39;</span><span class="p">:</span><span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;minq&#39;</span><span class="p">:</span><span class="s">&#39;20.5&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ParseIntValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;maxn&#39;</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ParseIntValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;minq&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">value 20.5 for minq is not integer</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ParseIntValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;otherkey&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">did not find a key for otherkey</span>
+</pre></div>
+</div>
 </dd></dl>
 
-<dl class="class">
-<dt id="io.BufferedIOBase">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">BufferedIOBase</tt><a class="headerlink" href="#io.BufferedIOBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._BufferedIOBase</span></tt>, <a class="reference internal" href="#io.IOBase" title="io.IOBase"><tt class="xref py py-class docutils literal"><span class="pre">io.IOBase</span></tt></a></p>
+<dl class="function">
+<dt id="src.io.ParseSeqValue">
+<tt class="descclassname">src.io.</tt><tt class="descname">ParseSeqValue</tt><big>(</big><em>d</em>, <em>key</em><big>)</big><a class="headerlink" href="#src.io.ParseSeqValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads sequence from FASTA file specified by input dictionary.</p>
+<p><cite>d</cite> : a dictionary of key/value string pairs as returned by
+<cite>ParseInfile</cite>.</p>
+<p><cite>key</cite> : a string in this dictionary that specifies a value that is a
+filename of a readable file that contains exactly one sequence
+in FASTA format.</p>
+<p>Returns a string corresponding to the sequence specified in the
+FASTA file. Raises a <cite>ValueError</cite> if the filename does not exist, or
+does not specify exactly one sequence.</p>
 </dd></dl>
 
-<dl class="class">
-<dt id="io.BufferedReader">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">BufferedReader</tt><a class="headerlink" href="#io.BufferedReader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._BufferedIOBase</span></tt></p>
-<p>Create a new buffered reader using the given readable raw IO object.</p>
-<dl class="method">
-<dt id="io.BufferedReader.close">
-<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.close" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedReader.closed">
-<tt class="descname">closed</tt><a class="headerlink" href="#io.BufferedReader.closed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedReader.detach">
-<tt class="descname">detach</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.detach" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedReader.fileno">
-<tt class="descname">fileno</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.fileno" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedReader.flush">
-<tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.flush" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedReader.isatty">
-<tt class="descname">isatty</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.isatty" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedReader.mode">
-<tt class="descname">mode</tt><a class="headerlink" href="#io.BufferedReader.mode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedReader.name">
-<tt class="descname">name</tt><a class="headerlink" href="#io.BufferedReader.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedReader.next">
-<tt class="descname">next</tt><a class="headerlink" href="#io.BufferedReader.next" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.next() -&gt; the next value, or raise StopIteration</p>
+<dl class="function">
+<dt id="src.io.ParseStringValue">
+<tt class="descclassname">src.io.</tt><tt class="descname">ParseStringValue</tt><big>(</big><em>d</em>, <em>key</em><big>)</big><a class="headerlink" href="#src.io.ParseStringValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads string argument specified by input dictionary.</p>
+<p><cite>d</cite> : a dictionary of the key/value string pairs as returned by
+<cite>ParseInfile</cite>.</p>
+<p><cite>key</cite> : a string in this dictionary that specifies a value that
+is a string.</p>
+<p>Returns string corresponding to <cite>key</cite>. Raises a <cite>ValueError</cite> if 
+<cite>key</cite> does not exist as a key in <cite>d</cite>.</p>
+<p>Here are some examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;outfileprefix&#39;</span><span class="p">:</span><span class="s">&#39;test_example&#39;</span><span class="p">,</span> <span class="s">&#39;samplename&#39;</span><span class="p">:</span><span class="s">&#39;test example&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ParseStringValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;outfileprefix&#39;</span><span class="p">)</span>
+<span class="go">&#39;test_example&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ParseStringValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;samplename&#39;</span><span class="p">)</span>
+<span class="go">&#39;test example&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ParseStringValue</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;otherkey&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+   <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">did not find a key for otherkey</span>
+</pre></div>
+</div>
 </dd></dl>
 
-<dl class="method">
-<dt id="io.BufferedReader.peek">
-<tt class="descname">peek</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.peek" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="function">
+<dt id="src.io.PrintVersions">
+<tt class="descclassname">src.io.</tt><tt class="descname">PrintVersions</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#src.io.PrintVersions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints information about the versions of <tt class="docutils literal"><span class="pre">mapmuts</span></tt> and utilized packages.</p>
+<p><em>f</em> is a writable file-like object (for example, could be <em>sys.stdout</em> if
+you want to write to standard output).</p>
+<p>This function writes to <em>f</em> a summary of the software versions. It
+also writes the current time and platform. For the optional packages,
+if any of the packages are not available then that is indicated. Prints
+information about the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The current time / date (accessed via <em>time.asctime()</em>).</li>
+<li>The current platform (accessed via <em>platform.platform()</em>).</li>
+<li>The version of Python (accessed via <em>sys.version</em>).</li>
+<li>The version of <tt class="docutils literal"><span class="pre">mapmuts</span></tt> (accessed via <em>mapmuts.__version__</em>).</li>
+<li>The version of <tt class="docutils literal"><span class="pre">numpy</span></tt> (accessed via <em>numpy.__version__</em>).</li>
+<li>The version of <tt class="docutils literal"><span class="pre">pymc</span></tt> (accessed via <em>pymc.__version__</em>).</li>
+<li>The version of <tt class="docutils literal"><span class="pre">scipy</span></tt> (accessed via <em>scipy.__version__</em>).</li>
+<li>The version of <tt class="docutils literal"><span class="pre">matplotlib</span></tt> (accessed via <em>matplotlib.__version__</em>).</li>
+<li>The version of <tt class="docutils literal"><span class="pre">pyPdf</span></tt>: unfortunately the <tt class="docutils literal"><span class="pre">pyPdf</span></tt> package does
+not contain a built-in version string, so we only print whether
+<tt class="docutils literal"><span class="pre">pyPdf</span></tt> is installed at all.</li>
+<li>The version of <tt class="docutils literal"><span class="pre">pdflatex</span></tt> (accessed via <em>mapmuts.latex.PdflatexAvailable()</em>).</li>
+<li>The version of <tt class="docutils literal"><span class="pre">weblogo</span></tt> (acccessed via <em>mapmuts.latex.WebLogoAvailable()</em>).</li>
+</ul>
+</div></blockquote>
+<p>Here is an example of the output of this function:</p>
+<div class="highlight-python"><div class="highlight"><pre>****************************************************
+Version information for mapmuts and associated programs.
 
-<dl class="attribute">
-<dt id="io.BufferedReader.raw">
-<tt class="descname">raw</tt><a class="headerlink" href="#io.BufferedReader.raw" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+Time and date: Thu Dec  5 16:40:30 2013
 
-<dl class="method">
-<dt id="io.BufferedReader.read">
-<tt class="descname">read</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.read" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+Platform: Darwin-10.8.0-x86_64-i386-64bit
 
-<dl class="method">
-<dt id="io.BufferedReader.read1">
-<tt class="descname">read1</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.read1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+Python version: 2.6.8 (unknown, Apr 14 2012, 04:15:37) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]
 
-<dl class="method">
-<dt id="io.BufferedReader.readable">
-<tt class="descname">readable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.readable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+mapmuts version: 1.0
 
-<dl class="method">
-<dt id="io.BufferedReader.readline">
-<tt class="descname">readline</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.readline" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+numpy version: 1.7.1
 
-<dl class="method">
-<dt id="io.BufferedReader.seek">
-<tt class="descname">seek</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.seek" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+pymc version: 2.3
 
-<dl class="method">
-<dt id="io.BufferedReader.seekable">
-<tt class="descname">seekable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.seekable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+scipy version: 0.12.0
 
-<dl class="method">
-<dt id="io.BufferedReader.tell">
-<tt class="descname">tell</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.tell" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+matplotlib version: 1.2.1
 
-<dl class="method">
-<dt id="io.BufferedReader.truncate">
-<tt class="descname">truncate</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.truncate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+pyPdf version: pyPdf is available, but no version string accessible
 
-<dl class="method">
-<dt id="io.BufferedReader.writable">
-<tt class="descname">writable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedReader.writable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+pdflatex version: pdfTeX 3.1415926-1.40.11-2.2 (TeX Live 2010)
+kpathsea version 6.0.0
+Copyright 2010 Peter Breitenlohner (eTeX)/Han The Thanh (pdfTeX).
+There is NO warranty.  Redistribution of this software is
+covered by the terms of both the pdfTeX copyright and
+the Lesser GNU General Public License.
+For more information about these matters, see the file
+named COPYING and the pdfTeX source.
+Primary author of pdfTeX: Peter Breitenlohner (eTeX)/Han The Thanh (pdfTeX).
+Compiled with libpng 1.2.40; using libpng 1.2.40
+Compiled with zlib 1.2.3; using zlib 1.2.3
+Compiled with xpdf version 3.02pl4
 
+weblogo version: WebLogo 3.3 (2012-07-02)
+****************************************************
+</pre></div>
+</div>
 </dd></dl>
 
-<dl class="class">
-<dt id="io.BufferedWriter">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">BufferedWriter</tt><a class="headerlink" href="#io.BufferedWriter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._BufferedIOBase</span></tt></p>
-<p>A buffer for a writeable sequential RawIO object.</p>
-<p>The constructor creates a BufferedWriter for the given writeable raw
-stream. If the buffer_size is not given, it defaults to
-DEFAULT_BUFFER_SIZE. max_buffer_size isn&#8217;t used anymore.</p>
-<dl class="method">
-<dt id="io.BufferedWriter.close">
-<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.close" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedWriter.closed">
-<tt class="descname">closed</tt><a class="headerlink" href="#io.BufferedWriter.closed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.detach">
-<tt class="descname">detach</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.detach" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.fileno">
-<tt class="descname">fileno</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.fileno" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.flush">
-<tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.flush" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.isatty">
-<tt class="descname">isatty</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.isatty" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedWriter.mode">
-<tt class="descname">mode</tt><a class="headerlink" href="#io.BufferedWriter.mode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedWriter.name">
-<tt class="descname">name</tt><a class="headerlink" href="#io.BufferedWriter.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedWriter.raw">
-<tt class="descname">raw</tt><a class="headerlink" href="#io.BufferedWriter.raw" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.readable">
-<tt class="descname">readable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.readable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.seek">
-<tt class="descname">seek</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.seek" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.seekable">
-<tt class="descname">seekable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.seekable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.tell">
-<tt class="descname">tell</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.tell" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.truncate">
-<tt class="descname">truncate</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.truncate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.writable">
-<tt class="descname">writable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.writable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedWriter.write">
-<tt class="descname">write</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedWriter.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dl class="function">
+<dt id="src.io.ReadAlignmentStatistics">
+<tt class="descclassname">src.io.</tt><tt class="descname">ReadAlignmentStatistics</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#src.io.ReadAlignmentStatistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads alignment statistics written by <cite>WriteAlignmentStatistics</cite>.</p>
+<p><cite>f</cite> : a readable file-like object, opened to the position
+where output was written by <cite>WriteAlignmentStatistics</cite>.</p>
+<p>This function returns a dictionary <cite>s</cite> containing the statistics used
+to call <cite>WriteAlignmentStatistics</cite> to generate the output in <cite>f</cite>.</p>
+<p>Here is an example showing how <cite>ReadAlignmentStatistics</cite> recovers the
+output written by <cite>WriteAlignmentStatistics</cite>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;nread&#39;</span><span class="p">:</span><span class="mi">110</span><span class="p">,</span> <span class="s">&#39;nexcessn&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;nfiltered&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#39;nlowq&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;nattempted&#39;</span><span class="p">:</span><span class="mi">90</span><span class="p">,</span> 
+<span class="gp">... </span>   <span class="s">&#39;npaired&#39;</span><span class="p">:</span><span class="mi">65</span><span class="p">,</span> <span class="s">&#39;nalignedfullgene&#39;</span><span class="p">:</span><span class="mi">55</span><span class="p">,</span> <span class="s">&#39;nalignedgene&#39;</span><span class="p">:</span><span class="mi">50</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">WriteAlignmentStatistics</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">==</span> <span class="n">ReadAlignmentStatistics</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
-<dl class="class">
-<dt id="io.BufferedRWPair">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">BufferedRWPair</tt><a class="headerlink" href="#io.BufferedRWPair" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._BufferedIOBase</span></tt></p>
-<p>A buffered reader and writer object together.</p>
-<p>A buffered reader object and buffered writer object put together to
-form a sequential IO object that can read and write. This is typically
-used with a socket or two-way pipe.</p>
-<p>reader and writer are RawIOBase objects that are readable and
-writeable respectively. If the buffer_size is omitted it defaults to
-DEFAULT_BUFFER_SIZE.</p>
-<dl class="method">
-<dt id="io.BufferedRWPair.close">
-<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.close" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedRWPair.closed">
-<tt class="descname">closed</tt><a class="headerlink" href="#io.BufferedRWPair.closed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRWPair.flush">
-<tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.flush" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRWPair.isatty">
-<tt class="descname">isatty</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.isatty" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRWPair.peek">
-<tt class="descname">peek</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.peek" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRWPair.read">
-<tt class="descname">read</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.read" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRWPair.read1">
-<tt class="descname">read1</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.read1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRWPair.readable">
-<tt class="descname">readable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.readable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRWPair.readinto">
-<tt class="descname">readinto</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.readinto" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRWPair.writable">
-<tt class="descname">writable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.writable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRWPair.write">
-<tt class="descname">write</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRWPair.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dl class="function">
+<dt id="src.io.ReadCodonCounts">
+<tt class="descclassname">src.io.</tt><tt class="descname">ReadCodonCounts</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#src.io.ReadCodonCounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads counts of codon identities written by <cite>WriteCodonCounts</cite>.</p>
+<p>This function reads the files written by <cite>WriteCodonCounts</cite> to
+reconstruct the calling dictionary specifying the number
+of time each codon identity is observed at a position.</p>
+<p><cite>f</cite> : a readable file-like object of the type written by 
+<cite>WriteNTCounts</cite>, open to the position where the codon
+counts begin.</p>
+<p>The returned variable is a dictionary that should be similar
+to the <cite>codon_counts</cite> dictionary used to call <cite>WriteCodonCounts</cite>.</p>
 </dd></dl>
 
-<dl class="class">
-<dt id="io.BufferedRandom">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">BufferedRandom</tt><a class="headerlink" href="#io.BufferedRandom" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._BufferedIOBase</span></tt></p>
-<p>A buffered interface to random access streams.</p>
-<p>The constructor creates a reader and writer for a seekable stream,
-raw, given in the first argument. If the buffer_size is omitted it
-defaults to DEFAULT_BUFFER_SIZE. max_buffer_size isn&#8217;t used anymore.</p>
-<dl class="method">
-<dt id="io.BufferedRandom.close">
-<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.close" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedRandom.closed">
-<tt class="descname">closed</tt><a class="headerlink" href="#io.BufferedRandom.closed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.detach">
-<tt class="descname">detach</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.detach" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.fileno">
-<tt class="descname">fileno</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.fileno" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.flush">
-<tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.flush" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.isatty">
-<tt class="descname">isatty</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.isatty" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedRandom.mode">
-<tt class="descname">mode</tt><a class="headerlink" href="#io.BufferedRandom.mode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedRandom.name">
-<tt class="descname">name</tt><a class="headerlink" href="#io.BufferedRandom.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedRandom.next">
-<tt class="descname">next</tt><a class="headerlink" href="#io.BufferedRandom.next" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.next() -&gt; the next value, or raise StopIteration</p>
+<dl class="function">
+<dt id="src.io.ReadEnrichmentRatios">
+<tt class="descclassname">src.io.</tt><tt class="descname">ReadEnrichmentRatios</tt><big>(</big><em>infile</em><big>)</big><a class="headerlink" href="#src.io.ReadEnrichmentRatios" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads enrichment ratios written by <tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt>.</p>
+<p>The single calling argument <em>infile</em> should specify a 
+<tt class="docutils literal"><span class="pre">*_enrichmentratios.txt</span></tt> file written by <tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt>.
+Specifically, these files have the following format:</p>
+<div class="highlight-python"><div class="highlight"><pre>#MUTATION PHI PHI_HPD95_LOW PHI_HPD95_HIGH DIRECT_RATIO MUTDNA_COUNTS
+A22N    0.030913    0.013112    0.049075    0.021807    364
+A22Q    0.070328    0.043265    0.097744    0.062814    408
+A22P    0.133431    0.103709    0.160012    0.203831    1128
+A22S    1.936427    1.787140    2.098920    1.740187    1065
+A22R    0.725581    0.653297    0.802220    0.747375    827
+A22T    0.175550    0.141060    0.210771    0.243729    1140
+A22W    0.141486    0.077679    0.211875    0.120190    121
+</pre></div>
+</div>
+<p>where the first column gives the mutation, the second gives the enrichment
+ratio (always a number &gt; 0),
+the third and fourth give the 95% highest posterior density for the
+enrichment ratio, the fifth column gives the directly estimated
+enrichment ratio denotes the enrichment ratio (a number that can range
+from minus infinity to infinity inclusive), and the fifth gives the number
+of counts in the mutant library (a number &gt;= 0).</p>
+<p>The returned variable is a dictionary keyed by mutation name. For each
+key, the value is itself a dictionary with the string keys <em>PHI</em>,
+<em>PHI_HPD95_LOW</em>, <em>PHI_HPD95_HIGH</em>, <em>DIRECT_RATIO</em>, and <em>MUTDNA_COUNTS</em>
+with the values matching the numbers specified for that mutation in
+<em>infile</em>. If a mutation is found multiple times in <em>infile</em>, and exception
+is raised. For <em>DIRECT_RATIO</em>, if the values are <tt class="docutils literal"><span class="pre">-inf</span></tt> or <tt class="docutils literal"><span class="pre">inf</span></tt> then
+the value is <em>-float(&#8216;inf&#8217;)</em> or <em>float(&#8216;inf&#8217;)</em>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="io.BufferedRandom.peek">
-<tt class="descname">peek</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.peek" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.BufferedRandom.raw">
-<tt class="descname">raw</tt><a class="headerlink" href="#io.BufferedRandom.raw" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.read">
-<tt class="descname">read</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.read" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.read1">
-<tt class="descname">read1</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.read1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.readable">
-<tt class="descname">readable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.readable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.readinto">
-<tt class="descname">readinto</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.readinto" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.readline">
-<tt class="descname">readline</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.readline" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.seek">
-<tt class="descname">seek</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.seek" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.seekable">
-<tt class="descname">seekable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.seekable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.tell">
-<tt class="descname">tell</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.tell" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.truncate">
-<tt class="descname">truncate</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.truncate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.writable">
-<tt class="descname">writable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.writable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.BufferedRandom.write">
-<tt class="descname">write</tt><big>(</big><big>)</big><a class="headerlink" href="#io.BufferedRandom.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dl class="function">
+<dt id="src.io.ReadEntropyAndEquilFreqs">
+<tt class="descclassname">src.io.</tt><tt class="descname">ReadEntropyAndEquilFreqs</tt><big>(</big><em>infile</em><big>)</big><a class="headerlink" href="#src.io.ReadEntropyAndEquilFreqs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads entropies and preferences written by <tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt> and <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt>.</p>
+<p>The single calling argument <em>infile</em> should specify a 
+<tt class="docutils literal"><span class="pre">*_equilibriumfreqs.txt</span></tt> file written by <tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt>
+or an <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> written by <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt>.</p>
+<p>These files have the following format:</p>
+<div class="highlight-python"><div class="highlight"><pre>#SITE WT_AA SITE_ENTROPY PI_A PI_C PI_D PI_E PI_F PI_G PI_H PI_I PI_K PI_L PI_M PI_N PI_P PI_Q PI_R PI_S PI_T PI_V PI_W PI_Y
+1   M   3.952438    0.027276    0.057787    0.061477    0.0589700.058843    0.023888    0.050938    0.017797    0.062260    0.019259    0.216150    0.070343    0.029413    0.052597    0.018734    0.013009    0.025890    0.020677    0.058900    0.055793
+2   A   2.362402    0.537118    0.012475    0.013213    0.0258260.014365    0.008897    0.005926    0.009136    0.013902    0.003019    0.191576    0.010007    0.001631    0.007791    0.003013    0.004130    0.005614    0.099395    0.020214    0.012752
+3   S   2.745295    0.024799    0.002901    0.002167    0.0071370.311824    0.002504    0.022821    0.008849    0.004478    0.059771    0.015584    0.022394    0.005062    0.004390    0.006270    0.091925    0.014399    0.003761    0.048111    0.340854
+</pre></div>
+</div>
+<p>The first column gives the residue number, the second gives the wildtype
+residue, the third the site entropy, and the remainder the equilibrium
+frequencies of each of the 20 amino acids. The columns can be delimited
+by a single space or single tab.</p>
+<p>There <strong>may</strong> be a final column <tt class="docutils literal"><span class="pre">PI_*</span></tt> giving the frequency for stop codons.
+That column can either be present or absent &#8211; either one is OK.</p>
+<p>The returned variable is a dictionary keyed by residue numbers, and with
+the values for each residue number being dictionaries keyed by all of the
+other 22 or 23 column labels (&#8216;WT_AA&#8217;, &#8216;SITE_ENTROPY&#8217;, &#8216;PI_A&#8217;, &#8216;PI_C&#8217;, ...)
+and possibly &#8216;PI_*&#8217; if that is present in the header.</p>
 </dd></dl>
 
-<dl class="class">
-<dt id="io.TextIOBase">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">TextIOBase</tt><a class="headerlink" href="#io.TextIOBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._TextIOBase</span></tt>, <a class="reference internal" href="#io.IOBase" title="io.IOBase"><tt class="xref py py-class docutils literal"><span class="pre">io.IOBase</span></tt></a></p>
+<dl class="function">
+<dt id="src.io.ReadInsertLengths">
+<tt class="descclassname">src.io.</tt><tt class="descname">ReadInsertLengths</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#src.io.ReadInsertLengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads alignment statistics written by <cite>WriteInsertLengths</cite>.</p>
+<p><cite>f</cite> : a readable file-like object, opened to the position
+where output was written by <cite>WriteInsertLengths</cite>.</p>
+<p>This function returns a dictionary <cite>d</cite> containing the statistics used
+to call <cite>WriteInsertLengths</cite> to generate the output in <cite>f</cite>.</p>
+<p>Here is an example showing how <cite>ReadInsertLengths</cite> recovers the
+output written by <cite>WriteInsertLengths</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="mi">20</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">22</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="mi">23</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">24</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">27</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">WriteInsertLengths</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">==</span> <span class="n">ReadInsertLengths</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
-<dl class="class">
-<dt id="io.TextIOWrapper">
-<em class="property">class </em><tt class="descclassname">io.</tt><tt class="descname">TextIOWrapper</tt><a class="headerlink" href="#io.TextIOWrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">_io._TextIOBase</span></tt></p>
-<p>Character and line based layer over a BufferedIOBase object, buffer.</p>
-<p>encoding gives the name of the encoding that the stream will be
-decoded or encoded with. It defaults to locale.getpreferredencoding.</p>
-<p>errors determines the strictness of encoding and decoding (see the
-codecs.register) and defaults to &#8220;strict&#8221;.</p>
-<p>newline can be None, &#8216;&#8217;, &#8216;n&#8217;, &#8216;r&#8217;, or &#8216;rn&#8217;.  It controls the
-handling of line endings. If it is None, universal newlines is
-enabled.  With this enabled, on input, the lines endings &#8216;n&#8217;, &#8216;r&#8217;,
-or &#8216;rn&#8217; are translated to &#8216;n&#8217; before being returned to the
-caller. Conversely, on output, &#8216;n&#8217; is translated to the system
-default line seperator, os.linesep. If newline is any other of its
-legal values, that newline becomes the newline when the file is read
-and it is returned untranslated. On output, &#8216;n&#8217; is converted to the
-newline.</p>
-<p>If line_buffering is True, a call to flush is implied when a call to
-write contains a newline character.</p>
-<dl class="attribute">
-<dt id="io.TextIOWrapper.buffer">
-<tt class="descname">buffer</tt><a class="headerlink" href="#io.TextIOWrapper.buffer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.close">
-<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.close" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.TextIOWrapper.closed">
-<tt class="descname">closed</tt><a class="headerlink" href="#io.TextIOWrapper.closed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.detach">
-<tt class="descname">detach</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.detach" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.TextIOWrapper.encoding">
-<tt class="descname">encoding</tt><a class="headerlink" href="#io.TextIOWrapper.encoding" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.TextIOWrapper.errors">
-<tt class="descname">errors</tt><a class="headerlink" href="#io.TextIOWrapper.errors" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.fileno">
-<tt class="descname">fileno</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.fileno" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.flush">
-<tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.flush" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.isatty">
-<tt class="descname">isatty</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.isatty" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.TextIOWrapper.line_buffering">
-<tt class="descname">line_buffering</tt><a class="headerlink" href="#io.TextIOWrapper.line_buffering" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.TextIOWrapper.name">
-<tt class="descname">name</tt><a class="headerlink" href="#io.TextIOWrapper.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.TextIOWrapper.newlines">
-<tt class="descname">newlines</tt><a class="headerlink" href="#io.TextIOWrapper.newlines" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="io.TextIOWrapper.next">
-<tt class="descname">next</tt><a class="headerlink" href="#io.TextIOWrapper.next" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.next() -&gt; the next value, or raise StopIteration</p>
+<dl class="function">
+<dt id="src.io.ReadNTCounts">
+<tt class="descclassname">src.io.</tt><tt class="descname">ReadNTCounts</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#src.io.ReadNTCounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads counts of nucleotide identities written by <cite>WriteNTCounts</cite>.</p>
+<p>This function reads the files written by <cite>WriteNTCounts</cite> to
+reconstruct the calling dictionary specifying the number
+of time each nucleotide identity is observed at a position.</p>
+<p><cite>f</cite> : a readable file-like object of the type written by 
+<cite>WriteNTCounts</cite>, open to the position where the nucleotide
+counts begin.</p>
+<p>The returned variable is a dictionary that should be identical in
+its contents to the <cite>nt_counts</cite> dictionary used to call <cite>WriteNTCounts</cite>.</p>
+<p>Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:{</span><span class="s">&#39;WT&#39;</span><span class="p">:</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;COUNTS&#39;</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;G&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="gp">... </span>     <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;t&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="mi">2</span><span class="p">:{</span><span class="s">&#39;WT&#39;</span><span class="p">:</span><span class="s">&#39;C&#39;</span><span class="p">,</span> <span class="s">&#39;COUNTS&#39;</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>      <span class="s">&#39;A&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="s">&#39;G&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;t&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">WriteNTCounts</span><span class="p">(</span><span class="n">nt_counts</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">ReadNTCounts</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">==</span> <span class="n">nt_counts</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
-<dl class="method">
-<dt id="io.TextIOWrapper.read">
-<tt class="descname">read</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.read" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.readable">
-<tt class="descname">readable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.readable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.readline">
-<tt class="descname">readline</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.readline" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.seek">
-<tt class="descname">seek</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.seek" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.seekable">
-<tt class="descname">seekable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.seekable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.tell">
-<tt class="descname">tell</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.tell" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.truncate">
-<tt class="descname">truncate</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.truncate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.writable">
-<tt class="descname">writable</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.writable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="io.TextIOWrapper.write">
-<tt class="descname">write</tt><big>(</big><big>)</big><a class="headerlink" href="#io.TextIOWrapper.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dl class="function">
+<dt id="src.io.ReadReadMismatches">
+<tt class="descclassname">src.io.</tt><tt class="descname">ReadReadMismatches</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#src.io.ReadReadMismatches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads read mismatches written by <cite>WriteReadMismatches</cite>.</p>
+<p><cite>f</cite> : should be a readable file-like object, opened to the position
+where output was written by <cite>WriteReadMismatches</cite>.</p>
+<p>This function returns a dictionary <cite>d</cite> containing information about
+the distribution of read mismatches along the read from the data
+written to <cite>f</cite> by <cite>WriteReadMismatches</cite>. The dictionary is keyed by read
+positions (in 1, 2, ... numbering) and the values are the fraction
+of mismatches at that position among all reads.</p>
+<p>Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rlengths</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rmismatches</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">WriteReadMismatches</span><span class="p">(</span><span class="n">rlengths</span><span class="p">,</span> <span class="n">rmismatches</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="mf">0.285714</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mf">0.142857</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mf">0.142857</span><span class="p">,</span>
+<span class="gp">... </span>     <span class="mi">6</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span><span class="mf">0.285714</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">11</span><span class="p">:</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">d</span> <span class="o">==</span> <span class="n">ReadReadMismatches</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
-<dl class="exception">
-<dt id="io.UnsupportedOperation">
-<em class="property">exception </em><tt class="descclassname">io.</tt><tt class="descname">UnsupportedOperation</tt><a class="headerlink" href="#io.UnsupportedOperation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.ValueError</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">exceptions.IOError</span></tt></p>
+<dl class="function">
+<dt id="src.io.WriteAAsFromCodonCounts">
+<tt class="descclassname">src.io.</tt><tt class="descname">WriteAAsFromCodonCounts</tt><big>(</big><em>infile</em>, <em>outfile</em><big>)</big><a class="headerlink" href="#src.io.WriteAAsFromCodonCounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in codon counts, writes out amino acid counts.</p>
+<p><cite>infile</cite> : name of an existing file of the type created by 
+<cite>WriteCodonCounts</cite>.</p>
+<p><cite>outfile</cite> : name of the resulting output file, which is created.</p>
+<p>Reads in codon counts from <cite>infile</cite>. For all definitively called
+codons (all upper case nucleotides) writes the number of
+amino acids of that identity. Also writes the total number
+of definitively called codons at that position, and the wildtype
+amino acid. The format is self-explanatory.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="src.io.WriteAlignmentStatistics">
+<tt class="descclassname">src.io.</tt><tt class="descname">WriteAlignmentStatistics</tt><big>(</big><em>s</em>, <em>f</em><big>)</big><a class="headerlink" href="#src.io.WriteAlignmentStatistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes summary of statistics from <cite>MakeAlignment</cite> attempt.</p>
+<p>This function writes a summary of the attempted / successful read
+alignment statistics to a writeable file-like object.</p>
+<p><cite>s</cite> : a dictionary holding the statistics in key / value format, with
+string keys and integer values. The specific keys are described
+below.</p>
+<p><cite>f</cite> : a writeable file-like object to which we write the summary.</p>
+<p><cite>s</cite> should have the following keys. These constitute the data written
+to <cite>f</cite>. Their meanings are explained in the example below:</p>
+<blockquote>
+<div><p>&#8216;nread&#8217;</p>
+<p>&#8216;nfiltered&#8217;</p>
+<p>&#8216;nlowq&#8217;</p>
+<p>&#8216;nexcessn&#8217;</p>
+<p>&#8216;nattempted&#8217;</p>
+<p>&#8216;npaired&#8217;</p>
+<p>&#8216;nalignedfullgene&#8217;</p>
+<p>&#8216;nalignedgene&#8217;</p>
+</div></blockquote>
+<p>Here is example output, comment lines beginning with # introduce
+each variable, which is then named and followed by its value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;nread&#39;</span><span class="p">:</span><span class="mi">110</span><span class="p">,</span> <span class="s">&#39;nfiltered&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#39;nlowq&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;nexcessn&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;nattempted&#39;</span><span class="p">:</span><span class="mi">90</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="s">&#39;npaired&#39;</span><span class="p">:</span><span class="mi">65</span><span class="p">,</span> <span class="s">&#39;nalignedfullgene&#39;</span><span class="p">:</span><span class="mi">55</span><span class="p">,</span> <span class="s">&#39;nalignedgene&#39;</span><span class="p">:</span><span class="mi">50</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">WriteAlignmentStatistics</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="go"># nread -&gt; total number of read pairs read from the FASTQ files.</span>
+<span class="go">nread 110</span>
+<span class="go"># nfiltered -&gt; number of read pairs removed by the Illumina filter.</span>
+<span class="go">nfiltered 10</span>
+<span class="go"># nlowq -&gt; number of read pairs removed due to low mean Q-score</span>
+<span class="go">nlowq 5</span>
+<span class="go"># nexcessn -&gt; number of read pairs removed due to excess N/n nucleotides</span>
+<span class="go">nexcessn 5</span>
+<span class="go"># nattempted -&gt; number of read pairs we attempted to align</span>
+<span class="go">nattempted 90</span>
+<span class="go"># npaired -&gt; number of read pairs where R1 and R2 were successfully</span>
+<span class="go"># overlapped</span>
+<span class="go">npaired 65</span>
+<span class="go"># nalignedfullgene -&gt; number of read pairs where the overlapped read</span>
+<span class="go"># pairs were successfully aligned to fullgene (the template</span>
+<span class="go"># amplicon).</span>
+<span class="go">nalignedfullgene 55</span>
+<span class="go"># nalignedgene -&gt; number of read pairs which overlapped with the</span>
+<span class="go"># gene of interest (region of fullgene specified by generange).</span>
+<span class="go">nalignedgene 50</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="src.io.WriteCodonCounts">
+<tt class="descclassname">src.io.</tt><tt class="descname">WriteCodonCounts</tt><big>(</big><em>codon_counts</em>, <em>f</em><big>)</big><a class="headerlink" href="#src.io.WriteCodonCounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes counts of codon identities.</p>
+<p>This function takes a dictionary that specifies the number of
+times each codon identity was observed at a position. This
+is used to write a text output file.</p>
+<p>This function operates exactly like <cite>WriteNTCounts</cite>, except
+that it operates on codon rather than nucleotide counts,
+so <cite>codon_counts</cite> should be keyed by codons rather than
+nucleotides.</p>
+<p>So the required keys for <cite>codon_counts[i]</cite> for each codon <cite>i</cite> (1, 2, ...
+numbering) are:</p>
+<blockquote>
+<div><p>&#8216;WT&#8217; : value should be an upper-case string indicating the
+wildtype identity, such as &#8216;ATG&#8217;.</p>
+<p>&#8216;COUNTS&#8217; : integer total number of counts for this codon.</p>
+<p>All codon codes in <cite>AllCodons()</cite>. For these codes, upper-case
+letters (A, T, C, G) specify identities called by both reads.
+Lower-case letter (a, t, c, g) specify identities called by
+just one read, with the other read ambiguous or excluded at
+the relevant position. N specifies identities where the 
+two reads disagree, both are ambiguous, or both are excluded.
+If any of the required keys are missing, raises a <cite>ValueError</cite>.</p>
+</div></blockquote>
+<p>So upper-case letters indicate positions called by both
+reads, lower-case letters indicate positions called by
+one read and the other ambiguous, and N indicates disagreement
+between reads or both ambiguous.</p>
+<p>The codons are listed in the order returned by <cite>AllCodons()</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="src.io.WriteInsertLengths">
+<tt class="descclassname">src.io.</tt><tt class="descname">WriteInsertLengths</tt><big>(</big><em>d</em>, <em>f</em><big>)</big><a class="headerlink" href="#src.io.WriteInsertLengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes distribution of paired read insert lengths.</p>
+<p>This function writes a text summary of the distribution of different
+insert lengths found between successfully overlapped paired-end
+reads. The insert length is the size of the template fragment
+between the two read adaptors.</p>
+<p><cite>d</cite> : dictionary holding the distribution of insert lengths. It is
+keyed by integers giving the insert lengths. For each length,
+the value is an integer giving the number of times inserts of
+this length are found. This method will raise a <cite>ValueError</cite> if <cite>d</cite>
+is empty or records no statistics.</p>
+<p><cite>f</cite> : writeable file-like object to which we write the summary.</p>
+<p>Here is example output, comment lines beginning with # introduce
+head each column.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="mi">20</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">22</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="mi">23</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">24</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">27</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">WriteInsertLengths</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="go"># Distribution of insert lengths</span>
+<span class="go"># Length Number Fraction</span>
+<span class="go">20 3 0.0909</span>
+<span class="go">21 5 0.1515</span>
+<span class="go">22 7 0.2121</span>
+<span class="go">23 10 0.3030</span>
+<span class="go">24 5 0.1515</span>
+<span class="go">25 2 0.0606</span>
+<span class="go">26 0 0.0000</span>
+<span class="go">27 1 0.0303</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="src.io.WriteNTCounts">
+<tt class="descclassname">src.io.</tt><tt class="descname">WriteNTCounts</tt><big>(</big><em>nt_counts</em>, <em>f</em><big>)</big><a class="headerlink" href="#src.io.WriteNTCounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes counts of nucleotide identities.</p>
+<p>This function takes a dictionary that specifies the number of
+times each nucleotide identity was observed at a position. This
+is used to write a text output file.</p>
+<p><cite>nt_counts</cite> : a dictionary keyed by nucleotide number. These integer
+keys should range from 1 to <cite>max(nt_counts.keys())</cite> inclusive, and
+there must be a key for every number within this range. For key
+<cite>nti</cite>, <cite>nt_counts[nti]</cite> is another dictionary specifying the counts
+for this specific nucleotide. This nucleotide dictionary must
+have the following string keys:</p>
+<blockquote>
+<div><p>&#8216;WT&#8217; : value should be a letter indicating wildtype nucleotide
+identity (such as &#8216;A&#8217;, &#8216;T&#8217;, &#8216;C&#8217;, or &#8216;G&#8217;)</p>
+<p>&#8216;COUNTS&#8217; -&gt; integer total number of counts for this nucleotide</p>
+<p>All nucleotide codes in <cite>AllNTs()</cite>. For these codes, upper-case
+letters (A, T, C, G) specify identities called by both reads.
+Lower-case letter (a, t, c, g) specify identities called by
+just one read, with the other read ambiguous or excluded at
+the relevant position. N specifies identities where the 
+two reads disagree, both are ambiguous, or both are excluded.
+If any of the required keys are missing, raises a <cite>ValueError</cite>.</p>
+</div></blockquote>
+<p><cite>f</cite> : writable file like object to which we write the counts.</p>
+<p>Here is example output, comment lines beginning with # introduce
+each variable, which is then named and followed by its value. The
+order of the nucleotide entries matches the order returned by <cite>AllNTs()</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nt_counts</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:{</span><span class="s">&#39;WT&#39;</span><span class="p">:</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;COUNTS&#39;</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;G&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="gp">... </span>     <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;t&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="mi">2</span><span class="p">:{</span><span class="s">&#39;WT&#39;</span><span class="p">:</span><span class="s">&#39;C&#39;</span><span class="p">,</span> <span class="s">&#39;COUNTS&#39;</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span>
+<span class="gp">... </span>      <span class="s">&#39;A&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="s">&#39;G&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;t&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">WriteNTCounts</span><span class="p">(</span><span class="n">nt_counts</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="go"># nucleotide counts</span>
+<span class="go"># upper case indicates nucleotide called by both reads</span>
+<span class="go"># lower case indicates nucleotide called by one read with other ambiguous</span>
+<span class="go"># N indicates disagreement between reads, or both ambiguous</span>
+<span class="go"># POSITION WT COUNTS A T C G a t c g N</span>
+<span class="go">1 A 7 3 1 0 0 1 1 0 0 1</span>
+<span class="go">2 C 8 0 0 6 0 1 0 1 0 0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="src.io.WriteReadMismatches">
+<tt class="descclassname">src.io.</tt><tt class="descname">WriteReadMismatches</tt><big>(</big><em>rlengths</em>, <em>rmismatches</em>, <em>f</em><big>)</big><a class="headerlink" href="#src.io.WriteReadMismatches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes distribution of mismatches along the read length.</p>
+<p>This function writes a text summary of the distribution of
+mismatches with a target gene as a function of position along the
+read.</p>
+<p><cite>rlengths</cite> : a dictionary keyed by the length of the reads that are
+being analyzed for mismatches, and with values being the number
+of reads of this length. For example, <tt class="docutils literal"><span class="pre">{25:2,</span> <span class="pre">26:3}</span></tt> indicates
+that we have 2 reads of length 25 and 3 reads of length 26. All
+reads are assumed to begin at the first position and extend up
+to the indicated length.</p>
+<p><cite>rmismatches</cite> : a dictionary giving the position of mismatches along
+the read. The key is the read position in 1, 2, ... numbering.
+The values are the number of mismatches found at that position
+in the read.</p>
+<p><cite>f</cite> : a writeable file-like object to which we write the summary.</p>
+<p>Here is example output, comment lines beginning with # introduce
+head each column:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rlengths</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rmismatches</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">WriteReadMismatches</span><span class="p">(</span><span class="n">rlengths</span><span class="p">,</span> <span class="n">rmismatches</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="go"># Distribution of mismatches along the read length.</span>
+<span class="go"># Read positions numbered 1, 2, ... from read start.</span>
+<span class="go"># ReadPosition NReads NMismatches FracMismatches</span>
+<span class="go">1 7 2 0.285714</span>
+<span class="go">2 7 0 0.000000</span>
+<span class="go">3 7 1 0.142857</span>
+<span class="go">4 7 0 0.000000</span>
+<span class="go">5 7 1 0.142857</span>
+<span class="go">6 7 0 0.000000</span>
+<span class="go">7 7 0 0.000000</span>
+<span class="go">8 7 2 0.285714</span>
+<span class="go">9 7 0 0.000000</span>
+<span class="go">10 7 0 0.000000</span>
+<span class="go">11 5 1 0.200000</span>
+<span class="go">12 2 1 0.500000</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -1129,9 +882,18 @@ write contains a newline character.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">io</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
+<li><a class="reference internal" href="#documentation-for-individual-functions">Documentation for individual functions</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="sequtils_module.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">sequtils</span></tt> Module</a></p>
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">sequtils</span></tt> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="stats_module.html"
                         title="next chapter"><tt class="docutils literal"><span class="pre">stats</span></tt> Module</a></p>
