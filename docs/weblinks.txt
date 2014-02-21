@@ -26,3 +26,4 @@
 .. _`Dirichlet distribution`: http://en.wikipedia.org/wiki/Dirichlet_distribution
 .. _`concentration parameter`: http://en.wikipedia.org/wiki/Concentration_parameter
 .. _`Shannon-Jensen divergence` : http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence
+.. _`Bloom, bioRxiv, 2014`: http://biorxiv.org/content/early/2014/02/20/002899

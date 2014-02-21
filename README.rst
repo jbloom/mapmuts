@@ -10,7 +10,7 @@ mapmuts
 
 `mapmuts`_ was written by `Jesse Bloom`_.
 
-`mapmuts`_ is free software under the `GPLv3`_ license.
+`mapmuts`_ is free software under the `GPLv3`_ license. However, `please cite mapmuts as described here`_. 
 
 
 .. _`on GitHub`: https://github.com/jbloom/mapmuts
@@ -20,3 +20,4 @@ mapmuts
 .. _`mapmuts`: https://github.com/jbloom/mapmuts
 .. _`Python`: http://www.python.org/
 .. _`GPLv3`: http://www.gnu.org/licenses/gpl.html
+.. _`please cite mapmuts as described here`: http://jbloom.github.io/mapmuts/acknowledgements.html#citations

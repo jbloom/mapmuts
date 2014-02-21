@@ -10,6 +10,8 @@ License
 
 Citations
 ----------------
-Please cite `mapmuts`_ appropriately if you utilize it in any publications. The citations for `mapmuts`_ can be found on `Jesse Bloom`_'s webpage.
+Please cite `mapmuts`_ appropriately if you utilize it in any publications. 
+
+The current citation is `Bloom, bioRxiv, 2014`_. However, this citation will be updated soon, so please check back.
 
 .. include:: weblinks.txt
