@@ -246,25 +246,25 @@ done if set to <cite>False</cite>. Each entry also contains a brief explanation 
 </ul>
 <p>Here is an example input file:</p>
 <div class="highlight-python"><div class="highlight"><pre># Example input file for mapmuts_makealignments.py
-r1files R1*.fastq.gz
-r2files R2*.fastq.gz
-gzipped True
-applyfilter True
-minq 20
-fullgenefile Aichi68-NP_amplicon.fasta
+maxa2m 1
 generange 62 1555
-a1file R1_trim3.fasta
-a2file R2_trim3.fasta
+write_unaligned True
+r2files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_A/Sample_WT-1_DNA/*R2*.fastq.gz
+maxa1m 1
+a1file /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/R1_trim3.fasta
+gzipped True
+minq 25
+minoverlap 30
+maxgenem 6
+r1files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_A/Sample_WT-1_DNA/*R1*.fastq.gz
+a2file /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/R2_trim3.fasta
+maxrm 1
+outfileprefix replicate_A_WT-1_DNA
+fullgenefile /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/Aichi68-NP_amplicon.fasta
 maxn 2
-minoverlap 20
-maxrm 2
-maxa1m 2
-maxa2m 2
-maxgenem 4
 upcase test
-outfileprefix example_run
-samplename example run
-write_unaligned False
+applyfilter True
+samplename replicate_A, WT-1, DNA
 </pre></div>
 </div>
 </div>
