@@ -278,7 +278,7 @@ def main():
     # Now run mapmuts_countparsedmuts.py for each replicate
     convert_to_jpgs = []
     for replicate in replicates:
-        commands = [('plotfileprefix', 'countparsedmuts'), ('maxn', '50'), ('legendloc', 'right')]
+        commands = [('plotfileprefix', 'countparsedmuts'), ('maxn', '50'), ('legendloc', 'right'), ('writecounts', 'False')]
         for amplicon in ['DNA', 'RNA', 'mutDNA', 'virus-p1', 'virus-p2', 'mutvirus-p1', 'mutvirus-p2']:
             files = ['%s/%s/%s/%s/%s_%s_%s_codoncounts.txt' % (basedir, replicate, sample, amplicon, replicate, sample, amplicon) for sample in samples]
             commands.append((amplicon, ' '.join(files)))

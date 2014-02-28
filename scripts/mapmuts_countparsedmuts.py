@@ -40,6 +40,7 @@ def main():
             line[0] != '#' and not line.isspace()]
     plotfileprefix = maxn = None
     legendloc = 'bottom' # default
+    writecounts = True
     samples = [] # tuples are (name, all_counts, syn_counts)
     for line in lines:
         entries = line.split()
@@ -63,6 +64,9 @@ def main():
             legendloc = entries[1].strip().lower()
             if legendloc not in ['bottom', 'right']:
                 raise ValueError("legendloc must be either bottom or right, got: %s" % legendloc)
+        elif entries[0].strip() == 'writecounts':
+            if entries[1].strip().upper() == 'FALSE':
+                writecounts = False
         else:
             if len(entries) < 2:
                 raise ValueError("Line must contain at least two entries:\n%s" % line)
@@ -140,7 +144,7 @@ def main():
         cumulfracs[mut_type] = [tup[tuple_index] for tup in cumul_samples]
     plotfile = "%s_multi-nt-codonmutcounts.pdf" % plotfileprefix
     print "Now creating plot %s..." % plotfile
-    mapmuts.plot.PlotMutCountFracs(plotfile, 'Multi-nucleotide codon mutations', names, cumulfracs['multi-nt-all'], cumulfracs['multi-nt-syn'], counts['multi-nt-all'], counts['multi-nt-syn'], legendloc)
+    mapmuts.plot.PlotMutCountFracs(plotfile, 'Multi-nucleotide codon mutations', names, cumulfracs['multi-nt-all'], cumulfracs['multi-nt-syn'], counts['multi-nt-all'], counts['multi-nt-syn'], legendloc, writecounts=writecounts)
     plotfile = "%s_codonmutcounts.pdf" % plotfileprefix
     print "Now creating plot %s..." % plotfile
     mapmuts.plot.PlotMutCountFracs(plotfile, 'Codon mutations', names, cumulfracs['all'], cumulfracs['syn'], counts['all'], counts['syn'], legendloc)

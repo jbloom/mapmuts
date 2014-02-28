@@ -49,6 +49,8 @@ Other than these comments, the input file should have the following format:
 
 * The next line should have the key *legendloc* and be followed by either *bottom* or *right*. If it is *bottom*, then the legend is at the bottom of the plot. If it is *right*, then the legend is at the right of the plot.
 
+* The next line is optional. If specified, it should have a key of *writecounts* and a value of *True* or *False*. If this line is not included or is *True*, then the total counts for each type of mutation is written above each plot. If this line is included and has a value of *False*, then the total counts for each type of mutation is not written above each plot.
+
 * All of the subsequent lines should list the samples for which we count the mutations. These are listed as follows: 
 
     - First, provide the name that you want to assign to the sample. This name can **not** contain any spaces.
@@ -68,6 +70,7 @@ Here is an example input file::
     plotfileprefix countparsedmuts
     maxn 50
     legendloc right
+    writecounts False
     DNA /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/DNA/replicate_A_WT-1_DNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/DNA/replicate_A_WT-2_DNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/DNA/replicate_A_N334H-1_DNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/DNA/replicate_A_N334H-2_DNA_codoncounts.txt
     RNA /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/RNA/replicate_A_WT-1_RNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/RNA/replicate_A_WT-2_RNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/RNA/replicate_A_N334H-1_RNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/RNA/replicate_A_N334H-2_RNA_codoncounts.txt
     mutDNA /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/mutDNA/replicate_A_WT-1_mutDNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/mutDNA/replicate_A_WT-2_mutDNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/mutDNA/replicate_A_N334H-1_mutDNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/mutDNA/replicate_A_N334H-2_mutDNA_codoncounts.txt

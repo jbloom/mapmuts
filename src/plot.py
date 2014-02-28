@@ -950,7 +950,7 @@ def PlotNTMutFracs(infiles, names, plotfile):
     pylab.close()
 
 
-def PlotMutCountFracs(plotfile, title, names, all_cumulfracs, syn_cumulfracs, all_counts, syn_counts, legendloc):
+def PlotMutCountFracs(plotfile, title, names, all_cumulfracs, syn_cumulfracs, all_counts, syn_counts, legendloc, writecounts=True):
     """Plots fraction of mutations with >= a given number of counts.
 
     Does this for both all mutations and synonymous mutations. The plots
@@ -993,6 +993,10 @@ def PlotMutCountFracs(plotfile, title, names, all_cumulfracs, syn_cumulfracs, al
         - *bottom* : put legend at the bottom of the plot.
 
         - *right* : put legend at the right of the plot.
+
+    * *writecounts* is a Boolean switch specifying whether we include the counts of all
+      mutations (specified by *all_counts* and *syn_counts*) in the plot title. We do
+      this if *writecounts* is *True*, and do not if it is *False*. 
     """
 
     # some basic checks 
@@ -1033,6 +1037,8 @@ def PlotMutCountFracs(plotfile, title, names, all_cumulfracs, syn_cumulfracs, al
     ax_all = pylab.axes([lmargin, bmargin, plotwidth, 1 - bmargin - tmargin])
     ax_syn = pylab.axes([lmargin + plotwidth + centermargin, bmargin, plotwidth, 1 - bmargin - tmargin])
     for (cumulfracs, ax, write_ylabel, ax_title) in [(syn_cumulfracs, ax_syn, False, 'synonymous (%d total)' % syn_counts), (all_cumulfracs, ax_all, True, 'all (%d total)' % all_counts)]:
+        if not writecounts:
+            ax_title = ax_title.split()[0]
         pylab.axes(ax)
         nmax = len(cumulfracs[0])
         assert nmax, "Length of entries in cumulfracs must be >= 1"
