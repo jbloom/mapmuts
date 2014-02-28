@@ -641,7 +641,7 @@ higher to provide some padding space. Is <em>False</em> by default.</li>
 
 <dl class="function">
 <dt id="plot.PlotMutCountFracs">
-<tt class="descclassname">plot.</tt><tt class="descname">PlotMutCountFracs</tt><big>(</big><em>plotfile</em>, <em>title</em>, <em>names</em>, <em>all_cumulfracs</em>, <em>syn_cumulfracs</em>, <em>all_counts</em>, <em>syn_counts</em>, <em>legendloc</em><big>)</big><a class="headerlink" href="#plot.PlotMutCountFracs" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">plot.</tt><tt class="descname">PlotMutCountFracs</tt><big>(</big><em>plotfile</em>, <em>title</em>, <em>names</em>, <em>all_cumulfracs</em>, <em>syn_cumulfracs</em>, <em>all_counts</em>, <em>syn_counts</em>, <em>legendloc</em>, <em>writecounts=True</em><big>)</big><a class="headerlink" href="#plot.PlotMutCountFracs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots fraction of mutations with &gt;= a given number of counts.</p>
 <p>Does this for both all mutations and synonymous mutations. The plots
 are placed side by side.</p>
@@ -682,6 +682,10 @@ Valid values are:</p>
 <li><em>right</em> : put legend at the right of the plot.</li>
 </ul>
 </div></blockquote>
+</li>
+<li><p class="first"><em>writecounts</em> is a Boolean switch specifying whether we include the counts of all
+mutations (specified by <em>all_counts</em> and <em>syn_counts</em>) in the plot title. We do
+this if <em>writecounts</em> is <em>True</em>, and do not if it is <em>False</em>.</p>
 </li>
 </ul>
 </dd></dl>
@@ -913,7 +917,7 @@ middle as possible while splitting at a space.</p>
                         title="previous chapter"><tt class="docutils literal"><span class="pre">simulate</span></tt> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="latex_module.html"
-                        title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">latex</span></tt> Module</a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">latex</span></tt> Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
