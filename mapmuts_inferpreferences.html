@@ -143,6 +143,12 @@ format described below. Then simply run the script with the single text file as 
 </li>
 <li><p class="first"><em>ncpus</em> is an option that allows you to run the analyses using multiple CPUs. This will usually be helpful, because these runs can take a long time. If you set <em>ncpus</em> to 1, then we just use one CPU. But if you are working on a multi-threaded processor, then setting to a larger number will take advantage of the additional CPUs. Note however that if you set <em>ncpus</em> to a number larger than the number of spare CPUs, you will overload the processor &#8211; so if you only have one CPU, set this to just 1.</p>
 </li>
+<li><p class="first"><em>sites</em> is an optional key. If specified, it should have a key of <em>sites</em> and is used to specify that we only examine certain sites. If this line is not included or is set to <em>all</em> then all sites listed in the count files (those specified by <em>DNA_file</em>, <em>mutDNA_files</em>, etc) are used in tallying the counts. However, sometimes you may only want to specify a certain range of sites. If so, <em>sites</em> allows you to do this. Just put the number of the first and last site that you want to include, and all sites in this range will be counted. For example, a line of:</p>
+<div class="highlight-python"><div class="highlight"><pre>sites 2 565
+</pre></div>
+</div>
+<p>means that we would only infer preferences for residues 2, 3, ..., 564, 565. In this case, we would exclude residue one from the range. You might want to do this if for example you did not mutagenize the N-terminal methionine of your gene.</p>
+</li>
 <li><p class="first"><em>removeoutlier</em> is an option that can only be used if there are 3 or more libraries specified by <em>DNA_files</em>, <em>RNA_files</em>, <em>mutDNA_files</em>, and <em>mutvirus_files</em>. If there are three or more libraries, this option specifies that for each site, we attempt to identify the one library that is an outlier at this site in terms of the inferred <span class="math">\(\pi_{r,a}\)</span> values. This single outlier library is then excluded from the final inference of the <span class="math">\(\pi_{r,a}\)</span> values. The rationale for using this option is that occasionally one library appears to give much different <span class="math">\(\pi_{r,a}\)</span> values (usually a much larger value for some specific value of <em>a</em>) than the other libraries &#8211; this is probably due to linkage of that mutation with another beneficial mutation. Therefore, identifying the one outlier and removing it from the analysis could be helpful. The concern of course is that this needs to be done in some unbiased way rather than just cherry-picking libraries for removal at specific sites. This option does that &#8211; a single outlier library is removed for all sites according to the following well-defined algorithm is applied to the inference of the <span class="math">\(\pi_{r,a}\)</span> values for each site <em>r</em>:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -178,6 +184,7 @@ MCMC_traces None
 preference_plots preference_plots/
 outfileprefix WT-1
 ncpus 2
+sites all
 removeoutlier False
 </pre></div>
 </div>
