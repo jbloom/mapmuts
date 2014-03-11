@@ -28,6 +28,8 @@ def main():
     if not mapmuts.plot.PylabAvailable():
         raise ImportError("This script requires matplotlib / pylab, which are not available.")
 
+    sites == 'all'
+    readsomecounts = False
     mapmuts.io.PrintVersions(sys.stdout)
     args = sys.argv[1 : ]
     if len(args) != 1:
@@ -60,6 +62,16 @@ def main():
                     raise ValueError("maxn does not specify a valid integer: %s" % entries[1])
                 if maxn < 1:
                     raise ValueError("max must be at least one")
+        elif entries[0].strip() == 'sites':
+            if readsomecounts:
+                raise ValueError("You must put the line for sites BEFORE the codon counts files")
+            if len(entries) == 2 and (entries[1].upper in ['all', 'None']):
+                pass # already set to all
+            elif len(entries) == 3:
+                sites = (int(entries[1]), int(entries[2]))
+                sites = [r for in range(sites[0], sites[1] + 1)]
+            else:
+                raise ValueError("Invalid line for sites:\n" % line)
         elif entries[0].strip() == 'legendloc':
             legendloc = entries[1].strip().lower()
             if legendloc not in ['bottom', 'right']:
@@ -78,12 +90,13 @@ def main():
                     raise IOError("Failed to find specified codon counts file of %s" % codoncountfile)
                 print "Reading codon counts for %s from %s" % (name, codoncountfile)
                 counts.append(mapmuts.io.ReadCodonCounts(open(codoncountfile)))
-            (all_counts, multi_nt_all_counts, syn_counts, multi_nt_syn_counts) = mapmuts.sequtils.TallyCodonCounts(counts)
+            (all_counts, multi_nt_all_counts, syn_counts, multi_nt_syn_counts) = mapmuts.sequtils.TallyCodonCounts(counts, sites=sites)
             if not all_counts:
                 raise ValueError("No counts for %s" % name)
             if not (max(all_counts) >= max(syn_counts) >= 0):
                 raise ValueError("Count minima don't make sense for %s" % name)
             samples.append((name, all_counts, multi_nt_all_counts, syn_counts, multi_nt_syn_counts))
+            readsomecounts = True
     samples.sort()
     if not plotfileprefix:
         raise ValueError("Failed to parse a value for plotfileprefix")

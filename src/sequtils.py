@@ -356,13 +356,18 @@ def ClassifyNTMuts(nt_counts, recompute=False):
                 nt_counts[tup] += n
 
 
-def TallyCodonCounts(codon_counts):
+def TallyCodonCounts(codon_counts, sites='all'):
     """Tallies codon mutations at each site.
 
     *codon_counts* : a list with entries being dictionaries of the type returned by
     *mapmuts.io.ReadCodonCounts*. There must be at least one such dictionary 
     specified. If there are multiple dictionaries, they must all specify the
     same set of sites as their keys.
+
+    *sites* is an optional argument that is the string *all* by default.
+    If you set it to some other value, then it should be a list of 
+    integer sites. In this case, we only tally sites for the sites in this
+    list (which all must be keys in the *codon_counts* dictionaries).
 
     For all sites *r* represented in *codon_counts* and for which all
     of the entries of *codon_counts* specify the same wildtype residue,
@@ -391,7 +396,12 @@ def TallyCodonCounts(codon_counts):
     """
     if not (isinstance(codon_counts, list) and len(codon_counts) >= 1):
         raise ValueError("codon_counts must be a list containing at least one entry.")
-    sites = codon_counts[0].keys()
+    if sites == 'all':
+        sites = codon_counts[0].keys()
+    else:
+        for r in sites:
+            if r not in codon_counts[0].keys():
+                raise ValueError("sites specifies a site that has no information: %s" % r)
     all_counts = []
     multi_nt_all_counts = []
     syn_counts = []
