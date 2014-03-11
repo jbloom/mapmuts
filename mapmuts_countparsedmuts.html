@@ -94,6 +94,12 @@ type:</p>
 </li>
 <li><p class="first">The next line is optional. If specified, it should have a key of <em>writecounts</em> and a value of <em>True</em> or <em>False</em>. If this line is not included or is <em>True</em>, then the total counts for each type of mutation is written above each plot. If this line is included and has a value of <em>False</em>, then the total counts for each type of mutation is not written above each plot.</p>
 </li>
+<li><p class="first">The next line is optional. If specified, it should have a key of <em>sites</em> and is used to specify that we only examine certain sites. If this line is not included or is set to <em>all</em> then all sites listed in the <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> files are used in tallying the counts. However, sometimes you may only want to specify a certain range of sites. If so, <em>sites</em> allows you to do this. Just put the number of the first and last site that you want to include, and all sites in this range will be counted. For example, a line of:</p>
+<div class="highlight-python"><div class="highlight"><pre>sites 2 565
+</pre></div>
+</div>
+<p>means that we would only tally sites for residues 2, 3, ..., 564, 565. In this case, we would exclude residue one from the range. You might want to do this if for example you did not mutagenize the N-terminal methionine of your gene.</p>
+</li>
 <li><p class="first">All of the subsequent lines should list the samples for which we count the mutations. These are listed as follows:</p>
 <blockquote>
 <div><ul class="simple">
@@ -114,6 +120,7 @@ plotfileprefix countparsedmuts
 maxn 50
 legendloc right
 writecounts False
+sites all
 DNA /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/DNA/replicate_A_WT-1_DNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/DNA/replicate_A_WT-2_DNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/DNA/replicate_A_N334H-1_DNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/DNA/replicate_A_N334H-2_DNA_codoncounts.txt
 RNA /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/RNA/replicate_A_WT-1_RNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/RNA/replicate_A_WT-2_RNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/RNA/replicate_A_N334H-1_RNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/RNA/replicate_A_N334H-2_RNA_codoncounts.txt
 mutDNA /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-1/mutDNA/replicate_A_WT-1_mutDNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/WT-2/mutDNA/replicate_A_WT-2_mutDNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-1/mutDNA/replicate_A_N334H-1_mutDNA_codoncounts.txt /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/replicate_A/N334H-2/mutDNA/replicate_A_N334H-2_mutDNA_codoncounts.txt

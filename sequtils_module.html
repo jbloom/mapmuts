@@ -688,12 +688,16 @@ are unchanged but the sequences are converted to reverse complements.</p>
 
 <dl class="function">
 <dt id="sequtils.TallyCodonCounts">
-<tt class="descclassname">sequtils.</tt><tt class="descname">TallyCodonCounts</tt><big>(</big><em>codon_counts</em><big>)</big><a class="headerlink" href="#sequtils.TallyCodonCounts" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">sequtils.</tt><tt class="descname">TallyCodonCounts</tt><big>(</big><em>codon_counts</em>, <em>sites='all'</em><big>)</big><a class="headerlink" href="#sequtils.TallyCodonCounts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tallies codon mutations at each site.</p>
 <p><em>codon_counts</em> : a list with entries being dictionaries of the type returned by
 <em>mapmuts.io.ReadCodonCounts</em>. There must be at least one such dictionary 
 specified. If there are multiple dictionaries, they must all specify the
 same set of sites as their keys.</p>
+<p><em>sites</em> is an optional argument that is the string <em>all</em> by default.
+If you set it to some other value, then it should be a list of 
+integer sites. In this case, we only tally sites for the sites in this
+list (which all must be keys in the <em>codon_counts</em> dictionaries).</p>
 <p>For all sites <em>r</em> represented in <em>codon_counts</em> and for which all
 of the entries of <em>codon_counts</em> specify the same wildtype residue,
 this function iterates
@@ -850,10 +854,10 @@ in <cite>headers_seqs</cite>.</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="align_module.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">align</span></tt> Module</a></p>
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">align</span></tt> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="io_module.html"
-                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">io</span></tt> Module</a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">io</span></tt> Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
