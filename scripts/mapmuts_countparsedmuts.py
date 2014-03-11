@@ -28,7 +28,7 @@ def main():
     if not mapmuts.plot.PylabAvailable():
         raise ImportError("This script requires matplotlib / pylab, which are not available.")
 
-    sites == 'all'
+    sites = 'all'
     readsomecounts = False
     mapmuts.io.PrintVersions(sys.stdout)
     args = sys.argv[1 : ]
