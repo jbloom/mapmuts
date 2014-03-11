@@ -69,7 +69,7 @@ def main():
                 pass # already set to all
             elif len(entries) == 3:
                 sites = (int(entries[1]), int(entries[2]))
-                sites = [r for in range(sites[0], sites[1] + 1)]
+                sites = [r for r in range(sites[0], sites[1] + 1)]
             else:
                 raise ValueError("Invalid line for sites:\n" % line)
         elif entries[0].strip() == 'legendloc':
