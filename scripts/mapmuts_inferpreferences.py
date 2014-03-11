@@ -227,6 +227,19 @@ def main():
         seed = mapmuts.io.ParseIntValue(d, 'seed')
         mapmuts.bayesian.Seed(seed)
         nruns = mapmuts.io.ParseIntValue(d, 'nruns')
+        if 'sites' in d:
+            sites = mapmuts.io.ParseStringValue(d, 'sites')
+            if sites.upper() in ['ALL', 'NONE']:
+                sites == 'all'
+            else:
+                try:
+                    (start, end) = sites.split()
+                    (start, end) = (int(start), int(end))
+                    sites = [r for r in range(start, end + 1)]
+                except:
+                    raise ValueError("problem parsing line for sites")
+        else:
+            sites == 'all'
         assert nruns >= 1, "nruns must be >= 1"
         if nruns < 2:
             warnings.warn('Will not be able to check for convergence since nruns < 2. You are suggested to use nruns >= 2.')
@@ -290,6 +303,8 @@ def main():
         integer_keys = [key for key in dna_libs[0].keys() if isinstance(key, int)]
         protlength = max(integer_keys)
         assert protlength == len(integer_keys), "Problem with residue numbering?"
+        if sites == 'all':
+            sites = [r for r in range(1, protlength + 1)]
         # get list of all codons
         codons = mapmuts.sequtils.Codons()
         # begin inference
@@ -299,7 +314,7 @@ def main():
         processes = {} # keyed by residue number, value is multiprocessing.Process
         wtaa_d = {} # keyed by residue number, value is wtaa
         pickleresults = {} # keyed by residue number, value is pickle file name
-        for ires in range(1, protlength + 1):
+        for ires in sites:
             library_stats = []
             wtaas = []
             for ilib in range(nlibs):
@@ -340,9 +355,9 @@ def main():
         # until the first residue still running is done.
         processes_running = dict([(ires, False) for ires in processes.iterkeys()])
         processes_finished = dict([(ires, False) for ires in processes.iterkeys()])
-        for ires in range(1, protlength + 1):
+        for ires in sites:
             i = 0
-            while (ires + i  <= protlength) and (processes_running.values().count(True) < ncpus):
+            while (ires + i  <= sites[-1]) and (processes_running.values().count(True) < ncpus):
                 if (not processes_finished[ires + i]) and (not processes_running[ires + i]):
                     processes[ires + i].start()
                     processes_running[ires + i] = True

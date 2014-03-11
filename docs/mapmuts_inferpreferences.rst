@@ -105,6 +105,13 @@ Keys for the input file:
 
 * *ncpus* is an option that allows you to run the analyses using multiple CPUs. This will usually be helpful, because these runs can take a long time. If you set *ncpus* to 1, then we just use one CPU. But if you are working on a multi-threaded processor, then setting to a larger number will take advantage of the additional CPUs. Note however that if you set *ncpus* to a number larger than the number of spare CPUs, you will overload the processor -- so if you only have one CPU, set this to just 1.
 
+* *sites* is an optional key. If specified, it should have a key of *sites* and is used to specify that we only examine certain sites. If this line is not included or is set to *all* then all sites listed in the count files (those specified by *DNA_file*, *mutDNA_files*, etc) are used in tallying the counts. However, sometimes you may only want to specify a certain range of sites. If so, *sites* allows you to do this. Just put the number of the first and last site that you want to include, and all sites in this range will be counted. For example, a line of::
+
+    sites 2 565
+
+  means that we would only infer preferences for residues 2, 3, ..., 564, 565. In this case, we would exclude residue one from the range. You might want to do this if for example you did not mutagenize the N-terminal methionine of your gene.
+
+
 * *removeoutlier* is an option that can only be used if there are 3 or more libraries specified by *DNA_files*, *RNA_files*, *mutDNA_files*, and *mutvirus_files*. If there are three or more libraries, this option specifies that for each site, we attempt to identify the one library that is an outlier at this site in terms of the inferred :math:`\pi_{r,a}` values. This single outlier library is then excluded from the final inference of the :math:`\pi_{r,a}` values. The rationale for using this option is that occasionally one library appears to give much different :math:`\pi_{r,a}` values (usually a much larger value for some specific value of *a*) than the other libraries -- this is probably due to linkage of that mutation with another beneficial mutation. Therefore, identifying the one outlier and removing it from the analysis could be helpful. The concern of course is that this needs to be done in some unbiased way rather than just cherry-picking libraries for removal at specific sites. This option does that -- a single outlier library is removed for all sites according to the following well-defined algorithm is applied to the inference of the :math:`\pi_{r,a}` values for each site *r*:
 
     1) For each of the libraries specified (by *DNA_file*, *RNA_files*, etc), the :math:`\pi_{r,a}` values are inferred just using the data from that individual library.
@@ -140,6 +147,7 @@ Here is an example input file::
     preference_plots preference_plots/
     outfileprefix WT-1
     ncpus 2
+    sites all
     removeoutlier False
 
 

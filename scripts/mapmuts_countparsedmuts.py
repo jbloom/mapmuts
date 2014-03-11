@@ -65,7 +65,7 @@ def main():
         elif entries[0].strip() == 'sites':
             if readsomecounts:
                 raise ValueError("You must put the line for sites BEFORE the codon counts files")
-            if len(entries) == 2 and (entries[1].upper in ['all', 'None']):
+            if len(entries) == 2 and (entries[1].upper() in ['ALL', 'NONE']):
                 pass # already set to all
             elif len(entries) == 3:
                 sites = (int(entries[1]), int(entries[2]))
