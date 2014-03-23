@@ -50,7 +50,7 @@ Keys for the input file:
 * *outfileprefix* specifies the prefix affixed to each of the output files detailed below. *outfileprefix* can include a directory as part of the prefix (such as ``./plots/replicate-1_``), but if such a directory is included in part of the prefix name then the directory must already exist or an error will be raised -- this script does not create new directories. Any existing files that have the same names specified by *outfileprefix* will be overwritten.
 
 
-* *siterange* specifies the range of residues that are included in the plot. The value should be two numbers giving the first and the last residues to include in the plots. You would use this option if you want to exclude certain residues (such as the first one in the example above). If you want to include all of the residues, just set to this to be the string *all*. There must be residue numbers in *sitepreferences* for all sites in *siterange*.
+* *siterange* specifies the range of residues that are included in the plot. The value should be two numbers giving the first and the last residues to include in the plots. You would use this option if you want to exclude certain residues (such as the first one in the example above). If you want to include all of the residues, just set to this to be the string *all*. There must be residue numbers in *sitepreferences* for all sites in *siterange*. 
 
 * *dsspfile* is an option that allows you to compare the observed site entropies and preferences to the relative solvent accessibility (RSA) and the secondary structure for the sites. This will only be useful if a crystal structure for your protein is available. You can then use the `DSSP`_ webserver to calculate the secondary structures and the RSAs. If you do not want to use this option, just set *dsspfile* to *None*. If you do want to use this option, then run `DSSP`_ on your protein structure -- this script is tested against output from the `DSSP`_ webserver, but should probably work on output from the standalone too. Then save the `DSSP`_ output in a text file, and specify the path to that file as the value for *dsspfile*. This script does not currently have a robust ability to parse the `DSSP`_ output, so you have to do some careful checks. In particular, you must make sure that residue numbers in the PDB file exactly match the residue numbering scheme used for the rest of this analysis (i.e. the same residue numbers found in *sitepreferences*, and that none of the residue numbers contain letter suffixes (such as 24A) as is sometimes the case in PDB files. It is not necessary that all of the residues be present in the PDB. If there are multiple PDB chains, you can specify them using the *dsspchain* option. `DSSP`_ only calculates absolute accessible surface areas (ASAs); the RSAs are computed by normalizing by the maximum ASAs given by `Tien et al, 2013`_.
 
@@ -65,6 +65,18 @@ Keys for the input file:
 * *includestop* specifies whether we include stop codons as possible amino acid identities if they are specified in *sitepreferences*. If *sitepreferences* comes from ``mapmuts_inferpreferences.py``, then it may contain stop codons (denoted by a * character) as a possible amino acid. If *includestop* is *False*, then these stop codons are **not** considered a possible amino acid in the plots created here, and all of the other preferences are normalized so that the :math:`\pi_{r,a}` values for all 20 non-stop amino acids *a* sum to one. If *includestop* is *True*, then stop codons **are** considered a possible amino acid for the plots created here -- but not that they are assigned a preference of zero if no preference is assigned in *sitepreferences*. In the sequence logo plot, stop codons are indicated with a black *X* character rather than an asterisk. 
 
   Often, you will not really be interested in stop codons as a potential amino acid at a site because you will assume that they are not viable amino acids as they truncate the protein. This could provide a justification for setting *includestop* to *False*. On the other hand, checking to see that stop codons have very low preferences can be a good sanity check to make sure that the overall analysis is giving reasonable inferences -- in that case, you might set *includestop* to *True* and then check that you don't have lots of black *X* characters in the logo plot.
+
+* *sitenumbermapping* is an optional argument that can be used to change how residues are numbering in the logo plot (it currently has no effect on ``site_entropy_plot.pdf``). If you either don't specify *sitenumbermapping* or set it to *None*, then nothing is done. Otherwise, you should set it to a value that specifies the name of an existing text file in CSV (comma-separated file) format. Here is an example of a few lines::
+
+    #SEQUENTIAL,ALTERNATIVE
+    1,3
+    2,4
+    3,5
+    4,6
+    5,7
+    6,8
+
+  Briefly, any lines in the specified file that are empty or begin with a # character are ignored. For all other lines, there should be two comma-separated integer entries. The first column should provide the sequential number for sites for sites specified by *siterange*. The second number gives the number that is actually assigned to the residue in the logo plot. Any sites specified in the sequential numbering that are outside *siterange* are still excluded. So for instance, the example file above would mean that the first residue is numbered as 3, and so on.
 
 Example input file
 ---------------------

@@ -108,6 +108,18 @@
 <li><p class="first"><em>includestop</em> specifies whether we include stop codons as possible amino acid identities if they are specified in <em>sitepreferences</em>. If <em>sitepreferences</em> comes from <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt>, then it may contain stop codons (denoted by a * character) as a possible amino acid. If <em>includestop</em> is <em>False</em>, then these stop codons are <strong>not</strong> considered a possible amino acid in the plots created here, and all of the other preferences are normalized so that the <span class="math">\(\pi_{r,a}\)</span> values for all 20 non-stop amino acids <em>a</em> sum to one. If <em>includestop</em> is <em>True</em>, then stop codons <strong>are</strong> considered a possible amino acid for the plots created here &#8211; but not that they are assigned a preference of zero if no preference is assigned in <em>sitepreferences</em>. In the sequence logo plot, stop codons are indicated with a black <em>X</em> character rather than an asterisk.</p>
 <p>Often, you will not really be interested in stop codons as a potential amino acid at a site because you will assume that they are not viable amino acids as they truncate the protein. This could provide a justification for setting <em>includestop</em> to <em>False</em>. On the other hand, checking to see that stop codons have very low preferences can be a good sanity check to make sure that the overall analysis is giving reasonable inferences &#8211; in that case, you might set <em>includestop</em> to <em>True</em> and then check that you don&#8217;t have lots of black <em>X</em> characters in the logo plot.</p>
 </li>
+<li><p class="first"><em>sitenumbermapping</em> is an optional argument that can be used to change how residues are numbering in the logo plot (it currently has no effect on <tt class="docutils literal"><span class="pre">site_entropy_plot.pdf</span></tt>). If you either don&#8217;t specify <em>sitenumbermapping</em> or set it to <em>None</em>, then nothing is done. Otherwise, you should set it to a value that specifies the name of an existing text file in CSV (comma-separated file) format. Here is an example of a few lines:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#SEQUENTIAL,ALTERNATIVE</span>
+<span class="mi">1</span><span class="p">,</span><span class="mi">3</span>
+<span class="mi">2</span><span class="p">,</span><span class="mi">4</span>
+<span class="mi">3</span><span class="p">,</span><span class="mi">5</span>
+<span class="mi">4</span><span class="p">,</span><span class="mi">6</span>
+<span class="mi">5</span><span class="p">,</span><span class="mi">7</span>
+<span class="mi">6</span><span class="p">,</span><span class="mi">8</span>
+</pre></div>
+</div>
+<p>Briefly, any lines in the specified file that are empty or begin with a # character are ignored. For all other lines, there should be two comma-separated integer entries. The first column should provide the sequential number for sites for sites specified by <em>siterange</em>. The second number gives the number that is actually assigned to the residue in the logo plot. Any sites specified in the sequential numbering that are outside <em>siterange</em> are still excluded. So for instance, the example file above would mean that the first residue is numbered as 3, and so on.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="example-input-file">
