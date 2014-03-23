@@ -95,7 +95,7 @@ def ConvertAvailable():
 
 
 
-def EquilibriumFreqsLogo(sites, pi_d, plotfile, nperline, overlay):
+def EquilibriumFreqsLogo(sites, pi_d, plotfile, nperline, overlay, sitenumbermapping=None, numberevery=10):
     """Constructs a sequence logo showing amino-acid equilibrium preferences.
 
     The heights of each amino-acid letter are equal to the preference of
@@ -163,6 +163,16 @@ def EquilibriumFreqsLogo(sites, pi_d, plotfile, nperline, overlay):
       * *ss_d* is like *rsa_d* except that it gives the codes for the 
         secondary structures. Allowed values are 'helix', 'strand', 
         and 'loop'.
+
+    * *sitenumbermapping* is an optional argument that is *None* by
+      default. If it is set to some other value then it should be 
+      a dictionary keyed by every integer in *sites*. The values are
+      then the string number annotation assigned to that site.
+
+    * *numberevery* is an option that is only meaningful if *sitenumbermapping*
+      is not *None*. In this case, it should be an integer. We only label
+      sites at this interval. It is 10 by default, meaning that only every 10th 
+      site is labeled.
     """
     stopchar = 'X' # character for stop codon in logo plot
     if not WebLogoAvailable():
@@ -225,6 +235,18 @@ def EquilibriumFreqsLogo(sites, pi_d, plotfile, nperline, overlay):
             args.append(colormapping[aa])
             args.append(aaforstring)
             args.append("'%s'"% aaforstring)
+        # add site number mapping
+        if sitenumbermapping:
+            args.append('--annotate')
+            annotatestring = []
+            isite = 0
+            for site in sites:
+                if isite % numberevery == 0:
+                    annotatestring.append(sitenumbermapping[site].strip())
+                else:
+                    annotatestring.append('')
+                isite += 1
+            args.append(','.join(annotatestring))
         # run weblogo
         sout = tempfile.TemporaryFile()
         serror = tempfile.TemporaryFile()

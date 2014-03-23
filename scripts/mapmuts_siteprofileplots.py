@@ -22,12 +22,12 @@ def main():
     """Main body of script."""
 
     # check on module availability
-    if not mapmuts.plot.PylabAvailable():
-        raise ImportError("Cannot run this script as pylab is not available.")
     if not mapmuts.weblogo.WebLogoAvailable():
         raise ImportError("Cannot run this script as weblogo is not available.")
     if not mapmuts.weblogo.PyPdfAvailable():
-        raise ImportError("Cannot run this script as pyPdf is not available.")
+        raise ImportError("Cannot run this script as PyPdf is not available.")
+    if not mapmuts.plot.PylabAvailable():
+        raise ImportError("Cannot run this script at pylab is not available.")
 
     # read input variables
     args = sys.argv[1 : ]
@@ -55,6 +55,7 @@ def main():
         siterange = (int(tup[0]), int(tup[1]))
         if siterange[1] <= siterange[0]:
             raise ValueError("Empty siterange")
+    sites = [site for site in range(siterange[0], siterange[1] + 1)]
     dsspfile = mapmuts.io.ParseStringValue(d, 'dsspfile')
     if dsspfile.upper() in ['NONE', 'FALSE']:
         dsspfile = False
@@ -75,6 +76,19 @@ def main():
     if nperline < 1:
         raise ValueError("nperline must be an integer >= 1")
     includestop = mapmuts.io.ParseBoolValue(d, 'includestop')
+    sitenumbermapping = None
+    if 'sitenumbermapping' in d:
+        sitenumbermapping = mapmuts.io.ParseStringValue(d, 'sitenumbermapping')
+        if sitenumbermapping.upper() == 'NONE':
+            sitenumbermapping = None
+        else:
+            if not os.path.isfile(sitenumbermapping):
+                raise IOError("Failed to find sitenumbermapping file %s" % sitenumbermapping)
+            sitenumbermapping = dict([(int(line.split(',')[0]), line.split(',')[1]) for line in open(sitenumbermapping).readlines() if line[0] != '#' and not line.isspace()])
+            for site in sites:
+                if site not in sitenumbermapping:
+                    raise ValueError("sitenumbermapping file fails to specify a value for site %d" % site)
+
 #    add_entropy = mapmuts.io.ParseBoolValue(d, 'add_entropy')
 
     # start running script
@@ -85,7 +99,6 @@ def main():
         mapmuts.bayesian.PreferencesRemoveStop(d)
 
     # make plots of entropies along primary sequence
-    sites = [site for site in range(siterange[0], siterange[1] + 1)]
     try:
         entropies = [d[site]['SITE_ENTROPY'] for site in sites]
     except KeyError:
@@ -131,7 +144,7 @@ def main():
         overlay = [rsa_d, ss_d]
     else:
         overlay = None
-    mapmuts.weblogo.EquilibriumFreqsLogo(sites, d, logoplotfile, nperline=nperline, overlay=overlay)
+    mapmuts.weblogo.EquilibriumFreqsLogo(sites, d, logoplotfile, nperline=nperline, overlay=overlay, sitenumbermapping=sitenumbermapping)
 
     sys.stdout.write("Script execution completed.\n")
 
