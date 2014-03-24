@@ -55,7 +55,6 @@ def main():
         siterange = (int(tup[0]), int(tup[1]))
         if siterange[1] <= siterange[0]:
             raise ValueError("Empty siterange")
-    sites = [site for site in range(siterange[0], siterange[1] + 1)]
     dsspfile = mapmuts.io.ParseStringValue(d, 'dsspfile')
     if dsspfile.upper() in ['NONE', 'FALSE']:
         dsspfile = False
@@ -85,9 +84,6 @@ def main():
             if not os.path.isfile(sitenumbermapping):
                 raise IOError("Failed to find sitenumbermapping file %s" % sitenumbermapping)
             sitenumbermapping = dict([(int(line.split(',')[0]), line.split(',')[1]) for line in open(sitenumbermapping).readlines() if line[0] != '#' and not line.isspace()])
-            for site in sites:
-                if site not in sitenumbermapping:
-                    raise ValueError("sitenumbermapping file fails to specify a value for site %d" % site)
 
 #    add_entropy = mapmuts.io.ParseBoolValue(d, 'add_entropy')
 
@@ -95,8 +91,13 @@ def main():
     d = mapmuts.io.ReadEntropyAndEquilFreqs(sitepreferences)
     if not siterange:
         siterange = (min(d.keys()), max(d.keys()))
+    sites = [site for site in range(siterange[0], siterange[1] + 1)]
     if not includestop:
         mapmuts.bayesian.PreferencesRemoveStop(d)
+    if sitenumbermapping:
+        for site in sites:
+            if site not in sitenumbermapping:
+                raise ValueError("sitenumbermapping file fails to specify a value for site %d" % site)
 
     # make plots of entropies along primary sequence
     try:
