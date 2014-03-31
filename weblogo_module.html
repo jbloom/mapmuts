@@ -90,7 +90,7 @@ for running external programs, and <em>False</em> otherwise.</p>
 
 <dl class="function">
 <dt id="weblogo.EquilibriumFreqsLogo">
-<tt class="descclassname">weblogo.</tt><tt class="descname">EquilibriumFreqsLogo</tt><big>(</big><em>sites</em>, <em>pi_d</em>, <em>plotfile</em>, <em>nperline</em>, <em>overlay</em><big>)</big><a class="headerlink" href="#weblogo.EquilibriumFreqsLogo" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">weblogo.</tt><tt class="descname">EquilibriumFreqsLogo</tt><big>(</big><em>sites</em>, <em>pi_d</em>, <em>plotfile</em>, <em>nperline</em>, <em>overlay</em>, <em>sitenumbermapping=None</em>, <em>numberevery=10</em><big>)</big><a class="headerlink" href="#weblogo.EquilibriumFreqsLogo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs a sequence logo showing amino-acid equilibrium preferences.</p>
 <p>The heights of each amino-acid letter are equal to the preference of
 that site for the amino acid.</p>
@@ -156,6 +156,16 @@ secondary structures. Allowed values are &#8216;helix&#8217;, &#8216;strand&#821
 and &#8216;loop&#8217;.</li>
 </ul>
 </li>
+<li><p class="first"><em>sitenumbermapping</em> is an optional argument that is <em>None</em> by
+default. If it is set to some other value then it should be 
+a dictionary keyed by every integer in <em>sites</em>. The values are
+then the string number annotation assigned to that site.</p>
+</li>
+<li><p class="first"><em>numberevery</em> is an option that is only meaningful if <em>sitenumbermapping</em>
+is not <em>None</em>. In this case, it should be an integer. We only label
+sites at this interval. It is 10 by default, meaning that only every 10th 
+site is labeled.</p>
+</li>
 </ul>
 </dd></dl>
 
@@ -195,7 +205,7 @@ evaluates to <em>True</em> using <em>bool(WebLogoAvailable())</em>.</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="dssp_module.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">dssp</span></tt> Module</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">dssp</span></tt> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="shortcomings.html"
                         title="next chapter">Shortcomings</a></p>

@@ -35,6 +35,8 @@ Keys for the input file:
 
 * *alpha* is an optional argument. It specifies the transparency of the points in the correlation plot. A value of *alpha* equal to one corresponds to no transparency. A value of *alpha < 1* makes the points somewhat transparent. This might be useful if you want to better visualize the density of points and many points fall on top of each other. You must set *alpha* > 0 and <= 1. In general, the maximum intensity at a spot on the plot will not be obtained until there are *1.0 / alpha* points on that spot. If you do not specify a value of *alpha*, it defaults to one.
 
+* *logscale* is an optional argument. If it is left out or set to *False*, then the data is plotted on a linear scale. If *logscale* is specified and set to *True*, then the data is plotted on a log scale. In this case, the correlations are calculated after log-transforming the data.
+
 Example input file
 ---------------------
 Here is an example input file::
