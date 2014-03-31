@@ -48,6 +48,10 @@ def main():
             raise ValueError("alpha must be > 0 and <= 1")
     else:
         alpha = 1.0
+    if 'logscale' in d:
+        logscale = mapmuts.io.ParseBoolValue(d, 'logscale')
+    else:
+        logscale = False
     samplenames = [x.strip() for x in samplenames.split()]
     if len(preferencesfiles) != len(samplenames):
         raise ValueError("samplenames and preferencesfiles do not specify the same number of entries")
@@ -75,7 +79,12 @@ def main():
                 for aa in aas:
                     sample1data.append(d1[r]['PI_%s' % aa])
                     sample2data.append(d2[r]['PI_%s' % aa])
-            mapmuts.plot.PlotCorrelation(sample1data, sample2data, plotfile, xlabel=sample1.replace('_', ' '), ylabel=sample2.replace('_', ' '), corr=corr, alpha=alpha, symmetrize=True, fixaxes=True)
+            if logscale:
+                if min(sample1data + sample2data) <= 0:
+                    raise ValueError("Cannot use logscale as there is data <= 0")
+                mapmuts.plot.PlotCorrelation(sample1data, sample2data, plotfile, xlabel=sample1.replace('_', ' '), ylabel=sample2.replace('_', ' '), logx=True, logy=True, corr=corr, alpha=alpha, symmetrize=False, fixaxes=False)
+            else:
+                mapmuts.plot.PlotCorrelation(sample1data, sample2data, plotfile, xlabel=sample1.replace('_', ' '), ylabel=sample2.replace('_', ' '), corr=corr, alpha=alpha, symmetrize=True, fixaxes=True)
 
     sys.stdout.write("\nScript execution completed.\n")
 
