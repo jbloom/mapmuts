@@ -164,8 +164,6 @@ def ReadDSSP(infile, asa_scale, chain=None):
                 if line[13] == '!':
                     continue # definitely missing residue, skip it
             raise ValueError("Cannot convert into a residue number, are they letter suffixes on some of the residue numbers? The problem is with: %s\nFound in line\n%s" % (line[5 : 10], line))
-        if ires in dssp:
-            raise ValueError("Duplicate residue number of %d" % ires)
         ichain = line[11]
         if chain:
             if ichain != chain:
@@ -174,6 +172,8 @@ def ReadDSSP(infile, asa_scale, chain=None):
             chainsfound[ichain] = True
             if len(chainsfound) > 1:
                 raise ValueError("No chain specified but multiple chains found in %s" % infile)
+        if ires in dssp:
+            raise ValueError("Duplicate residue number of %d" % ires)
         wt = line[13]
         dssp[ires] = {}
         ss = line[16]
