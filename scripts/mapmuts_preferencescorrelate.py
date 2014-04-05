@@ -10,6 +10,7 @@ import sys
 import os
 import time
 import warnings
+import copy
 import mapmuts.io
 import mapmuts.sequtils
 import mapmuts.plot
@@ -68,10 +69,18 @@ def main():
             sys.stdout.write("Making plot %s...\n" % plotfile)
             sys.stdout.flush()
             sharedresidues = [r for r in d1.iterkeys() if r in d2]
-            if 'PI_*' in d1[sharedresidues[0]]:
+            if not sharedresidues:
+                raise ValueError("No shared residues")
+            if ('PI_*' in d1[sharedresidues[0]]) and ('PI_*' in d2[sharedresidues[0]]):
                 includestop = True
             else:
                 includestop = False
+                if 'PI_*' in d1[sharedresidues[0]]:
+                    d1 = copy.deepcopy(d1)
+                    mapmuts.bayesian.PreferencesRemoveStop(d1)
+                if 'PI_*' in d2[sharedresidues[0]]:
+                    d2 = copy.deepcopy(d2)
+                    mapmuts.bayesian.PreferencesRemoveStop(d2)
             sample1data = []
             sample2data = []
             aas = mapmuts.sequtils.AminoAcids(includestop=includestop)
