@@ -40,7 +40,7 @@ Although the core of `mapmuts`_  package can be run just using the standard `Pyt
     
     - 0.12.0
 
-* Creation of sequence logos requires installation of `weblogo`_ in a location that puts it in the current search path so that it can be run from the shell. This package has been tested with `weblogo`_ version 3.3. It is not known if it would work with other versions.
+* Creation of sequence logos requires installation of `weblogo`_ in a location that puts it in the current search path so that it can be run from the shell. This package has been tested with `weblogo`_ version 3.3. It is not known if it would work with other versions. Note that if `weblogo`_ crashes with a Ghostscript error, you may want to see `this bug report <https://code.google.com/p/weblogo/issues/detail?id=36>`_.
 
 * Overlay of RSA and SS information on the sequence logos requires the `pyPdf`_ package to be installed. This package has only been tested with `pyPdf`_ version 1.13 -- it is unknown whether it would work with ``pyPdf2``.
 
