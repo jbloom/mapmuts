@@ -342,21 +342,18 @@ are being included in the logo. They must be consecutive,
 so that <em>sites = [i for i in range(sites[0], sites[-1] + 1)]</em>.</li>
 <li><em>plotfile</em> is a string giving the name of the PDF file containing
 the overlay. It must end in the extension <tt class="docutils literal"><span class="pre">.pdf</span></tt>.</li>
-<li><em>otherprops</em> is an optional argument that can be used to specify
-additional bars that are plotted above the main heat map
-of the site preferences. By default, <em>otherprops</em> is an empty
-list, which means that no additional bars are plotted. If you
-want to plot additonal bars, then add tuple entries to the list.
-The format of these tuples differs depending on whether the
-data is scalar (such as RSA or site entropy) or categorical
-(such as secondary structure):</li>
 <li><em>rsa_d</em> is a dictionary giving the RSA values. It is keyed by the
 integer site numbers: <em>rsa_d[site]</em> gives a float with the RSA
 for residue <em>site</em>. If <em>site</em> is not in RSA d, the value is
 shown in white.</li>
 <li><em>ss_d</em> is like <em>rsa_d</em> except that it gives the codes for the 
-secondary structures. Allowed values are &#8216;helix&#8217;, &#8216;strand&#8217;, 
-and &#8216;loop&#8217;.</li>
+some discrete property which can be secondary structure or
+something else. The values should be a string specifying
+the property name, and there should be at leasat one
+such property. For secondary structure, the 
+values might be &#8216;helix&#8217;, &#8216;strand&#8217;, and &#8216;loop&#8217;. For
+some other custom discrete property, these values
+are whatever you specify.</li>
 <li><em>nperline</em> is the number of sites per line.</li>
 <li><em>sitewidth</em> is the width of each site in points.</li>
 <li><em>rmargin</em> is the right margin in points.</li>
