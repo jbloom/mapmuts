@@ -194,14 +194,34 @@ def Seed(seed):
     random.seed(seed)
 
 
+def SimpsonDiversity(pi):
+    """Calculates the Simpson Diversity Index.
+
+    *pi* is a dictionary that has values representing the frequencies
+    of different states. These frequencies must sum to one,
+    and must all be >= 0. The
+    Simpson Diversity index is calculated
+    as :math:`D = \sum_a \pi_a^2` where *a* ranges over all values
+    in *pi*. This diversity will be between 0 and 1.
+    """
+    assert abs(sum(pi.values()) - 1.0) < 1.0e-5, "Sum of values in pi not close to one"
+    d = 0
+    for pi_a in pi.values():
+        assert 0 <= pi_a <= 1.0, "pi contains a value not between 0 and 1"
+        d += pi_a**2
+    assert 0 <= d <= 1, "Calculated invalid Simpson Diversity Index"
+    return d
+
+
 def SiteEntropy(pi):
     """Calculates a site entropy (in bits) based on equilibrium fractions.
 
     This function takes as a calling argument a single dictionary *pi*
-    which has the format of the return variable from *EquilibriumFracs*.
-    It then calculates a site entropy *h* which is a measure of how
-    variable the site is in terms of its tolerance for various amino acids.
-    This entropy is defined as::
+    which has values that represent the frequencies of the different states,
+    and should sum to one.
+    This function calculates a site entropy *h* which is a measure of how
+    variable the site is in terms of its frequencies of these various
+    steates. This entropy is defined as::
 
         h = - sum_aa pi[aa] * log2(pi[aa])
 
