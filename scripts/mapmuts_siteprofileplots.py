@@ -71,6 +71,41 @@ def main():
     add_ss = mapmuts.io.ParseBoolValue(d, 'add_ss')
     if add_ss and not dsspfile:
         raise ValueError("Cannot use add_ss without dsspfile")
+    if add_ss and not add_rsa:
+        raise ValueError("Cannot specify add_ss True but add_rsa False")
+    if 'add_custom' in d:
+        add_custom = mapmuts.io.ParseStringValue(d, 'add_custom')
+        if add_custom.upper() == 'FALSE':
+            add_custom = False
+        else:
+            if not add_rsa:
+                raise ValueError("Cannot specify add_custom True and add_rsa False")
+            if add_ss:
+                raise ValueError("Cannot specify add_custom True and add_ss True")
+            entries = add_custom.split()
+            if len(entries) % 2:
+                raise ValueError("add_custom does not specify an even number of entries, so these cannot be property name / file name pairs")
+            nprops = len(entries) // 2
+            if nprops < 1:
+                raise ValueError("add_custom must specify at least one property")
+            add_custom = {}
+            for iprop in range(nprops):
+                propname = entries[2 * iprop]
+                propfile = entries[2 * iprop + 1]
+                if not os.path.isfile(propfile):
+                    raise IOError("Failed to find file %s specified by add_custom" % propfile)
+                sites = [int(line.split()[0]) for line in open(propfile).readlines() if (not line.isspace()) and line[0] != '#']
+                if not sites:
+                    raise IOError("add_custom file %s failed to specify any sites" % propfile)
+                for site in sites:
+                    if site in add_custom:
+                        raise ValueError("add_custom specifies duplicate property names for site %d" % site)
+                    add_custom[site] = propname
+
+    else: 
+        add_custom = False
+    if add_rsa and not (add_ss or add_custom):
+        raise ValueError("Cannot specify add_rsa True and both add_ss and add_custom False")
     nperline = mapmuts.io.ParseIntValue(d, 'nperline')
     if nperline < 1:
         raise ValueError("nperline must be an integer >= 1")
@@ -141,8 +176,13 @@ def main():
     # make sequence logo plot
     logoplotfile = '%ssite_preferences_logoplot.pdf' % outfileprefix
     sys.stdout.write("Creating plot %s...\n" % logoplotfile)
-    if add_rsa and add_ss:
-        overlay = [rsa_d, ss_d]
+    if add_rsa:
+        if add_ss and not add_custom:
+            overlay = [rsa_d, ss_d]
+        elif add_custom and not add_ss:
+            overlay = [rsa_d, add_custom]
+        else:
+            raise ValueError("add_rsa must be paired with exactly one of add_custom or add_ss")
     else:
         overlay = None
     mapmuts.weblogo.EquilibriumFreqsLogo(sites, d, logoplotfile, nperline=nperline, overlay=overlay, sitenumbermapping=sitenumbermapping)

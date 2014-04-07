@@ -146,7 +146,8 @@ def EquilibriumFreqsLogo(sites, pi_d, plotfile, nperline, overlay, sitenumbermap
 
     * *overlay* specifies that we also overlay a bar showing the hydrophobicity
       scale for the sequence logo colors, as well as bars showing the relative
-      solvent accessibility (RSA) and the secondary structure (SS). This 
+      solvent accessibility (RSA) and either the secondary structure (SS)
+      or some other discrete custom property with between 1 or more classes. This 
       requires *mapmuts.plot.PylabAvailable()* to be *True*, and also
       requires *PyPdfAvailable()* to be *True*. If you do not want to
       do the overlaying, set *overlay* to *False*. If you do want to do
@@ -160,9 +161,9 @@ def EquilibriumFreqsLogo(sites, pi_d, plotfile, nperline, overlay, sitenumbermap
         for residue *site*. If *site* is not in RSA d, the value is
         shown in white.
 
-      * *ss_d* is like *rsa_d* except that it gives the codes for the 
-        secondary structures. Allowed values are 'helix', 'strand', 
-        and 'loop'.
+      * *ss_d* is like *rsa_d* except that it gives the codes for some
+        discrete property. These can be secondary structure ('helix', 
+        'strand', and 'loop') or some other set of one ore more strings.
 
     * *sitenumbermapping* is an optional argument that is *None* by
       default. If it is set to some other value then it should be 

@@ -1535,23 +1535,19 @@ def LogoOverlay(sites, plotfile, rsa_d, ss_d, nperline, sitewidth, rmargin, logo
     * *plotfile* is a string giving the name of the PDF file containing
       the overlay. It must end in the extension ``.pdf``.
 
-    * *otherprops* is an optional argument that can be used to specify
-      additional bars that are plotted above the main heat map
-      of the site preferences. By default, *otherprops* is an empty
-      list, which means that no additional bars are plotted. If you
-      want to plot additonal bars, then add tuple entries to the list.
-      The format of these tuples differs depending on whether the
-      data is scalar (such as RSA or site entropy) or categorical
-      (such as secondary structure):
-      
     * *rsa_d* is a dictionary giving the RSA values. It is keyed by the
       integer site numbers: *rsa_d[site]* gives a float with the RSA
       for residue *site*. If *site* is not in RSA d, the value is
       shown in white.
 
     * *ss_d* is like *rsa_d* except that it gives the codes for the 
-      secondary structures. Allowed values are 'helix', 'strand', 
-      and 'loop'.
+      some discrete property which can be secondary structure or
+      something else. The values should be a string specifying
+      the property name, and there should be at leasat one
+      such property. For secondary structure, the 
+      values might be 'helix', 'strand', and 'loop'. For
+      some other custom discrete property, these values
+      are whatever you specify.
 
     * *nperline* is the number of sites per line.
 
@@ -1574,7 +1570,17 @@ def LogoOverlay(sites, plotfile, rsa_d, ss_d, nperline, sitewidth, rmargin, logo
     if os.path.splitext(plotfile)[1] != '.pdf':
         raise ValueError("plotfile must end in .pdf: %s" % plotfile)
     (cmap, mapping_d, mapper) = KyteDoolittleColorMapping()
-    ss_categories = ['strand', 'helix', 'loop']
+    ss_categories = dict([(propname, True) for propname in ss_d.values()]).keys()
+    if not (1 <= len(ss_categories)):
+        raise ValueError('ss_d does not specify at least one category')
+    if len(ss_categories) == 3 and 'strand' in ss_categories and 'helix' in ss_categories and 'loop' in ss_categories:
+        ss_categories = ['strand', 'helix', 'loop']
+        ss_name = 'SS'
+    elif len(ss_categories) == 1:
+        ss_name = ss_categories[0]
+    else:
+        ss_name = 'other'
+        ss_categories.sort()
     nprops = 2 # two properties, RSA and SS
     pts_per_inch = 72.0 # to convert between points and inches
     # some general properties of the plot
@@ -1609,7 +1615,7 @@ def LogoOverlay(sites, plotfile, rsa_d, ss_d, nperline, sitewidth, rmargin, logo
         pylab.yticks([])
         pylab.xlim(xmin - 0.5, xmax + 0.5)
         pylab.xticks([])
-        for (iprop, propname, prop_d) in [(0, 'RSA', rsa_d), (1, 'SS', ss_d)]:
+        for (iprop, propname, prop_d) in [(0, 'RSA', rsa_d), (1, ss_name, ss_d)]:
             prop_ax = pylab.axes([lmargin / figwidth, ((nlines - iline - 1) * (logoheight + nprops * (barspacing + barheight)) + logoheight + iprop * (barspacing + barheight)) / figheight, xlength / figwidth, barheight / figheight], frameon=True)
             prop_ax.xaxis.set_ticks_position('none')
             prop_ax.yaxis.set_ticks_position('left')
@@ -1624,16 +1630,14 @@ def LogoOverlay(sites, plotfile, rsa_d, ss_d, nperline, sitewidth, rmargin, logo
                 if site in prop_d:
                     if propname == 'RSA':
                         propdata[(0, isite)] = prop_d[site]
-                    elif propname == 'SS':
+                    else:
                         if prop_d[site] not in ss_categories:
                             raise ValueError("Invalid secondary structure: %s" % str(prop_d[site]))
                         propdata[(0, isite)] = ss_categories.index(prop_d[site])
-                    else:
-                        raise ValueError("propname unknown")
                 isite += 1
             if propname == 'RSA':
                 (vmin, vmax) = (0, max(prop_d.values()))
-            elif propname == 'SS':
+            else:
                 (vmin, vmax) = (0, len(ss_categories) - 1)
             prop_image[propname] = pylab.imshow(propdata, interpolation='nearest', aspect='auto', extent=[isites[0], isites[-1], 0.5, -0.5], cmap=cmap, vmin=vmin, vmax=vmax)
             pylab.yticks([0], [propname], size=8)
@@ -1642,7 +1646,9 @@ def LogoOverlay(sites, plotfile, rsa_d, ss_d, nperline, sitewidth, rmargin, logo
     colorbarwidth = 1.0 / ((nprops + 1) * (1.0 + colorbarspacingfrac)) # width of color bars in fraction of figure width
     colorbarspacingwidth = colorbarwidth * colorbarspacingfrac # width of color bar spacing in fraction of figure width
     propnames = {'AA':'amino-acid hydrophobicity', 'RSA':'relative solvent accessibility (RSA)', 'SS':'secondary structure (SS)'}
-    for (icolorbar, propcode) in  zip(range(nprops + 1), ['AA', 'RSA', 'SS']):
+    if ss_name != 'SS':
+        propnames[ss_name] = ss_name
+    for (icolorbar, propcode) in  zip(range(nprops + 1), ['AA', 'RSA', ss_name]):
 #        colorbar_ax = pylab.axes([colorbarspacingwidth * 0.5 + icolorbar * (colorbarwidth + colorbarspacingwidth), 1.0 - (colorbar_tmargin + barheight) / figwidth, colorbarwidth, barheight / figwidth], frameon=True)
         colorbar_ax = pylab.axes([colorbarspacingwidth * 0.5 + icolorbar * (colorbarwidth + colorbarspacingwidth), 1.0 - (colorbar_tmargin + barheight) / figheight, colorbarwidth, barheight / figheight], frameon=True)
         colorbar_ax.xaxis.set_ticks_position('bottom')
@@ -1660,7 +1666,7 @@ def LogoOverlay(sites, plotfile, rsa_d, ss_d, nperline, sitewidth, rmargin, logo
             cb = pylab.colorbar(prop_image[propcode], cax=colorbar_ax, orientation='horizontal')
             cb.set_ticks([0, 0.5, 1])
             cb.set_ticklabels(['0', '0.5', '1'])
-        elif propcode == 'SS':
+        elif propcode == ss_name:
             cb = pylab.colorbar(prop_image[propcode], cax=colorbar_ax, orientation='horizontal', boundaries=[i for i in range(len(ss_categories) + 1)], values=[i for i in range(len(ss_categories))])
             cb.set_ticks([i + 0.5 for i in range(len(ss_categories))])
             cb.set_ticklabels(ss_categories)
