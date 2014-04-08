@@ -37,7 +37,7 @@ Keys for the input file:
 
 * *logscale* is an optional argument. If it is left out or set to *False*, then the data is plotted on a linear scale. If *logscale* is specified and set to *True*, then the data is plotted on a log scale. In this case, the correlations are calculated after log-transforming the data.
 
-* *plot_simpsondiversity* is an optional argument. If it is left out or set to *False*, then the correlation between the amino-acid preferences is plotted. But if *plot_simpsondiversity* is set to *True*, then the correlation between the `Simpson Diversity index`_ for each site is plotted instead of the correlation between the preferences. For a site *r* with amino-acid preferences :math:`\pi_{r,a}`, the `Simpson Diversity index`_ is :math:`D = \sum_a \pi_{r,a}^2`, and so ranges from values of zero to one.
+* *plot_simpsondiversity* is an optional argument. If it is left out or set to *False*, then the correlation between the amino-acid preferences is plotted. But if *plot_simpsondiversity* is set to *True*, then the correlation between the `Gini-Simpson index`_ for each site is plotted instead of the correlation between the preferences. For a site *r* with amino-acid preferences :math:`\pi_{r,a}`, the `Gini-Simpson index`_ is :math:`D = 1 - \sum_a \pi_{r,a}^2`, and so ranges from values of zero to one (for an infinite number of possible amino acids), or in practice from zero to 0.95 (for 20 amino acids). Higher indices imply greatear diversity.
 
 Example input file
 ---------------------
@@ -53,7 +53,7 @@ Here is an example input file::
 Output
 --------
 
-This script will write some brief output to standard out (*sys.stdout*) describing its progress. However, the main output is the plots created in *plotdir*. There is a plot for each pair of samples specified by *preferencesfiles* and *samplenames*. The plots show the correlations between the amino-acid preferences (unless *plot_simpsondiversity* is *True*, in which case they show the correlations between the `Simpson Diversity index`_ for each site).
+This script will write some brief output to standard out (*sys.stdout*) describing its progress. However, the main output is the plots created in *plotdir*. There is a plot for each pair of samples specified by *preferencesfiles* and *samplenames*. The plots show the correlations between the amino-acid preferences (unless *plot_simpsondiversity* is *True*, in which case they show the correlations between the `Gini-Simpson index`_ for each site).
 
 The plots are PDFs generated with `matplotlib`_, and they show the Pearson correlation coefficients if `scipy`_ is available. The plots are created in *plotdir*. For the example input file shown above, the following plots would be created in *plotdir*:
 

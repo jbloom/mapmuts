@@ -92,8 +92,8 @@ def main():
                 if plot_simpsondiversity:
                     pi1 = dict([(aa, d1[r]['PI_%s' % aa]) for aa in aas])
                     pi2 = dict([(aa, d2[r]['PI_%s' % aa]) for aa in aas])
-                    sample1data.append(mapmuts.bayesian.SimpsonDiversity(pi1))
-                    sample2data.append(mapmuts.bayesian.SimpsonDiversity(pi2))
+                    sample1data.append(mapmuts.bayesian.GiniSimpson(pi1))
+                    sample2data.append(mapmuts.bayesian.GiniSimpson(pi2))
                 else:
                     for aa in aas:
                         sample1data.append(d1[r]['PI_%s' % aa])

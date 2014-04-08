@@ -27,4 +27,4 @@
 .. _`concentration parameter`: http://en.wikipedia.org/wiki/Concentration_parameter
 .. _`Shannon-Jensen divergence` : http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence
 .. _`Bloom, bioRxiv, 2014`: http://biorxiv.org/content/early/2014/03/05/002899
-.. _`Simpson Diversity index`: http://en.wikipedia.org/wiki/Diversity_index#Simpson_index
+.. _`Gini-Simpson index`: http://en.wikipedia.org/wiki/Diversity_index#Simpson_index

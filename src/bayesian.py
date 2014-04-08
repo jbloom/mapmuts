@@ -34,7 +34,7 @@ List of functions
 
 * *SiteEntropy* : calculates site entropy from equilibrium fractions.
 
-* *SimpsonDiversity* : calculates Simpson Diversity index.
+* *GiniSimpson* : calculates Gini-Simpson diversity iversity index.
 
 * *ShannonJensenDivergence* : calculates Shannon-Jensen Divergence.
 
@@ -196,21 +196,21 @@ def Seed(seed):
     random.seed(seed)
 
 
-def SimpsonDiversity(pi):
-    """Calculates the Simpson Diversity Index.
+def GiniSimpson(pi):
+    """Calculates the Gini-Simpson diversity index.
 
     *pi* is a dictionary that has values representing the frequencies
     of different states. These frequencies must sum to one,
     and must all be >= 0. The
-    Simpson Diversity index is calculated
-    as :math:`D = \sum_a \pi_a^2` where *a* ranges over all values
+    Gini-Simpson diversity index is calculated
+    as :math:`D = 1 - \sum_a \pi_a^2` where *a* ranges over all values
     in *pi*. This diversity will be between 0 and 1.
     """
     assert abs(sum(pi.values()) - 1.0) < 1.0e-5, "Sum of values in pi not close to one"
-    d = 0
+    d = 1.0
     for pi_a in pi.values():
         assert 0 <= pi_a <= 1.0, "pi contains a value not between 0 and 1"
-        d += pi_a**2
+        d -= pi_a**2
     assert 0 <= d <= 1, "Calculated invalid Simpson Diversity Index"
     return d
 
