@@ -34,6 +34,8 @@ List of functions
 
 * *SiteEntropy* : calculates site entropy from equilibrium fractions.
 
+* *SimpsonDiversity* : calculates Simpson Diversity index.
+
 * *ShannonJensenDivergence* : calculates Shannon-Jensen Divergence.
 
 * *PreferencesRemoveStop* : removes stop codon as possible amino acid from preferences.

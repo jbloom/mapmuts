@@ -53,6 +53,10 @@ def main():
         logscale = mapmuts.io.ParseBoolValue(d, 'logscale')
     else:
         logscale = False
+    if 'plot_simpsondiversity' in d:
+        plot_simpsondiversity = mapmuts.io.ParseBoolValue(d, 'plot_simpsondiversity')
+    else:
+        plot_simpsondiversity = False
     samplenames = [x.strip() for x in samplenames.split()]
     if len(preferencesfiles) != len(samplenames):
         raise ValueError("samplenames and preferencesfiles do not specify the same number of entries")
@@ -85,9 +89,15 @@ def main():
             sample2data = []
             aas = mapmuts.sequtils.AminoAcids(includestop=includestop)
             for r in sharedresidues:
-                for aa in aas:
-                    sample1data.append(d1[r]['PI_%s' % aa])
-                    sample2data.append(d2[r]['PI_%s' % aa])
+                if plot_simpsondiversity:
+                    pi1 = dict([(aa, d1[r]['PI_%s' % aa]) for aa in aas])
+                    pi2 = dict([(aa, d2[r]['PI_%s' % aa]) for aa in aas])
+                    sample1data.append(mapmuts.bayesian.SimpsonDiversity(pi1))
+                    sample2data.append(mapmuts.bayesian.SimpsonDiversity(pi2))
+                else:
+                    for aa in aas:
+                        sample1data.append(d1[r]['PI_%s' % aa])
+                        sample2data.append(d2[r]['PI_%s' % aa])
             if logscale:
                 if min(sample1data + sample2data) <= 0:
                     raise ValueError("Cannot use logscale as there is data <= 0")
