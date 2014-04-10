@@ -96,5 +96,6 @@ setup(
             'scripts/mapmuts_enrichmentcorrelate.py',
             'scripts/mapmuts_enrichmentgeomeans.py',
             'scripts/mapmuts_siteprofileplots.py',
+            'scripts/mapmuts_entropycomparison.py',
             ],
 )

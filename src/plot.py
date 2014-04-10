@@ -2036,7 +2036,7 @@ def SplitLabel(label, splitlen, splitchar):
 
 
 def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
-        corr=None, title=False, alpha=1.0, symmetrize=False, fixaxes=False):
+        corr=None, title=False, alpha=1.0, symmetrize=False, fixaxes=False, additionalxy=[]):
     """Plots the correlation between two variables as a scatter plot.
     
     The data is plotted as a scatter plot.
@@ -2057,7 +2057,7 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
 
     * *xs* and *ys* are lists of numbers, with the lists
       being of the same length. Entry *xs[i]* is plotted
-      on the x-axis agains entrie *ys[i]* on the y-axis.
+      on the x-axis against entries *ys[i]* on the y-axis.
 
     * *plotfile* is a string giving the name of the plot PDF file
       that we create. It should end in the extension ``.pdf``.
@@ -2088,6 +2088,8 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
       two-tailed P-values. They are written on the plot.
       If you set this to a value other than *None* and ``scipy`` is
       not available, then an exception is raised.
+      If *additionalxy* specifies additional data, this data is
+      combined with that in *xs* and *ys* to calculate the correlation.
 
     * *title* is a string giving the title placed above the plot. 
       It can be *False* if no title is to be used. Otherwise, it should
@@ -2110,7 +2112,19 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
       If *True*, we fix both the X and Y axes to go from 0 to 1, 
       with ticks at 0, 0.5, and 1. If you set this option to *True*,
       then you must set *logx* and *logy* to *False*.
-
+    
+    * *additionalxy* is an optional list. By default, it is an empty list.
+      However, you can use it to plot additional data points with a different
+      color. The main data (specified by *xs* and *ys*) is plotted with
+      blue circles. For each addition set of data that you want to plot,
+      include a 2-tuple of lists of the form *(x2s, y2s)* in 
+      *additionalxy*. Currently, only one such 2-tuple is allowed
+      (so only one additional data set). These are plotted as red
+      triangles, whereas the main data is plotted as blue
+      circles. The same *alpha* value set by the *alpha* parameter applies
+      to these points as well. The data in *additionalxy* is combined
+      with that in *xs* and *ys* to calculate the correlation
+      if *corr* is being used.
     """
     if not _pylabavailable:
         raise ImportError("Could not find pylab or matplotlib")
@@ -2125,7 +2139,7 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
     (bigmargin, smallmargin) = (0.26, 0.05)
     (lmargin, rmargin, bmargin, tmargin) = (bigmargin, smallmargin, bigmargin, smallmargin)
     titlemargin = 0.09
-    plotmargin = 0.02 # add this much above and below the last data point
+    plotmargin = 0.03 # add this much above and below the last data point
     logplotmargin = 2 # scale limits by this much if log scale
     xsize = 1.8
     if title:
@@ -2137,6 +2151,14 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
     figure = pylab.figure(figsize=(xsize, ysize), facecolor='white')
     ax = pylab.axes([lmargin, bmargin, 1.0 - lmargin - rmargin, 1.0 - tmargin - bmargin])
     pylab.plot(xs, ys, 'b.', markersize=4, alpha=alpha)
+    if additionalxy:
+        if len(additionalxy) != 1:
+            raise ValueError("Currently additionalxy only works for one additional set of data")
+        (x2s, y2s) = additionalxy[0]
+        assert len(x2s) == len(y2s) > 0, "additionalxy does not specify two non-empty data lists of equal length"
+        xs += x2s # add for later correlation and limit calculations
+        ys += y2s
+        pylab.plot(x2s, y2s, 'r^', markersize=3, alpha=alpha)
     (xmin, xmax, ymin, ymax) = (min(xs), max(xs), min(ys), max(ys))
     if fixaxes:
         xmin = ymin = 0.0
@@ -2184,14 +2206,14 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
     elif fixaxes:
         yticker = matplotlib.ticker.FixedLocator([0, 0.5, 1])
     else:
-        yticker = matplotlib.ticker.MaxNLocator(5)
+        yticker = matplotlib.ticker.MaxNLocator(4)
     pylab.gca().yaxis.set_major_locator(yticker)
     if logx:
         xticker = matplotlib.ticker.LogLocator(numticks=5)
     elif fixaxes:
         xticker = matplotlib.ticker.FixedLocator([0, 0.5, 1])
     else:
-        xticker = matplotlib.ticker.MaxNLocator(5)
+        xticker = matplotlib.ticker.MaxNLocator(4)
     pylab.gca().xaxis.set_major_locator(xticker)
     pylab.gca().get_xaxis().tick_bottom()
     pylab.gca().get_yaxis().tick_left()
