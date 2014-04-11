@@ -473,7 +473,7 @@ these modules cannot be imported (if <cite>PylabAvailable() == False</cite>).</p
 
 <dl class="function">
 <dt id="plot.PlotCorrelation">
-<tt class="descclassname">plot.</tt><tt class="descname">PlotCorrelation</tt><big>(</big><em>xs</em>, <em>ys</em>, <em>plotfile</em>, <em>xlabel</em>, <em>ylabel</em>, <em>logx=False</em>, <em>logy=False</em>, <em>corr=None</em>, <em>title=False</em>, <em>alpha=1.0</em>, <em>symmetrize=False</em>, <em>fixaxes=False</em><big>)</big><a class="headerlink" href="#plot.PlotCorrelation" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">plot.</tt><tt class="descname">PlotCorrelation</tt><big>(</big><em>xs</em>, <em>ys</em>, <em>plotfile</em>, <em>xlabel</em>, <em>ylabel</em>, <em>logx=False</em>, <em>logy=False</em>, <em>corr=None</em>, <em>title=False</em>, <em>alpha=1.0</em>, <em>symmetrize=False</em>, <em>fixaxes=False</em>, <em>additionalxy=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#plot.PlotCorrelation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the correlation between two variables as a scatter plot.</p>
 <p>The data is plotted as a scatter plot.</p>
 <p>This function uses <tt class="docutils literal"><span class="pre">pylab</span></tt> / <tt class="docutils literal"><span class="pre">matplotlib</span></tt>. It will raise an Exception if
@@ -490,7 +490,7 @@ outside of math mode in LaTex, so you would need to use
 <ul class="simple">
 <li><em>xs</em> and <em>ys</em> are lists of numbers, with the lists
 being of the same length. Entry <em>xs[i]</em> is plotted
-on the x-axis agains entrie <em>ys[i]</em> on the y-axis.</li>
+on the x-axis against entries <em>ys[i]</em> on the y-axis.</li>
 <li><em>plotfile</em> is a string giving the name of the plot PDF file
 that we create. It should end in the extension <tt class="docutils literal"><span class="pre">.pdf</span></tt>.
 If this plot already exists, it is overwritten.</li>
@@ -514,7 +514,9 @@ is for correlation between the log-transformed data.
 In both cases, the correlations are reported along with the
 two-tailed P-values. They are written on the plot.
 If you set this to a value other than <em>None</em> and <tt class="docutils literal"><span class="pre">scipy</span></tt> is
-not available, then an exception is raised.</li>
+not available, then an exception is raised.
+If <em>additionalxy</em> specifies additional data, this data is
+combined with that in <em>xs</em> and <em>ys</em> to calculate the correlation.</li>
 <li><em>title</em> is a string giving the title placed above the plot. 
 It can be <em>False</em> if no title is to be used. Otherwise, it should
 be the title string (using LaTex formatting, spaces are allowed).
@@ -533,6 +535,18 @@ If <em>True</em>, we make the X and Y limits on the plot the same.</li>
 If <em>True</em>, we fix both the X and Y axes to go from 0 to 1, 
 with ticks at 0, 0.5, and 1. If you set this option to <em>True</em>,
 then you must set <em>logx</em> and <em>logy</em> to <em>False</em>.</li>
+<li><em>additionalxy</em> is an optional list. By default, it is an empty list.
+However, you can use it to plot additional data points with a different
+color. The main data (specified by <em>xs</em> and <em>ys</em>) is plotted with
+blue circles. For each addition set of data that you want to plot,
+include a 2-tuple of lists of the form <em>(x2s, y2s)</em> in 
+<em>additionalxy</em>. Currently, only one such 2-tuple is allowed
+(so only one additional data set). These are plotted as red
+triangles, whereas the main data is plotted as blue
+circles. The same <em>alpha</em> value set by the <em>alpha</em> parameter applies
+to these points as well. The data in <em>additionalxy</em> is combined
+with that in <em>xs</em> and <em>ys</em> to calculate the correlation
+if <em>corr</em> is being used.</li>
 </ul>
 </dd></dl>
 
@@ -914,7 +928,7 @@ middle as possible while splitting at a space.</p>
                         title="previous chapter"><tt class="docutils literal"><span class="pre">simulate</span></tt> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="latex_module.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">latex</span></tt> Module</a></p>
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">latex</span></tt> Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">

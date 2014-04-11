@@ -20,6 +20,7 @@ Here are scripts that are recommended as part of the current suggested workflow 
    mapmuts_preferencescorrelate
    mapmuts_preferencemeans
    mapmuts_siteprofileplots
+   mapmuts_entropycomparison
 
 Other scripts
 ----------------

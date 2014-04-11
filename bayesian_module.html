@@ -79,6 +79,7 @@ this is not strictly required.</p>
 <li><em>EquilibriumFracs</em> : calculates equilibrium preferences for amino acids.</li>
 <li><em>CredibleInterval</em> : computes median-centered credible interval.</li>
 <li><em>SiteEntropy</em> : calculates site entropy from equilibrium fractions.</li>
+<li><em>GiniSimpson</em> : calculates Gini-Simpson diversity iversity index.</li>
 <li><em>ShannonJensenDivergence</em> : calculates Shannon-Jensen Divergence.</li>
 <li><em>PreferencesRemoveStop</em> : removes stop codon as possible amino acid from preferences.</li>
 </ul>
@@ -156,6 +157,18 @@ to valid amino acid codes.</li>
 in <em>phi</em> (should be all non-wildtype amino acids) plus <em>wt</em> (should
 be the wildtype amino acid), and the values for each key is the 
 equilibrium preference for that amino acid.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.GiniSimpson">
+<tt class="descclassname">bayesian.</tt><tt class="descname">GiniSimpson</tt><big>(</big><em>pi</em><big>)</big><a class="headerlink" href="#bayesian.GiniSimpson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the Gini-Simpson diversity index.</p>
+<p><em>pi</em> is a dictionary that has values representing the frequencies
+of different states. These frequencies must sum to one,
+and must all be &gt;= 0. The
+Gini-Simpson diversity index is calculated
+as <span class="math">\(D = 1 - \sum_a \pi_a^2\)</span> where <em>a</em> ranges over all values
+in <em>pi</em>. This diversity will be between 0 and 1.</p>
 </dd></dl>
 
 <dl class="function">
@@ -628,10 +641,11 @@ will always be between 0 and 1.</p>
 <tt class="descclassname">bayesian.</tt><tt class="descname">SiteEntropy</tt><big>(</big><em>pi</em><big>)</big><a class="headerlink" href="#bayesian.SiteEntropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates a site entropy (in bits) based on equilibrium fractions.</p>
 <p>This function takes as a calling argument a single dictionary <em>pi</em>
-which has the format of the return variable from <em>EquilibriumFracs</em>.
-It then calculates a site entropy <em>h</em> which is a measure of how
-variable the site is in terms of its tolerance for various amino acids.
-This entropy is defined as:</p>
+which has values that represent the frequencies of the different states,
+and should sum to one.
+This function calculates a site entropy <em>h</em> which is a measure of how
+variable the site is in terms of its frequencies of these various
+steates. This entropy is defined as:</p>
 <div class="highlight-python"><div class="highlight"><pre>h = - sum_aa pi[aa] * log2(pi[aa])
 </pre></div>
 </div>
