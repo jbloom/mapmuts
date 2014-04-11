@@ -75,7 +75,7 @@ Here is an example input file::
     dsspchain A
     aapreferences combined_amino_acid_preferences.txt
     plotfile corr.pdf
-    lienarmodelfile linearmodelresults.txt
+    linearmodelfile linearmodelresults.txt
     alpha 1.0
     siterange 2 365
     selectedsites Caton_H1_HA_antigenic_sites.txt
@@ -94,23 +94,24 @@ There are two output. First, the PDF file specified by *plotfile* is created. Al
     
     Example of the *plotfile* plot created by this script.
     
-The second output is the result of an `R`_ linear model analysis (`R`_ function ``lm``) that looks for the correlations of RSA and presence in *selectedsites* with site entropy. Essentially, this analysis regresses site entropy against both RSA and the presence in *selectedsites* (coded as 0 if not in *selectedsites*, and 1 if in *selectedsites*). The results of the analysis are written to *linearmodelfile*. The interesting results will be at the bottom of the file. For example, here is an example output (bottom part of file)::
+The second output is the result of an `R`_ linear model analysis (`R`_ function ``lm``) that looks for the correlations of RSA and presence in *selectedsites* with site entropy. Essentially, this analysis regresses site entropy against both RSA and the presence in *selectedsites* (coded as 0 if not in *selectedsites*, and 1 if in *selectedsites*). The results of the analysis are written to *linearmodelfile*. Below is example output. For instance, this example shows that RSA is positively correlated with entropy, and that being a selected site is also positively correlated with diversity::
 
     Residuals:
          Min       1Q   Median       3Q      Max
-    -1.44540 -0.27915 -0.01172  0.34469  0.96391
+    -1.45241 -0.27611 -0.01408  0.34896  0.96557
 
     Coefficients:
                 Estimate Std. Error t value Pr(>|t|)
-    (Intercept)  2.88094    0.03387  85.068  < 2e-16 ***
-    r_rsa        1.29879    0.11899  10.915  < 2e-16 ***
-    r_antigenic  0.29138    0.09273   3.142  0.00182 **
+    (Intercept)  2.88267    0.03388  85.090  < 2e-16 ***
+    RSA          1.29333    0.11903  10.866  < 2e-16 ***
+    selected     0.29549    0.09276   3.186  0.00158 **
     ---
     Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-    Residual standard error: 0.4562 on 341 degrees of freedom
-    Multiple R-squared:  0.3247,    Adjusted R-squared:  0.3208
-    F-statistic: 81.99 on 2 and 341 DF,  p-value: < 2.2e-16
+    Residual standard error: 0.4563 on 341 degrees of freedom
+    Multiple R-squared:  0.3238,    Adjusted R-squared:  0.3198
+    F-statistic: 81.65 on 2 and 341 DF,  p-value: < 2.2e-16
+
 
 
 .. include:: weblinks.txt

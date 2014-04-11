@@ -101,12 +101,12 @@ def main():
     # do multiple linear regression
     r_entropy = rpy2.robjects.FloatVector([entropies[r] for r in sharedsites])
     r_rsa = rpy2.robjects.FloatVector([rsas[r] for r in sharedsites])
-    r_antigenic = rpy2.robjects.FloatVector([int(r in selectedsites) for r in sharedsites])
-    rpy2.robjects.globalenv['r_entropy'] = r_entropy
-    rpy2.robjects.globalenv['r_rsa'] = r_rsa
-    rpy2.robjects.globalenv['r_antigenic'] = r_antigenic
+    r_selected = rpy2.robjects.FloatVector([int(r in selectedsites) for r in sharedsites])
+    rpy2.robjects.globalenv['entropy'] = r_entropy
+    rpy2.robjects.globalenv['RSA'] = r_rsa
+    rpy2.robjects.globalenv['selected'] = r_selected
     r_linmodel = rpy2.robjects.r['lm']
-    results = r_linmodel(formula='r_entropy ~ r_rsa + r_antigenic')
+    results = r_linmodel(formula='entropy ~ RSA + selected')
     base = rpy2.robjects.packages.importr('base')
     sys.stdout.write("\nWriting the results of the linear model analysis to %s\n" % linearmodelfile)
     old_out = sys.stdout
@@ -114,6 +114,10 @@ def main():
     print(base.summary(results))
     sys.stdout.close()
     sys.stdout = old_out
+    text = open(linearmodelfile).read()
+    i = text.index('Residuals:')
+    open(linearmodelfile, 'w').write(text[i : ])
+    print "Here are those results:\n%s" % text[i : ]
 
     sys.stdout.write('\nScript execution complete.\n')
 

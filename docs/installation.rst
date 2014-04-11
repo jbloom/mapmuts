@@ -44,7 +44,7 @@ Although the core of `mapmuts`_  package can be run just using the standard `Pyt
 
 * Overlay of RSA and SS information on the sequence logos requires the `pyPdf`_ package to be installed. This package has only been tested with `pyPdf`_ version 1.13 -- it is unknown whether it would work with ``pyPdf2``.
 
-* The `rpy2` package is required for the :ref:`mapmuts_entropycomparison.py` script. This package has been tested with version 2.2.6.
+* The `rpy2` package is required for the :ref:`mapmuts_entropycomparison.py` script. This package has been tested with version 2.3.9.
 
 * The `R`_ statistical package is required for the :ref:`mapmuts_entropycomparison.py` script. This package has been tested with version 3.0.3.
 
