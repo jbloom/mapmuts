@@ -618,7 +618,7 @@ def PlotPairedMutFracs(infiles, names, plotfile):
     matplotlib.rc('patch', linewidth=0.5)
     # make stacked bar graph
     fig = pylab.figure(figsize=(6.5, 3.75))
-    (lmargin, rmargin, bmargin, tmargin) = (0.06, 0.01, 0.43, 0.13)
+    (lmargin, rmargin, bmargin, tmargin) = (0.07, 0.01, 0.43, 0.13)
     ax = pylab.axes([lmargin, bmargin, 1 - lmargin - rmargin, 1 -\
             bmargin - tmargin])
     bars = []
@@ -638,7 +638,7 @@ def PlotPairedMutFracs(infiles, names, plotfile):
     pylab.xticks([i for i in indices], names, rotation=90)
     pylab.gca().set_xlim([0.4, nsamples + 0.6])
     yformatter = pylab.ScalarFormatter(useMathText=True)
-    yformatter.set_powerlimits((-3, 3))
+    yformatter.set_powerlimits((-2, 2))
     pylab.gca().yaxis.set_major_formatter(yformatter)
     yticker = matplotlib.ticker.MaxNLocator(5)
     pylab.gca().yaxis.set_major_locator(yticker)
