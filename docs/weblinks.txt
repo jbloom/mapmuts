@@ -26,7 +26,7 @@
 .. _`Dirichlet distribution`: http://en.wikipedia.org/wiki/Dirichlet_distribution
 .. _`concentration parameter`: http://en.wikipedia.org/wiki/Concentration_parameter
 .. _`Shannon-Jensen divergence` : http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence
-.. _`Bloom, bioRxiv, 2014`: http://biorxiv.org/content/early/2014/03/05/002899
+.. _`Bloom 2014`: http://biorxiv.org/content/early/2014/04/27/002899
 .. _`Gini-Simpson index`: http://en.wikipedia.org/wiki/Diversity_index#Gini-Simpson
 .. _`rpy2`: http://rpy.sourceforge.net/rpy2.html
 .. _`R`: http://rpy.sourceforge.net/rpy2.html
