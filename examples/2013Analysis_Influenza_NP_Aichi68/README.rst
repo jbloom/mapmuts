@@ -9,6 +9,8 @@ Overview
 -----------
 This is a description of the analysis of mutagenesis and deep-sequencing of the nucleoprotein (NP) from the human H3N2 influenza strain A/Aichi/2/1968. The ultimate goal is to infer the preference of each site for each possible amino acid.
 
+This is the analysis described at `Bloom 2014`_.
+
 The overall conceptual approach of the experiments is similar to the strategy originally described by `Fowler et al`_.
 
 The sequencing and analysis was performed by `Jesse Bloom`_ using the `mapmuts`_ package. The sequencing was performed in 2013, and the analysis extended from 2013 to 2014.
@@ -427,3 +429,4 @@ As described in the previous section, the overall best inferences for the amino-
 .. _`Fowler et al`: http://www.nature.com/nmeth/journal/v7/n9/full/nmeth.1492.html
 .. _`Gong et al`: http://elife.elifesciences.org/content/2/e00631
 .. _`SRA accession SRP036064`: http://www.ncbi.nlm.nih.gov/sra/?term=SRP036064
+.. _`Bloom 2014`: http://biorxiv.org/content/early/2014/04/27/002899

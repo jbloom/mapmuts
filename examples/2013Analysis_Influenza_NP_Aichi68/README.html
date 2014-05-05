@@ -2,9 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils 0.8.1: http://docutils.sourceforge.net/" />
 <title>2013 analysis of Influenza NP (Aichi/1968)</title>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <style type="text/css">
 
 /*
@@ -336,7 +337,8 @@ ul.auto-toc {
 </div>
 <div class="section" id="overview">
 <h1><a class="toc-backref" href="#id1">Overview</a></h1>
-<p>This is a description of the analysis of mutagenesis and deep-sequencing of the nucleoprotein (NP) from the human H3N2 influenza strain A/Aichi/2/1968. The ultiamte goal is to infer the preference of each site for each possible amino acid.</p>
+<p>This is a description of the analysis of mutagenesis and deep-sequencing of the nucleoprotein (NP) from the human H3N2 influenza strain A/Aichi/2/1968. The ultimate goal is to infer the preference of each site for each possible amino acid.</p>
+<p>This is the analysis described at <a class="reference external" href="http://biorxiv.org/content/early/2014/04/27/002899">Bloom 2014</a>.</p>
 <p>The overall conceptual approach of the experiments is similar to the strategy originally described by <a class="reference external" href="http://www.nature.com/nmeth/journal/v7/n9/full/nmeth.1492.html">Fowler et al</a>.</p>
 <p>The sequencing and analysis was performed by <a class="reference external" href="http://research.fhcrc.org/bloom/en.html">Jesse Bloom</a> using the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package. The sequencing was performed in 2013, and the analysis extended from 2013 to 2014.</p>
 <p>This analysis can be replicated if you install the appropriate software (see <a class="reference internal" href="#software-used">Software used</a>) by downloading the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> and going to the directory <tt class="docutils literal">./examples/2013Analysis_Influenza_NP_Aichi68/</tt> in the main <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package directory. This will contain all of the necessary input files (see <a class="reference internal" href="#input-files">Input files</a>) with the exception of the very large Illumina FASTQ files, which are available at <a class="reference external" href="http://www.ncbi.nlm.nih.gov/sra/?term=SRP036064">SRA accession SRP036064</a>. Once all of this is set up, you can replicate the analysis with the simple command:</p>
@@ -552,8 +554,9 @@ Within each subdirectory are the files created by <tt class="docutils literal">m
 <p>Each analysis was done in the subdirectory for that <em>replicate</em> (i.e. <tt class="docutils literal">./replicate_A/</tt>) and created the following files of interest:</p>
 <blockquote>
 <ul>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">countparsedmuts_multi-nt-allcodonmutcounts.txt</span></tt> file gives the fraction of all mutations that involve multiple nucleotide changes to the same codon that are found <math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow><mo>≥</mo><mi>n</mi></mrow></math> times for <em>n</em> ranging from 0 to 50. The reason that this fraction is of interest is that multiple nucleotide change codon mutations arise only very rarely due to sequencing or reverse-transcription errors -- so occurrence of these mutations will tend to be due to the desired codon mutagenesis process. Here are the first few lines of this file for <em>replicate_A</em> (this is the <tt class="docutils literal"><span class="pre">./replicate_A/countparsedmuts_multi-nt-allcodonmutcounts.txt</span></tt> file):</p>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">countparsedmuts_multi-nt-allcodonmutcounts.txt</span></tt> file gives the fraction of all mutations that involve multiple nucleotide changes to the same codon that are found <span class="math">
+\(\ge n\)</span>
+ times for <em>n</em> ranging from 0 to 50. The reason that this fraction is of interest is that multiple nucleotide change codon mutations arise only very rarely due to sequencing or reverse-transcription errors -- so occurrence of these mutations will tend to be due to the desired codon mutagenesis process. Here are the first few lines of this file for <em>replicate_A</em> (this is the <tt class="docutils literal"><span class="pre">./replicate_A/countparsedmuts_multi-nt-allcodonmutcounts.txt</span></tt> file):</p>
 <blockquote>
 <pre class="literal-block">
 # File listing the fraction of multi-nt-all mutations that are found greater than or equal to n times.
@@ -582,8 +585,9 @@ Within each subdirectory are the files created by <tt class="docutils literal">m
 </blockquote>
 <p>To attempt to distinguish between these explanations, see the next files...</p>
 </li>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">countparsedmuts_multi-nt-syncodonmutcounts.txt</span></tt> file gives the fraction of <strong>synonymous</strong> multi-nucleotide change mutations that are found <math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow><mo>≥</mo><mi>n</mi></mrow></math> times for <em>n</em> ranging from 0 to 50. We would expect that synonymous mutations will usually not be highly deleterious, and so will usually not be purged by selection during viral growth. (Note however that this is not completely true for influenza, as some synonymous mutations to the virus can be extremely deleterious; see for example <a class="reference external" href="http://jvi.asm.org/content/82/5/2295.short">J Virol, 82, 2295</a> and <a class="reference external" href="http://www.nature.com/nbt/journal/v28/n7/full/nbt.1636.html">Nat Biotech, 28, 723</a>). Here are the first few lines of this file for <em>replicate_A</em> (this is the <tt class="docutils literal"><span class="pre">./replicate_A/countparsedmuts_multi-nt-syncodonmutcounts.txt</span></tt> file):</p>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">countparsedmuts_multi-nt-syncodonmutcounts.txt</span></tt> file gives the fraction of <strong>synonymous</strong> multi-nucleotide change mutations that are found <span class="math">
+\(\ge n\)</span>
+ times for <em>n</em> ranging from 0 to 50. We would expect that synonymous mutations will usually not be highly deleterious, and so will usually not be purged by selection during viral growth. (Note however that this is not completely true for influenza, as some synonymous mutations to the virus can be extremely deleterious; see for example <a class="reference external" href="http://jvi.asm.org/content/82/5/2295.short">J Virol, 82, 2295</a> and <a class="reference external" href="http://www.nature.com/nbt/journal/v28/n7/full/nbt.1636.html">Nat Biotech, 28, 723</a>). Here are the first few lines of this file for <em>replicate_A</em> (this is the <tt class="docutils literal"><span class="pre">./replicate_A/countparsedmuts_multi-nt-syncodonmutcounts.txt</span></tt> file):</p>
 <blockquote>
 <pre class="literal-block">
 # File listing the fraction of multi-nt-syn mutations that are found greater than or equal to n times.
