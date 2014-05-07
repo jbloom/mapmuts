@@ -65,7 +65,7 @@ The last command might need to be replaced with::
     
 if you want to install the package globally do not have privileges to the default global installation directory. Alternatively, if you just want to install the package locally for the current user, you can use::
     
-    sudo python setup.py install --user
+    python setup.py install --user
 
 The ``test`` command runs a variety of tests to check that the program appears to be working properly. This is optional, and the tests may take a few minutes to run. Running these tests is recommended.
 
