@@ -2203,14 +2203,14 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
         text = '%s\n%s' % (r, p)
         pylab.text(0.05, 0.96, text, horizontalalignment='left', verticalalignment='top', transform=ax.transAxes, size=10)
     if logy:
-        yticker = matplotlib.ticker.LogLocator(numticks=5)
+        yticker = matplotlib.ticker.LogLocator(numticks=4)
     elif fixaxes:
         yticker = matplotlib.ticker.FixedLocator([0, 0.5, 1])
     else:
         yticker = matplotlib.ticker.MaxNLocator(4)
     pylab.gca().yaxis.set_major_locator(yticker)
     if logx:
-        xticker = matplotlib.ticker.LogLocator(numticks=5)
+        xticker = matplotlib.ticker.LogLocator(numticks=4)
     elif fixaxes:
         xticker = matplotlib.ticker.FixedLocator([0, 0.5, 1])
     else:
