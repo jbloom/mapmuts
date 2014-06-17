@@ -89,6 +89,7 @@ except ImportError:
 # global variable _scipyavailable indicates if scipy is available
 try:
     import scipy
+    import scipy.stats
     _scipyavailable = True
 except ImportError:
     _scipyavailable = False
