@@ -2037,7 +2037,7 @@ def SplitLabel(label, splitlen, splitchar):
 
 
 def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
-        corr=None, title=False, alpha=1.0, symmetrize=False, fixaxes=False, additionalxy=[]):
+        corr=None, title=False, alpha=1.0, symmetrize=False, fixaxes=False, additionalxy=[], bigmargin=0.26, xsize=1.8):
     """Plots the correlation between two variables as a scatter plot.
     
     The data is plotted as a scatter plot.
@@ -2126,6 +2126,14 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
       to these points as well. The data in *additionalxy* is combined
       with that in *xs* and *ys* to calculate the correlation
       if *corr* is being used.
+
+    * *bigmargin* is an optional argument that is 0.26 by default. It is
+      the fraction of the plot width taken up by the larger margin, which
+      is the bottom and left. Make larger if you need more space for axis
+      labels.
+
+    * *xsize* is an optional argument that is the width of the plot in inches.
+      It is 1.8 by default.
     """
     if not _pylabavailable:
         raise ImportError("Could not find pylab or matplotlib")
@@ -2137,12 +2145,11 @@ def PlotCorrelation(xs, ys, plotfile, xlabel, ylabel, logx=False, logy=False,\
         raise ValueError("xs and ys do not specify lists of the same length with >= 2 entries")
     if fixaxes and (logy or logx):
         raise ValueError("Cannot use fixaxes with logx or logy")
-    (bigmargin, smallmargin) = (0.26, 0.05)
+    smallmargin = 0.05
     (lmargin, rmargin, bmargin, tmargin) = (bigmargin, smallmargin, bigmargin, smallmargin)
     titlemargin = 0.09
     plotmargin = 0.03 # add this much above and below the last data point
     logplotmargin = 2 # scale limits by this much if log scale
-    xsize = 1.8
     if title:
         tmargin += titlemargin
     ysize = xsize * (1.0 - lmargin - rmargin) / (1.0 - tmargin - bmargin)
