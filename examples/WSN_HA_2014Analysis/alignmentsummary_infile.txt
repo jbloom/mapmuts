@@ -1,0 +1,17 @@
+replicate_1/DNA/replicate_1_DNA_alignmentstatistics.txt \#1 DNA
+replicate_2/DNA/replicate_2_DNA_alignmentstatistics.txt \#2 DNA
+replicate_3/DNA/replicate_3_DNA_alignmentstatistics.txt \#3 DNA
+replicate_1_repeat/DNA/replicate_1_repeat_DNA_alignmentstatistics.txt \#1 repeat DNA
+replicate_1/mutDNA/replicate_1_mutDNA_alignmentstatistics.txt \#1 mutDNA
+replicate_2/mutDNA/replicate_2_mutDNA_alignmentstatistics.txt \#2 mutDNA
+replicate_3/mutDNA/replicate_3_mutDNA_alignmentstatistics.txt \#3 mutDNA
+replicate_1_repeat/mutDNA/replicate_1_repeat_mutDNA_alignmentstatistics.txt \#1 repeat mutDNA
+replicate_1/virus/replicate_1_virus_alignmentstatistics.txt \#1 virus
+replicate_2/virus/replicate_2_virus_alignmentstatistics.txt \#2 virus
+replicate_3/virus/replicate_3_virus_alignmentstatistics.txt \#3 virus
+replicate_1_repeat/virus/replicate_1_repeat_virus_alignmentstatistics.txt \#1 repeat virus
+replicate_1/mutvirus/replicate_1_mutvirus_alignmentstatistics.txt \#1 mutvirus
+replicate_2/mutvirus/replicate_2_mutvirus_alignmentstatistics.txt \#2 mutvirus
+replicate_3/mutvirus/replicate_3_mutvirus_alignmentstatistics.txt \#3 mutvirus
+replicate_1_repeat/mutvirus/replicate_1_repeat_mutvirus_alignmentstatistics.txt \#1 repeat mutvirus
+plotfile alignmentsummaryplot.pdf

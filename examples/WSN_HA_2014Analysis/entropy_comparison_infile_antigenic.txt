@@ -1,0 +1,7 @@
+dsspfile ./PDB_structure/1RVX_trimer_renumbered.dssp
+dsspchain A
+aapreferences average_equilibriumpreferences.txt
+siterange 2 365
+plotfile antigenic_entropy_rsa_correlation.pdf
+linearmodelfile antigenic_linearmodelresults.txt
+selectedsites Caton_H1_HA_antigenic_sites.txt

@@ -1,0 +1,19 @@
+r1files /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_3/mutDNA/*R1*.gz
+r2files /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_3/mutDNA/*R2*.gz
+gzipped True
+applyfilter True
+minq 25
+fullgenefile  /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/WSN-HA-amplicon.txt
+generange 33 1727
+a1file /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/R1_trim3.fasta
+a2file /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/R2_trim3.fasta
+maxn 2
+minoverlap 30
+maxrm 1
+maxa1m 1
+maxa2m 1
+maxgenem 6
+upcase test
+outfileprefix replicate_3_mutDNA
+samplename \#3 mutDNA
+write_unaligned True

@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.8.1: http://docutils.sourceforge.net/" />
+<title>Analysis of Influenza Hemagglutinin from A/WSN/1933(H1N1)</title>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7056 2011-06-17 10:50:48Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="analysis-of-influenza-hemagglutinin-from-a-wsn-1933-h1n1">
+<h1 class="title">Analysis of Influenza Hemagglutinin from A/WSN/1933(H1N1)</h1>
+
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#overview" id="id2">Overview</a></li>
+<li><a class="reference internal" href="#outline-of-the-experiment" id="id3">Outline of the experiment</a></li>
+<li><a class="reference internal" href="#ha-numbering" id="id4">HA numbering</a></li>
+<li><a class="reference internal" href="#analysis-of-deep-sequencing-data" id="id5">Analysis of deep-sequencing data</a><ul>
+<li><a class="reference internal" href="#input-files" id="id6">Input files</a></li>
+<li><a class="reference internal" href="#software-used" id="id7">Software used</a></li>
+<li><a class="reference internal" href="#making-alignments" id="id8">Making alignments</a></li>
+<li><a class="reference internal" href="#parsing-mutations" id="id9">Parsing mutations</a></li>
+<li><a class="reference internal" href="#counting-occurrences-of-mutations" id="id10">Counting occurrences of mutations</a></li>
+<li><a class="reference internal" href="#inferring-amino-acid-preferences" id="id11">Inferring amino-acid preferences</a></li>
+<li><a class="reference internal" href="#computing-correlations-between-replicates" id="id12">Computing correlations between replicates</a></li>
+<li><a class="reference internal" href="#calculating-preference-means" id="id13">Calculating preference means</a></li>
+<li><a class="reference internal" href="#creating-the-sequence-logo-plot" id="id14">Creating the sequence logo plot</a></li>
+<li><a class="reference internal" href="#mutational-tolerance-of-antigenic-and-receptor-binding-sites" id="id15">Mutational tolerance of antigenic and receptor-binding sites</a></li>
+<li><a class="reference internal" href="#comparison-to-np" id="id16">Comparison to NP</a></li>
+<li><a class="reference internal" href="#entropy-mapped-structures" id="id17">Entropy-mapped structures</a></li>
+<li><a class="reference internal" href="#correlation-with-wu-et-al" id="id18">Correlation with Wu et al</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h1><a class="toc-backref" href="#id2">Overview</a></h1>
+<p>The overall strategy to analyze influenza hemagglutinin (HA) from A/WSN/1933(H1N1) is to mutagenize each position of the HA sequence to all possible amino acid variants and use deep-sequencing to decipher the amino acid preference at each position. This approach was initially described as &quot;deep mutational scanning&quot; by <a class="reference external" href="http://www.nature.com/nmeth/journal/v7/n9/full/nmeth.1492.html">Fowler et al</a>, and was subsequently adapted by the <a class="reference external" href="http://research.fhcrc.org/bloom/en.html">Bloom lab</a> to influenza.</p>
+<p>The experiments and analysis were done by Bargavi Thyagarajan in the <a class="reference external" href="http://research.fhcrc.org/bloom/en.html">Bloom lab</a>. Illumina deep-sequencing yields HA nucleotide sequence reads as FASTQ files. These are assembled and analyzed using the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package. The analysis can be replicated by downloading the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> repository on <a class="reference external" href="https://github.com/jbloom/mapmuts">GitHub</a>, downloading the Illumina FASTQ files to the <tt class="docutils literal">./examples/WSN_HA_2014Analysis/FASTQ_files</tt> subdirectory and running the <a class="reference external" href="https://www.python.org/">Python</a> script <tt class="docutils literal">pipeline.py</tt> in the the directory <tt class="docutils literal">./examples/WSN_HA_2014Analysis/</tt> with the command:</p>
+<pre class="literal-block">
+python pipeline.py
+</pre>
+<p>The <tt class="docutils literal">./examples/WSN_HA_2014Analysis/</tt> subdirectory of the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package already contains many of the results of this analysis, but many of the larger files are excluded due to file-size limitations. The raw FASTQ files are available on the <a class="reference external" href="http://www.ncbi.nlm.nih.gov/sra/?term=SRP040983">SRA at accession SRP040983</a>.</p>
+</div>
+<div class="section" id="outline-of-the-experiment">
+<h1><a class="toc-backref" href="#id3">Outline of the experiment</a></h1>
+<p>In this experiment, each position of the WSN-HA coding sequence is mutated to specify all possible amino acids creating a pool of mutated HA sequences. To identify HA mutations that are tolerated during viral growth, this plasmid pool is used in tissue-culture to grow A/WSN/33 viruses with mutated HA using the reverse genetics system. The HA mutant virus pool is then passaged through cells once at a low multiplicity of infection (MOI of 0.1). The low MOI ensures that not more than one virus infects a given cell in the intial round of infection. This avoids a mismatch between the packaged vRNA and HA protein species expressed on the surface of the viruses produced from the cell (genotype-phenotype mismatch).</p>
+<p>Comparing HA sequences from mutant virus pools (<em>mutvirus</em> sample) to HA sequences in the mutated plasmid pool (<em>mutDNA</em> sample) by 50-bp, paired end, Illumina sequencing yields information on the amino acids preferred at each position of WSN-HA when subjected to viral growth selection.</p>
+<p>In addition, as a control to decipher baseline error rates during viral growth, sample processing and deep-sequencing, unmutated WSN-HA plasmid (<em>DNA</em> sample) is used to grow wild-type A/WSN/33 virus (<em>virus</em> sample) and included in the deep-sequencing analysis.</p>
+<p>Thus, the <em>samples</em> used for Illumina deep-sequencing are:</p>
+<blockquote>
+<ul class="simple">
+<li><em>DNA</em> : Made by low-cycle number PCR amplification of wild-type WSN-HA. Measure of error-rate in deep-sequencing.</li>
+<li><em>mutDNA</em> : Made by low-cycle number PCR amplification of HA from mutant HA plasmid pool. Measure of mutations in the mutant HA plasmid pool.</li>
+<li><em>virus</em> : Made by reverse-transcription of vRNA from wild-type A/WSN/33 virus, followed by PCR amplification of cDNA. Measure of error-rate during viral growth and reverse-transcription.</li>
+<li><em>mutvirus</em> : Made by reverse-transcription of vRNA from mutant virus pool, followed by PCR amplification of cDNA.Measure of mutations that are tolerated during viral growth selection.</li>
+</ul>
+</blockquote>
+<p>Three biological <em>replicates</em> of each sample are made starting from independent wild-type and mutant HA plasmid pools. A fourth technical repeat consists of samples processed independently for deep-sequencing (starting from tagmentation). The samples for each replicate are multiplexed with Nextera primers for deep-sequencing and each replicate was run on a separate Illumina sequencing lane. Thus, the <em>replicates</em> used for Illumina deep-sequencing are:</p>
+<blockquote>
+<ul class="simple">
+<li><em>#1 (or replicate 1)</em> : DNA, mutDNA, virus and mutvirus samples made from one WSN-HA plasmid preparation.</li>
+<li><em>#2 (or replicate 2)</em> : DNA, mutDNA, virus and mutvirus samples made from another WSN-HA plasmid preparation.</li>
+<li><em>#3 (or replicate 3)</em> : DNA, mutDNA, virus and mutvirus samples made from a third WSN-HA plasmid preparation.</li>
+<li><em>#1 repeat (or replicate 1 repeat)</em> : DNA, mutDNA, virus and mutvirus samples from <em>replicate 1</em> independently processed for deep-sequencing.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="ha-numbering">
+<h1><a class="toc-backref" href="#id4">HA numbering</a></h1>
+<p>Multiple schemes for numbering the influenza HA are in use. For most of the results generated here, the WSN HA is simply numbered sequentially in 1, 2, ... numbering starting with the N-terminal Met. In the literature, HA is commonly numbered in the H3 numbering scheme (for example, as in PDB <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=4HMG">4HMG</a>). In certain cases as indicated, residues are numbered in this scheme. See <a class="reference external" href="https://github.com/jbloom/HA_numbering">HA_numbering</a> for a program to interconvert among these schemes.</p>
+</div>
+<div class="section" id="analysis-of-deep-sequencing-data">
+<h1><a class="toc-backref" href="#id5">Analysis of deep-sequencing data</a></h1>
+<p>Illumina deep-sequencing yields HA nucleotide sequence reads as FASTQ files. These data must be analyzed to determine the changes in mutation frequency upon selection.</p>
+<p>The analysis of these data can be replicated by downloading the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package on <a class="reference external" href="https://github.com/jbloom/mapmuts">GitHub</a> and going to the subdirectory <tt class="docutils literal">./examples/WSN_HA_2014Analysis/FASTQ_files</tt>, downloading the FASTQ files as described under <a class="reference internal" href="#input-files">Input files</a>, and making sure that you have all of the relevant software as described in <a class="reference internal" href="#software-used">Software used</a>. You can then replicate the entire analysis with the <a class="reference external" href="https://www.python.org/">Python</a> script <tt class="docutils literal">pipeline.py</tt> with the command:</p>
+<pre class="literal-block">
+python pipeline.py
+</pre>
+<p>The exception is the steps in <a class="reference internal" href="#entropy-mapped-structures">Entropy-mapped structures</a>, which require some manual manipulations.</p>
+<div class="section" id="input-files">
+<h2><a class="toc-backref" href="#id6">Input files</a></h2>
+<p>Input files needed for the analysis.</p>
+<blockquote>
+<ul>
+<li><p class="first"><tt class="docutils literal">pipeline.py</tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that will run the entire analysis.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">./FASTQ_files</tt> is a subdirectory within <tt class="docutils literal">./examples/WSN_HA_2014Analysis/</tt> with the Illumina gzipped FASTQ sequence files for all the samples and replicates. The <tt class="docutils literal">./FASTQ_files</tt> directory contains subdirectories for each replicate (for example, <tt class="docutils literal">./FASTQ_files/replicate_1/</tt>). Each sample within a replicate then has a separate subdirectory (for example, <tt class="docutils literal">./FASTQ_files/replicate_1/DNA</tt>) within which the read 1 (has <em>R1</em> in the filename) and read 2 (has <em>R2</em> in the filename) gzipped FASTQ files are deposited. The <a class="reference external" href="https://www.python.org/">Python</a> script used for this analysis looks for files with the following naming format:</p>
+<pre class="literal-block">
+./FASTQ_files/replicate_1/DNA/*R1*.gz
+./FASTQ_files/replicate_1/DNA/*R2*.gz
+</pre>
+<p>Because of the large size of these files, they are not distributed on <a class="reference external" href="https://github.com/jbloom/mapmuts">GitHub</a>. You will need to download them from the <a class="reference external" href="http://www.ncbi.nlm.nih.gov/sra/?term=SRP040983">SRA at accession SRP040983</a>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">R1_trim3.fasta</tt> and <tt class="docutils literal">R2_trim3.fasta</tt> are files with the Nextera adaptor sequences found at the 3'end of the read 1 and read 2 sequence reads, respectively. The sequences are the reverse compliment of Nextera transposase/adaptor sequences for each read (shown below):</p>
+<pre class="literal-block">
+R1_trim sequence: CTGTCTCTTATACACATCTCCGAGCCCACGAGAC
+R2_trim sequence: CTGTCTCTTATACACATCTGACGCTGCCGACGA
+</pre>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">WSN-HA-amplicon.txt</span></tt> is the file with the WSN-HA amplicon sequence to which the reads are aligned. The sequences of the primers used to PCR amplify WSN-HA are included. The coding sequence of HA is in upper-case letters.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">./PDB_structure/</tt> : subdirectory containing the results of analyzing the crystal structure of HA. Specific input files in this directory:</p>
+<ul class="simple">
+<li><tt class="docutils literal">1RVX.pdb</tt> is the crystal structure <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=1rvx">1RVX</a> (downloaded from the Protein Data Bank) of the HA from A/PR/8/1934 (H1N1). This is the crystallized HA closest in identity to the WSN HA.</li>
+<li><tt class="docutils literal">1RVX_trimer.pdb</tt> is a version of <tt class="docutils literal">1RVX.pdb</tt> that has been manually edited to contain only one trimer (chains A through F). The original <tt class="docutils literal">1RVX.pdb</tt> contains two trimers in the asymmetric unit.</li>
+<li><tt class="docutils literal">1RVX_trimer_renumbered.pdb</tt> is a version of <tt class="docutils literal">1RVX_trimer.pdb</tt> that has been renumbered with <a class="reference external" href="http://dicsoft2.physics.iisc.ernet.in/pdbgoodies/inputpage.html">PDB Goodies</a> and manual touch-up o that the numbering matches sequential 1, 2, ... numbering of the WSN HA sequence. The HA1 and HA2 chains have been merged into single chains (A, B, and C) and these chains are now numbered so that residue <em>r</em> corresponds to residue <em>r</em> in sequential numbering of the WSN HA sequence. Overall, this renumbered PDB contains 483 residues in each of the three HA chains, of which 438 are exact matches with the corresponding position in the WSN HA protein.</li>
+<li><tt class="docutils literal">1RVX_trimer_renumbered.dssp</tt> is a text file containing the results of running the <a class="reference external" href="http://www.cmbi.ru.nl/hsspsoap/">DSSP webserver</a> on <tt class="docutils literal">1RVX_trimer_renumbered.pdb</tt> to determine the secondary structure and solvent accessibility of residues. The residues in this file match sequential 1, 2, ... numbering of the WSN HA protein sequence.</li>
+<li><tt class="docutils literal">sequential_to_H3.txt</tt> is a file that converts between the sequential 1, 2, ... numbering of the WSN HA and the H3 numbering scheme as used in PDB <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=4HMG">4HMG</a>. This conversion was done using <a class="reference external" href="https://github.com/jbloom/HA_numbering">HA_numbering</a>. The file contains comma-separated lines with the first entry giving the sequential number and the second giving the H3 number. For the H3 number, numbers alone indicate the HA1 chain and numbers followed by HA2 indicate the HA2 chain.</li>
+</ul>
+</li>
+<li><p class="first"><tt class="docutils literal">Caton_H1_HA_antigenic_sites.txt</tt> is a text file that defines the antigenic sites in HA, based on the analysis originally done by <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a>. See the text file itself for detailed information.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">receptor_binding_residues.txt</tt> is a text file that defines the conserved receptor binding sites for the HA, based largely on the analysis done originally by <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/9454721">Martin et al 1998</a>. See the text file itself for detailed information. Note that these are <strong>not</strong> all receptor-binding residues, but rather all <strong>conserved</strong> receptor-binding residues as explained within the <tt class="docutils literal">receptor_binding_residues.txt</tt> file.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">entropy_label_PDB.py</tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that uses <a class="reference external" href="http://www.pymol.org/">PyMOL</a> to label the crystal structure.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">assess_aa_completeness.py</tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that estimates the completenes with which amino-acid mutations were sampled from knowledge of the sampling of codon mutations.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">get_PDB_contacts.py</tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that defines contacting residues.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">get_sites_near_Caton_sites.py</tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that defines the sites that are near <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> antigenic sites and are solvent exposed.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">get_RBS.py</tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that is used to create the file <tt class="docutils literal">allRBS_residues.txt</tt>. This must be done manually using <a class="reference external" href="http://www.pymol.org/">PyMOL</a>. Briefly, the created <tt class="docutils literal">allRBS_residues.txt</tt> file contains all residues that have any atom within 5.0 angstroms of the receptor bound in the <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=1rvx">1RVX</a> PDB structure. To create <tt class="docutils literal">allRBS_residues.txt</tt>, open <a class="reference external" href="http://www.pymol.org/">PyMOL</a> and then run the following command within <a class="reference external" href="http://www.pymol.org/">PyMOL</a>:</p>
+<pre class="literal-block">
+run get_RBS.py
+</pre>
+</li>
+<li><p class="first">The <tt class="docutils literal">./NP_stuff/</tt> contains files related to the comparative analysis with influenza nucleoprotein. Specifically, it contains the following files:</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">NP_CTL_epitope_sitecounts.csv</tt> is a list of the CTL epitopes per site in NP. This is Table S1 from <a class="reference external" href="http://www.plosgenetics.org/article/info%3Adoi%2F10.1371%2Fjournal.pgen.1004328">Gong and Bloom 2014</a>. See that reference for a detailed description of how the CTL epitopes were defined.</li>
+<li><tt class="docutils literal">NP_amino_acid_preferences.txt</tt> are the experimentally determined site-specific amino-acid preferences for NP. This is Supplementary file S1 from <a class="reference external" href="http://mbe.oxfordjournals.org/content/early/2014/06/12/molbev.msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>.</li>
+<li><tt class="docutils literal">2IQH_monomerC.dssp</tt> is the analysis of the solvent exposure and secondary structure of the NP crystal structure using the <a class="reference external" href="http://www.cmbi.ru.nl/hsspsoap/">DSSP webserver</a> described in <a class="reference external" href="http://mbe.oxfordjournals.org/content/early/2014/06/12/molbev.msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a> (this paper provides links to the source code and data that contain this file).</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal">Wu_et_al_Table_S1.csv</tt> is a file containing the data in Table S1 of <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>. This is the &quot;relative fitness&quot; values of about 20% of the possible mutations to HA.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">correlate_with_Wu_data.py</tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that correlates the data in <tt class="docutils literal">Wu_et_al_Table_S1.csv</tt> with the site-specific amino-acid preferences inferred during the analysis described here (see <a class="reference internal" href="#correlation-with-wu-et-al">Correlation with Wu et al</a>).</p>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="software-used">
+<h2><a class="toc-backref" href="#id7">Software used</a></h2>
+<p>This analysis was performed using the following software
+on the Fred Hutchinson computer cluster using the following Linux distribution:</p>
+<pre class="literal-block">
+Linux version 3.5.0-43-generic (buildd&#64;roseapple) (gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) ) #66~precise1-Ubuntu SMP Thu Oct 24 14:52:23 UTC 2013
+</pre>
+<p>In order to replicate the analysis, you will also need to use Linux or Mac OS X, and install the following software.</p>
+<p>The specific software versions used for the analysis are specified. You can probably also use other software versions in many cases, but this has not been confirmed.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> : specifically, <a class="reference external" href="https://github.com/jbloom/mapmuts/tree/v1.01">mapmuts version 1.01</a></li>
+<li><a class="reference external" href="https://www.python.org/">Python</a> version 2.7.3</li>
+<li><a class="reference external" href="http://www.numpy.org/">numpy</a> version 1.6.1</li>
+<li><a class="reference external" href="http://matplotlib.org/">matplotlib</a> version 1.3.1</li>
+<li><a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> version 2.3</li>
+<li><a class="reference external" href="http://www.scipy.org/">scipy</a> version 0.9.0</li>
+<li><a class="reference external" href="http://pybrary.net/pyPdf/">pyPdf</a> version 1.13</li>
+<li><a class="reference external" href="http://www.tug.org/applications/pdftex/">pdflatex</a> version 3.1415926-1.40.10-2.2</li>
+<li><a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> version 3.3</li>
+<li><a class="reference external" href="http://www.imagemagick.org/script/convert.php">ImageMagick convert</a> 6.6.9-7 2012-08-17</li>
+<li><a class="reference external" href="https://computing.llnl.gov/linux/slurm/sbatch.html">sbatch</a> (version 2.6.2) was used by the <tt class="docutils literal">run_mapmuts.py</tt> script to submit the jobs on a computer cluster.</li>
+<li><a class="reference external" href="http://rpy.sourceforge.net/rpy2.html">rpy2</a> version 2.3.9</li>
+<li><a class="reference external" href="http://www.r-project.org/">R</a> statistical package, version 3.0.3</li>
+<li><a class="reference external" href="http://www.pymol.org/">PyMOL</a> to create an image of the structure.</li>
+</ul>
+</div>
+<div class="section" id="making-alignments">
+<h2><a class="toc-backref" href="#id8">Making alignments</a></h2>
+<p>The deep-sequencing reads are aligned to the WSN-HA sequence using the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_makealignments.py</tt> (see the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>). The <tt class="docutils literal">pipeline.py</tt> script creates an input file (<tt class="docutils literal">makealignments_infile.txt</tt>) for each sample within subdirectories specifying the replicate and sample (for example, <tt class="docutils literal">./replicate_1/DNA</tt>). The infile specifies the following criteria:</p>
+<pre class="literal-block">
+gzipped True
+applyfilter True
+minq 25
+maxn 2
+minoverlap 30
+maxrm 1
+maxa1m 1
+maxa2m 1
+maxgenem 6
+upcase test
+</pre>
+<p>The output files are deposited within the subdirectory for each sample. The output is described in more detail in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a> and includes the following files in each replicate and sample subdirectory:</p>
+<pre class="literal-block">
+*_alignments.txt.gz
+*_unaligned.fasta.gz
+*_alignmentstatistics.txt
+*_alignmentstatistics.pdf
+*_insertlengths.txt
+*_insertlengths.pdf
+*_R1mismatches.txt
+*_R1mismatches.pdf
+*_R2mismatches.txt
+*_R2mismatches.pdf
+*_makealignments_summary.pdf
+*_makealignments_log.txt
+</pre>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_alignmentsummaryplot.py</tt> creates a summary of the number of aligned reads for all samples in each replicate. Here is this plot, it shows a large number of overlapping paired-end reads for all samples.</p>
+<blockquote>
+<div class="figure align-center">
+<img alt="alignmentsummaryplot.jpg" src="alignmentsummaryplot.jpg" style="width: 50%;" />
+<p class="caption">The <tt class="docutils literal">alignmentsummaryplot.pdf</tt> summarizing the depth of overlapping paired-end reads for each sample.</p>
+</div>
+</blockquote>
+</div>
+<div class="section" id="parsing-mutations">
+<h2><a class="toc-backref" href="#id9">Parsing mutations</a></h2>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_parsecounts.py</tt> (see <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>) uses the alignments to parse counts of different types of mutations - synonymous/non-synonymous, single/double nucleotide changes etc. across each position in the HA coding sequence. The <tt class="docutils literal">pipeline.py</tt> script creates an input file (<tt class="docutils literal">parsecounts_infile.txt</tt>) for each sample within the existing subdirectories specifying the replicate and sample (for example, <tt class="docutils literal">./replicate_1/DNA</tt>). The following output files are created:</p>
+<pre class="literal-block">
+*_ntcounts.txt
+*_codoncounts.txt
+*_aacounts.txt
+*_codondepth.pdf
+*_syn-ns-dist.pdf
+*_nmutspercodon-dist.pdf
+*_parsesummary.pdf
+*_parsecounts_log.txt
+</pre>
+<p>Below is an example of one of the files showing the read depth across the sequence. The read depth is not entirely uniform due to biases in fragmentation, but all sites have a large number of reads.</p>
+<blockquote>
+<div class="figure align-center">
+<img alt="replicate_3/DNA/replicate_3_DNA_codondepth.jpg" src="replicate_3/DNA/replicate_3_DNA_codondepth.jpg" style="width: 50%;" />
+<p class="caption">The <tt class="docutils literal">*_codondepth.pdf</tt> plot for <em>replicate 3</em>, <em>DNA</em>.</p>
+</div>
+</blockquote>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_parsesummaryplots.py</tt> summarizes the output from the parsed counts and creates a plot with the fraction of different types of mutations in each sample in all the replicates. The following output files are created:</p>
+<pre class="literal-block">
+parsesummary_ntfracs.pdf
+parsesummary_codontypes.pdf
+parsesummary_codonmuts.pdf
+parsesummary_codon_types_and_nmuts.pdf
+</pre>
+<p>Below is the key plot. It shows a relatively low background error rate, and selection against stop codon and nonsynonymous mutations in the mutant viruses relative to the mutant DNA.</p>
+<blockquote>
+<div class="figure align-center">
+<img alt="parsesummary_codon_types_and_nmuts.jpg" src="parsesummary_codon_types_and_nmuts.jpg" style="width: 60%;" />
+<p class="caption">The <tt class="docutils literal">parsesummary_codon_types_and_nmuts.pdf</tt> plot.</p>
+</div>
+</blockquote>
+</div>
+<div class="section" id="counting-occurrences-of-mutations">
+<h2><a class="toc-backref" href="#id10">Counting occurrences of mutations</a></h2>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_countparsedmuts.py</tt> is used to summarize the number of times different types of mutations occur in various <em>samples</em> (DNA, mutDNA etc.) both for the biological replicates individually, and after including data from all <em>biological replicates</em> (#1, #2 and #3). The script calculates the fraction of mutations that occur a certain number of times. The types of mutations analyzed includes all codon mutations, all codon mutations that involve more than one nucleotide change per codon, all synonymous mutations and all synonymous mutations that involve more than one nucleotide change per codon. The following output files are created:</p>
+<pre class="literal-block">
+*_multi-nt-allcodonmutcounts.txt
+*_allcodonmutcounts.txt
+*_syncodonmutcounts.txt
+*_multi-nt-syncodonmutcounts.txt
+*_multi-nt-codonmutcounts.pdf
+*_codonmutcounts.pdf
+</pre>
+<p>Below are files showing the occurrences of multi-nucleotide codon mutations. This first plot is for the combined data for all three biological replicates.</p>
+<blockquote>
+<div class="figure align-center">
+<img alt="countparsedmuts_multi-nt-codonmutcounts.jpg" src="countparsedmuts_multi-nt-codonmutcounts.jpg" style="width: 70%;" />
+<p class="caption">The <tt class="docutils literal"><span class="pre">countparsedmuts_multi-nt-codonmutcounts.pdf</span></tt> file shows the occurrence of mutations in the three biological replicates combined. Nearly all mutations are sampled in the mutated DNA, and a high fraction are sampled in the mutant viruses.</p>
+</div>
+</blockquote>
+<p>Specifically, the above plot show that 85% of synonymous multi-nucleotide codon mutations are sampled at least five times in the combined libraries. The script <tt class="docutils literal">assess_aa_completeness.py</tt> determines the fraction of amino acids that have at least one codon sampled at least five times given the structure of the genetic code. It turns out that 97% of amino acids are expected to have at least one codon sampled at least five times when 85% of codons are sampled.</p>
+<p>The next plots show the replicates individually. None of the individual replicates are as comprehensive as the three biological replicates combined.</p>
+<blockquote>
+<div class="figure align-center">
+<img alt="replicate_1/countparsedmuts_multi-nt-codonmutcounts.jpg" src="replicate_1/countparsedmuts_multi-nt-codonmutcounts.jpg" style="width: 70%;" />
+<p class="caption">The <tt class="docutils literal"><span class="pre">replicate_1/countparsedmuts_multi-nt-codonmutcounts.pdf</span></tt> file shows the occurrence of mutations in <em>replicate 1</em> alone.</p>
+</div>
+<div class="figure align-center">
+<img alt="replicate_2/countparsedmuts_multi-nt-codonmutcounts.jpg" src="replicate_2/countparsedmuts_multi-nt-codonmutcounts.jpg" style="width: 70%;" />
+<p class="caption">The <tt class="docutils literal"><span class="pre">replicate_2/countparsedmuts_multi-nt-codonmutcounts.pdf</span></tt> file shows the occurrence of mutations in <em>replicate 2</em> alone.</p>
+</div>
+<div class="figure align-center">
+<img alt="replicate_3/countparsedmuts_multi-nt-codonmutcounts.jpg" src="replicate_3/countparsedmuts_multi-nt-codonmutcounts.jpg" style="width: 70%;" />
+<p class="caption">The <tt class="docutils literal"><span class="pre">replicate_3/countparsedmuts_multi-nt-codonmutcounts.pdf</span></tt> file shows the occurrence of mutations in <em>replicate 3</em> alone.</p>
+</div>
+<div class="figure align-center">
+<img alt="replicate_1_repeat/countparsedmuts_multi-nt-codonmutcounts.jpg" src="replicate_1_repeat/countparsedmuts_multi-nt-codonmutcounts.jpg" style="width: 70%;" />
+<p class="caption">The <tt class="docutils literal"><span class="pre">replicate_1_repeat/countparsedmuts_multi-nt-codonmutcounts.pdf</span></tt> file shows the occurrence of mutations in <em>replicate 1 repeat</em>.</p>
+</div>
+</blockquote>
+</div>
+<div class="section" id="inferring-amino-acid-preferences">
+<h2><a class="toc-backref" href="#id11">Inferring amino-acid preferences</a></h2>
+<p>The amino-acid preferences for each position of the HA coding sequence is deduced by the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_inferpreferences.py</tt>. The script uses an inference algorithm to calculate the amino acid preferences at each position while accounting for mutations in HA sequence arising due to viral growth, sample preparation steps such as reverse-transcription and deep-sequencing errors. A more detailed description of the inference algorithm can be found in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>. The <tt class="docutils literal">pipeline.py</tt> script creates an input file  for each replicate (for example, <tt class="docutils literal">replicate_1_equilibriumpreferences_infile.txt</tt>) within the existing subdirectory for the replicate (for example, <tt class="docutils literal">./replicate_1/</tt>). The script also creates subdirectories named <tt class="docutils literal">MCMC_traces</tt> and <tt class="docutils literal">preference_plots</tt> within each replicate directory and deposits the MCMC trace plots and preference plots for individual amino acids. The infile specifies the following criteria:</p>
+<pre class="literal-block">
+mu_concentration 1.0
+MCMC_traces MCMC_traces
+preference_plots preference_plots
+stepincrease 4
+seed 1
+convergence 0.01
+ncpus 12
+nruns 3
+pi_concentration 1.0
+removeoutlier False
+rho_concentration 1.0
+epsilon_concentration 1.0
+minvalue 1e-7
+thin 200
+nsteps 200000
+sites 2 565
+</pre>
+<p>The following output files are created:</p>
+<pre class="literal-block">
+*_equilibriumpreferences.txt
+*_equilibriumpreferences_credibleintervals_95.txt
+preference_plots/replicate_*_residue_*.pdf
+MCMC_traces/replicate_*_residue_*.pdf
+*_inferpreferences_log.txt (to track the output of this script)
+</pre>
+<p>The key file is the <tt class="docutils literal">*_equilibriumpreferences.txt</tt> file, which lists the inferred amino-acid preferences.</p>
+</div>
+<div class="section" id="computing-correlations-between-replicates">
+<h2><a class="toc-backref" href="#id12">Computing correlations between replicates</a></h2>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_preferencescorrelate.py</tt> uses the computed amino acid preferences and creates plots to compare preferences for all amino acids across different replicates. The <tt class="docutils literal">pipeline.py</tt> script creates a subdirectory <tt class="docutils literal">./correlations</tt> and an input file for each pair-wise comparison (for example <tt class="docutils literal">preferencescorrelate_replicate_1_vs_replicate_2_infile.txt</tt>). The output files are the plots comparing the preferences between replicates.</p>
+<p>Below are the key correlation plots. They show a significant but imperfect correlation between the preferences from biological replicates. The correlation between the technical repeats of replicate 1 is very high. Therefore, variation comes from the biological process of viral growth rather than from technical sources such as sequencing errors.</p>
+<blockquote>
+<div class="figure align-center">
+<img alt="correlations/replicate_1_vs_replicate_2.jpg" src="correlations/replicate_1_vs_replicate_2.jpg" style="width: 30%;" />
+<p class="caption">Moderate correlation between biological replicates 1 and 2 (<tt class="docutils literal">./correlations/replicate_1_vs_replicate_2.jpg</tt>).</p>
+</div>
+<div class="figure align-center">
+<img alt="correlations/replicate_1_vs_replicate_3.jpg" src="correlations/replicate_1_vs_replicate_3.jpg" style="width: 30%;" />
+<p class="caption">Moderate correlation between biological replicates 1 and 3 (<tt class="docutils literal">./correlations/replicate_1_vs_replicate_3.jpg</tt>).</p>
+</div>
+<div class="figure align-center">
+<img alt="correlations/replicate_2_vs_replicate_3.jpg" src="correlations/replicate_2_vs_replicate_3.jpg" style="width: 30%;" />
+<p class="caption">Moderate correlation between biological replicates 2 and 3 (<tt class="docutils literal">./correlations/replicate_2_vs_replicate_3.jpg</tt>).</p>
+</div>
+<div class="figure align-center">
+<img alt="correlations/replicate_1_vs_replicate_1_repeat.jpg" src="correlations/replicate_1_vs_replicate_1_repeat.jpg" style="width: 30%;" />
+<p class="caption">Strong correlation between biological replicates 1 and the technical repeat of replicate 1 (<tt class="docutils literal">./correlations/replicate_1_vs_replicate_1_repeat.jpg</tt>).</p>
+</div>
+</blockquote>
+</div>
+<div class="section" id="calculating-preference-means">
+<h2><a class="toc-backref" href="#id13">Calculating preference means</a></h2>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_preferencemeans.py</tt> calculates the mean animo acid preferences at each position of HA inferred from the preferences computed for each biological replicate. The <tt class="docutils literal">pipeline.py</tt> script creates an infile <tt class="docutils literal">preferencemeans_infile.txt</tt> and the output file <tt class="docutils literal">average_equilibriumpreferences.txt</tt> with the mean preferences for each position and entropy values.</p>
+<p>The amino-acid preferences in this <tt class="docutils literal">average_equilibriumpreferences.txt</tt> file should be the best estimate of the true preferences, as they average the results of the three biological replicates.</p>
+</div>
+<div class="section" id="creating-the-sequence-logo-plot">
+<h2><a class="toc-backref" href="#id14">Creating the sequence logo plot</a></h2>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_siteprofileplots.py</tt> uses the mean amino acid preferences (<tt class="docutils literal">average_equilibriumpreferences.txt</tt>) calculated for each position on HA to create a sequence logo plot. Additional information about the relative solvent accessibility of HA derived from the input text file <tt class="docutils literal">1RVX_trimer_renumbered.dssp</tt> in the <tt class="docutils literal">./PDB_structure/</tt> subdirectory (see <a class="reference internal" href="#input-files">Input files</a>) is overlaid as bars on top of the sequence information in the logo plot. Also overlaid is the identity of antigenic sites and receptor-binding residues taken from <tt class="docutils literal">Caton_H1_HA_antigenic_sites.txt</tt> and <tt class="docutils literal">receptor_binding_residues.txt</tt> (see <a class="reference internal" href="#input-files">Input files</a>).</p>
+<p>The <tt class="docutils literal">pipeline.py</tt> script creates two sequence logo plots as outputs with the same preference mean information differing in the amino acid position numbering - following the H3 numbering or sequential numbering (the first amino acid residue of WSN-HA is position 1) (see <a class="reference internal" href="#ha-numbering">HA numbering</a>).</p>
+<p>Below are these plots:</p>
+<blockquote>
+<blockquote>
+<div class="figure align-center">
+<img alt="sequentialnumbering_preferences_logoplot.jpg" src="sequentialnumbering_site_preferences_logoplot.jpg" style="width: 90%;" />
+</div>
+</blockquote>
+<p>The <tt class="docutils literal">sequentialnumbering_site_preferences_logoplot.pdf</tt> file, showing the preferences with sequential numbering of the HA..</p>
+<blockquote>
+<div class="figure align-center">
+<img alt="H3numbering_preferences_logoplot.jpg" src="H3numbering_site_preferences_logoplot.jpg" style="width: 90%;" />
+</div>
+</blockquote>
+<p>The <tt class="docutils literal">H3numbering_site_preferences_logoplot.pdf</tt> file, showing the preferences with H3 numbering of the HA..</p>
+</blockquote>
+</div>
+<div class="section" id="mutational-tolerance-of-antigenic-and-receptor-binding-sites">
+<h2><a class="toc-backref" href="#id15">Mutational tolerance of antigenic and receptor-binding sites</a></h2>
+<p>The results shown in the previous section summarize the inherent mutational tolerance of different sites in influenza. It is well known that sites with higher solvent accessibility are more mutationally tolerant. It is interesting to ask if residues in antigenic sites and receptor-binding sites (as defined in <tt class="docutils literal">Caton_H1_HA_antigenic_sites.txt</tt> and <tt class="docutils literal">receptor_binding_sites.txt</tt> as described in <a class="reference internal" href="#input-files">Input files</a>) have especially high or low mutational tolerance after controlling for RSA (relative solvent accessibility). For example, it seems likely that conserved receptor-binding sites will have low mutational tolerance due to functional constraints. It is also possible that antigenic sites will have high mutational tolerance if evolvability of antigenic sites is a factor that contributes to influenza immune escape.</p>
+<p>A possible confounding factor when examining the mutational tolerance of the antigenic sites defined by <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> is that these sites were defined in part by being the location of escape mutations during monoclonal antibody escape -- they therefore might be more tolerant of mutations simply because they are close to other sites. In order to assess this, we also defined all sites that are near known antigenic sites and are solvent exposed. This definition should include sites near antigenic sites that were not selected by <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> and could in principle have low mutational tolerance. Specifically, these sites were defined as any sites that have a alpha-carbon to alpha-carbon distance of less than or equal to 6 angstroms from a <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> antigenic site and also have a relative solvent accessibility of at least 0.2. These sites must be defined manually (this is <strong>not</strong> done by the <tt class="docutils literal">pipeline.py</tt> script) using the following two steps:</p>
+<blockquote>
+<ol class="arabic">
+<li><p class="first">Define all HA1 sites in contact (within 6 angstroms CA-CA distance) with other HA1 sites by opening <a class="reference external" href="http://www.pymol.org/">PyMOL</a> and running the command:</p>
+<pre class="literal-block">
+run get_PDB_contacts.py
+</pre>
+<p>This command creates the file <tt class="docutils literal">PDB_structure/contacting_residues.txt</tt>, which defines all residues that contact other residues in the same HA1 monomer.</p>
+</li>
+<li><p class="first">Use the definitions in the created <tt class="docutils literal">PDB_structure/contacting_residues.txt</tt> file and the solvent accessibilities within the file <tt class="docutils literal">PDB_structure/1RVX_trimer_renumbered.dssp</tt> to define all sites with relative solvent accessibility (RSA) of at least 0.2 that contact an antigenic site. This is done by running at the command line:</p>
+<pre class="literal-block">
+python get_sites_near_Caton_sites.py
+</pre>
+<p>This creates the file <tt class="docutils literal">nearby_antigenic_sites.txt</tt> which lists (in 1, 2, ... numbering) all antigenic sites in <tt class="docutils literal">Caton_H1_HA_antigenic_sites.txt</tt> plus all their contacting sites.</p>
+</li>
+</ol>
+</blockquote>
+<p>An analysis to examine the mutational tolerance of these subsets of sites is done by the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal">mapmuts_entropycomparison.py</tt> (described in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>). The plots are below, as are the results of multiple linear regression analyses performed by <a class="reference external" href="http://www.r-project.org/">R</a> to test for statistical associations. The analysis is limited to residues in the HA1 chain since all antigenic and receptor-binding residues are in this chain.</p>
+<p>The following plots summarize the results graphically:</p>
+<div class="figure align-center">
+<img alt="antigenic_entropy_rsa_correlation.jpg" src="antigenic_entropy_rsa_correlation.jpg" style="width: 40%;" />
+<p class="caption">The <tt class="docutils literal">antigenic_entropy_rsa_correlation.pdf</tt> file shows the site entropy (in bits) and RSA for residues in antigenic sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, antigenic-site residues appear to be more mutationally tolerant (higher site entropy).</p>
+</div>
+<div class="figure align-center">
+<img alt="nearby_antigenic_entropy_rsa_correlation.jpg" src="nearby_antigenic_entropy_rsa_correlation.jpg" style="width: 40%;" />
+<p class="caption">The <tt class="docutils literal">nearby_antigenic_entropy_rsa_correlation.pdf</tt> file shows the site entropy (in bits) and RSA for residues in antigenic sites or in contact with antigenic sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, antigenic-site residues and their nearby neighbors appear to be more mutationally tolerant (higher site entropy).</p>
+</div>
+<div class="figure align-center">
+<img alt="receptor_binding_entropy_rsa_correlation.jpg" src="receptor_binding_entropy_rsa_correlation.jpg" style="width: 40%;" />
+<p class="caption">The <tt class="docutils literal">receptor_binding_entropy_rsa_correlation.pdf</tt> file shows the site entropy (in bits) and RSA for residues in conserved receptor-binding sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, receptor-binding residues appear to be less mutationally tolerant (lower site entropy).</p>
+</div>
+<div class="figure align-center">
+<img alt="allRBS_entropy_rsa_correlation.jpg" src="allRBS_entropy_rsa_correlation.jpg" style="width: 40%;" />
+<p class="caption">The <tt class="docutils literal">allRBS_entropy_rsa_correlation.pdf</tt> file shows the site entropy (in bits) and RSA for <strong>all</strong> residues in receptor-binding sites, including non-conserved sites, (red triangles) and all other residues in the HA1 chain (blue circles).</p>
+</div>
+<p>To statistically test whether the selected sites differ in site entropy, <tt class="docutils literal">mapmuts_entropycomparison.py</tt> uses linear regression. The results for the antigenic sites are in <tt class="docutils literal">antigenic_linearmodelresults.txt</tt>, which is included below:</p>
+<pre class="literal-block">
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.45241 -0.27611 -0.01408  0.34896  0.96557 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.88267    0.03388  85.090  &lt; 2e-16 ***
+RSA          1.29333    0.11903  10.866  &lt; 2e-16 ***
+selected     0.29549    0.09276   3.186  0.00158 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4563 on 341 degrees of freedom
+Multiple R-squared:  0.3238,    Adjusted R-squared:  0.3198 
+F-statistic: 81.65 on 2 and 341 DF,  p-value: &lt; 2.2e-16
+
+
+
+</pre>
+<p>These results show that being in antigenic site is significantly correlated with higher mutational tolerance after controlling for RSA.</p>
+<p>The results for the antigenic sites and their nearby neighbors are in receptor-binding sites are in <tt class="docutils literal">nearby_antigenic_linearmodelresults.txt</tt>, which is included below:</p>
+<pre class="literal-block">
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.3990 -0.2727  0.0033  0.3408  0.9801 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.88423    0.03390  85.069  &lt; 2e-16 ***
+RSA          1.22043    0.12871   9.482  &lt; 2e-16 ***
+selected     0.23110    0.07496   3.083  0.00221 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4568 on 341 degrees of freedom
+Multiple R-squared:  0.3226,    Adjusted R-squared:  0.3186 
+F-statistic: 81.19 on 2 and 341 DF,  p-value: &lt; 2.2e-16
+
+
+
+</pre>
+<p>These results show that being in antigenic site or nearby an antigenic site is significantly correlated with higher mutational tolerance after controlling for RSA.</p>
+<p>The results for the conserved receptor-binding sites are in <tt class="docutils literal">receptor_binding_linearmodelresults.txt</tt>, which is included below:</p>
+<pre class="literal-block">
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.5372 -0.2730 -0.0004  0.3656  0.9273 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.90170    0.03432  84.543  &lt; 2e-16 ***
+RSA          1.38063    0.11395  12.116  &lt; 2e-16 ***
+selected    -0.51606    0.16371  -3.152  0.00176 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4565 on 341 degrees of freedom
+Multiple R-squared:  0.3234,    Adjusted R-squared:  0.3194 
+F-statistic:  81.5 on 2 and 341 DF,  p-value: &lt; 2.2e-16
+
+
+
+</pre>
+<p>These results show that being in a conserved receptor-binding site is significantly correlated with lower mutational tolerance after controlling for RSA.</p>
+<p>The results for all (not just conserved) receptor-binding sites are in <tt class="docutils literal">allRBS_linearmodelresults.txt</tt>, which is included below:</p>
+<pre class="literal-block">
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.54556 -0.27443 -0.02212  0.36633  0.93024 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.89410    0.03482  83.111   &lt;2e-16 ***
+RSA          1.40180    0.11495  12.195   &lt;2e-16 ***
+selected    -0.17694    0.11483  -1.541    0.124    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4615 on 341 degrees of freedom
+Multiple R-squared:  0.3085,    Adjusted R-squared:  0.3044 
+F-statistic: 76.07 on 2 and 341 DF,  p-value: &lt; 2.2e-16
+
+
+
+</pre>
+<p>These results show that being in any receptor-binding site is somewhat correlated with lower mutational tolerance after controlling for RSA, but that the difference is not significant.</p>
+</div>
+<div class="section" id="comparison-to-np">
+<h2><a class="toc-backref" href="#id16">Comparison to NP</a></h2>
+<p>The results in <a class="reference internal" href="#mutational-tolerance-of-antigenic-and-receptor-binding-sites">Mutational tolerance of antigenic and receptor-binding sites</a> suggest that antigenic sites in hemagglutinin are especially tolerant of mutations. As a comparison data set, we used results from deep mutational scanning of NP described in <a class="reference external" href="http://mbe.oxfordjournals.org/content/early/2014/06/12/molbev.msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>. Specifically, that paper allowed us to quantify the site entropy of every site in NP (in the file <tt class="docutils literal">./NP_stuff/NP_amino_acid_preferences.txt</tt>). <a class="reference external" href="http://www.plosgenetics.org/article/info%3Adoi%2F10.1371%2Fjournal.pgen.1004328">Gong and Bloom 2014</a> mapped the number of CTL epitopes per site in NP (in the file <tt class="docutils literal">./NP_stuff/NP_CTL_epitope_sitecounts.csv</tt>). The average site in NP participates in 1.1 CTL epitopes. We therefore classified sites as being above average in their number of CTL epitopes if they participated in two or more epitopes -- there are 114 such sites. We then asked whether these sites with at least two CTL epitopes had higher or lower site entropy than other sites. This analysis is all done by the <tt class="docutils literal">pipeline.py</tt> script. Here are the results:</p>
+<div class="figure align-center">
+<img alt="NP_CTL_entropy_rsa_correlation.jpg" src="NP_CTL_entropy_rsa_correlation.jpg" style="width: 40%;" />
+<p class="caption">The <tt class="docutils literal">NP_CTL_entropy_rsa_correlation.pdf</tt> file shows the site entropy (in bits) and RSA for NP residues that participate in two or more CTL epitopes (red triangles) and all other sites (blue circles).</p>
+</div>
+<p>The linear regression results are in <tt class="docutils literal">NP_CTL_linearmodelresults.txt</tt>, which is included below:</p>
+<pre class="literal-block">
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.69674 -0.17194  0.07198  0.25956  0.71721 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.44238    0.02858 120.436   &lt;2e-16 ***
+RSA         -0.04749    0.07394  -0.642    0.521    
+selected    -0.04156    0.04053  -1.026    0.306    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3675 on 433 degrees of freedom
+Multiple R-squared:  0.003341,  Adjusted R-squared:  -0.001263 
+F-statistic: 0.7257 on 2 and 433 DF,  p-value: 0.4846
+
+
+
+</pre>
+<p>Overall, for NP there is no significant tendency for CTL epitope sites to have higher mutational tolerance. Therefore, while HA does have enhanced mutational tolerance in its antigenic sites, there is no enhanced mutational tolerance in NP antigenic sites.</p>
+<p>Note also that unlike for HA, there is not a correlation between RSA and site entropy. This is probably because the folded structure of NP is an oligomer that wraps RNA, so even the surfaces are constrained by those functions.</p>
+</div>
+<div class="section" id="entropy-mapped-structures">
+<h2><a class="toc-backref" href="#id17">Entropy-mapped structures</a></h2>
+<p>This step is <strong>manual</strong>, and is not done by the <tt class="docutils literal">pipeline.py</tt> script. Do the following:</p>
+<ol class="arabic">
+<li><p class="first">Open <a class="reference external" href="http://www.pymol.org/">PyMOL</a> in the main directory for this example.</p>
+</li>
+<li><p class="first">Run the <a class="reference external" href="http://www.pymol.org/">PyMOL</a> script <tt class="docutils literal">entropy_label_PDB.py</tt> from within <a class="reference external" href="http://www.pymol.org/">PyMOL</a> using the command:</p>
+<pre class="literal-block">
+run entropy_label_PDB.py
+</pre>
+</li>
+<li><p class="first">This will create five <tt class="docutils literal">*.png</tt> files in the <tt class="docutils literal">./PDB_structure/</tt> directory. For all of these images, one of the three HA monomers from the PR8 structure <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=1rvx">1RVX</a> is colored according to site entropies (calculated from the amino-acid preferences in <tt class="docutils literal">average_equilibriumpreferences.txt</tt>) from blue (lowest entropy) to red (highest entropy). The other two HAmonomers are in gray. These images are shown below:</p>
+</li>
+</ol>
+<div class="figure align-center">
+<img alt="PDB_structure/entropy_colored_structure.png" src="PDB_structure/entropy_colored_structure.png" style="width: 40%;" />
+<p class="caption"><tt class="docutils literal">entropy_colored_structure.png</tt> shows a surface rendering for all residues.</p>
+</div>
+<div class="figure align-center">
+<img alt="PDB_structure/conservedRBS_entropy_colored_structure.png" src="PDB_structure/conservedRBS_entropy_colored_structure.png" style="width: 40%;" />
+<p class="caption"><tt class="docutils literal">conservedRBS_entropy_colored_structure.png</tt> shows the HA1 residues colored according to site entropy, with the conserved receptor-binding residues in spheres.</p>
+</div>
+<div class="figure align-center">
+<img alt="PDB_structure/allRBS_entropy_colored_structure.png" src="PDB_structure/allRBS_entropy_colored_structure.png" style="width: 40%;" />
+<p class="caption"><tt class="docutils literal">allRBS_entropy_colored_structure.png</tt> shows the HA1 residues colored according to site entropy, with the all receptor-binding residues (within 5 angstroms of receptor) in spheres.</p>
+</div>
+<div class="figure align-center">
+<img alt="PDB_structure/antigenicsites_entropy_colored_structure.png" src="PDB_structure/antigenicsites_entropy_colored_structure.png" style="width: 40%;" />
+<p class="caption"><tt class="docutils literal">antigenicsites_entropy_colored_structure.png</tt> shows the HA1 residues colored according to site entropy, with the <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> antigenic sites in spheres.</p>
+</div>
+<div class="figure align-center">
+<img alt="PDB_structure/nearantigenicsites_entropy_colored_structure.png" src="PDB_structure/nearantigenicsites_entropy_colored_structure.png" style="width: 40%;" />
+<p class="caption"><tt class="docutils literal">nearantigenicsites_entropy_colored_structure.png</tt> shows the HA1 residues colored according to site entropy, with the antigenic sites (<a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a>) and all other nearby residues (within 6 angstroms alpha-carbon distance) in spheres.</p>
+</div>
+</div>
+<div class="section" id="correlation-with-wu-et-al">
+<h2><a class="toc-backref" href="#id18">Correlation with Wu et al</a></h2>
+<p><a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a> do a somewhat similar study, where they estimate the impact of many of the single-nucleotide mutations to the WSN HA. Their data is the in file <tt class="docutils literal">Wu_et_al_Table_S1.csv</tt>. To compare their data to the overall inferred preferences (<tt class="docutils literal">average_equilibriumpreferences.txt</tt>), the <tt class="docutils literal">pipeline.py</tt> script runs another script with the command:</p>
+<pre class="literal-block">
+python correlate_with_Wu_data.py
+</pre>
+<p>This script first goes through the data of <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>. They report a total of 3010 &quot;relative fitness&quot; values. After excluding values for mutations to stop codons or back to the wildtype residue, this is data for 2350 unique amino-acid mutations (out of <span class="math">
+\(19 \times 564 = 10716\)</span>
+ total possible mutations to non-start codons, so 22% of mutations are covered by <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>).</p>
+<p>In order to make the values comparable, the &quot;relative fitness&quot; values are normalized to the value for the wildtype at that residue, to give <em>normalize relative fitness = (relative fitness mutant) / (relative fitness wildtype)</em>. This can be done for 2264 of the mutations (for the rest, there is no wildtype fitness for that residue. These are then compared the preference for that mutant residue normalized by the wildtype preference from our experiments, <span class="math">
+\(\pi_{r,a} / \pi_{r,\mbox{wt}}\)</span>
+.</p>
+<p>Some of the mutations are reported to have relative fitness of zero by <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>. Since such values cannot be plotted on a log scale, these zeros are assigned the minimum non-zero value from their entire data set.</p>
+<p>The overall correlation (on a log-log plot) is shown in the following generated plot:</p>
+<div class="figure align-center">
+<img alt="correlation_with_Wu_et_al.jpg" src="correlation_with_Wu_et_al.jpg" style="width: 40%;" />
+<p class="caption"><tt class="docutils literal">correlation_with_Wu_et_al.pdf</tt> shows that there is a substantial correlation between the inferences from the current study and that by <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>. Note that <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a> do not perform replicates of their experiment, so we do not know how well correlated their reported results would be with another replicate of their same experiment.</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

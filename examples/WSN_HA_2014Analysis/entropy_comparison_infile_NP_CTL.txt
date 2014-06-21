@@ -1,0 +1,7 @@
+dsspfile ./NP_stuff/2IQH_monomerC.dssp
+dsspchain None
+aapreferences NP_stuff/NP_amino_acid_preferences.txt
+siterange all
+plotfile NP_CTL_entropy_rsa_correlation.pdf
+linearmodelfile NP_CTL_linearmodelresults.txt
+selectedsites NP_stuff/NP_sites_with_CTL_epitopes.txt

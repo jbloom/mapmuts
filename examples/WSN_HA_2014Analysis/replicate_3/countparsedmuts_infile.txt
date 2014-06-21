@@ -1,0 +1,9 @@
+plotfileprefix countparsedmuts
+maxn 50
+legendloc right
+writecounts False
+sites 2 565
+DNA /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_3/DNA/replicate_3_DNA_codoncounts.txt
+mutDNA /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_3/mutDNA/replicate_3_mutDNA_codoncounts.txt
+virus /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_3/virus/replicate_3_virus_codoncounts.txt
+mutvirus /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_3/mutvirus/replicate_3_mutvirus_codoncounts.txt

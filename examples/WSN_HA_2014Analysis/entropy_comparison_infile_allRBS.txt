@@ -1,0 +1,7 @@
+dsspfile ./PDB_structure/1RVX_trimer_renumbered.dssp
+dsspchain A
+aapreferences average_equilibriumpreferences.txt
+siterange 2 365
+plotfile allRBS_entropy_rsa_correlation.pdf
+linearmodelfile allRBS_linearmodelresults.txt
+selectedsites allRBS_residues.txt

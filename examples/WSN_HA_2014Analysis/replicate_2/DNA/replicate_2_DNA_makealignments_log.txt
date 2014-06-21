@@ -1,0 +1,447 @@
+Beginning execution of mapmuts_makealignments.py in directory /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_2/DNA
+
+****************************************************
+Version information for mapmuts and associated programs.
+
+Time and date: Fri Apr  4 13:38:16 2014
+
+Platform: Linux-3.2.0-56-generic-x86_64-with-Ubuntu-12.04-precise
+
+Python version: 2.7.3 (default, Sep 26 2013, 20:03:06) 
+[GCC 4.6.3]
+
+mapmuts version: 1.0
+
+numpy version: 1.8.0
+
+pymc version: 2.3
+
+scipy version: 0.9.0
+
+matplotlib version: 1.3.1
+
+pyPdf version: pyPdf is available, but no version string accessible
+
+pdflatex version: pdfTeX 3.1415926-1.40.10-2.2 (TeX Live 2009/Debian)
+kpathsea version 5.0.0
+Copyright 2009 Peter Breitenlohner (eTeX)/Han The Thanh (pdfTeX).
+There is NO warranty.  Redistribution of this software is
+covered by the terms of both the pdfTeX copyright and
+the Lesser GNU General Public License.
+For more information about these matters, see the file
+named COPYING and the pdfTeX source.
+Primary author of pdfTeX: Peter Breitenlohner (eTeX)/Han The Thanh (pdfTeX).
+Compiled with libpng 1.2.46; using libpng 1.2.46
+Compiled with zlib 1.2.3.4; using zlib 1.2.3.4
+Compiled with poppler version 0.18.2
+
+weblogo version: WebLogo 3.3 (2012-07-02)
+****************************************************
+
+Input data being read from infile makealignments_infile.txt
+
+Progress being logged to this file, replicate_2_DNA_makealignments_log.txt
+
+Read the following key/value pairs from infile makealignments_infile.txt:
+write_unaligned True
+maxa2m 1
+r1files /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/*R1*.gz
+applyfilter True
+generange 33 1727
+maxrm 1
+outfileprefix replicate_2_DNA
+r2files /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/*R2*.gz
+minoverlap 30
+maxn 2
+maxgenem 6
+a1file /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/R1_trim3.fasta
+a2file /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/R2_trim3.fasta
+gzipped True
+minq 25
+maxa1m 1
+samplename \#2 DNA
+fullgenefile /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/WSN-HA-amplicon.txt
+upcase test
+
+Beginning execution of mapmuts.main.MakeAlignments.
+Current time is Fri Apr  4 13:38:17 2014.
+Current directory is /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_2/DNA.
+
+The R1 reads will come from the following FASTQ files:
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R1_001.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R1_002.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R1_003.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R1_004.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R1_005.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R1_006.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R1_007.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R1_008.fastq.gz
+
+The R2 reads will come from the following FASTQ files:
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R2_001.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R2_002.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R2_003.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R2_004.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R2_005.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R2_006.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R2_007.fastq.gz
+/home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/FASTQ_files/replicate_2/DNA/WSN_WT-2_DNA_TAAGGC_L001_R2_008.fastq.gz
+
+applyfilter = True: all reads flagged Y  by the Illumina filter will be removed.
+
+minq = 25.00: any read pair where the average Q-score of either read is < this will be removed.
+
+upcase = 'test': converting fullgene, a1, and a2 to upper case.
+Testing case of first R1 and R2 reads... test passed, first reads upper case.
+
+The value of fullgene is:
+AGCAAAAGCAGGGGAAAATAAAAACAACCAAAATGAAGGCAAAACTACTGGTCCTGTTATATGCATTTGTAGCTACAGATGCAGACACAATATGTATAGGCTACCATGCGAACAACTCAACCGACACTGTTGACACAATACTCGAGAAGAATGTGGCAGTGACACATTCTGTTAACCTGCTCGAAGACAGCCACAACGGGAAACTATGTAAATTAAAAGGAATAGCCCCACTACAATTGGGGAAATGTAACATCACCGGATGGCTCTTGGGAAATCCAGAATGCGACTCACTGCTTCCAGCGAGATCATGGTCCTACATTGTAGAAACACCAAACTCTGAGAATGGAGCATGTTATCCAGGAGATCTCATCGACTATGAGGAACTGAGGGAGCAATTGAGCTCAGTATCATCATTAGAAAGATTCGAAATATTTCCCAAGGAAAGTTCATGGCCCAACCACACATTCAACGGAGTAACAGTATCATGCTCCCATAGGGGAAAAAGCAGTTTTTACAGAAATTTGCTATGGCTGACGAAGAAGGGGGATTCATACCCAAAGCTGACCAATTCCTATGTGAACAATAAAGGGAAAGAAGTCCTTGTACTATGGGGTGTTCATCACCCGTCTAGCAGTGATGAGCAACAGAGTCTCTATAGTAATGGAAATGCTTATGTCTCTGTAGCGTCTTCAAATTATAACAGGAGATTCACCCCGGAAATAGCTGCAAGGCCCAAAGTAAGAGATCAACATGGGAGGATGAACTATTACTGGACCTTGCTAGAACCCGGAGACACAATAATATTTGAGGCAACTGGTAATCTAATAGCACCATGGTATGCTTTCGCACTGAGTAGAGGGTTTGAGTCCGGCATCATCACCTCAAACGCGTCAATGCATGAGTGTAACACGAAGTGTCAAACACCCCAGGGAGCTATAAACAGCAATCTCCCTTTCCAGAATATACACCCAGTCACAATAGGAGAGTGCCCAAAATATGTCAGGAGTACCAAATTGAGGATGGTTACAGGACTAAGAAACATCCCATCCATTCAATACAGAGGTCTATTTGGAGCCATTGCTGGTTTTATTGAGGGGGGATGGACTGGAATGATAGATGGATGGTATGGTTATCATCATCAGAATGAACAGGGATCAGGCTATGCAGCGGATCAAAAAAGCACACAAAATGCCATTAACGGGATTACAAACAAGGTGAACTCTGTTATCGAGAAAATGAACACTCAATTCACAGCTGTGGGTAAAGAATTCAACAACTTAGAAAAAAGGATGGAAAATTTAAATAAAAAAGTTGATGATGGGTTTCTGGACATTTGGACATATAATGCAGAATTGTTAGTTCTACTGGAAAATGAAAGGACTTTGGATTTCCATGACTTAAATGTGAAGAATCTGTACGAGAAAGTAAAAAGCCAATTAAAGAATAATGCCAAAGAAATCGGAAATGGGTGTTTTGAGTTCTACCACAAGTGTGACAATGAATGCATGGAAAGTGTAAGAAATGGGACTTATGATTATCCAAAATATTCAGAAGAATCAAAGTTGAACAGGGAAAAGATAGATGGAGTGAAATTGGAATCAATGGGGGTGTATCAGATTCTGGCGATCTACTCAACTGTCGCCAGTTCACTGGTGCTTTTGGTCTCCCTGGGGGCAATCAGTTTCTGGATGTGTTCTAATGGGTCTTTGCAGTGCAGAATATGCATCTGAGATTAGGATTTCAGAAATATAAGGAAAAACACCCTTGTTTCTACT
+
+The value of generange is:
+(32, 1727)
+
+This means that the value of gene (the region of fullgene specified by generange) is:
+ATGAAGGCAAAACTACTGGTCCTGTTATATGCATTTGTAGCTACAGATGCAGACACAATATGTATAGGCTACCATGCGAACAACTCAACCGACACTGTTGACACAATACTCGAGAAGAATGTGGCAGTGACACATTCTGTTAACCTGCTCGAAGACAGCCACAACGGGAAACTATGTAAATTAAAAGGAATAGCCCCACTACAATTGGGGAAATGTAACATCACCGGATGGCTCTTGGGAAATCCAGAATGCGACTCACTGCTTCCAGCGAGATCATGGTCCTACATTGTAGAAACACCAAACTCTGAGAATGGAGCATGTTATCCAGGAGATCTCATCGACTATGAGGAACTGAGGGAGCAATTGAGCTCAGTATCATCATTAGAAAGATTCGAAATATTTCCCAAGGAAAGTTCATGGCCCAACCACACATTCAACGGAGTAACAGTATCATGCTCCCATAGGGGAAAAAGCAGTTTTTACAGAAATTTGCTATGGCTGACGAAGAAGGGGGATTCATACCCAAAGCTGACCAATTCCTATGTGAACAATAAAGGGAAAGAAGTCCTTGTACTATGGGGTGTTCATCACCCGTCTAGCAGTGATGAGCAACAGAGTCTCTATAGTAATGGAAATGCTTATGTCTCTGTAGCGTCTTCAAATTATAACAGGAGATTCACCCCGGAAATAGCTGCAAGGCCCAAAGTAAGAGATCAACATGGGAGGATGAACTATTACTGGACCTTGCTAGAACCCGGAGACACAATAATATTTGAGGCAACTGGTAATCTAATAGCACCATGGTATGCTTTCGCACTGAGTAGAGGGTTTGAGTCCGGCATCATCACCTCAAACGCGTCAATGCATGAGTGTAACACGAAGTGTCAAACACCCCAGGGAGCTATAAACAGCAATCTCCCTTTCCAGAATATACACCCAGTCACAATAGGAGAGTGCCCAAAATATGTCAGGAGTACCAAATTGAGGATGGTTACAGGACTAAGAAACATCCCATCCATTCAATACAGAGGTCTATTTGGAGCCATTGCTGGTTTTATTGAGGGGGGATGGACTGGAATGATAGATGGATGGTATGGTTATCATCATCAGAATGAACAGGGATCAGGCTATGCAGCGGATCAAAAAAGCACACAAAATGCCATTAACGGGATTACAAACAAGGTGAACTCTGTTATCGAGAAAATGAACACTCAATTCACAGCTGTGGGTAAAGAATTCAACAACTTAGAAAAAAGGATGGAAAATTTAAATAAAAAAGTTGATGATGGGTTTCTGGACATTTGGACATATAATGCAGAATTGTTAGTTCTACTGGAAAATGAAAGGACTTTGGATTTCCATGACTTAAATGTGAAGAATCTGTACGAGAAAGTAAAAAGCCAATTAAAGAATAATGCCAAAGAAATCGGAAATGGGTGTTTTGAGTTCTACCACAAGTGTGACAATGAATGCATGGAAAGTGTAAGAAATGGGACTTATGATTATCCAAAATATTCAGAAGAATCAAAGTTGAACAGGGAAAAGATAGATGGAGTGAAATTGGAATCAATGGGGGTGTATCAGATTCTGGCGATCTACTCAACTGTCGCCAGTTCACTGGTGCTTTTGGTCTCCCTGGGGGCAATCAGTTTCTGGATGTGTTCTAATGGGTCTTTGCAGTGCAGAATATGCATC
+
+The value of a1 (the adaptor at the 3' end of R1 reads) is:
+CTGTCTCTTATACACATCTCCGAGCCCACGAGAC
+
+The value of a2 (the adaptor at the 3' end of R2 reads) is:
+CTGTCTCTTATACACATCTGACGCTGCCGACGA
+
+The value of maxn (the maximum number of N / n nucleotides allowed in a read) is 2
+
+The value of minoverlap (minimum acceptable overlap between R1 and R2) is 30.
+
+The value of maxrm (maximum allowed mismatches between R1 and R2 in overlap) is 1.
+
+The value of maxa1m (maximum allowed mismatches between R1 and its adaptor a1) is 1.
+
+The value of maxa2m (maximum allowed mismatches between R2 and its adaptor a2) is 1.
+
+The value of maxgenem (maximum allowed mismatches of either read with fullgene after removing read adaptors) is 6.
+
+Unaligned reads that passed applyfilter will be written to replicate_2_DNA_unaligned.fasta.gz
+
+Successfully aligned reads will be written to replicate_2_DNA_alignments.txt.gz
+
+Beginning reading and aligning reads...
+Completed 100000 reads in 13.220 seconds.
+Completed 200000 reads in 26.240 seconds.
+Completed 300000 reads in 39.220 seconds.
+Completed 400000 reads in 52.180 seconds.
+Completed 500000 reads in 65.200 seconds.
+Completed 600000 reads in 78.190 seconds.
+Completed 700000 reads in 91.140 seconds.
+Completed 800000 reads in 104.080 seconds.
+Completed 900000 reads in 117.110 seconds.
+Completed 1000000 reads in 130.110 seconds.
+Completed 1100000 reads in 143.100 seconds.
+Completed 1200000 reads in 156.010 seconds.
+Completed 1300000 reads in 169.010 seconds.
+Completed 1400000 reads in 181.990 seconds.
+Completed 1500000 reads in 194.940 seconds.
+Completed 1600000 reads in 207.870 seconds.
+Completed 1700000 reads in 220.820 seconds.
+Completed 1800000 reads in 233.820 seconds.
+Completed 1900000 reads in 246.750 seconds.
+Completed 2000000 reads in 259.710 seconds.
+Completed 2100000 reads in 272.660 seconds.
+Completed 2200000 reads in 285.650 seconds.
+Completed 2300000 reads in 298.570 seconds.
+Completed 2400000 reads in 311.520 seconds.
+Completed 2500000 reads in 324.410 seconds.
+Completed 2600000 reads in 337.350 seconds.
+Completed 2700000 reads in 350.280 seconds.
+Completed 2800000 reads in 363.190 seconds.
+Completed 2900000 reads in 376.070 seconds.
+Completed 3000000 reads in 388.990 seconds.
+Completed 3100000 reads in 401.920 seconds.
+Completed 3200000 reads in 414.850 seconds.
+Completed 3300000 reads in 427.770 seconds.
+Completed 3400000 reads in 440.660 seconds.
+Completed 3500000 reads in 453.580 seconds.
+Completed 3600000 reads in 466.470 seconds.
+Completed 3700000 reads in 479.340 seconds.
+Completed 3800000 reads in 492.210 seconds.
+Completed 3900000 reads in 505.110 seconds.
+Completed 4000000 reads in 517.970 seconds.
+Completed 4100000 reads in 531.230 seconds.
+Completed 4200000 reads in 544.090 seconds.
+Completed 4300000 reads in 556.970 seconds.
+Completed 4400000 reads in 569.840 seconds.
+Completed 4500000 reads in 582.730 seconds.
+Completed 4600000 reads in 595.570 seconds.
+Completed 4700000 reads in 608.390 seconds.
+Completed 4800000 reads in 621.190 seconds.
+Completed 4900000 reads in 634.010 seconds.
+Completed 5000000 reads in 646.840 seconds.
+Completed 5100000 reads in 659.670 seconds.
+Completed 5200000 reads in 672.510 seconds.
+Completed 5300000 reads in 685.300 seconds.
+Completed 5400000 reads in 698.900 seconds.
+Completed 5500000 reads in 711.650 seconds.
+Completed 5600000 reads in 724.430 seconds.
+Completed 5700000 reads in 737.230 seconds.
+Completed 5800000 reads in 750.130 seconds.
+Completed 5900000 reads in 763.020 seconds.
+Completed 6000000 reads in 775.810 seconds.
+Completed 6100000 reads in 788.560 seconds.
+Completed 6200000 reads in 801.290 seconds.
+Completed 6300000 reads in 813.990 seconds.
+Completed 6400000 reads in 826.680 seconds.
+Completed 6500000 reads in 839.400 seconds.
+Completed 6600000 reads in 852.080 seconds.
+Completed 6700000 reads in 864.780 seconds.
+Completed 6800000 reads in 877.480 seconds.
+Completed 6900000 reads in 890.120 seconds.
+Completed 7000000 reads in 902.640 seconds.
+Completed 7100000 reads in 915.140 seconds.
+Completed 7200000 reads in 927.670 seconds.
+Completed 7300000 reads in 940.200 seconds.
+Completed 7400000 reads in 952.840 seconds.
+Completed 7500000 reads in 965.840 seconds.
+Completed 7600000 reads in 978.820 seconds.
+Completed 7700000 reads in 991.790 seconds.
+Completed 7800000 reads in 1004.750 seconds.
+Completed 7900000 reads in 1017.730 seconds.
+Completed 8000000 reads in 1030.670 seconds.
+Completed 8100000 reads in 1043.640 seconds.
+Completed 8200000 reads in 1057.000 seconds.
+Completed 8300000 reads in 1069.970 seconds.
+Completed 8400000 reads in 1082.930 seconds.
+Completed 8500000 reads in 1095.910 seconds.
+Completed 8600000 reads in 1108.860 seconds.
+Completed 8700000 reads in 1121.840 seconds.
+Completed 8800000 reads in 1134.780 seconds.
+Completed 8900000 reads in 1147.730 seconds.
+Completed 9000000 reads in 1160.690 seconds.
+Completed 9100000 reads in 1173.670 seconds.
+Completed 9200000 reads in 1186.610 seconds.
+Completed 9300000 reads in 1199.550 seconds.
+Completed 9400000 reads in 1212.490 seconds.
+Completed 9500000 reads in 1225.430 seconds.
+Completed 9600000 reads in 1238.380 seconds.
+Completed 9700000 reads in 1251.320 seconds.
+Completed 9800000 reads in 1264.250 seconds.
+Completed 9900000 reads in 1277.150 seconds.
+Completed 10000000 reads in 1290.070 seconds.
+Completed 10100000 reads in 1303.010 seconds.
+Completed 10200000 reads in 1315.920 seconds.
+Completed 10300000 reads in 1328.840 seconds.
+Completed 10400000 reads in 1341.760 seconds.
+Completed 10500000 reads in 1354.650 seconds.
+Completed 10600000 reads in 1367.560 seconds.
+Completed 10700000 reads in 1380.450 seconds.
+Completed 10800000 reads in 1393.320 seconds.
+Completed 10900000 reads in 1406.210 seconds.
+Completed 11000000 reads in 1419.110 seconds.
+Completed 11100000 reads in 1431.970 seconds.
+Completed 11200000 reads in 1444.800 seconds.
+Completed 11300000 reads in 1457.680 seconds.
+Completed 11400000 reads in 1470.540 seconds.
+Completed 11500000 reads in 1483.390 seconds.
+Completed 11600000 reads in 1496.230 seconds.
+Completed 11700000 reads in 1509.060 seconds.
+Completed 11800000 reads in 1521.940 seconds.
+Completed 11900000 reads in 1534.770 seconds.
+Completed 12000000 reads in 1547.620 seconds.
+Completed 12100000 reads in 1560.430 seconds.
+Completed 12200000 reads in 1573.670 seconds.
+Completed 12300000 reads in 1586.490 seconds.
+Completed 12400000 reads in 1599.310 seconds.
+Completed 12500000 reads in 1612.110 seconds.
+Completed 12600000 reads in 1624.910 seconds.
+Completed 12700000 reads in 1637.640 seconds.
+Completed 12800000 reads in 1650.410 seconds.
+Completed 12900000 reads in 1663.140 seconds.
+Completed 13000000 reads in 1675.920 seconds.
+Completed 13100000 reads in 1688.660 seconds.
+Completed 13200000 reads in 1701.360 seconds.
+Completed 13300000 reads in 1714.110 seconds.
+Completed 13400000 reads in 1726.870 seconds.
+Completed 13500000 reads in 1739.550 seconds.
+Completed 13600000 reads in 1752.280 seconds.
+Completed 13700000 reads in 1764.950 seconds.
+Completed 13800000 reads in 1777.640 seconds.
+Completed 13900000 reads in 1790.300 seconds.
+Completed 14000000 reads in 1803.000 seconds.
+Completed 14100000 reads in 1815.620 seconds.
+Completed 14200000 reads in 1828.260 seconds.
+Completed 14300000 reads in 1840.860 seconds.
+Completed 14400000 reads in 1853.480 seconds.
+Completed 14500000 reads in 1866.080 seconds.
+Completed 14600000 reads in 1878.630 seconds.
+Completed 14700000 reads in 1891.130 seconds.
+Completed 14800000 reads in 1903.630 seconds.
+Completed 14900000 reads in 1916.500 seconds.
+Completed 15000000 reads in 1929.560 seconds.
+Completed 15100000 reads in 1942.580 seconds.
+Completed 15200000 reads in 1955.610 seconds.
+Completed 15300000 reads in 1968.620 seconds.
+Completed 15400000 reads in 1981.680 seconds.
+Completed 15500000 reads in 1994.710 seconds.
+Completed 15600000 reads in 2007.760 seconds.
+Completed 15700000 reads in 2020.760 seconds.
+Completed 15800000 reads in 2033.790 seconds.
+Completed 15900000 reads in 2046.820 seconds.
+Completed 16000000 reads in 2059.840 seconds.
+Completed 16100000 reads in 2072.830 seconds.
+Completed 16200000 reads in 2085.830 seconds.
+Completed 16300000 reads in 2099.230 seconds.
+Completed 16400000 reads in 2112.260 seconds.
+Completed 16500000 reads in 2125.270 seconds.
+Completed 16600000 reads in 2138.300 seconds.
+Completed 16700000 reads in 2151.340 seconds.
+Completed 16800000 reads in 2164.390 seconds.
+Completed 16900000 reads in 2177.380 seconds.
+Completed 17000000 reads in 2190.380 seconds.
+Completed 17100000 reads in 2203.390 seconds.
+Completed 17200000 reads in 2216.390 seconds.
+Completed 17300000 reads in 2229.400 seconds.
+Completed 17400000 reads in 2242.360 seconds.
+Completed 17500000 reads in 2255.370 seconds.
+Completed 17600000 reads in 2268.390 seconds.
+Completed 17700000 reads in 2281.330 seconds.
+Completed 17800000 reads in 2294.310 seconds.
+Completed 17900000 reads in 2307.300 seconds.
+Completed 18000000 reads in 2320.290 seconds.
+Completed 18100000 reads in 2333.260 seconds.
+Completed 18200000 reads in 2346.230 seconds.
+Completed 18300000 reads in 2359.170 seconds.
+Completed 18400000 reads in 2372.160 seconds.
+Completed 18500000 reads in 2385.130 seconds.
+Completed 18600000 reads in 2398.060 seconds.
+Completed 18700000 reads in 2411.050 seconds.
+Completed 18800000 reads in 2424.020 seconds.
+Completed 18900000 reads in 2436.970 seconds.
+Completed 19000000 reads in 2449.920 seconds.
+Completed 19100000 reads in 2462.880 seconds.
+Completed 19200000 reads in 2475.820 seconds.
+Completed 19300000 reads in 2488.740 seconds.
+Completed 19400000 reads in 2501.650 seconds.
+Completed 19500000 reads in 2514.580 seconds.
+Completed 19600000 reads in 2527.510 seconds.
+Completed 19700000 reads in 2540.440 seconds.
+Completed 19800000 reads in 2553.340 seconds.
+Completed 19900000 reads in 2566.270 seconds.
+Completed 20000000 reads in 2579.190 seconds.
+Completed 20100000 reads in 2592.090 seconds.
+Completed 20200000 reads in 2604.960 seconds.
+Completed 20300000 reads in 2618.020 seconds.
+Completed 20400000 reads in 2631.080 seconds.
+Completed 20500000 reads in 2643.900 seconds.
+Completed 20600000 reads in 2656.750 seconds.
+Completed 20700000 reads in 2669.600 seconds.
+Completed 20800000 reads in 2682.420 seconds.
+Completed 20900000 reads in 2695.260 seconds.
+Completed 21000000 reads in 2708.120 seconds.
+Completed 21100000 reads in 2720.960 seconds.
+Completed 21200000 reads in 2733.710 seconds.
+Completed 21300000 reads in 2746.490 seconds.
+Completed 21400000 reads in 2759.050 seconds.
+Completed 21500000 reads in 2771.720 seconds.
+Completed 21600000 reads in 2784.500 seconds.
+Completed 21700000 reads in 2797.230 seconds.
+Completed 21800000 reads in 2809.960 seconds.
+Completed 21900000 reads in 2822.700 seconds.
+Completed 22000000 reads in 2835.410 seconds.
+Completed 22100000 reads in 2848.080 seconds.
+Completed 22200000 reads in 2860.690 seconds.
+Completed 22300000 reads in 2873.340 seconds.
+Completed 22400000 reads in 2886.000 seconds.
+Completed 22500000 reads in 2898.660 seconds.
+Completed 22600000 reads in 2911.530 seconds.
+Completed 22700000 reads in 2924.530 seconds.
+Completed 22800000 reads in 2937.520 seconds.
+Completed 22900000 reads in 2950.500 seconds.
+Completed 23000000 reads in 2963.490 seconds.
+Completed 23100000 reads in 2976.500 seconds.
+Completed 23200000 reads in 2989.460 seconds.
+Completed 23300000 reads in 3002.450 seconds.
+Completed 23400000 reads in 3015.400 seconds.
+Completed 23500000 reads in 3028.420 seconds.
+Completed 23600000 reads in 3041.410 seconds.
+Completed 23700000 reads in 3054.380 seconds.
+Completed 23800000 reads in 3067.360 seconds.
+Completed 23900000 reads in 3080.360 seconds.
+Completed 24000000 reads in 3093.300 seconds.
+Completed 24100000 reads in 3106.250 seconds.
+Completed 24200000 reads in 3119.220 seconds.
+Completed 24300000 reads in 3132.230 seconds.
+Completed 24400000 reads in 3145.610 seconds.
+Completed 24500000 reads in 3158.610 seconds.
+Completed 24600000 reads in 3171.590 seconds.
+Completed 24700000 reads in 3184.580 seconds.
+Completed 24800000 reads in 3197.550 seconds.
+Completed 24900000 reads in 3210.530 seconds.
+Completed 25000000 reads in 3223.470 seconds.
+Completed 25100000 reads in 3236.410 seconds.
+Completed 25200000 reads in 3249.410 seconds.
+Completed 25300000 reads in 3262.350 seconds.
+Completed 25400000 reads in 3275.330 seconds.
+Completed 25500000 reads in 3288.280 seconds.
+Completed 25600000 reads in 3301.280 seconds.
+Completed 25700000 reads in 3314.260 seconds.
+Completed 25800000 reads in 3327.210 seconds.
+Completed 25900000 reads in 3340.150 seconds.
+Completed 26000000 reads in 3353.080 seconds.
+Completed 26100000 reads in 3366.040 seconds.
+Completed 26200000 reads in 3378.960 seconds.
+Completed 26300000 reads in 3391.880 seconds.
+Completed 26400000 reads in 3404.830 seconds.
+Completed 26500000 reads in 3417.760 seconds.
+Completed 26600000 reads in 3430.670 seconds.
+Completed 26700000 reads in 3443.570 seconds.
+Completed 26800000 reads in 3456.490 seconds.
+Completed 26900000 reads in 3469.380 seconds.
+Completed 27000000 reads in 3482.280 seconds.
+Completed 27100000 reads in 3495.240 seconds.
+Completed 27200000 reads in 3508.140 seconds.
+Completed 27300000 reads in 3521.050 seconds.
+Completed 27400000 reads in 3533.950 seconds.
+Completed 27500000 reads in 3546.820 seconds.
+Completed 27600000 reads in 3559.730 seconds.
+Completed 27700000 reads in 3572.600 seconds.
+Completed 27800000 reads in 3585.450 seconds.
+Completed 27900000 reads in 3598.340 seconds.
+Completed 28000000 reads in 3611.190 seconds.
+Completed 28100000 reads in 3624.070 seconds.
+Completed 28200000 reads in 3636.950 seconds.
+Completed 28300000 reads in 3649.780 seconds.
+Completed 28400000 reads in 3662.640 seconds.
+Completed 28500000 reads in 3675.870 seconds.
+Completed 28600000 reads in 3688.730 seconds.
+Completed 28700000 reads in 3701.550 seconds.
+Completed 28800000 reads in 3714.390 seconds.
+Completed 28900000 reads in 3727.190 seconds.
+Completed 29000000 reads in 3739.970 seconds.
+Completed 29100000 reads in 3752.720 seconds.
+Completed 29200000 reads in 3765.510 seconds.
+Completed 29300000 reads in 3778.320 seconds.
+Completed 29400000 reads in 3791.100 seconds.
+Completed 29500000 reads in 3803.860 seconds.
+Completed 29600000 reads in 3816.560 seconds.
+Completed 29700000 reads in 3829.240 seconds.
+Completed 29800000 reads in 3841.920 seconds.
+Completed 29900000 reads in 3854.600 seconds.
+Completed 30000000 reads in 3867.250 seconds.
+Completed 30100000 reads in 3879.860 seconds.
+Completed 30200000 reads in 3892.510 seconds.
+
+Now writing statistics to output files.
+Writing summary statistics to replicate_2_DNA_alignmentstatistics.txt.
+Writing insert length distribution to replicate_2_DNA_insertlengths.txt.
+Writing R1 mismatch distribution to replicate_2_DNA_R1mismatches.txt.
+Writing R2 mismatch distribution to replicate_2_DNA_R2mismatches.txt.
+
+Completed execution of mapmuts.main.MakeAlignments at Fri Apr  4 14:45:45 2014.
+Pylab / matplotlib appear to be available, so we will make the summary plots.
+
+pdflatex is available, so we will also make an overall summary PDF.
+
+Now running mapmuts.main.MakeAlignmentsPlots...
+Completed running mapmuts.main.MakeAlignmentsPlots.
+
+
+Execution completed at Fri Apr  4 14:46:07 2014.

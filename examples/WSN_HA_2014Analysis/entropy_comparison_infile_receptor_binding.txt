@@ -1,0 +1,7 @@
+dsspfile ./PDB_structure/1RVX_trimer_renumbered.dssp
+dsspchain A
+aapreferences average_equilibriumpreferences.txt
+siterange 2 365
+plotfile receptor_binding_entropy_rsa_correlation.pdf
+linearmodelfile receptor_binding_linearmodelresults.txt
+selectedsites receptor_binding_residues.txt

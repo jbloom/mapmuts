@@ -1,0 +1,8 @@
+fullgenefile  /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/WSN-HA-amplicon.txt
+generange 33 1727
+upcase test
+alignmentfile /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_1_repeat/mutvirus/replicate_1_repeat_mutvirus_alignments.txt.gz
+r1exclude None
+r2exclude None
+outfileprefix replicate_1_repeat_mutvirus
+samplename \#1 repeat mutvirus

@@ -1,0 +1,20 @@
+# nread -> total number of read pairs read from the FASTQ files.
+nread 38608713
+# nfiltered -> number of read pairs removed by the Illumina filter.
+nfiltered 810537
+# nlowq -> number of read pairs removed due to low mean Q-score
+nlowq 965883
+# nexcessn -> number of read pairs removed due to excess N/n nucleotides
+nexcessn 11650
+# nattempted -> number of read pairs we attempted to align
+nattempted 36832293
+# npaired -> number of read pairs where R1 and R2 were successfully
+# overlapped
+npaired 25339548
+# nalignedfullgene -> number of read pairs where the overlapped read
+# pairs were successfully aligned to fullgene (the template
+# amplicon).
+nalignedfullgene 25298969
+# nalignedgene -> number of read pairs which overlapped with the
+# gene of interest (region of fullgene specified by generange).
+nalignedgene 25294778

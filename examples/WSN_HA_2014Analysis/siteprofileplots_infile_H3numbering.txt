@@ -1,0 +1,11 @@
+sitepreferences average_equilibriumpreferences.txt
+siterange 2 565
+dsspfile ./PDB_structure/1RVX_trimer_renumbered.dssp
+dsspchain A
+add_rsa True
+add_ss False
+add_custom antigenic Caton_H1_HA_antigenic_sites.txt receptor-binding receptor_binding_residues.txt
+nperline 63
+includestop False
+outfileprefix H3numbering_
+sitenumbermapping ./PDB_structure/sequential_to_H3.txt

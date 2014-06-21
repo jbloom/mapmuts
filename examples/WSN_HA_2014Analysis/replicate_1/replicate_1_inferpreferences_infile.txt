@@ -1,0 +1,21 @@
+DNA_files /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_1/DNA/replicate_1_DNA_codoncounts.txt
+RNA_files /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_1/virus/replicate_1_virus_codoncounts.txt
+mutDNA_files /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_1/mutDNA/replicate_1_mutDNA_codoncounts.txt
+mutvirus_files /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_1/mutvirus/replicate_1_mutvirus_codoncounts.txt
+mu_concentration 1.0
+MCMC_traces MCMC_traces
+preference_plots preference_plots
+stepincrease 4
+seed 1
+convergence 0.01
+ncpus 12
+nruns 3
+pi_concentration 1.0
+removeoutlier False
+rho_concentration 1.0
+epsilon_concentration 1.0
+minvalue 1e-7
+thin 200
+nsteps 200000
+sites 2 565
+outfileprefix replicate_1

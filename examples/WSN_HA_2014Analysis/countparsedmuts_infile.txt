@@ -1,0 +1,9 @@
+plotfileprefix countparsedmuts
+maxn 50
+legendloc right
+sites 2 565
+writecounts False
+DNA replicate_1/DNA/replicate_1_DNA_codoncounts.txt replicate_2/DNA/replicate_2_DNA_codoncounts.txt replicate_3/DNA/replicate_3_DNA_codoncounts.txt
+mutDNA replicate_1/mutDNA/replicate_1_mutDNA_codoncounts.txt replicate_2/mutDNA/replicate_2_mutDNA_codoncounts.txt replicate_3/mutDNA/replicate_3_mutDNA_codoncounts.txt
+virus replicate_1/virus/replicate_1_virus_codoncounts.txt replicate_2/virus/replicate_2_virus_codoncounts.txt replicate_3/virus/replicate_3_virus_codoncounts.txt
+mutvirus replicate_1/mutvirus/replicate_1_mutvirus_codoncounts.txt replicate_2/mutvirus/replicate_2_mutvirus_codoncounts.txt replicate_3/mutvirus/replicate_3_mutvirus_codoncounts.txt

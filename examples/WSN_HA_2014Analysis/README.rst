@@ -191,7 +191,7 @@ The output files are deposited within the subdirectory for each sample. The outp
 
 The `mapmuts`_ script ``mapmuts_alignmentsummaryplot.py`` creates a summary of the number of aligned reads for all samples in each replicate. Here is this plot, it shows a large number of overlapping paired-end reads for all samples.
 
-      .. figure:: example_WSN_HA_2014Analysis_alignmentsummaryplot.jpg
+      .. figure:: alignmentsummaryplot.jpg
          :width: 50%
          :align: center
          :alt: alignmentsummaryplot.jpg
@@ -213,7 +213,7 @@ The `mapmuts`_ script ``mapmuts_parsecounts.py`` (see `mapmuts documentation`_) 
 
 Below is an example of one of the files showing the read depth across the sequence. The read depth is not entirely uniform due to biases in fragmentation, but all sites have a large number of reads. 
 
-      .. figure:: example_WSN_HA_2014Analysis_replicate_3_DNA_replicate_3_DNA_codondepth.jpg
+      .. figure:: replicate_3/DNA/replicate_3_DNA_codondepth.jpg
          :width: 50%
          :align: center
          :alt: replicate_3/DNA/replicate_3_DNA_codondepth.jpg
@@ -229,7 +229,7 @@ The `mapmuts`_ script ``mapmuts_parsesummaryplots.py`` summarizes the output fro
        
 Below is the key plot. It shows a relatively low background error rate, and selection against stop codon and nonsynonymous mutations in the mutant viruses relative to the mutant DNA.
 
-      .. figure:: example_WSN_HA_2014Analysis_parsesummary_codon_types_and_nmuts.jpg
+      .. figure:: parsesummary_codon_types_and_nmuts.jpg
          :width: 60%
          :align: center
          :alt: parsesummary_codon_types_and_nmuts.jpg
@@ -250,7 +250,7 @@ The `mapmuts`_ script ``mapmuts_countparsedmuts.py`` is used to summarize the nu
 
 Below are files showing the occurrences of multi-nucleotide codon mutations. This first plot is for the combined data for all three biological replicates.
 
-      .. figure:: example_WSN_HA_2014Analysis_countparsedmuts_multi-nt-codonmutcounts.jpg
+      .. figure:: countparsedmuts_multi-nt-codonmutcounts.jpg
          :width: 70%
          :align: center
          :alt: countparsedmuts_multi-nt-codonmutcounts.jpg
@@ -261,28 +261,28 @@ Specifically, the above plot show that 85% of synonymous multi-nucleotide codon 
 
 The next plots show the replicates individually. None of the individual replicates are as comprehensive as the three biological replicates combined.
 
-      .. figure:: example_WSN_HA_2014Analysis_replicate_1_countparsedmuts_multi-nt-codonmutcounts.jpg
+      .. figure:: replicate_1/countparsedmuts_multi-nt-codonmutcounts.jpg
          :width: 70%
          :align: center
          :alt: replicate_1/countparsedmuts_multi-nt-codonmutcounts.jpg
 
          The ``replicate_1/countparsedmuts_multi-nt-codonmutcounts.pdf`` file shows the occurrence of mutations in *replicate 1* alone.
 
-      .. figure:: example_WSN_HA_2014Analysis_replicate_2_countparsedmuts_multi-nt-codonmutcounts.jpg
+      .. figure:: replicate_2/countparsedmuts_multi-nt-codonmutcounts.jpg
          :width: 70%
          :align: center
          :alt: replicate_2/countparsedmuts_multi-nt-codonmutcounts.jpg
 
          The ``replicate_2/countparsedmuts_multi-nt-codonmutcounts.pdf`` file shows the occurrence of mutations in *replicate 2* alone.
 
-      .. figure:: example_WSN_HA_2014Analysis_replicate_3_countparsedmuts_multi-nt-codonmutcounts.jpg
+      .. figure:: replicate_3/countparsedmuts_multi-nt-codonmutcounts.jpg
          :width: 70%
          :align: center
          :alt: replicate_3/countparsedmuts_multi-nt-codonmutcounts.jpg
 
          The ``replicate_3/countparsedmuts_multi-nt-codonmutcounts.pdf`` file shows the occurrence of mutations in *replicate 3* alone.
 
-      .. figure:: example_WSN_HA_2014Analysis_replicate_1_repeat_countparsedmuts_multi-nt-codonmutcounts.jpg
+      .. figure:: replicate_1_repeat/countparsedmuts_multi-nt-codonmutcounts.jpg
          :width: 70%
          :align: center
          :alt: replicate_1_repeat/countparsedmuts_multi-nt-codonmutcounts.jpg
@@ -329,28 +329,28 @@ The `mapmuts`_ script ``mapmuts_preferencescorrelate.py`` uses the computed amin
 
 Below are the key correlation plots. They show a significant but imperfect correlation between the preferences from biological replicates. The correlation between the technical repeats of replicate 1 is very high. Therefore, variation comes from the biological process of viral growth rather than from technical sources such as sequencing errors.
 
-      .. figure:: example_WSN_HA_2014Analysis_correlations_replicate_1_vs_replicate_2.jpg
+      .. figure:: correlations/replicate_1_vs_replicate_2.jpg
          :width: 30%
          :align: center
          :alt: correlations/replicate_1_vs_replicate_2.jpg
 
          Moderate correlation between biological replicates 1 and 2 (``./correlations/replicate_1_vs_replicate_2.jpg``).
 
-      .. figure:: example_WSN_HA_2014Analysis_correlations_replicate_1_vs_replicate_3.jpg
+      .. figure:: correlations/replicate_1_vs_replicate_3.jpg
          :width: 30%
          :align: center
          :alt: correlations/replicate_1_vs_replicate_3.jpg
 
          Moderate correlation between biological replicates 1 and 3 (``./correlations/replicate_1_vs_replicate_3.jpg``).
 
-      .. figure:: example_WSN_HA_2014Analysis_correlations_replicate_2_vs_replicate_3.jpg
+      .. figure:: correlations/replicate_2_vs_replicate_3.jpg
          :width: 30%
          :align: center
          :alt: correlations/replicate_2_vs_replicate_3.jpg
 
          Moderate correlation between biological replicates 2 and 3 (``./correlations/replicate_2_vs_replicate_3.jpg``).
 
-      .. figure:: example_WSN_HA_2014Analysis_correlations_replicate_1_vs_replicate_1_repeat.jpg
+      .. figure:: correlations/replicate_1_vs_replicate_1_repeat.jpg
          :width: 30%
          :align: center
          :alt: correlations/replicate_1_vs_replicate_1_repeat.jpg
@@ -374,14 +374,14 @@ The ``pipeline.py`` script creates two sequence logo plots as outputs with the s
 
 Below are these plots: 
 
-      .. figure:: example_WSN_HA_2014Analysis_sequentialnumbering_site_preferences_logoplot.jpg
+      .. figure:: sequentialnumbering_site_preferences_logoplot.jpg
          :width: 90%
          :align: center
          :alt: sequentialnumbering_preferences_logoplot.jpg
           
      The ``sequentialnumbering_site_preferences_logoplot.pdf`` file, showing the preferences with sequential numbering of the HA..
 
-      .. figure:: example_WSN_HA_2014Analysis_H3numbering_site_preferences_logoplot.jpg
+      .. figure:: H3numbering_site_preferences_logoplot.jpg
          :width: 90%
          :align: center
          :alt: H3numbering_preferences_logoplot.jpg
@@ -410,14 +410,14 @@ An analysis to examine the mutational tolerance of these subsets of sites is don
 
 The following plots summarize the results graphically:
 
-.. figure:: example_WSN_HA_2014Analysis_antigenic_entropy_rsa_correlation.jpg
+.. figure:: antigenic_entropy_rsa_correlation.jpg
    :width: 40%
    :align: center
    :alt: antigenic_entropy_rsa_correlation.jpg
 
    The ``antigenic_entropy_rsa_correlation.pdf`` file shows the site entropy (in bits) and RSA for residues in antigenic sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, antigenic-site residues appear to be more mutationally tolerant (higher site entropy).
 
-.. figure:: example_WSN_HA_2014Analysis_nearby_antigenic_entropy_rsa_correlation.jpg
+.. figure:: nearby_antigenic_entropy_rsa_correlation.jpg
    :width: 40%
    :align: center
    :alt: nearby_antigenic_entropy_rsa_correlation.jpg
@@ -425,14 +425,14 @@ The following plots summarize the results graphically:
    The ``nearby_antigenic_entropy_rsa_correlation.pdf`` file shows the site entropy (in bits) and RSA for residues in antigenic sites or in contact with antigenic sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, antigenic-site residues and their nearby neighbors appear to be more mutationally tolerant (higher site entropy).
 
 
-.. figure:: example_WSN_HA_2014Analysis_receptor_binding_entropy_rsa_correlation.jpg
+.. figure:: receptor_binding_entropy_rsa_correlation.jpg
    :width: 40%
    :align: center
    :alt: receptor_binding_entropy_rsa_correlation.jpg
 
    The ``receptor_binding_entropy_rsa_correlation.pdf`` file shows the site entropy (in bits) and RSA for residues in conserved receptor-binding sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, receptor-binding residues appear to be less mutationally tolerant (lower site entropy).
 
-.. figure:: example_WSN_HA_2014Analysis_allRBS_entropy_rsa_correlation.jpg
+.. figure:: allRBS_entropy_rsa_correlation.jpg
    :width: 40%
    :align: center
    :alt: allRBS_entropy_rsa_correlation.jpg
@@ -441,28 +441,28 @@ The following plots summarize the results graphically:
 
 To statistically test whether the selected sites differ in site entropy, ``mapmuts_entropycomparison.py`` uses linear regression. The results for the antigenic sites are in ``antigenic_linearmodelresults.txt``, which is included below:
 
-.. include:: example_WSN_HA_2014Analysis_antigenic_linearmodelresults.txt
+.. include:: antigenic_linearmodelresults.txt
    :literal:
 
 These results show that being in antigenic site is significantly correlated with higher mutational tolerance after controlling for RSA.
 
 The results for the antigenic sites and their nearby neighbors are in receptor-binding sites are in ``nearby_antigenic_linearmodelresults.txt``, which is included below:
 
-.. include:: example_WSN_HA_2014Analysis_nearby_antigenic_linearmodelresults.txt
+.. include:: nearby_antigenic_linearmodelresults.txt
    :literal:
 
 These results show that being in antigenic site or nearby an antigenic site is significantly correlated with higher mutational tolerance after controlling for RSA.
 
 The results for the conserved receptor-binding sites are in ``receptor_binding_linearmodelresults.txt``, which is included below:
 
-.. include:: example_WSN_HA_2014Analysis_receptor_binding_linearmodelresults.txt
+.. include:: receptor_binding_linearmodelresults.txt
    :literal:
 
 These results show that being in a conserved receptor-binding site is significantly correlated with lower mutational tolerance after controlling for RSA.
 
 The results for all (not just conserved) receptor-binding sites are in ``allRBS_linearmodelresults.txt``, which is included below:
 
-.. include:: example_WSN_HA_2014Analysis_allRBS_linearmodelresults.txt
+.. include:: allRBS_linearmodelresults.txt
    :literal:
 
 These results show that being in any receptor-binding site is somewhat correlated with lower mutational tolerance after controlling for RSA, but that the difference is not significant.
@@ -471,7 +471,7 @@ Comparison to NP
 ~~~~~~~~~~~~~~~~~~~
 The results in `Mutational tolerance of antigenic and receptor-binding sites`_ suggest that antigenic sites in hemagglutinin are especially tolerant of mutations. As a comparison data set, we used results from deep mutational scanning of NP described in `An experimentally determined evolutionary model dramatically improves phylogenetic fit`_. Specifically, that paper allowed us to quantify the site entropy of every site in NP (in the file ``./NP_stuff/NP_amino_acid_preferences.txt``). `Gong and Bloom 2014`_ mapped the number of CTL epitopes per site in NP (in the file ``./NP_stuff/NP_CTL_epitope_sitecounts.csv``). The average site in NP participates in 1.1 CTL epitopes. We therefore classified sites as being above average in their number of CTL epitopes if they participated in two or more epitopes -- there are 114 such sites. We then asked whether these sites with at least two CTL epitopes had higher or lower site entropy than other sites. This analysis is all done by the ``pipeline.py`` script. Here are the results:
 
-.. figure:: example_WSN_HA_2014Analysis_NP_CTL_entropy_rsa_correlation.jpg
+.. figure:: NP_CTL_entropy_rsa_correlation.jpg
    :width: 40%
    :align: center
    :alt: NP_CTL_entropy_rsa_correlation.jpg
@@ -480,7 +480,7 @@ The results in `Mutational tolerance of antigenic and receptor-binding sites`_ s
 
 The linear regression results are in ``NP_CTL_linearmodelresults.txt``, which is included below:
 
-.. include:: example_WSN_HA_2014Analysis_NP_CTL_linearmodelresults.txt
+.. include:: NP_CTL_linearmodelresults.txt
    :literal:
 
 Overall, for NP there is no significant tendency for CTL epitope sites to have higher mutational tolerance. Therefore, while HA does have enhanced mutational tolerance in its antigenic sites, there is no enhanced mutational tolerance in NP antigenic sites.
@@ -499,35 +499,35 @@ This step is **manual**, and is not done by the ``pipeline.py`` script. Do the f
 
 3) This will create five ``*.png`` files in the ``./PDB_structure/`` directory. For all of these images, one of the three HA monomers from the PR8 structure `1RVX`_ is colored according to site entropies (calculated from the amino-acid preferences in ``average_equilibriumpreferences.txt``) from blue (lowest entropy) to red (highest entropy). The other two HAmonomers are in gray. These images are shown below:
 
-.. figure:: example_WSN_HA_2014Analysis_PDB_structure_entropy_colored_structure.png
+.. figure:: PDB_structure/entropy_colored_structure.png
    :width: 40%
    :align: center
    :alt: PDB_structure/entropy_colored_structure.png
 
    ``entropy_colored_structure.png`` shows a surface rendering for all residues.
 
-.. figure:: example_WSN_HA_2014Analysis_PDB_structure_conservedRBS_entropy_colored_structure.png
+.. figure:: PDB_structure/conservedRBS_entropy_colored_structure.png
    :width: 40%
    :align: center
    :alt: PDB_structure/conservedRBS_entropy_colored_structure.png
 
    ``conservedRBS_entropy_colored_structure.png`` shows the HA1 residues colored according to site entropy, with the conserved receptor-binding residues in spheres.
 
-.. figure:: example_WSN_HA_2014Analysis_PDB_structure_allRBS_entropy_colored_structure.png
+.. figure:: PDB_structure/allRBS_entropy_colored_structure.png
    :width: 40%
    :align: center
    :alt: PDB_structure/allRBS_entropy_colored_structure.png
 
    ``allRBS_entropy_colored_structure.png`` shows the HA1 residues colored according to site entropy, with the all receptor-binding residues (within 5 angstroms of receptor) in spheres.
 
-.. figure:: example_WSN_HA_2014Analysis_PDB_structure_antigenicsites_entropy_colored_structure.png
+.. figure:: PDB_structure/antigenicsites_entropy_colored_structure.png
    :width: 40%
    :align: center
    :alt: PDB_structure/antigenicsites_entropy_colored_structure.png
 
    ``antigenicsites_entropy_colored_structure.png`` shows the HA1 residues colored according to site entropy, with the `Caton et al 1982`_ antigenic sites in spheres.
 
-.. figure:: example_WSN_HA_2014Analysis_PDB_structure_nearantigenicsites_entropy_colored_structure.png
+.. figure:: PDB_structure/nearantigenicsites_entropy_colored_structure.png
    :width: 40%
    :align: center
    :alt: PDB_structure/nearantigenicsites_entropy_colored_structure.png
@@ -548,7 +548,7 @@ Some of the mutations are reported to have relative fitness of zero by `Wu et al
 
 The overall correlation (on a log-log plot) is shown in the following generated plot:
 
-.. figure:: example_WSN_HA_2014Analysis_correlation_with_Wu_et_al.jpg
+.. figure:: correlation_with_Wu_et_al.jpg
    :width: 40%
    :align: center
    :alt: correlation_with_Wu_et_al.jpg

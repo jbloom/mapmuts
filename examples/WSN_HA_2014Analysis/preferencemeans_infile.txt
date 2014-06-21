@@ -1,0 +1,3 @@
+preferencefiles replicate_1/replicate_1_equilibriumpreferences.txt replicate_2/replicate_2_equilibriumpreferences.txt replicate_3/replicate_3_equilibriumpreferences.txt
+includestop False
+outfile average_equilibriumpreferences.txt

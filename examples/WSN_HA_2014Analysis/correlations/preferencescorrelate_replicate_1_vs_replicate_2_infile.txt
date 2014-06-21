@@ -1,0 +1,4 @@
+plotdir ./
+samplenames replicate_1 replicate_2
+preferencesfiles /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_1/replicate_1_equilibriumpreferences.txt /home/jbloom/mapmuts/examples/WSN_HA_2014Analysis/replicate_2/replicate_2_equilibriumpreferences.txt
+alpha 0.1
