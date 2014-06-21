@@ -75,14 +75,15 @@
 <li><a class="reference internal" href="#calculating-preference-means" id="id14">Calculating preference means</a></li>
 <li><a class="reference internal" href="#creating-the-sequence-logo-plot" id="id15">Creating the sequence logo plot</a></li>
 <li><a class="reference internal" href="#mutational-tolerance-of-antigenic-and-receptor-binding-sites" id="id16">Mutational tolerance of antigenic and receptor-binding sites</a></li>
-<li><a class="reference internal" href="#entropy-mapped-structure" id="id17">Entropy-mapped structure</a></li>
+<li><a class="reference internal" href="#comparison-to-np" id="id17">Comparison to NP</a></li>
+<li><a class="reference internal" href="#entropy-mapped-structures" id="id18">Entropy-mapped structures</a></li>
+<li><a class="reference internal" href="#correlation-with-wu-et-al" id="id19">Correlation with Wu et al</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </div>
-<p><strong>This documentation and description of the analysis is publicly available. The specific data for this analysis is not currently publicly available in the ``examples/WSN_HA_2014Analysis/`` subdirectory, but will be made available upon publication of the paper. If you are a reviewer and would like to see this data now, please relay to the request to Jesse via the editor.</strong></p>
 <div class="section" id="overview">
 <h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The overall strategy to analyze influenza hemagglutinin (HA) from A/WSN/1933(H1N1) is to mutagenize each position of the HA sequence to all possible amino acid variants and use deep-sequencing to decipher the amino acid preference at each position. This approach was initially described as &#8220;deep mutational scanning&#8221; by <a class="reference external" href="http://www.nature.com/nmeth/journal/v7/n9/full/nmeth.1492.html">Fowler et al</a>, and was subsequently adapted by the <a class="reference external" href="http://research.fhcrc.org/bloom/en.html">Bloom lab</a> to influenza.</p>
@@ -127,7 +128,7 @@
 <div class="highlight-python"><div class="highlight"><pre>python pipeline.py
 </pre></div>
 </div>
-<p>The exception is the steps in <a class="reference internal" href="#entropy-mapped-structure">Entropy-mapped structure</a>, which require some manual manipulations.</p>
+<p>The exception is the steps in <a class="reference internal" href="#entropy-mapped-structures">Entropy-mapped structures</a>, which require some manual manipulations.</p>
 <div class="section" id="input-files">
 <h3><a class="toc-backref" href="#id7">Input files</a><a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h3>
 <p>Input files needed for the analysis.</p>
@@ -161,9 +162,33 @@ R2_trim sequence: CTGTCTCTTATACACATCTGACGCTGCCGACGA
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">Caton_H1_HA_antigenic_sites.txt</span></tt> is a text file that defines the antigenic sites in HA, based on the analysis originally done by <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a>. See the text file itself for detailed information.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">receptor_binding_residues.txt</span></tt> is a text file that defines the conserved receptor binding sites for the HA, based largely on the analysis done originally by <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/9454721">Martin et al 1998</a>. See the text file itself for detailed information.</p>
+<li><p class="first"><tt class="docutils literal"><span class="pre">receptor_binding_residues.txt</span></tt> is a text file that defines the conserved receptor binding sites for the HA, based largely on the analysis done originally by <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/9454721">Martin et al 1998</a>. See the text file itself for detailed information. Note that these are <strong>not</strong> all receptor-binding residues, but rather all <strong>conserved</strong> receptor-binding residues as explained within the <tt class="docutils literal"><span class="pre">receptor_binding_residues.txt</span></tt> file.</p>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">entropy_label_PDB.py</span></tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that uses <a class="reference external" href="http://www.pymol.org/">PyMOL</a> to label the crystal structure.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">assess_aa_completeness.py</span></tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that estimates the completenes with which amino-acid mutations were sampled from knowledge of the sampling of codon mutations.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_PDB_contacts.py</span></tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that defines contacting residues.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_sites_near_Caton_sites.py</span></tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that defines the sites that are near <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> antigenic sites and are solvent exposed.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_RBS.py</span></tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that is used to create the file <tt class="docutils literal"><span class="pre">allRBS_residues.txt</span></tt>. This must be done manually using <a class="reference external" href="http://www.pymol.org/">PyMOL</a>. Briefly, the created <tt class="docutils literal"><span class="pre">allRBS_residues.txt</span></tt> file contains all residues that have any atom within 5.0 angstroms of the receptor bound in the <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=1rvx">1RVX</a> PDB structure. To create <tt class="docutils literal"><span class="pre">allRBS_residues.txt</span></tt>, open <a class="reference external" href="http://www.pymol.org/">PyMOL</a> and then run the following command within <a class="reference external" href="http://www.pymol.org/">PyMOL</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre>run get_RBS.py
+</pre></div>
+</div>
+</li>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">./NP_stuff/</span></tt> contains files related to the comparative analysis with influenza nucleoprotein. Specifically, it contains the following files:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">NP_CTL_epitope_sitecounts.csv</span></tt> is a list of the CTL epitopes per site in NP. This is Table S1 from <a class="reference external" href="http://www.plosgenetics.org/article/info%3Adoi%2F10.1371%2Fjournal.pgen.1004328">Gong and Bloom 2014</a>. See that reference for a detailed description of how the CTL epitopes were defined.</li>
+<li><tt class="docutils literal"><span class="pre">NP_amino_acid_preferences.txt</span></tt> are the experimentally determined site-specific amino-acid preferences for NP. This is Supplementary file S1 from <a class="reference external" href="http://mbe.oxfordjournals.org/content/early/2014/06/12/molbev.msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>.</li>
+<li><tt class="docutils literal"><span class="pre">2IQH_monomerC.dssp</span></tt> is the analysis of the solvent exposure and secondary structure of the NP crystal structure using the <a class="reference external" href="http://www.cmbi.ru.nl/hsspsoap/">DSSP webserver</a> described in <a class="reference external" href="http://mbe.oxfordjournals.org/content/early/2014/06/12/molbev.msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a> (this paper provides links to the source code and data that contain this file).</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">Wu_et_al_Table_S1.csv</span></tt> is a file containing the data in Table S1 of <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>. This is the &#8220;relative fitness&#8221; values of about 20% of the possible mutations to HA.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">correlate_with_Wu_data.py</span></tt> is a <a class="reference external" href="https://www.python.org/">Python</a> script that correlates the data in <tt class="docutils literal"><span class="pre">Wu_et_al_Table_S1.csv</span></tt> with the site-specific amino-acid preferences inferred during the analysis described here (see <a class="reference internal" href="#correlation-with-wu-et-al">Correlation with Wu et al</a>).</p>
 </li>
 </ul>
 </div></blockquote>
@@ -178,7 +203,7 @@ on the Fred Hutchinson computer cluster using the following Linux distribution:<
 <p>In order to replicate the analysis, you will also need to use Linux or Mac OS X, and install the following software.</p>
 <p>The specific software versions used for the analysis are specified. You can probably also use other software versions in many cases, but this has not been confirmed.</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> version 1.0</li>
+<li><a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> : specifically, <a class="reference external" href="https://github.com/jbloom/mapmuts/tree/v1.01">mapmuts version 1.01</a></li>
 <li><a class="reference external" href="https://www.python.org/">Python</a> version 2.7.3</li>
 <li><a class="reference external" href="http://www.numpy.org/">numpy</a> version 1.6.1</li>
 <li><a class="reference external" href="http://matplotlib.org/">matplotlib</a> version 1.3.1</li>
@@ -285,6 +310,7 @@ upcase test
 <p class="caption">The <tt class="docutils literal"><span class="pre">countparsedmuts_multi-nt-codonmutcounts.pdf</span></tt> file shows the occurrence of mutations in the three biological replicates combined. Nearly all mutations are sampled in the mutated DNA, and a high fraction are sampled in the mutant viruses.</p>
 </div>
 </div></blockquote>
+<p>Specifically, the above plot show that 85% of synonymous multi-nucleotide codon mutations are sampled at least five times in the combined libraries. The script <tt class="docutils literal"><span class="pre">assess_aa_completeness.py</span></tt> determines the fraction of amino acids that have at least one codon sampled at least five times given the structure of the genetic code. It turns out that 97% of amino acids are expected to have at least one codon sampled at least five times when 85% of codons are sampled.</p>
 <p>The next plots show the replicates individually. None of the individual replicates are as comprehensive as the three biological replicates combined.</p>
 <blockquote>
 <div><div class="figure align-center">
@@ -386,16 +412,41 @@ MCMC_traces/replicate_*_residue_*.pdf
 </div>
 <div class="section" id="mutational-tolerance-of-antigenic-and-receptor-binding-sites">
 <h3><a class="toc-backref" href="#id16">Mutational tolerance of antigenic and receptor-binding sites</a><a class="headerlink" href="#mutational-tolerance-of-antigenic-and-receptor-binding-sites" title="Permalink to this headline">¶</a></h3>
-<p>The results shown in the previous section summarize the inherent mutational tolerance of different sites in influenza. It is well known that sites with higher solvent accessibility are more mutationally tolerant. It is interesting to ask if residues in antigenic sites and receptor-binding sites (as defined in <tt class="docutils literal"><span class="pre">Caton_H1_HA_antigenic_sites.txt</span></tt> and <tt class="docutils literal"><span class="pre">receptor_binding_sites.txt</span></tt> as described in <a class="reference internal" href="#input-files">Input files</a>) have especially high or low mutational tolerance after controlling for RSA (relative solvent accessibility). For example, it seems likely that receptor-binding sites will have low mutational tolerance due to functional constraints. It is also possible that antigenic sites will have high mutational tolerance if evolvability of antigenic sites is a factor that contributes to influenza immune escape.</p>
-<p>An analysis to examine this is done by the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal"><span class="pre">mapmuts_entropycomparison.py</span></tt> (described in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>). The plots are below, as are the results of multiple linear regression analyses performed by <a class="reference external" href="http://www.r-project.org/">R</a> to test for statistical associations. The analysis is limited to residues in the HA1 chain since all antigenic and receptor-binding residues are in this chain.</p>
-<p>The following two plots summarize the results graphically:</p>
+<p>The results shown in the previous section summarize the inherent mutational tolerance of different sites in influenza. It is well known that sites with higher solvent accessibility are more mutationally tolerant. It is interesting to ask if residues in antigenic sites and receptor-binding sites (as defined in <tt class="docutils literal"><span class="pre">Caton_H1_HA_antigenic_sites.txt</span></tt> and <tt class="docutils literal"><span class="pre">receptor_binding_sites.txt</span></tt> as described in <a class="reference internal" href="#input-files">Input files</a>) have especially high or low mutational tolerance after controlling for RSA (relative solvent accessibility). For example, it seems likely that conserved receptor-binding sites will have low mutational tolerance due to functional constraints. It is also possible that antigenic sites will have high mutational tolerance if evolvability of antigenic sites is a factor that contributes to influenza immune escape.</p>
+<p>A possible confounding factor when examining the mutational tolerance of the antigenic sites defined by <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> is that these sites were defined in part by being the location of escape mutations during monoclonal antibody escape &#8211; they therefore might be more tolerant of mutations simply because they are close to other sites. In order to assess this, we also defined all sites that are near known antigenic sites and are solvent exposed. This definition should include sites near antigenic sites that were not selected by <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> and could in principle have low mutational tolerance. Specifically, these sites were defined as any sites that have a alpha-carbon to alpha-carbon distance of less than or equal to 6 angstroms from a <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> antigenic site and also have a relative solvent accessibility of at least 0.2. These sites must be defined manually (this is <strong>not</strong> done by the <tt class="docutils literal"><span class="pre">pipeline.py</span></tt> script) using the following two steps:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Define all HA1 sites in contact (within 6 angstroms CA-CA distance) with other HA1 sites by opening <a class="reference external" href="http://www.pymol.org/">PyMOL</a> and running the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>run get_PDB_contacts.py
+</pre></div>
+</div>
+<p>This command creates the file <tt class="docutils literal"><span class="pre">PDB_structure/contacting_residues.txt</span></tt>, which defines all residues that contact other residues in the same HA1 monomer.</p>
+</li>
+<li><p class="first">Use the definitions in the created <tt class="docutils literal"><span class="pre">PDB_structure/contacting_residues.txt</span></tt> file and the solvent accessibilities within the file <tt class="docutils literal"><span class="pre">PDB_structure/1RVX_trimer_renumbered.dssp</span></tt> to define all sites with relative solvent accessibility (RSA) of at least 0.2 that contact an antigenic site. This is done by running at the command line:</p>
+<div class="highlight-python"><div class="highlight"><pre>python get_sites_near_Caton_sites.py
+</pre></div>
+</div>
+<p>This creates the file <tt class="docutils literal"><span class="pre">nearby_antigenic_sites.txt</span></tt> which lists (in 1, 2, ... numbering) all antigenic sites in <tt class="docutils literal"><span class="pre">Caton_H1_HA_antigenic_sites.txt</span></tt> plus all their contacting sites.</p>
+</li>
+</ol>
+</div></blockquote>
+<p>An analysis to examine the mutational tolerance of these subsets of sites is done by the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal"><span class="pre">mapmuts_entropycomparison.py</span></tt> (described in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>). The plots are below, as are the results of multiple linear regression analyses performed by <a class="reference external" href="http://www.r-project.org/">R</a> to test for statistical associations. The analysis is limited to residues in the HA1 chain since all antigenic and receptor-binding residues are in this chain.</p>
+<p>The following plots summarize the results graphically:</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_antigenic_entropy_rsa_correlation.jpg"><img alt="antigenic_entropy_rsa_correlation.jpg" src="_images/example_WSN_HA_2014Analysis_antigenic_entropy_rsa_correlation.jpg" style="width: 40%;" /></a>
 <p class="caption">The <tt class="docutils literal"><span class="pre">antigenic_entropy_rsa_correlation.pdf</span></tt> file shows the site entropy (in bits) and RSA for residues in antigenic sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, antigenic-site residues appear to be more mutationally tolerant (higher site entropy).</p>
 </div>
 <div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_nearby_antigenic_entropy_rsa_correlation.jpg"><img alt="nearby_antigenic_entropy_rsa_correlation.jpg" src="_images/example_WSN_HA_2014Analysis_nearby_antigenic_entropy_rsa_correlation.jpg" style="width: 40%;" /></a>
+<p class="caption">The <tt class="docutils literal"><span class="pre">nearby_antigenic_entropy_rsa_correlation.pdf</span></tt> file shows the site entropy (in bits) and RSA for residues in antigenic sites or in contact with antigenic sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, antigenic-site residues and their nearby neighbors appear to be more mutationally tolerant (higher site entropy).</p>
+</div>
+<div class="figure align-center">
 <a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_receptor_binding_entropy_rsa_correlation.jpg"><img alt="receptor_binding_entropy_rsa_correlation.jpg" src="_images/example_WSN_HA_2014Analysis_receptor_binding_entropy_rsa_correlation.jpg" style="width: 40%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">receptor_binding_entropy_rsa_correlation.pdf</span></tt> file shows the site entropy (in bits) and RSA for residues in receptor-binding sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, receptor-binding residues appear to be less mutationally tolerant (lower site entropy).</p>
+<p class="caption">The <tt class="docutils literal"><span class="pre">receptor_binding_entropy_rsa_correlation.pdf</span></tt> file shows the site entropy (in bits) and RSA for residues in conserved receptor-binding sites (red triangles) and all other residues in the HA1 chain (blue circles). Qualitatively, receptor-binding residues appear to be less mutationally tolerant (lower site entropy).</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_allRBS_entropy_rsa_correlation.jpg"><img alt="allRBS_entropy_rsa_correlation.jpg" src="_images/example_WSN_HA_2014Analysis_allRBS_entropy_rsa_correlation.jpg" style="width: 40%;" /></a>
+<p class="caption">The <tt class="docutils literal"><span class="pre">allRBS_entropy_rsa_correlation.pdf</span></tt> file shows the site entropy (in bits) and RSA for <strong>all</strong> residues in receptor-binding sites, including non-conserved sites, (red triangles) and all other residues in the HA1 chain (blue circles).</p>
 </div>
 <p>To statistically test whether the selected sites differ in site entropy, <tt class="docutils literal"><span class="pre">mapmuts_entropycomparison.py</span></tt> uses linear regression. The results for the antigenic sites are in <tt class="docutils literal"><span class="pre">antigenic_linearmodelresults.txt</span></tt>, which is included below:</p>
 <pre class="literal-block">
@@ -419,7 +470,29 @@ F-statistic: 81.65 on 2 and 341 DF,  p-value: &lt; 2.2e-16
 
 </pre>
 <p>These results show that being in antigenic site is significantly correlated with higher mutational tolerance after controlling for RSA.</p>
-<p>The results for the receptor-binding sites are in <tt class="docutils literal"><span class="pre">receptor_binding_linearmodelresults.txt</span></tt>, which is included below:</p>
+<p>The results for the antigenic sites and their nearby neighbors are in receptor-binding sites are in <tt class="docutils literal"><span class="pre">nearby_antigenic_linearmodelresults.txt</span></tt>, which is included below:</p>
+<pre class="literal-block">
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.3990 -0.2727  0.0033  0.3408  0.9801 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.88423    0.03390  85.069  &lt; 2e-16 ***
+RSA          1.22043    0.12871   9.482  &lt; 2e-16 ***
+selected     0.23110    0.07496   3.083  0.00221 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4568 on 341 degrees of freedom
+Multiple R-squared:  0.3226,    Adjusted R-squared:  0.3186 
+F-statistic: 81.19 on 2 and 341 DF,  p-value: &lt; 2.2e-16
+
+
+
+</pre>
+<p>These results show that being in antigenic site or nearby an antigenic site is significantly correlated with higher mutational tolerance after controlling for RSA.</p>
+<p>The results for the conserved receptor-binding sites are in <tt class="docutils literal"><span class="pre">receptor_binding_linearmodelresults.txt</span></tt>, which is included below:</p>
 <pre class="literal-block">
 Residuals:
     Min      1Q  Median      3Q     Max 
@@ -440,11 +513,64 @@ F-statistic:  81.5 on 2 and 341 DF,  p-value: &lt; 2.2e-16
 
 
 </pre>
-<p>These results show that being in antigenic site is significantly correlated with lower mutational tolerance after controlling for RSA.</p>
+<p>These results show that being in a conserved receptor-binding site is significantly correlated with lower mutational tolerance after controlling for RSA.</p>
+<p>The results for all (not just conserved) receptor-binding sites are in <tt class="docutils literal"><span class="pre">allRBS_linearmodelresults.txt</span></tt>, which is included below:</p>
+<pre class="literal-block">
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.54556 -0.27443 -0.02212  0.36633  0.93024 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.89410    0.03482  83.111   &lt;2e-16 ***
+RSA          1.40180    0.11495  12.195   &lt;2e-16 ***
+selected    -0.17694    0.11483  -1.541    0.124    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4615 on 341 degrees of freedom
+Multiple R-squared:  0.3085,    Adjusted R-squared:  0.3044 
+F-statistic: 76.07 on 2 and 341 DF,  p-value: &lt; 2.2e-16
+
+
+
+</pre>
+<p>These results show that being in any receptor-binding site is somewhat correlated with lower mutational tolerance after controlling for RSA, but that the difference is not significant.</p>
 </div>
-<div class="section" id="entropy-mapped-structure">
-<h3><a class="toc-backref" href="#id17">Entropy-mapped structure</a><a class="headerlink" href="#entropy-mapped-structure" title="Permalink to this headline">¶</a></h3>
-<p>This step is manual, and is not done by the <tt class="docutils literal"><span class="pre">pipeline.py</span></tt> script. Do the following:</p>
+<div class="section" id="comparison-to-np">
+<h3><a class="toc-backref" href="#id17">Comparison to NP</a><a class="headerlink" href="#comparison-to-np" title="Permalink to this headline">¶</a></h3>
+<p>The results in <a class="reference internal" href="#mutational-tolerance-of-antigenic-and-receptor-binding-sites">Mutational tolerance of antigenic and receptor-binding sites</a> suggest that antigenic sites in hemagglutinin are especially tolerant of mutations. As a comparison data set, we used results from deep mutational scanning of NP described in <a class="reference external" href="http://mbe.oxfordjournals.org/content/early/2014/06/12/molbev.msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>. Specifically, that paper allowed us to quantify the site entropy of every site in NP (in the file <tt class="docutils literal"><span class="pre">./NP_stuff/NP_amino_acid_preferences.txt</span></tt>). <a class="reference external" href="http://www.plosgenetics.org/article/info%3Adoi%2F10.1371%2Fjournal.pgen.1004328">Gong and Bloom 2014</a> mapped the number of CTL epitopes per site in NP (in the file <tt class="docutils literal"><span class="pre">./NP_stuff/NP_CTL_epitope_sitecounts.csv</span></tt>). The average site in NP participates in 1.1 CTL epitopes. We therefore classified sites as being above average in their number of CTL epitopes if they participated in two or more epitopes &#8211; there are 114 such sites. We then asked whether these sites with at least two CTL epitopes had higher or lower site entropy than other sites. This analysis is all done by the <tt class="docutils literal"><span class="pre">pipeline.py</span></tt> script. Here are the results:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_NP_CTL_entropy_rsa_correlation.jpg"><img alt="NP_CTL_entropy_rsa_correlation.jpg" src="_images/example_WSN_HA_2014Analysis_NP_CTL_entropy_rsa_correlation.jpg" style="width: 40%;" /></a>
+<p class="caption">The <tt class="docutils literal"><span class="pre">NP_CTL_entropy_rsa_correlation.pdf</span></tt> file shows the site entropy (in bits) and RSA for NP residues that participate in two or more CTL epitopes (red triangles) and all other sites (blue circles).</p>
+</div>
+<p>The linear regression results are in <tt class="docutils literal"><span class="pre">NP_CTL_linearmodelresults.txt</span></tt>, which is included below:</p>
+<pre class="literal-block">
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.69674 -0.17194  0.07198  0.25956  0.71721 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.44238    0.02858 120.436   &lt;2e-16 ***
+RSA         -0.04749    0.07394  -0.642    0.521    
+selected    -0.04156    0.04053  -1.026    0.306    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3675 on 433 degrees of freedom
+Multiple R-squared:  0.003341,  Adjusted R-squared:  -0.001263 
+F-statistic: 0.7257 on 2 and 433 DF,  p-value: 0.4846
+
+
+
+</pre>
+<p>Overall, for NP there is no significant tendency for CTL epitope sites to have higher mutational tolerance. Therefore, while HA does have enhanced mutational tolerance in its antigenic sites, there is no enhanced mutational tolerance in NP antigenic sites.</p>
+<p>Note also that unlike for HA, there is not a correlation between RSA and site entropy. This is probably because the folded structure of NP is an oligomer that wraps RNA, so even the surfaces are constrained by those functions.</p>
+</div>
+<div class="section" id="entropy-mapped-structures">
+<h3><a class="toc-backref" href="#id18">Entropy-mapped structures</a><a class="headerlink" href="#entropy-mapped-structures" title="Permalink to this headline">¶</a></h3>
+<p>This step is <strong>manual</strong>, and is not done by the <tt class="docutils literal"><span class="pre">pipeline.py</span></tt> script. Do the following:</p>
 <ol class="arabic">
 <li><p class="first">Open <a class="reference external" href="http://www.pymol.org/">PyMOL</a> in the main directory for this example.</p>
 </li>
@@ -453,13 +579,43 @@ F-statistic:  81.5 on 2 and 341 DF,  p-value: &lt; 2.2e-16
 </pre></div>
 </div>
 </li>
-<li><p class="first">This should create the file <tt class="docutils literal"><span class="pre">./PDB_structure/entropy_colored_structure.png</span></tt>.</p>
+<li><p class="first">This will create five <tt class="docutils literal"><span class="pre">*.png</span></tt> files in the <tt class="docutils literal"><span class="pre">./PDB_structure/</span></tt> directory. For all of these images, one of the three HA monomers from the PR8 structure <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=1rvx">1RVX</a> is colored according to site entropies (calculated from the amino-acid preferences in <tt class="docutils literal"><span class="pre">average_equilibriumpreferences.txt</span></tt>) from blue (lowest entropy) to red (highest entropy). The other two HAmonomers are in gray. These images are shown below:</p>
 </li>
 </ol>
-<p>This created image file is shown below.</p>
 <div class="figure align-center">
-<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_PDB_structure_entropy_colored_structure.png"><img alt="PDB_structure/entropy_colored_structure.png" src="_images/example_WSN_HA_2014Analysis_PDB_structure_entropy_colored_structure.png" style="width: 60%;" /></a>
-<p class="caption">The image <tt class="docutils literal"><span class="pre">entropy_colored_structure.png</span></tt> shows the PDB structure for an H1 HA (from the PR8 strain, PDB <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=1rvx">1RVX</a>) with the HA1 chain colored according to the site entropies calculated from the replicate averaged amino-acid preferences (<tt class="docutils literal"><span class="pre">average_equilibriumpreferences.txt</span></tt>). Blue color indicates the lowest entropy, and red color indicates the highest entropy. Two of the HA1 chains are colored (the third HA1 chain and all HA2 chains are in gray). For the chain on the left, the conserved receptor binding residues (as delineated in <tt class="docutils literal"><span class="pre">receptor_binding_residues.txt</span></tt>) are shown in spheres. For the chain on the right, the antigenic sites (as delineated in <tt class="docutils literal"><span class="pre">Caton_H1_HA_antigenic_sites.txt</span></tt>) are shown in spheres. It is apparent that the conserved receptor-binding residues have low entropy, and the antigenic sites have high entropy.</p>
+<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_PDB_structure_entropy_colored_structure.png"><img alt="PDB_structure/entropy_colored_structure.png" src="_images/example_WSN_HA_2014Analysis_PDB_structure_entropy_colored_structure.png" style="width: 40%;" /></a>
+<p class="caption"><tt class="docutils literal"><span class="pre">entropy_colored_structure.png</span></tt> shows a surface rendering for all residues.</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_PDB_structure_conservedRBS_entropy_colored_structure.png"><img alt="PDB_structure/conservedRBS_entropy_colored_structure.png" src="_images/example_WSN_HA_2014Analysis_PDB_structure_conservedRBS_entropy_colored_structure.png" style="width: 40%;" /></a>
+<p class="caption"><tt class="docutils literal"><span class="pre">conservedRBS_entropy_colored_structure.png</span></tt> shows the HA1 residues colored according to site entropy, with the conserved receptor-binding residues in spheres.</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_PDB_structure_allRBS_entropy_colored_structure.png"><img alt="PDB_structure/allRBS_entropy_colored_structure.png" src="_images/example_WSN_HA_2014Analysis_PDB_structure_allRBS_entropy_colored_structure.png" style="width: 40%;" /></a>
+<p class="caption"><tt class="docutils literal"><span class="pre">allRBS_entropy_colored_structure.png</span></tt> shows the HA1 residues colored according to site entropy, with the all receptor-binding residues (within 5 angstroms of receptor) in spheres.</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_PDB_structure_antigenicsites_entropy_colored_structure.png"><img alt="PDB_structure/antigenicsites_entropy_colored_structure.png" src="_images/example_WSN_HA_2014Analysis_PDB_structure_antigenicsites_entropy_colored_structure.png" style="width: 40%;" /></a>
+<p class="caption"><tt class="docutils literal"><span class="pre">antigenicsites_entropy_colored_structure.png</span></tt> shows the HA1 residues colored according to site entropy, with the <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a> antigenic sites in spheres.</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_PDB_structure_nearantigenicsites_entropy_colored_structure.png"><img alt="PDB_structure/nearantigenicsites_entropy_colored_structure.png" src="_images/example_WSN_HA_2014Analysis_PDB_structure_nearantigenicsites_entropy_colored_structure.png" style="width: 40%;" /></a>
+<p class="caption"><tt class="docutils literal"><span class="pre">nearantigenicsites_entropy_colored_structure.png</span></tt> shows the HA1 residues colored according to site entropy, with the antigenic sites (<a class="reference external" href="http://www.sciencedirect.com/science/article/pii/0092867482901350">Caton et al 1982</a>) and all other nearby residues (within 6 angstroms alpha-carbon distance) in spheres.</p>
+</div>
+</div>
+<div class="section" id="correlation-with-wu-et-al">
+<h3><a class="toc-backref" href="#id19">Correlation with Wu et al</a><a class="headerlink" href="#correlation-with-wu-et-al" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a> do a somewhat similar study, where they estimate the impact of many of the single-nucleotide mutations to the WSN HA. Their data is the in file <tt class="docutils literal"><span class="pre">Wu_et_al_Table_S1.csv</span></tt>. To compare their data to the overall inferred preferences (<tt class="docutils literal"><span class="pre">average_equilibriumpreferences.txt</span></tt>), the <tt class="docutils literal"><span class="pre">pipeline.py</span></tt> script runs another script with the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>python correlate_with_Wu_data.py
+</pre></div>
+</div>
+<p>This script first goes through the data of <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>. They report a total of 3010 &#8220;relative fitness&#8221; values. After excluding values for mutations to stop codons or back to the wildtype residue, this is data for 2350 unique amino-acid mutations (out of <span class="math">\(19 \times 564 = 10716\)</span> total possible mutations to non-start codons, so 22% of mutations are covered by <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>).</p>
+<p>In order to make the values comparable, the &#8220;relative fitness&#8221; values are normalized to the value for the wildtype at that residue, to give <em>normalize relative fitness = (relative fitness mutant) / (relative fitness wildtype)</em>. This can be done for 2264 of the mutations (for the rest, there is no wildtype fitness for that residue. These are then compared the preference for that mutant residue normalized by the wildtype preference from our experiments, <span class="math">\(\pi_{r,a} / \pi_{r,\mbox{wt}}\)</span>.</p>
+<p>Some of the mutations are reported to have relative fitness of zero by <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>. Since such values cannot be plotted on a log scale, these zeros are assigned the minimum non-zero value from their entire data set.</p>
+<p>The overall correlation (on a log-log plot) is shown in the following generated plot:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/example_WSN_HA_2014Analysis_correlation_with_Wu_et_al.jpg"><img alt="correlation_with_Wu_et_al.jpg" src="_images/example_WSN_HA_2014Analysis_correlation_with_Wu_et_al.jpg" style="width: 40%;" /></a>
+<p class="caption"><tt class="docutils literal"><span class="pre">correlation_with_Wu_et_al.pdf</span></tt> shows that there is a substantial correlation between the inferences from the current study and that by <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a>. Note that <a class="reference external" href="http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html">Wu et al 2014</a> do not perform replicates of their experiment, so we do not know how well correlated their reported results would be with another replicate of their same experiment.</p>
 </div>
 </div>
 </div>
@@ -488,7 +644,9 @@ F-statistic:  81.5 on 2 and 341 DF,  p-value: &lt; 2.2e-16
 <li><a class="reference internal" href="#calculating-preference-means">Calculating preference means</a></li>
 <li><a class="reference internal" href="#creating-the-sequence-logo-plot">Creating the sequence logo plot</a></li>
 <li><a class="reference internal" href="#mutational-tolerance-of-antigenic-and-receptor-binding-sites">Mutational tolerance of antigenic and receptor-binding sites</a></li>
-<li><a class="reference internal" href="#entropy-mapped-structure">Entropy-mapped structure</a></li>
+<li><a class="reference internal" href="#comparison-to-np">Comparison to NP</a></li>
+<li><a class="reference internal" href="#entropy-mapped-structures">Entropy-mapped structures</a></li>
+<li><a class="reference internal" href="#correlation-with-wu-et-al">Correlation with Wu et al</a></li>
 </ul>
 </li>
 </ul>

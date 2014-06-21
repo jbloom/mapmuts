@@ -473,7 +473,7 @@ these modules cannot be imported (if <cite>PylabAvailable() == False</cite>).</p
 
 <dl class="function">
 <dt id="plot.PlotCorrelation">
-<tt class="descclassname">plot.</tt><tt class="descname">PlotCorrelation</tt><big>(</big><em>xs</em>, <em>ys</em>, <em>plotfile</em>, <em>xlabel</em>, <em>ylabel</em>, <em>logx=False</em>, <em>logy=False</em>, <em>corr=None</em>, <em>title=False</em>, <em>alpha=1.0</em>, <em>symmetrize=False</em>, <em>fixaxes=False</em>, <em>additionalxy=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#plot.PlotCorrelation" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">plot.</tt><tt class="descname">PlotCorrelation</tt><big>(</big><em>xs</em>, <em>ys</em>, <em>plotfile</em>, <em>xlabel</em>, <em>ylabel</em>, <em>logx=False</em>, <em>logy=False</em>, <em>corr=None</em>, <em>title=False</em>, <em>alpha=1.0</em>, <em>symmetrize=False</em>, <em>fixaxes=False</em>, <em>additionalxy=</em>, <span class="optional">[</span><span class="optional">]</span><em>bigmargin=0.26</em>, <em>xsize=1.8</em><big>)</big><a class="headerlink" href="#plot.PlotCorrelation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the correlation between two variables as a scatter plot.</p>
 <p>The data is plotted as a scatter plot.</p>
 <p>This function uses <tt class="docutils literal"><span class="pre">pylab</span></tt> / <tt class="docutils literal"><span class="pre">matplotlib</span></tt>. It will raise an Exception if
@@ -547,6 +547,12 @@ circles. The same <em>alpha</em> value set by the <em>alpha</em> parameter appli
 to these points as well. The data in <em>additionalxy</em> is combined
 with that in <em>xs</em> and <em>ys</em> to calculate the correlation
 if <em>corr</em> is being used.</li>
+<li><em>bigmargin</em> is an optional argument that is 0.26 by default. It is
+the fraction of the plot width taken up by the larger margin, which
+is the bottom and left. Make larger if you need more space for axis
+labels.</li>
+<li><em>xsize</em> is an optional argument that is the width of the plot in inches.
+It is 1.8 by default.</li>
 </ul>
 </dd></dl>
 
