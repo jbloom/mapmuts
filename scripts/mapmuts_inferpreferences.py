@@ -230,7 +230,7 @@ def main():
         if 'sites' in d:
             sites = mapmuts.io.ParseStringValue(d, 'sites')
             if sites.upper() in ['ALL', 'NONE']:
-                sites == 'all'
+                sites = 'all'
             else:
                 try:
                     (start, end) = sites.split()
@@ -239,7 +239,7 @@ def main():
                 except:
                     raise ValueError("problem parsing line for sites")
         else:
-            sites == 'all'
+            sites = 'all'
         assert nruns >= 1, "nruns must be >= 1"
         if nruns < 2:
             warnings.warn('Will not be able to check for convergence since nruns < 2. You are suggested to use nruns >= 2.')
