@@ -389,7 +389,7 @@ def IterateAlignmentFile(filename, gzipped=True, usegzip=False):
     For example, the alignment shown above under the filename
     option description would return::
 
-        (14, 'ATAGATACTAGAT', 26, 1, '.....C.....T.', 13, 13, '.....C.......', 1)
+        (14, 26, 'ATAGATACTAGAT', 1, 13, '.....C.....T.', 13, 1, '.....C.......')
     """
     if not os.path.isfile(filename):
         raise IOError("Can't find file %s" % filename)
