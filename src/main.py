@@ -413,6 +413,9 @@ def MakeAlignments(r1files, r2files, gzipped, applyfilter, minq, fullgene,\
         mapmuts.io.WriteInsertLengths(s['insertlength'], insertlenfile)
         insertlenfile.close()
         for r in [1, 2]:
+            if s['naligned'] == 0:
+                log.write("Failed to align any reads, so not writing mismatch distribution.\n")
+                continue
             rmfilename = '%s_R%dmismatches.txt' % (outfileprefix, r)
             log.write('Writing R%d mismatch distribution to %s.\n' %\
                     (r, rmfilename))
