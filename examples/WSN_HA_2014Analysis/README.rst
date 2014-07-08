@@ -5,6 +5,7 @@ Analysis of Influenza Hemagglutinin from A/WSN/1933(H1N1)
 .. contents::
    :depth: 3
 
+This is a description of the analysis of the deep sequencing data in the publication `The inherent mutational tolerance and antigenic evolvability of influenza hemagglutinin`_.
 
 Overview
 ---------
@@ -589,3 +590,4 @@ The overall correlation (on a log-log plot) is shown in the following generated 
 .. _`An experimentally determined evolutionary model dramatically improves phylogenetic fit`: http://mbe.oxfordjournals.org/content/early/2014/06/12/molbev.msu173
 .. _`Wu et al 2014`: http://www.nature.com/srep/2014/140513/srep04942/full/srep04942.html
 .. _`mapmuts version 1.01`: https://github.com/jbloom/mapmuts/tree/v1.01
+.. _`The inherent mutational tolerance and antigenic evolvability of influenza hemagglutinin`: http://dx.doi.org/10.7554/eLife.03300
