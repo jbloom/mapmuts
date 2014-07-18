@@ -26,7 +26,8 @@
 .. _`Dirichlet distribution`: http://en.wikipedia.org/wiki/Dirichlet_distribution
 .. _`concentration parameter`: http://en.wikipedia.org/wiki/Concentration_parameter
 .. _`Shannon-Jensen divergence` : http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence
-.. _`Bloom 2014`: http://mbe.oxfordjournals.org/content/early/2014/05/23/molbev.msu173.abstract
+.. _`Bloom 2014`: http://dx.doi.org/10.1093/molbev/msu173
+.. _`An experimentally determined evolutionary model dramatically improves phylogenetic fit`: http://dx.doi.org/10.1093/molbev/msu173
 .. _`Gini-Simpson index`: http://en.wikipedia.org/wiki/Diversity_index#Gini-Simpson
 .. _`rpy2`: http://rpy.sourceforge.net/rpy2.html
 .. _`R`: http://rpy.sourceforge.net/rpy2.html
