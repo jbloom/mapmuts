@@ -165,10 +165,10 @@ def ShannonJensenDivergence(p1, p2):
         raise ValueError("numpy may not be available.")
     assert 1 == len(p1.shape) == len(p2.shape), "p1 and p2 not both numpy.ndarrays of dimension 1"
     assert len(p1) == len(p2) > 0, "p1 and p2 not both arrays of same nonzero length"
-    assert numpy.allclose(sum(p1), 1), "p1 does not have entries summing to one"
-    assert numpy.allclose(sum(p2), 1), "p2 does not have entries summing to one"
-    assert numpy.all(p1 >= 0), "p1 does not have all entries >= 0"
-    assert numpy.all(p2 >= 0), "p2 does not have all entries >= 0"
+    assert numpy.allclose(sum(p1), 1), "p1 does not have entries summing to one: sum is %g, p1 is %s" % (sum(p1), p1)
+    assert numpy.allclose(sum(p2), 1), "p2 does not have entries summing to one: sum is %g, p2 is %s" % (sum(p2), p2)
+    assert numpy.all(p1 >= 0), "p1 does not have all entries >= 0: p1 is %s" % p1
+    assert numpy.all(p2 >= 0), "p2 does not have all entries >= 0: p2 is %s" % p2
     m = (p1 + p2) / 2.0
     d_p1_m = d_p2_m = 0.0
     for i in range(len(p1)):
@@ -177,7 +177,7 @@ def ShannonJensenDivergence(p1, p2):
         if p2[i]:
             d_p2_m += p2[i] * math.log(p2[i] / m[i], 2)
     jsd = (d_p1_m + d_p2_m) / 2.0
-    assert 0 <= jsd <= 1, "Shannon-Jensen divergence should be between zero and one"
+    assert -1e10 <= jsd <= 1, "Shannon-Jensen divergence should be between zero and one, got value of %g" % jsd
     return jsd
 
 
@@ -1328,7 +1328,12 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
           2. If the two runs are identical, this divergence is zero,
           while its maximum value is one. We then calculate the average
           of the pairwise Shannon-Jensen divergence for all pairs of
-          runs, and return that as *run_diff*. If *run_diff* is close
+          runs, and return that as *run_diff*. For *control_selection*,
+          the divergence is calculated on the preferences
+          :math:`\pi_{r,a}`. For the other selections, the divergence
+          is calculated on the sum of the preferences and the 
+          differential preferences, :math:`\pi_{r,a} + \Delta\pi^{s_i}_{r,a}`.
+          If *run_diff* is close
           to zero (say less than 0.01), that indicates that the runs 
           are converging to similar values.
           If *run_diff* is large (say > 0.05), that indicates
@@ -1366,6 +1371,10 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         codon_to_aa_indices[icodon] = aas.index(aa)
         icodon += 1
     iwtcodon = codons.index(wtcodon) # index of wildtype codon
+    
+    # define deltar, all elements zero except wildtype codon
+    deltar = numpy.zeros(ncodons)
+    deltar[iwtcodon] = 1.0
 
     # define pi, the control selection preferences, with Dirichlet prior
     pi_incomplete = pymc.Dirichlet('pi_incomplete', pi_concentration * numpy.ones(naas), value=numpy.array([1.0 / naas] * (naas - 1))) 
@@ -1389,29 +1398,41 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
     epsilon = pymc.CompletedDirichlet('epsilon', epsilon_incomplete)
     f = pymc.CompletedDirichlet('f', f_incomplete)
     # define deltapi, the differential preferences, for each selection
+    def CompletedZeroSum(incomplete_v):
+        """Adds a final element so that values sum to zero."""
+        return numpy.append(incomplete_v, -numpy.sum(incomplete_v))            
     deltapi_incomplete = {}
-    deltapi_{}
+    deltapi = {}
     for selection in selection_counts.iterkeys():
-        deltapi_incomplete[selection] = pymc.Dirichlet('deltapi_%s_incomplete' % selection, deltapiconcentration * naas * pi, value=pi_incomplete) - pi_incomplete
-        deltapi[selection] = pymc.CompletedDirichlet('deltapi_%s' % selection, deltapin_incomplete[selection])
+        deltapi_incomplete[selection] = pymc.Dirichlet('deltapi_%s_incomplete' % selection, deltapi_concentration * naas * pi, value=copy.deepcopy(pi_incomplete.value)) - pi_incomplete
+        deltapi[selection] = pymc.Deterministic(eval=CompletedZeroSum, name='deltapi_%s' % selection, parents={'incomplete_v':deltapi_incomplete[selection]}, doc='completed zero-sum Dirichlet', plot=False)
     # define vector-valued function to take amino-acids to codons
-    #@pymc.deterministic(plot=False)
-    def C(pix):
+    def C(aavalues):
         """Amino-acid values mapped to codons."""
-        return pix.take(codon_to_aa_indices)
+        return aavalues.take(codon_to_aa_indices)
+    c_pi = pymc.Deterministic(eval=C, name='c_pi', parents={'aavalues':pi}, doc='codon mapping', plot=False)
+    c_deltapi = {}
+    for selection in selection_counts.iterkeys():
+        c_deltapi[selection] = pymc.Deterministic(eval=C, name='c_deltapi_%s' % selection, parents={'aavalues':deltapi[selection]}, doc='codon mapping', plot=False)
     # define likelihoods for all samples
+    def Dot(v1, v2):
+        """Evaluates dot product."""
+        return float(numpy.dot(v1, v2.ravel()))
     nrerror = numpy.array([error_control_counts[codon] for codon in codons])
     pr_nrerror = pymc.Multinomial('pr_nrerror', n=numpy.sum(nrerror), p=epsilon, value=nrerror, observed=True)
     nrstart = numpy.array([starting_sample_counts[codon] for codon in codons])
-    pr_nrstart = pymc.Multinomial('pr_nrstart', n=numpy.sum(nrstart), p=epsilon + f, value=nrstart, observed=True)
+    pr_nrstart = pymc.Multinomial('pr_nrstart', n=numpy.sum(nrstart), p=epsilon + f - deltar, value=nrstart, observed=True)
     nrcontrol = numpy.array([control_selection_counts[codon] for codon in codons])
-    pr_nrcontrol = pymc.Multinomial('pr_nrcontrol', n=numpy.sum(nrcontrol), p=epsilon + C(pi) * f / float(numpy.dot(C(pi), f)), value=nrcontrol, observed=True)
+    pr_nrcontrol_normalization = pymc.Deterministic(eval=Dot, name='pr_nrcontrol_normalization', parents={'v1':c_pi, 'v2':f}, doc='normalization constant', plot=False)
+    pr_nrcontrol = pymc.Multinomial('pr_nrcontrol', n=numpy.sum(nrcontrol), p=epsilon + c_pi * f / pr_nrcontrol_normalization - deltar, value=nrcontrol, observed=True)
     pr_nrselection = {}
+    pr_nrselection_normalization = {}
     for (selection, scounts) in selection_counts.iteritems():
         nrselection = numpy.array([scounts[codon] for codon in codons])
-        pr_nrselection[selection] = pymc.Multinomial('pr_nrselection_%s' % selection, n=numpy.sum(nrselection), p=epsilon + C(pi + deltapi[selection]) * f / float(numpy.dot(C(pi + deltapi[selection]), f)), value=nrselection, observed=True)
+        pr_nrselection_normalization[selection] = pymc.Deterministic(eval=Dot, name='pr_nrselection_normalization_%s' % selection, parents={'v1':c_pi + c_deltapi[selection], 'v2':f}, doc='normalization constant', plot=False)
+        pr_nrselection[selection] = pymc.Multinomial('pr_nrselection_%s' % selection, n=numpy.sum(nrselection), p=epsilon + (c_pi + c_deltapi[selection]) * f / pr_nrselection_normalization[selection] - deltar, value=nrselection, observed=True)
     # variables in model
-    variables = [epsilon_incomplete, epsilon, f_incomplete, f, pi_incomplete, pi] + deltapi_incomplete.values() + pi_incomplete.values() + [pr_nrerror, pr_nrstart, pr_nrcontrol] + pr_nrselection.values()
+    variables = [epsilon_incomplete, epsilon, f_incomplete, f, pi_incomplete, pi, c_pi, pr_nrcontrol_normalization] + pr_nrselection_normalization.values() + c_deltapi.values() + deltapi_incomplete.values() + deltapi.values() + [pr_nrerror, pr_nrstart, pr_nrcontrol] + pr_nrselection.values()
     assert thin < nsteps and burn < nsteps, "nsteps must be greater than both thin and burn"
     if not (nsteps % thin == 0 and burn % thin == 0):
         raise ValueError("nsteps = %d and burn = %d are not multiples of thin = %d" % (nsteps, burn, thin))
@@ -1463,13 +1484,13 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         i_trace = mcmc.trace('pi', chain=None)[:][:,0,:]
         pi_traces.append(mcmc.trace('pi', chain=None)[:][:,0,:])
         for selection in selection_counts.iterkeys():
-            deltapi_traces[selection].append(mcmc.trace('deltapi_%s' % selection, chain=None)[:][:,0,:])
+            deltapi_traces[selection].append(mcmc.trace('deltapi_%s' % selection, chain=None)[:])
     # indexing is changed in that from aas to that in aas_original
     reindex = numpy.array([aas.index(aa) for aa in aas_original])
     # set up the return value
     returnvalue = {}
     pi_mean = numpy.mean(numpy.concatenate(pi_traces), axis=0).take(reindex) 
-    pi_cred95 = numpy.array([CredibleInterval(pi_traces.transpose()[iaa], 0.95) for iaa in range(naas)]).take(reindex, axis=0)
+    pi_cred95 = numpy.array([CredibleInterval(numpy.concatenate(pi_traces).transpose()[iaa], 0.95) for iaa in range(naas)]).take(reindex, axis=0)
     assert pi_cred95.shape == (naas, 2), "Re-indexed pi_cred95 has invalid shape of %s" % str(pi_cred95.shape)
     pi_traces = numpy.array(pi_traces).take(reindex, axis=2)
     assert pi_traces.shape == (nruns, (nsteps - burn) / thin, naas), "Re-indexed pi_traces has invalid shape of %s" % pi_traces.shape
@@ -1487,7 +1508,7 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
     returnvalue['control_selection'] = (pi_mean, pi_cred95, pi_traces, run_diff)
     for selection in selection_counts.iterkeys():
         mean = numpy.mean(numpy.concatenate(deltapi_traces[selection]), axis=0).take(reindex) 
-        cred95 = numpy.array([CredibleInterval(deltapi_traces[selection].transpose()[iaa], 0.95) for iaa in range(naas)]).take(reindex, axis=0)
+        cred95 = numpy.array([CredibleInterval(numpy.concatenate(deltapi_traces[selection]).transpose()[iaa], 0.95) for iaa in range(naas)]).take(reindex, axis=0)
         assert cred95.shape == (naas, 2), "Re-indexed cred95 has invalid shape of %s" % str(cred95.shape)
         traces = numpy.array(deltapi_traces[selection]).take(reindex, axis=2)
         assert traces.shape == (nruns, (nsteps - burn) / thin, naas), "Re-indexed traces has invalid shape of %s" % traces.shape
@@ -1497,9 +1518,9 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         else:
             run_diff = []
             for irun in range(nruns):
-                i_mean = numpy.mean(traces[irun], axis=0)
+                i_mean = numpy.mean(traces[irun], axis=0) + numpy.mean(pi_traces[irun], axis=0)
                 for jrun in range(irun + 1, nruns):
-                    j_mean = numpy.mean(traces[jrun], axis=0)
+                    j_mean = numpy.mean(traces[jrun], axis=0) + numpy.mean(pi_traces[jrun], axis=0)
                     run_diff.append(ShannonJensenDivergence(i_mean, j_mean))
             run_diff = numpy.mean(run_diff)
         returnvalue[selection] = (mean, cred95, traces, run_diff)

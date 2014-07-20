@@ -111,7 +111,7 @@ def main():
     outfileprefix = mapmuts.io.ParseStringValue(d, 'outfileprefix')
     if outfileprefix.upper() == 'NONE':
         outfileprefix = ''
-    logfile = "%sinferpreferences_log.txt" % outfileprefix
+    logfile = "%sinferdifferentialpreferences_log.txt" % outfileprefix
     log = open(logfile, 'w')
     log.write("Beginning execution of mapmuts_inferpreferences.py"\
             " in directory %s" % (os.getcwd()))
@@ -124,10 +124,10 @@ def main():
         log.write("\n%s %s" % (key, value))
     codoncounts_data = {} # dictionary keyed by sample type
     for sample in ['error_control', 'starting_sample', 'control_selection']:
-        fname = mapmuts.io.ParseStringValue(sample)
+        fname = mapmuts.io.ParseStringValue(d, sample)
         if not os.path.isfile(fname):
             raise IOError("Failed to find file %s specified by %s" % (fname, sample))
-        codoncounts_data[sample] = mapmuts.io.ReadCodonCounts(open(f))
+        codoncounts_data[sample] = mapmuts.io.ReadCodonCounts(open(fname))
     selections = []
     for (key, value) in d.iteritems():
         m = re.search('^selection_(?P<sample>\S+)$', key)
@@ -191,8 +191,10 @@ def main():
 
     # Now set up to run the MCMC
     # first, compute the parameters needed for the priors
-    f_prior = (codoncounts_data['starting_sample']['TOTAL_MUT'] / float(codoncounts_data['starting_sample']['TOTAL_COUNTS']) - codoncounts_data['error_control']['TOTAL_MUT'] / float(codoncounts_data['error_control']['TOTAL_COUNTS'])) / float((len(codons) - 1))
-    log.write('\nThe prior estimate the for frequency of a mutation in starting_sample is %g.' % f_prior)
+    starting_mutrate = codoncounts_data['starting_sample']['TOTAL_MUT'] / float(codoncounts_data['starting_sample']['TOTAL_COUNTS'])
+    error_rate = codoncounts_data['error_control']['TOTAL_MUT'] / float(codoncounts_data['error_control']['TOTAL_COUNTS'])
+    f_prior = (starting_mutrate - error_rate) / float(len(codons) - 1)
+    log.write('\nThe prior estimate for the frequency of any specific mutation in starting_sample is %g (overall mutation rate of %g in starting_sample minus overall error rate of %g for error_control, divided by number of codons).' % (f_prior, starting_mutrate, error_rate))
     epsilon_prior = {}
     for (ndiffs, denom) in [(1, 9.0), (2, 27.0), (3, 27.0)]:
         epsilon_prior[ndiffs] = codoncounts_data['error_control']['TOTAL_N_%dMUT' % ndiffs] / float(codoncounts_data['error_control']['TOTAL_COUNTS']) / denom
@@ -244,7 +246,7 @@ def main():
             selection_counts = {}
             for selection in selections:
                 selection_counts[selection] = dict([(codon, codoncounts_data[selection][ires][codon]) for codon in codons])
-            processes[ires] = multiprocessing.Process(target=RunMCMC, args=(ires, error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, npreburns, thin, minvalue, convergence, stepincrease, pickleresults[ires], seed)
+            processes[ires] = multiprocessing.Process(target=RunMCMC, args=(ires, error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, npreburns, thin, minvalue, convergence, stepincrease, pickleresults[ires], seed))
         # start running processes. Don't start the next
         # until the first residue still running is done.
         processes_running = dict([(ires, False) for ires in processes.iterkeys()])
@@ -272,16 +274,18 @@ def main():
             (mean, cred95, traces, run_diff) = returnvalue['control_selection']
             assert len(aas) == len(mean) == len(cred95), "Not right number of entries"
             assert abs(sum(mean) - 1.0) < 1e-7, "Sum of control preferences of %g not close to one." % sum(mean)
-            preferencesfile.write('%d\t%s\t%g\t%s\n' % (ires, wtaa_d[ires], Entropy(mean), '\t'.join(['%g' % pi for pi in means])))
-            cred95file.write('%d\t%s\n' % (ires, '\t'.join(['%g' % x for x in cred95])))
+            preferencesfile.write('%d\t%s\t%g\t%s\n' % (ires, wtaa_d[ires], Entropy(mean), '\t'.join(['%g' % pi for pi in mean])))
+            preferencescred95file.write('%d\t%s\n' % (ires, '\t'.join(['%g,%g' % (x[0], x[1]) for x in cred95])))
             preferencesfile.flush()
-            cred95file.flush()
+            preferencescred95file.flush()
             for selection in selections:
                 (mean, cred95, traces, run_diff) = returnvalue[selection]
                 assert len(aas) == len(mean) == len(cred95), "Not right number of entries"
                 assert abs(sum(mean)) < 1e-7, "Sum of differential preferences of %g not close to one." % sum(mean)
-                meanfiles[selection].write('%d\t%s\t%g\t%s\n' % (ires, wtaa_d[ires], RMS(mean), '\t'.join(['%g' % dpi for dpi in means])))
-                cred95files[selection].write('%d\t%s\n' % (ires, '\t'.join(['%g' % x for x in cred95])))
+                meanfiles[selection].write('%d\t%s\t%g\t%s\n' % (ires, wtaa_d[ires], RMS(mean), '\t'.join(['%g' % dpi for dpi in mean])))
+                cred95files[selection].write('%d\t%s\n' % (ires, '\t'.join(['%g,%g' % (x[0], x[1]) for x in cred95])))
+                meanfiles[selection].flush()
+                cred95files[selection].flush()
     except:
         (exc_type, exc_value, exc_traceback) = sys.exc_info()
         traceback.print_exception(exc_type, exc_value, exc_traceback, file=log)
@@ -291,7 +295,7 @@ def main():
         log.write("\n\nExecution completed at %s." % time.ctime())
         log.close()
         preferencesfile.close()
-        cred95file.close()
+        preferencescred95file.close()
         for selection in selections:
             meanfiles[selection].close()
             cred95files[selection].close()
