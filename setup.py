@@ -63,7 +63,7 @@ csequtils = Extension('mapmuts.csequtils', sources=['src/csequtils.c'])
 # main setup command
 setup(
     name = 'mapmuts', 
-    version = '1.0', 
+    version = '1.1', 
     author = 'Jesse D. Bloom', 
     author_email = 'jbloom@fhcrc.org', 
     url = 'https://github.com/jbloom/mapmuts', 
@@ -90,6 +90,7 @@ setup(
             'scripts/mapmuts_countparsedmuts.py',
             'scripts/mapmuts_aafracsplots.py',
             'scripts/mapmuts_inferpreferences.py',
+            'scripts/mapmuts_inferdifferentialpreferences.py',
             'scripts/mapmuts_preferencescorrelate.py',
             'scripts/mapmuts_preferencemeans.py',
             'scripts/mapmuts_inferenrichment.py',

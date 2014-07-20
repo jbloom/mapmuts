@@ -46,4 +46,4 @@ Acknowledgements
 ``mapmuts`` is written by Jesse Bloom.
 """
 
-__version__ = '1.0'
+__version__ = '1.1'

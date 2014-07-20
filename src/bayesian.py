@@ -825,7 +825,7 @@ def InferPreferencesMCMC(library_stats, pi_concentration, epsilon_concentration,
     correspond to a larger preference for *a* at site *r*.
 
     The full inference algorithm is described in the documentation for
-    the ``mapmuts`` function, and so it not recapitulated here.
+    the ``mapmuts`` package, and so it not recapitulated here.
 
     CALLING VARIABLES:
 
@@ -1164,6 +1164,348 @@ def InferPreferencesMCMC(library_stats, pi_concentration, epsilon_concentration,
     # Return the results with the reordered variables
     return (pi_mean, pi_cred95, pi_traces, run_diff)
 
+
+
+def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration,\
+    nruns, nsteps, burn, npreburns, thin, progress_bar=False, minvalue=1e-7, debugging=False):
+    """Infers differential preferences for a site by MCMC.
+
+    This function utilizes ``pymc`` for the inference. Only 
+    guaranteed to work for ``pymc`` version 2.3.
+
+    This function infers the preferences and differential preferences
+    for all amino acids *a* at a given site. There are 21 possible values
+    for *a* since we allow all 20 amino acids plus a stop codon (denoted
+    by the * character). The preferences sum to one; the differential
+    preferences sum to zero.
+
+    The full inference algorithm is described in the documentation for
+    the ``mapmuts`` package, and so it not recapitulated here.
+
+    CALLING VARIABLES:
+
+    * *error_control_counts* is a dictionary keyed by all possible codons,
+      with the values giving the counts of that codon in the *error_control*
+      sample.
+
+    * *starting_sample_counts* is like *error_control_counts*, but for
+      the *starting_sample*.
+
+    * *control_selection_counts* is like *error_control_counts*, but for
+      the *control_selection*.
+
+    * *selection_counts* is a dictionary. The keys are strings giving
+      the names of the different *selection_i* samples, and the values
+      for each key are dictionaries like *error_control_counts* for that
+      selection. There must be at least one key here, corresponding to
+      at least one selected sample.
+
+    * *wtcodon* is a string giving the wildtype codon at the site. Should
+        be an upper-case string, such as *GGC*.
+
+    * *f_prior* : a number giving the prior estimate for the probability
+      that the site is mutated from its wildtype codon to some specific other
+      codon in the *starting_sample*. Note that this is the probability to
+      be mutated to a **specific** codon, not to any codon.
+
+    * *epsilon_prior* : a dictionary keyed by the integers 1, 2, and 3
+      giving the prior estimate for the probability that the site is
+      erroneously read as some other **specific** codon in the 
+      *error_control*. The value for the key of 1 is the probability to be
+      mutated to some other specific codon that differs by 1 nucleotide,
+      the value for the key of 2 is the probability to be mutated to 
+      some other specific codon that differs by 2 nucleotides, etc.
+
+    * *pi_concentration* is the concentration parameter (:math:`\sigma_{\pi}`)
+      for the symmetric Dirichlet-distribution prior over the :math:`\pi_{r,a}` 
+      values.
+
+    * *epsilon_concentration* is the concentration parameter
+      (:math: `\sigma_{\epsilon}`) for the Dirichlet-distribution prior
+      over error rate in the *error_control*.
+
+    * *f_concentration* is the concentration parameter (:math:`\sigma_{f}`)
+      for the Dirichlet-distribution prior over the mutation rate in
+      the *starting_sample*.
+
+    * *deltapi_concentration* is the concentration parameter 
+      (:math:`\sigma_{\Delta\pi}`)
+      for the Dirichlet-distribution prior over the differential 
+      preferences.
+
+    * *nruns* is the number of MCMC runs to perform, each starting from 
+      different random values of the variables. Should be an integer >= 1.
+      Each MCMC run is *nsteps*, with a burn-in of *burn* and thining of
+      *thin*.
+
+    * *nsteps* is an integer giving the number of MCMC steps to perform per run.
+      Typically you might want values of 1e4 to 1e6 (depending on the chain
+      is converging).
+
+    * *burn* is a number giving the number of burn-in steps to perform per run
+      before saving the MCMC values. Typically you might want a value
+      equal to 10 to 20% of *nsteps*.
+
+    * *npreburns* is the number of "pre-burn" runs that are performed. 
+      Setting this variable to at least one, and preferably two, is 
+      **strongly** recommended. The MCMC becomes very inefficient as it
+      approaches its maximum because the sampler currently does not choose
+      the step sizes in the Dirichlet-distributed variables in a particularly
+      intelligent way. This option specifies that *npreburns* MCMC runs of
+      *burn* steps are performed before the main MCMC, with the results
+      of these pre-burn runs used to tune the step sizes for the main
+      MCMC. The other heuristic (which is always applied) is to place
+      the wildtype codon as the last entry in the Dirichlet-distributed
+      variable since it will typically be the largest entry. However, 
+      it is still not clear if this is the most efficient way to do
+      MCMC updates of Dirichlet variables, and it is possible that
+      using a delta exchange type operator (as implemented in ``BEAST``)
+      might be substantially more efficient). In addition,
+      the setting of the wildtype codon to the last entry is only done
+      based on the entries in the first library in *library_stats* --
+      so if there are multiple libraries, this efficiency is lost.
+
+    * *thin* specifies the thinning of steps to perform (i.e. only sample
+      every *thin* steps. Typically you might want a value of 10 to 100.
+      *thin* must be set so that *burn* and *nsteps* are both multiples
+      of *thin*.
+
+    * *progress_bar* is a Boolean switch specifying whether we display the 
+      MCMC progress bar.
+
+    * *minvalue* is the minimum value assigned to any of the priors over
+      the rates. This prevents the priors from being set to
+      zero. A reasonable value is *1e-7* or *1e-8*. Set to *1e-7* by default.
+
+    * *debugging* is a Boolean switch specifying whether we display
+      fairly extensive debugging information. Is *False* by
+      default. If *True*, the following is done:
+
+        - MCMC is run with *verbose=2* rather than the default
+          of *verbose=0*.
+
+        - Information about the pre-burn runs and the step methods
+          are printed to standard output.
+
+    RETURN VALUE:
+
+    The return value is a dictionary. It is keyed by the string 
+    *control_selection* and a string for every key in *selection_counts*.
+    For each of these string keys, the value is a 4-tuple with the 
+    following entries: *(means, cred95, traces, run_diff)*. For the 
+    *control_selection*, these entries describe the values of the
+    preferences :math:`\pi_{r,a}`. For the other selections, they
+    describe the values of the differential preferences
+    :math:`\Delta\pi_{r,a}^{s_i}`. Specifically:
+
+        * *mean* is a ``numpy`` array of length 21. Element *mean[i]* holds
+          the mean preference or differential preference over all non-burnin
+          steps and all *nruns* runs for amino-acid :math:`a` where
+          *i = mapmuts.sequtils.AminoAcids(includestop=True).index(a)*.
+
+        * *cred95* gives the median-centered 95% credible intervals.
+          *cred95[i]* is the interval corresponding to the estimate with 
+          the mean of *mean[i]*. The interval is represented such
+          that *cred95[i][0]* is the lower bound, and *cred95[i][1]*
+          is the upper bound. *cred95* is a ``numpy`` array
+          of dimension *(21, 2)*.
+
+        * *traces* is a ``numpy`` array of dimension 
+          *(nruns, (nsteps - burn) / thin, 21)*. This give values of the
+          values during the thinned non-burnin MCMC steps.
+          Specifically, *traces[irun][istep][iaa]* gives the value
+          of for run *irun* (where *0 <= irun < nruns*)
+          for step *istep* (where *0 <= istep < (nsteps - burn) / thin*)
+          for amino acid *a* where 
+          *iaa = mapmuts.sequtils.AminoAcids(includestop=True).index(a)*.
+
+        * *run_diff* is a measure of the difference between the mean 
+          values for all non-burnin steps between the
+          *nruns* different runs. If *nruns* is 1, then this cannot be
+          calculated, so *run_diff = None*. Otherwise, we calculate
+          the Shannon-Jensen divergence between the 
+          values for each pair of runs, taking the logarithm to the base
+          2. If the two runs are identical, this divergence is zero,
+          while its maximum value is one. We then calculate the average
+          of the pairwise Shannon-Jensen divergence for all pairs of
+          runs, and return that as *run_diff*. If *run_diff* is close
+          to zero (say less than 0.01), that indicates that the runs 
+          are converging to similar values.
+          If *run_diff* is large (say > 0.05), that indicates
+          they are converging to different values -- in that case,
+          you might want to increase *nsteps* (and perhaps *burn*).
+    """
+    if not _pymcavailable:
+        raise ImportError("Cannot import either numpy or pymc")
+    if debugging:
+        verbose = 2
+    else:
+        verbose = 0
+    assert isinstance(npreburns, int) and npreburns >= 0, "npreburns must be integer >= 0"
+    assert minvalue > 0, 'minvalue must be > 0'
+    wtaa = mapmuts.sequtils.Translate([('wt', wtcodon)])[0][1]
+    if not wtaa:
+        wtaa = "*"
+    # We re-order codons and aas so that the wtcodon is last, and therefore
+    # is the incompleted entry in the Dirichlet distributions. This should
+    # improve MCMC performance. 
+    codons = [codon for codon in mapmuts.sequtils.Codons() if codon != wtcodon] + [wtcodon] # list of codons with wtcodon last
+    ncodons = len(codons)
+    assert ncodons == len(mapmuts.sequtils.Codons())
+    aas_original = mapmuts.sequtils.AminoAcids(includestop=True)
+    aas = [aa for aa in aas_original if aa != wtaa] + [wtaa]
+    naas = len(aas)
+    assert len(aas_original) == naas
+    codon_to_aa_indices = numpy.ndarray(ncodons, dtype='int')
+    icodon = 0
+    for codon in codons:
+        aa = mapmuts.sequtils.Translate([('wt', codon)])[0][1]
+        if not aa:
+            aa = '*'
+        assert aa in aas, "Failed to find aa %s" % aa
+        codon_to_aa_indices[icodon] = aas.index(aa)
+        icodon += 1
+    iwtcodon = codons.index(wtcodon) # index of wildtype codon
+
+    # define pi, the control selection preferences, with Dirichlet prior
+    pi_incomplete = pymc.Dirichlet('pi_incomplete', pi_concentration * numpy.ones(naas), value=numpy.array([1.0 / naas] * (naas - 1))) 
+    pi = pymc.CompletedDirichlet('pi', pi_incomplete) 
+    # define epsilon the error rate, and f the mutation frequencies
+    alpha_epsilon = numpy.zeros(ncodons)
+    alpha_f = numpy.zeros(ncodons)
+    for icodon in range(ncodons):
+        codon = codons[icodon]
+        ndiffs = len([i for i in range(len(codon)) if codon[i] != wtcodon[i]])
+        if icodon != iwtcodon:
+            assert ndiffs > 0, "Can't be wildtype if not different codon"
+            alpha_epsilon[icodon] = max(minvalue, epsilon_prior[ndiffs])
+            alpha_f[icodon] = max(minvalue, f_prior)
+    alpha_epsilon[iwtcodon] = 1 - numpy.sum(alpha_epsilon)
+    alpha_f[iwtcodon] = 1 - numpy.sum(alpha_f)
+    assert alpha_epsilon[iwtcodon] > 0, "Non-wildtype epsilon priors sum to >= 1"
+    assert alpha_f[iwtcodon] > 0, "Non-wildtype f priors sum to >= 1"
+    epsilon_incomplete = pymc.Dirichlet('epsilon_incomplete', epsilon_concentration * ncodons * alpha_epsilon, value=alpha_epsilon[ : -1])
+    f_incomplete = pymc.Dirichlet('f_incomplete', f_concentration * ncodons * alpha_f, value=alpha_f[ : -1])
+    epsilon = pymc.CompletedDirichlet('epsilon', epsilon_incomplete)
+    f = pymc.CompletedDirichlet('f', f_incomplete)
+    # define deltapi, the differential preferences, for each selection
+    deltapi_incomplete = {}
+    deltapi_{}
+    for selection in selection_counts.iterkeys():
+        deltapi_incomplete[selection] = pymc.Dirichlet('deltapi_%s_incomplete' % selection, deltapiconcentration * naas * pi, value=pi_incomplete) - pi_incomplete
+        deltapi[selection] = pymc.CompletedDirichlet('deltapi_%s' % selection, deltapin_incomplete[selection])
+    # define vector-valued function to take amino-acids to codons
+    #@pymc.deterministic(plot=False)
+    def C(pix):
+        """Amino-acid values mapped to codons."""
+        return pix.take(codon_to_aa_indices)
+    # define likelihoods for all samples
+    nrerror = numpy.array([error_control_counts[codon] for codon in codons])
+    pr_nrerror = pymc.Multinomial('pr_nrerror', n=numpy.sum(nrerror), p=epsilon, value=nrerror, observed=True)
+    nrstart = numpy.array([starting_sample_counts[codon] for codon in codons])
+    pr_nrstart = pymc.Multinomial('pr_nrstart', n=numpy.sum(nrstart), p=epsilon + f, value=nrstart, observed=True)
+    nrcontrol = numpy.array([control_selection_counts[codon] for codon in codons])
+    pr_nrcontrol = pymc.Multinomial('pr_nrcontrol', n=numpy.sum(nrcontrol), p=epsilon + C(pi) * f / float(numpy.dot(C(pi), f)), value=nrcontrol, observed=True)
+    pr_nrselection = {}
+    for (selection, scounts) in selection_counts.iteritems():
+        nrselection = numpy.array([scounts[codon] for codon in codons])
+        pr_nrselection[selection] = pymc.Multinomial('pr_nrselection_%s' % selection, n=numpy.sum(nrselection), p=epsilon + C(pi + deltapi[selection]) * f / float(numpy.dot(C(pi + deltapi[selection]), f)), value=nrselection, observed=True)
+    # variables in model
+    variables = [epsilon_incomplete, epsilon, f_incomplete, f, pi_incomplete, pi] + deltapi_incomplete.values() + pi_incomplete.values() + [pr_nrerror, pr_nrstart, pr_nrcontrol] + pr_nrselection.values()
+    assert thin < nsteps and burn < nsteps, "nsteps must be greater than both thin and burn"
+    if not (nsteps % thin == 0 and burn % thin == 0):
+        raise ValueError("nsteps = %d and burn = %d are not multiples of thin = %d" % (nsteps, burn, thin))
+    pi_traces = [] # save traces of pi values for runs
+    deltapi_traces = dict([(selection, []) for selection in selection_counts.iterkeys()])
+    initial_stochastic_values = {} # initial values of stochastics before any burn-in. Reset to these prior to each run.
+    for irun in range(nruns):
+        # To avoid carry-over from previous runs, we set each stochastic
+        # variable back to its very initial values, which are just the initial 
+        # estimates before MCMC.
+        mcmc = pymc.MCMC(variables, verbose=0)
+        for stochasticvariable in mcmc.step_method_dict.iterkeys():
+            if stochasticvariable in initial_stochastic_values:
+                stochasticvariable.value = copy.deepcopy(initial_stochastic_values[stochasticvariable])
+                if debugging:
+                    print "Setting initial value of stochastic variable %s to %s." % (stochasticvariable, str(stochasticvariable.value))
+            else:
+                initial_stochastic_values[stochasticvariable] = copy.deepcopy(stochasticvariable.value)
+        # The proposal_sd after each pre-burn run should be the values at the end
+        # of the previous pre-burn run. This will make the steps for the Dirichlet
+        # variable much more efficient, since small-valued variables will have
+        # small steps and large-valued variables with have large steps.
+        for ipreburn in range(npreburns):
+            if debugging:
+                print "\nPerforming pre-burn run %d" % ipreburn
+            mcmc = pymc.MCMC(variables, verbose=verbose)
+            for stochasticvariable in mcmc.step_method_dict.iterkeys():
+                mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
+                if debugging:
+                    print "For stochastic variable %s:\n\tinitial values = %s\n\tinitial proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
+            mcmc.sample(iter=burn, burn=0, thin=thin, progress_bar=progress_bar)
+            if debugging:
+                print "At completion of pre-burn run %d:" % ipreburn
+                for stochasticvariable in mcmc.step_method_dict.iterkeys():
+                    print "For stochastic variable %s:\n\tfinal values = %s\n\tfinal proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
+        # now set up the actual sampling run
+        mcmc = pymc.MCMC(variables, verbose=verbose)
+        if debugging:
+            print "\nNow beginning the actual sampling MCMC."
+        for stochasticvariable in mcmc.step_method_dict.iterkeys():
+            mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
+            if debugging:
+                print "For stochastic variable %s:\n\tinitial values = %s\n\tinitial proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
+        mcmc.sample(iter=nsteps, burn=burn, thin=thin, progress_bar=progress_bar)
+        if debugging:
+            print "At completion of the actual sampling MCMC."
+            for stochasticvariable in mcmc.step_method_dict.iterkeys():
+                print "For stochastic variable %s:\n\tfinal values = %s\n\tfinal proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
+        i_trace = mcmc.trace('pi', chain=None)[:][:,0,:]
+        pi_traces.append(mcmc.trace('pi', chain=None)[:][:,0,:])
+        for selection in selection_counts.iterkeys():
+            deltapi_traces[selection].append(mcmc.trace('deltapi_%s' % selection, chain=None)[:][:,0,:])
+    # indexing is changed in that from aas to that in aas_original
+    reindex = numpy.array([aas.index(aa) for aa in aas_original])
+    # set up the return value
+    returnvalue = {}
+    pi_mean = numpy.mean(numpy.concatenate(pi_traces), axis=0).take(reindex) 
+    pi_cred95 = numpy.array([CredibleInterval(pi_traces.transpose()[iaa], 0.95) for iaa in range(naas)]).take(reindex, axis=0)
+    assert pi_cred95.shape == (naas, 2), "Re-indexed pi_cred95 has invalid shape of %s" % str(pi_cred95.shape)
+    pi_traces = numpy.array(pi_traces).take(reindex, axis=2)
+    assert pi_traces.shape == (nruns, (nsteps - burn) / thin, naas), "Re-indexed pi_traces has invalid shape of %s" % pi_traces.shape
+    # Calculate the run_diff
+    if nruns == 1:
+        run_diff = None
+    else:
+        run_diff = []
+        for irun in range(nruns):
+            i_pi_mean = numpy.mean(pi_traces[irun], axis=0)
+            for jrun in range(irun + 1, nruns):
+                j_pi_mean = numpy.mean(pi_traces[jrun], axis=0)
+                run_diff.append(ShannonJensenDivergence(i_pi_mean, j_pi_mean))
+        run_diff = numpy.mean(run_diff)
+    returnvalue['control_selection'] = (pi_mean, pi_cred95, pi_traces, run_diff)
+    for selection in selection_counts.iterkeys():
+        mean = numpy.mean(numpy.concatenate(deltapi_traces[selection]), axis=0).take(reindex) 
+        cred95 = numpy.array([CredibleInterval(deltapi_traces[selection].transpose()[iaa], 0.95) for iaa in range(naas)]).take(reindex, axis=0)
+        assert cred95.shape == (naas, 2), "Re-indexed cred95 has invalid shape of %s" % str(cred95.shape)
+        traces = numpy.array(deltapi_traces[selection]).take(reindex, axis=2)
+        assert traces.shape == (nruns, (nsteps - burn) / thin, naas), "Re-indexed traces has invalid shape of %s" % traces.shape
+        # Calculate the run_diff
+        if nruns == 1:
+            run_diff = None
+        else:
+            run_diff = []
+            for irun in range(nruns):
+                i_mean = numpy.mean(traces[irun], axis=0)
+                for jrun in range(irun + 1, nruns):
+                    j_mean = numpy.mean(traces[jrun], axis=0)
+                    run_diff.append(ShannonJensenDivergence(i_mean, j_mean))
+            run_diff = numpy.mean(run_diff)
+        returnvalue[selection] = (mean, cred95, traces, run_diff)
+
+    # Return the results
+    return returnvalue
 
 
 if __name__ == '__main__':
