@@ -1397,15 +1397,29 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
     f_incomplete = pymc.Dirichlet('f_incomplete', f_concentration * ncodons * alpha_f, value=alpha_f[ : -1])
     epsilon = pymc.CompletedDirichlet('epsilon', epsilon_incomplete)
     f = pymc.CompletedDirichlet('f', f_incomplete)
+
     # define deltapi, the differential preferences, for each selection
+    def DeltaPi_logp(value, pix, naasx, deltapi_concentrationx):
+        """Returns log likelihood for deltapi"""
+        assert value.shape == pix.ravel()[ : -1].shape, "value.shape = %s\npix.ravel().shape = %s\nvalue = %s\npix.ravel() = %s" % (value.shape, pix.ravel().shape, value, pix.ravel())
+        return pymc.distributions.dirichlet_like(value + pix.ravel()[ : -1], pix * naasx * deltapi_concentrationx)
     def CompletedZeroSum(incomplete_v):
         """Adds a final element so that values sum to zero."""
         return numpy.append(incomplete_v, -numpy.sum(incomplete_v))            
     deltapi_incomplete = {}
     deltapi = {}
     for selection in selection_counts.iterkeys():
-        deltapi_incomplete[selection] = pymc.Dirichlet('deltapi_%s_incomplete' % selection, deltapi_concentration * naas * pi, value=copy.deepcopy(pi_incomplete.value)) - pi_incomplete
+        deltapi_incomplete[selection] = pymc.Stochastic(\
+                logp=DeltaPi_logp,\
+                doc='log likleihood for delta pi',\
+                name='deltapi_%s_incomplete' % selection,\
+                parents={'pix':pi, 'naasx':naas, 'deltapi_concentrationx':deltapi_concentration},\
+                value=numpy.zeros(naas - 1),\
+                plot=False,\
+                trace=True,\
+                )
         deltapi[selection] = pymc.Deterministic(eval=CompletedZeroSum, name='deltapi_%s' % selection, parents={'incomplete_v':deltapi_incomplete[selection]}, doc='completed zero-sum Dirichlet', plot=False)
+
     # define vector-valued function to take amino-acids to codons
     def C(aavalues):
         """Amino-acid values mapped to codons."""
@@ -1414,6 +1428,7 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
     c_deltapi = {}
     for selection in selection_counts.iterkeys():
         c_deltapi[selection] = pymc.Deterministic(eval=C, name='c_deltapi_%s' % selection, parents={'aavalues':deltapi[selection]}, doc='codon mapping', plot=False)
+
     # define likelihoods for all samples
     def Dot(v1, v2):
         """Evaluates dot product."""
