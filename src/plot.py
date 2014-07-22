@@ -71,6 +71,7 @@ Documentation for individual functions is provided in their definitions below.
 import os
 import sys
 import math
+import time
 import warnings
 import mapmuts.io
 import mapmuts.sequtils
@@ -1171,6 +1172,7 @@ def PlotTraces(traces, plotfile, xlabel, ylabel, title, trace_labels=None):
             loc='upper center', ncol=7)
     pylab.title(title, size=10)
     pylab.savefig(plotfile)
+    time.sleep(0.5)
     pylab.clf()
     pylab.close()
 
