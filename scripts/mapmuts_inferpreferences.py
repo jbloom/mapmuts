@@ -38,7 +38,7 @@ def Entropy(pi_mean):
     return h
 
 
-def RemoveOutlierRunMCMC(ires, library_stats, pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, convergence, stepincrease, pickleresults, minvalue):
+def RemoveOutlierRunMCMC(ires, library_stats, pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, convergence, stepincrease, pickleresults, minvalue, seed):
     """Like *RunMCMC* but removes outlier library.
 
     This function can only be called if there is data for at least three
@@ -67,6 +67,7 @@ def RemoveOutlierRunMCMC(ires, library_stats, pi_concentration, epsilon_concentr
         3) We remove as the outlier the library with the largest
            average pairwise Shannon-Jensen divergence.
     """
+    mapmuts.bayesian.Seed(seed)
     nlibs = len(library_stats)
     if nlibs < 3:
         raise ValueError("Cannot remove outlier for less than 3 libraries.")
@@ -116,7 +117,7 @@ def RemoveOutlierRunMCMC(ires, library_stats, pi_concentration, epsilon_concentr
 
 
 
-def RunMCMC(ires, library_stats, pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, convergence, stepincrease, pickleresults, minvalue):
+def RunMCMC(ires, library_stats, pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, convergence, stepincrease, pickleresults, minvalue, seed):
     """Runs MCMC to infer equilibrium preferences.
 
     Calling variables have the same meaning as in the *main* calling function.
@@ -132,6 +133,7 @@ def RunMCMC(ires, library_stats, pi_concentration, epsilon_concentration, mu_con
     by this method. Instead, they are written using *cPickle* to the file
     specified by *pickleresults*.
     """
+    mapmuts.bayesian.Seed(seed)
     library_stats = copy.deepcopy(library_stats)
     logstring = ['\nPerforming inference for site %d...' % ires]
     start_t = time.clock()
@@ -225,7 +227,6 @@ def main():
         minvalue = mapmuts.io.ParseFloatValue(d, 'minvalue')
         assert minvalue > 0, "minvalue must be > 0"
         seed = mapmuts.io.ParseIntValue(d, 'seed')
-        mapmuts.bayesian.Seed(seed)
         nruns = mapmuts.io.ParseIntValue(d, 'nruns')
         if 'sites' in d:
             sites = mapmuts.io.ParseStringValue(d, 'sites')
@@ -348,9 +349,9 @@ def main():
             (fd, pickleresults[ires]) = tempfile.mkstemp()
             os.close(fd)
             if removeoutlier:
-                processes[ires] = multiprocessing.Process(target=RemoveOutlierRunMCMC, args=(ires, copy.deepcopy(library_stats), pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, convergence, stepincrease, pickleresults[ires], minvalue))
+                processes[ires] = multiprocessing.Process(target=RemoveOutlierRunMCMC, args=(ires, copy.deepcopy(library_stats), pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, convergence, stepincrease, pickleresults[ires], minvalue, seed))
             else:
-                processes[ires] = multiprocessing.Process(target=RunMCMC, args=(ires, copy.deepcopy(library_stats), pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, convergence, stepincrease, pickleresults[ires], minvalue))
+                processes[ires] = multiprocessing.Process(target=RunMCMC, args=(ires, copy.deepcopy(library_stats), pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, convergence, stepincrease, pickleresults[ires], minvalue, seed))
         # now start running the processes in order of residues. Don't start the next
         # until the first residue still running is done.
         processes_running = dict([(ires, False) for ires in processes.iterkeys()])
