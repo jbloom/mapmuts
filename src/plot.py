@@ -1678,7 +1678,7 @@ def LogoOverlay(sites, plotfile, rsa_d, ss_d, nperline, sitewidth, rmargin, logo
 
 
 
-def PlotEquilibriumFreqs(pis, plotfile, title='', pi_errs=None):
+def PlotEquilibriumFreqs(pis, plotfile, title='', pi_errs=None, differentialpreferences=False):
     """Plots equilibrium frequencies of different amino acids.
     
     *pis* : a dictionary keyed by amino acid codes with values giving
@@ -1695,6 +1695,10 @@ def PlotEquilibriumFreqs(pis, plotfile, title='', pi_errs=None):
     In this case, for each key in *pis*, there should be a similar key
     in *pi_errs* with the value a list or tuple such that *pi_errs[key][0]*
     gives the lower bound and *pi_errs[key][1]* gives the upper bound.
+
+    *differentialpreferences* is an optional argument that is *False* by
+    default. Set to *True* if you are plotting differential preferences
+    rather than preferences.
 
     This function uses ``pylab`` / ``matplotlib``. It will raise an exception
     if these modules cannot be imported (if `PylabAvailable() == False`).
@@ -1718,7 +1722,10 @@ def PlotEquilibriumFreqs(pis, plotfile, title='', pi_errs=None):
     xticks = [tup[0] for tup in pis_list]
     ys = [tup[1] for tup in pis_list]
     xindices = [i for i in range(len(pis))]
-    (ymin, ymax) = (-0.03, 1.03)
+    if differentialpreferences:
+        (ymin, ymax) = (-1.02, 1.02)
+    else:
+        (ymin, ymax) = (-0.03, 1.03)
     if pi_errs:
         errs = pylab.ndarray(shape=(2, len(xticks)))
         i = 0
@@ -1734,7 +1741,10 @@ def PlotEquilibriumFreqs(pis, plotfile, title='', pi_errs=None):
     pylab.gca().set_ylim([ymin, ymax])
     pylab.xticks(xindices, xticks, rotation=0)
     pylab.gca().set_xlim([-0.5, len(pis) - 0.5])
-    pylab.ylabel('equilibrium preference', size=10)
+    if differentialpreferences:
+        pylab.ylabel('differential preference', size=10)
+    else:
+        pylab.ylabel('equilibrium preference', size=10)
     pylab.xlabel('amino acid', size=10)
     pylab.title(title, size=10)
     pylab.savefig(plotfile)

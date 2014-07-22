@@ -46,7 +46,7 @@ def Entropy(pi_mean):
     return h
 
 
-def RunMCMC(ires, error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, npreburns, thin, minvalue, convergence, stepincrease, pickleresults, seed):
+def RunMCMC(ires, error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, thin, minvalue, convergence, stepincrease, pickleresults, seed):
     """Runs MCMC to infer differential preferences.
 
     Calling variables have same meaning as in the *main* function.
@@ -59,7 +59,7 @@ def RunMCMC(ires, error_control_counts, starting_sample_counts, control_selectio
     start_t = time.clock()
     returnvalue = \
             mapmuts.bayesian.InferDifferentialPreferencesMCMC(\
-            error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, npreburns, thin, minvalue=minvalue)
+            error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, thin, minvalue=minvalue)
     t = time.clock() - start_t
     run_diffs = [(selection, returnvalue[selection][3]) for selection in returnvalue.iterkeys()]
     logstring.append(" completed MCMC of %d steps in %.1f seconds" % (nsteps, t))
@@ -70,7 +70,7 @@ def RunMCMC(ires, error_control_counts, starting_sample_counts, control_selectio
             logstring.append('Trying again with %d-fold more steps...' % stepincrease)
             returnvalue = \
                 mapmuts.bayesian.InferDifferentialPreferencesMCMC(\
-                error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, npreburns, thin, minvalue=minvalue)
+                error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, thin, minvalue=minvalue)
             assert len(returnvalue) >= 2, "Should be at least the control preferences and one differential preference"
             t = time.clock() - start_t
             run_diffs = [(selection, returnvalue[selection][3]) for selection in returnvalue.iterkeys()]
@@ -91,8 +91,7 @@ def main():
     """Main body of script."""
     # hard-coded variables
     includestop = True # include stop codons as a possible amino acid
-    burnfrac = 0.1 # set burn-in to this times nsteps
-    npreburns = 2 # perform this many pre-burn runs
+    burnfrac = 0.2 # set burn-in to this times nsteps
     # check on module availability
     if not mapmuts.bayesian.PymcAvailable():
         raise ImportError("Cannot run this script as pymc or numpy are not available.")
@@ -246,7 +245,7 @@ def main():
             selection_counts = {}
             for selection in selections:
                 selection_counts[selection] = dict([(codon, codoncounts_data[selection][ires][codon]) for codon in codons])
-            processes[ires] = multiprocessing.Process(target=RunMCMC, args=(ires, error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, npreburns, thin, minvalue, convergence, stepincrease, pickleresults[ires], seed))
+            processes[ires] = multiprocessing.Process(target=RunMCMC, args=(ires, error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, thin, minvalue, convergence, stepincrease, pickleresults[ires], seed))
         # start running processes. Don't start the next
         # until the first residue still running is done.
         processes_running = dict([(ires, False) for ires in processes.iterkeys()])
@@ -286,6 +285,34 @@ def main():
                 cred95files[selection].write('%d\t%s\n' % (ires, '\t'.join(['%g,%g' % (x[0], x[1]) for x in cred95])))
                 meanfiles[selection].flush()
                 cred95files[selection].flush()
+            if MCMC_traces:
+                for selection in ['control_selection'] + selections:
+                    plottraces = []
+                    trace_labels = []
+                    for irun in range(nruns):
+                        plottraces += [returnvalue[selection][2][irun].transpose()[iaa] for iaa in range(len(aas))]
+                        trace_labels += [aas[iaa] for iaa in range(len(aas))]
+                    if selection == 'control_selection':
+                        plotname = '%s/%spreferences_control_selection_%d.pdf' % (MCMC_traces, outfileprefix, ires)
+                        ylabel = 'preference'
+                        title = 'control selection preferences, residue %d' % ires
+                    else:
+                        plotname = '%s/%sdifferentialpreferences_selection_%s_%d.pdf' % (MCMC_traces, outfileprefix, selection, ires)
+                        ylabel = 'differential preference'
+                        title = 'selection %s differential preferences, residue %d' % (selection, ires)
+                    mapmuts.plot.PlotTraces(plottraces, plotname, xlabel='MCMC step', ylabel=ylabel, title=title, trace_labels=trace_labels)
+                    log.write('Wrote MCMC traces to %s\n' % plotname)
+                    log.flush()
+            if preference_plots:
+                for selection in ['control_selection'] + selections:
+                    if selection == 'control_selection':
+                        plotname = '%s/%spreferences_control_selection_%d.pdf' % (preference_plots, outfileprefix, ires)
+                        differentialpreferences = False
+                    else:
+                        plotname = '%s/%sdifferentialpreferences_selection_%s_%d.pdf' % (preference_plots, outfileprefix, selection, ires)
+                        differentialpreferences = True
+                    (mean, cred95) = (dict(zip(aas, returnvalue[selection][0])), dict(zip(aas, returnvalue[selection][1])))
+                    mapmuts.plot.PlotEquilibriumFreqs(mean, plotname, 'residue %d' % ires, pi_errs=cred95, differentialpreferences=differentialpreferences)
     except:
         (exc_type, exc_value, exc_traceback) = sys.exc_info()
         traceback.print_exception(exc_type, exc_value, exc_traceback, file=log)

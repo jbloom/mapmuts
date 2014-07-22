@@ -1185,7 +1185,7 @@ def InferPreferencesMCMC(library_stats, pi_concentration, epsilon_concentration,
 
 
 def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration,\
-    nruns, nsteps, burn, npreburns, thin, progress_bar=False, minvalue=1e-7, debugging=False):
+    nruns, nsteps, burn, thin, progress_bar=False, minvalue=1e-7, debugging=False):
     """Infers differential preferences for a site by MCMC.
 
     This function utilizes ``pymc`` for the inference. Only 
@@ -1263,25 +1263,6 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
     * *burn* is a number giving the number of burn-in steps to perform per run
       before saving the MCMC values. Typically you might want a value
       equal to 10 to 20% of *nsteps*.
-
-    * *npreburns* is the number of "pre-burn" runs that are performed. 
-      Setting this variable to at least one, and preferably two, is 
-      **strongly** recommended. The MCMC becomes very inefficient as it
-      approaches its maximum because the sampler currently does not choose
-      the step sizes in the Dirichlet-distributed variables in a particularly
-      intelligent way. This option specifies that *npreburns* MCMC runs of
-      *burn* steps are performed before the main MCMC, with the results
-      of these pre-burn runs used to tune the step sizes for the main
-      MCMC. The other heuristic (which is always applied) is to place
-      the wildtype codon as the last entry in the Dirichlet-distributed
-      variable since it will typically be the largest entry. However, 
-      it is still not clear if this is the most efficient way to do
-      MCMC updates of Dirichlet variables, and it is possible that
-      using a delta exchange type operator (as implemented in ``BEAST``)
-      might be substantially more efficient). In addition,
-      the setting of the wildtype codon to the last entry is only done
-      based on the entries in the first library in *library_stats* --
-      so if there are multiple libraries, this efficiency is lost.
 
     * *thin* specifies the thinning of steps to perform (i.e. only sample
       every *thin* steps. Typically you might want a value of 10 to 100.
@@ -1364,21 +1345,15 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         verbose = 2
     else:
         verbose = 0
-    assert isinstance(npreburns, int) and npreburns >= 0, "npreburns must be integer >= 0"
     assert minvalue > 0, 'minvalue must be > 0'
     wtaa = mapmuts.sequtils.Translate([('wt', wtcodon)])[0][1]
     if not wtaa:
         wtaa = "*"
-    # We re-order codons and aas so that the wtcodon is last, and therefore
-    # is the incompleted entry in the Dirichlet distributions. This should
-    # improve MCMC performance. 
-    codons = [codon for codon in mapmuts.sequtils.Codons() if codon != wtcodon] + [wtcodon] # list of codons with wtcodon last
+    codons = mapmuts.sequtils.Codons()
     ncodons = len(codons)
-    assert ncodons == len(mapmuts.sequtils.Codons())
-    aas_original = mapmuts.sequtils.AminoAcids(includestop=True)
-    aas = [aa for aa in aas_original if aa != wtaa] + [wtaa]
+    aas = mapmuts.sequtils.AminoAcids(includestop=True)
     naas = len(aas)
-    assert len(aas_original) == naas
+    iwtcodon = codons.index(wtcodon) # index of wildtype codon
     codon_to_aa_indices = numpy.ndarray(ncodons, dtype='int')
     icodon = 0
     for codon in codons:
@@ -1388,7 +1363,6 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         assert aa in aas, "Failed to find aa %s" % aa
         codon_to_aa_indices[icodon] = aas.index(aa)
         icodon += 1
-    iwtcodon = codons.index(wtcodon) # index of wildtype codon
     
     # define deltar, all elements zero except wildtype codon
     deltar = numpy.zeros(ncodons)
@@ -1487,24 +1461,6 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
                     print "Setting initial value of stochastic variable %s to %s." % (stochasticvariable, str(stochasticvariable.value))
             else:
                 initial_stochastic_values[stochasticvariable] = copy.deepcopy(stochasticvariable.value)
-        # The proposal_sd after each pre-burn run should be the values at the end
-        # of the previous pre-burn run. This will make the steps for the Dirichlet
-        # variable much more efficient, since small-valued variables will have
-        # small steps and large-valued variables with have large steps.
-        for ipreburn in range(npreburns):
-            if debugging:
-                print "\nPerforming pre-burn run %d" % ipreburn
-            mcmc = pymc.MCMC(variables, verbose=verbose)
-            for stochasticvariable in mcmc.step_method_dict.iterkeys():
-                mcmc.use_step_method(DeltaExchange, stochasticvariable)
-                #mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
-                if debugging:
-                    print "For stochastic variable %s:\n\tinitial values = %s\n\tinitial proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
-            mcmc.sample(iter=burn, burn=0, thin=thin, progress_bar=progress_bar)
-            if debugging:
-                print "At completion of pre-burn run %d:" % ipreburn
-                for stochasticvariable in mcmc.step_method_dict.iterkeys():
-                    print "For stochastic variable %s:\n\tfinal values = %s\n\tfinal proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
         # now set up the actual sampling run
         mcmc = pymc.MCMC(variables, verbose=verbose)
         if debugging:
@@ -1523,14 +1479,12 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         pi_traces.append(mcmc.trace('pi', chain=None)[:][:,0,:])
         for selection in selection_counts.iterkeys():
             deltapi_traces[selection].append(mcmc.trace('deltapi_%s' % selection, chain=None)[:])
-    # indexing is changed in that from aas to that in aas_original
-    reindex = numpy.array([aas.index(aa) for aa in aas_original])
     # set up the return value
     returnvalue = {}
-    pi_mean = numpy.mean(numpy.concatenate(pi_traces), axis=0).take(reindex) 
-    pi_cred95 = numpy.array([CredibleInterval(numpy.concatenate(pi_traces).transpose()[iaa], 0.95) for iaa in range(naas)]).take(reindex, axis=0)
+    pi_mean = numpy.mean(numpy.concatenate(pi_traces), axis=0)
+    pi_cred95 = numpy.array([CredibleInterval(numpy.concatenate(pi_traces).transpose()[iaa], 0.95) for iaa in range(naas)])
     assert pi_cred95.shape == (naas, 2), "Re-indexed pi_cred95 has invalid shape of %s" % str(pi_cred95.shape)
-    pi_traces = numpy.array(pi_traces).take(reindex, axis=2)
+    pi_traces = numpy.array(pi_traces)
     assert pi_traces.shape == (nruns, (nsteps - burn) / thin, naas), "Re-indexed pi_traces has invalid shape of %s" % pi_traces.shape
     # Calculate the run_diff
     if nruns == 1:
@@ -1545,10 +1499,10 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         run_diff = numpy.mean(run_diff)
     returnvalue['control_selection'] = (pi_mean, pi_cred95, pi_traces, run_diff)
     for selection in selection_counts.iterkeys():
-        mean = numpy.mean(numpy.concatenate(deltapi_traces[selection]), axis=0).take(reindex) 
-        cred95 = numpy.array([CredibleInterval(numpy.concatenate(deltapi_traces[selection]).transpose()[iaa], 0.95) for iaa in range(naas)]).take(reindex, axis=0)
+        mean = numpy.mean(numpy.concatenate(deltapi_traces[selection]), axis=0)
+        cred95 = numpy.array([CredibleInterval(numpy.concatenate(deltapi_traces[selection]).transpose()[iaa], 0.95) for iaa in range(naas)])
         assert cred95.shape == (naas, 2), "Re-indexed cred95 has invalid shape of %s" % str(cred95.shape)
-        traces = numpy.array(deltapi_traces[selection]).take(reindex, axis=2)
+        traces = numpy.array(deltapi_traces[selection])
         assert traces.shape == (nruns, (nsteps - burn) / thin, naas), "Re-indexed traces has invalid shape of %s" % traces.shape
         # Calculate the run_diff
         if nruns == 1:
