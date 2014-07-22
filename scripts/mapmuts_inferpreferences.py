@@ -173,8 +173,8 @@ def main():
     """Main body of script."""
     # hard-coded variables
     includestop = True # include stop codons as a possible amino acid
-    burnfrac = 0.1 # set burn-in to this times nsteps
-    npreburns = 2 # perform this many pre-burn runs
+    burnfrac = 0.2 # set burn-in to this times nsteps
+    npreburns = 0 # perform this many pre-burn runs; none should be necessary since using delta exchange steps
     # check on module availability
     if not mapmuts.bayesian.PymcAvailable():
         raise ImportError("Cannot run this script as pymc or numpy are not available.")

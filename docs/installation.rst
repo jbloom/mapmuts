@@ -32,7 +32,7 @@ Although the core of `mapmuts`_  package can be run just using the standard `Pyt
 
     - 1.7.1
 
-* The MCMC Bayesian inference of the amino-acid preferences (or enrichment ratios) requires `pymc`_. `mapmuts`_ has been tested with `pymc`_ version 2.3.
+* The MCMC Bayesian inference of the amino-acid preferences (or enrichment ratios) requires `pymc`_. `mapmuts`_ has been tested with `pymc`_ version 2.3. It may **not** work with other versions of `pymc`_.
 
 * A few operations require `scipy`_. The following versions of `scipy`_ have been tested:
 

@@ -28,6 +28,8 @@ List of functions
 
 * *InferPreferencesMCMC* : infers equilibrium amino-acid preferences using MCMC.
 
+* *InferDifferentialPreferencesMCMC* : infers differential preferences by MCMC.
+
 * *EquilibriumFracs* : calculates equilibrium preferences for amino acids.
 
 * *CredibleInterval* : computes median-centered credible interval.
@@ -40,6 +42,7 @@ List of functions
 
 * *PreferencesRemoveStop* : removes stop codon as possible amino acid from preferences.
 
+* *DeltaExchange* : Implements delta exchange steps for MCMC.
 
 Details of functions
 ----------------------
@@ -812,7 +815,7 @@ def CredibleInterval(a, interval):
     return numpy.array([acopy[int((0.5 - interval / 2.) * len(acopy))], acopy[int((0.5 + interval / 2.) * len(acopy))]])
 
 
-def InferPreferencesMCMC(library_stats, pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, progress_bar=False, minvalue=1e-7, debugging=False):
+def InferPreferencesMCMC(library_stats, pi_concentration, epsilon_concentration, mu_concentration, rho_concentration, nruns, nsteps, burn, npreburns, thin, progress_bar=False, minvalue=1e-7, debugging=False, use_delta_exchange=True):
     """Infers equilibrium amino-acid preferences :math:`\pi_{r,a}` by MCMC.
 
     This function utilizes ``pymc`` for the inference. 
@@ -894,8 +897,10 @@ def InferPreferencesMCMC(library_stats, pi_concentration, epsilon_concentration,
       before saving the MCMC values. Typically you might want a value
       equal to 10 to 20% of *nsteps*.
 
-    * *npreburns* is the number of "pre-burn" runs that are performed. 
-      Setting this variable to at least one, and preferably two, is 
+    * *npreburns* is the number of "pre-burn" runs that are performed.
+      As long as *use_delta_exchange* has its default value of *True*,
+      you can safely set this option to zero. Otherwise,
+      setting this variable to at least one, and preferably two, is 
       **strongly** recommended. The MCMC becomes very inefficient as it
       approaches its maximum because the sampler currently does not choose
       the step sizes in the Dirichlet-distributed variables in a particularly
@@ -934,6 +939,13 @@ def InferPreferencesMCMC(library_stats, pi_concentration, epsilon_concentration,
 
         - Information about the pre-burn runs and the step methods
           are printed to standard output.
+
+    * *use_delta_exchange* specifies that we take the MCMC steps
+      by exchanging an amount delta between pairs of elements
+      in the Dirichlet distributions, rather than by moving 
+      all elements at once. This is *True* by default, which is the
+      recommended value as it avoids problems with the step size
+      calibration if the default ``pymc`` method is used.
 
     RETURN VALUE:
 
@@ -1113,7 +1125,10 @@ def InferPreferencesMCMC(library_stats, pi_concentration, epsilon_concentration,
                 print "\nPerforming pre-burn run %d" % ipreburn
             mcmc = pymc.MCMC(variables, verbose=verbose)
             for stochasticvariable in mcmc.step_method_dict.iterkeys():
-                mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
+                if use_delta_exchange:
+                    mcmc.use_step_method(DeltaExchange, stochasticvariable, verbose=verbose)
+                else:
+                    mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
                 if debugging:
                     print "For stochastic variable %s:\n\tinitial values = %s\n\tinitial proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
             mcmc.sample(iter=burn, burn=0, thin=thin, progress_bar=progress_bar)
@@ -1126,7 +1141,10 @@ def InferPreferencesMCMC(library_stats, pi_concentration, epsilon_concentration,
         if debugging:
             print "\nNow beginning the actual sampling MCMC."
         for stochasticvariable in mcmc.step_method_dict.iterkeys():
-            mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
+            if use_delta_exchange:
+                mcmc.use_step_method(DeltaExchange, stochasticvariable, verbose=verbose)
+            else:
+                mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
             if debugging:
                 print "For stochastic variable %s:\n\tinitial values = %s\n\tinitial proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
         mcmc.sample(iter=nsteps, burn=burn, thin=thin, progress_bar=progress_bar)
@@ -1403,6 +1421,7 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         """Returns log likelihood for deltapi"""
         assert value.shape == pix.ravel()[ : -1].shape, "value.shape = %s\npix.ravel().shape = %s\nvalue = %s\npix.ravel() = %s" % (value.shape, pix.ravel().shape, value, pix.ravel())
         return pymc.distributions.dirichlet_like(value + pix.ravel()[ : -1], pix * naasx * deltapi_concentrationx)
+
     def CompletedZeroSum(incomplete_v):
         """Adds a final element so that values sum to zero."""
         return numpy.append(incomplete_v, -numpy.sum(incomplete_v))            
@@ -1424,6 +1443,7 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
     def C(aavalues):
         """Amino-acid values mapped to codons."""
         return aavalues.take(codon_to_aa_indices)
+
     c_pi = pymc.Deterministic(eval=C, name='c_pi', parents={'aavalues':pi}, doc='codon mapping', plot=False)
     c_deltapi = {}
     for selection in selection_counts.iterkeys():
@@ -1446,6 +1466,7 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         nrselection = numpy.array([scounts[codon] for codon in codons])
         pr_nrselection_normalization[selection] = pymc.Deterministic(eval=Dot, name='pr_nrselection_normalization_%s' % selection, parents={'v1':c_pi + c_deltapi[selection], 'v2':f}, doc='normalization constant', plot=False)
         pr_nrselection[selection] = pymc.Multinomial('pr_nrselection_%s' % selection, n=numpy.sum(nrselection), p=epsilon + (c_pi + c_deltapi[selection]) * f / pr_nrselection_normalization[selection] - deltar, value=nrselection, observed=True)
+
     # variables in model
     variables = [epsilon_incomplete, epsilon, f_incomplete, f, pi_incomplete, pi, c_pi, pr_nrcontrol_normalization] + pr_nrselection_normalization.values() + c_deltapi.values() + deltapi_incomplete.values() + deltapi.values() + [pr_nrerror, pr_nrstart, pr_nrcontrol] + pr_nrselection.values()
     assert thin < nsteps and burn < nsteps, "nsteps must be greater than both thin and burn"
@@ -1475,7 +1496,8 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
                 print "\nPerforming pre-burn run %d" % ipreburn
             mcmc = pymc.MCMC(variables, verbose=verbose)
             for stochasticvariable in mcmc.step_method_dict.iterkeys():
-                mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
+                mcmc.use_step_method(DeltaExchange, stochasticvariable)
+                #mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
                 if debugging:
                     print "For stochastic variable %s:\n\tinitial values = %s\n\tinitial proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
             mcmc.sample(iter=burn, burn=0, thin=thin, progress_bar=progress_bar)
@@ -1488,7 +1510,8 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
         if debugging:
             print "\nNow beginning the actual sampling MCMC."
         for stochasticvariable in mcmc.step_method_dict.iterkeys():
-            mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
+            mcmc.use_step_method(DeltaExchange, stochasticvariable)
+            #mcmc.use_step_method(pymc.Metropolis, stochasticvariable, verbose=verbose)
             if debugging:
                 print "For stochastic variable %s:\n\tinitial values = %s\n\tinitial proposal_sd = %s" % (stochasticvariable, str(stochasticvariable.value), str(mcmc.step_method_dict[stochasticvariable][0].proposal_sd))
         mcmc.sample(iter=nsteps, burn=burn, thin=thin, progress_bar=progress_bar)
@@ -1542,6 +1565,33 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
 
     # Return the results
     return returnvalue
+
+
+class DeltaExchange(pymc.Metropolis):
+    """Implements delta exchange MCMC steps.
+
+    Designed to operate on an incomplete Dirichlet distribution
+    variable. Moves an amount from one element to another, effectively
+    exchanging an amount delta between two elements of the distribution.
+    Can propose moves that leave negative quantities.
+    """
+    def propose(self):
+        """Moves random normal quantity from one element to another."""
+        newvalue = self.stochastic.value.copy()
+        n = len(newvalue)
+        assert n >= 1
+        i = random.randint(0, n) # move from this element
+        j = random.randint(0, n) # move to this element
+        while j == i:
+            j = random.randint(0, n)
+        delta = random.normalvariate(0, 0.1 * self.adaptive_scale_factor)
+        if i < n: # not incompleted element
+            newvalue[i] -= delta
+        if j < n:
+            newvalue[j] += delta
+        self.stochastic.value = newvalue
+        #print "For %s, moved %g from %d to %d (adaptive_scale_factor = %g)" % (self.stochastic.__name__, delta, i, j, self.adaptive_scale_factor)
+
 
 
 if __name__ == '__main__':
