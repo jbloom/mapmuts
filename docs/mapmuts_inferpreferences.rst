@@ -87,7 +87,7 @@ Keys for the input file:
 
 * *seed* : integer seed for the random number generator. Runs with the same seed should generate exactly the same output. Otherwise the output may differ for different seeds as the MCMC uses random numbers.
 
-* *nruns* : the number of independent MCMC runs. Must be at least one, but it is recommended that you use *nruns* equal to at least 2, as this allows checks for MCMC convergence. When multiple runs are performed, the reported equilibrium preferences come from all runs.
+* *nruns* : the number of independent MCMC runs. Must be at least one, but it is recommended that you use *nruns* equal to at least 2 (and probably preferably 3), as this allows checks for MCMC convergence. When multiple runs are performed, the reported equilibrium preferences come from all runs.
 
 * *nsteps* : the number of steps for each MCMC run. A reasonable starting value is probably 200000. Note that the number of burn-in steps are not explicitly specified in this input file, but the program implements internal methods that should ensure adequate burn-in that is not included in the output. You will have to look at the source code if you want to understand that in detail. 
 
@@ -138,7 +138,7 @@ Here is an example input file::
     pi_concentration 1.0
     minvalue 1e-7
     seed 1
-    nruns 2
+    nruns 3
     nsteps 200000
     thin 200
     stepincrease 4
