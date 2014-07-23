@@ -12,7 +12,7 @@ This script takes as input the *codoncounts.txt* files created by :ref:`mapmuts_
 
 Dependencies
 --------------
-This script requires `pymc`_ for the Bayesian inference, which in turn requires `numpy`_. If you want the script to make plots, you also need `matplotlib`_. The use of `pymc`_ version 2.3 is strongly recommended over version 2.2 for better performance.
+This script requires `pymc`_ for the Bayesian inference, which in turn requires `numpy`_. If you want the script to make plots, you also need `matplotlib`_. You should use `pymc`_ version 2.3. This script may **not** work if you are using another version of `pymc`_ (so check that as a possible problem if you are getting strange error messages).
 
 
 Background and nomenclature
@@ -87,11 +87,11 @@ Keys for the input file:
 
 * *seed* : integer seed for the random number generator. Runs with the same seed should generate exactly the same output. Otherwise the output may differ for different seeds as the MCMC uses random numbers.
 
-* *nruns* : the number of independent MCMC runs. Must be at least one, but it is recommended that you use *nruns* equal to at least 2 (and 3 is probably better), as this allows checks for MCMC convergence. When multiple runs are performed, the reported equilibrium preferences come from all runs.
+* *nruns* : the number of independent MCMC runs. Must be at least one, but it is recommended that you use *nruns* equal to at least 2 (and probably preferably 3), as this allows checks for MCMC convergence. When multiple runs are performed, the reported equilibrium preferences come from all runs.
 
-* *nsteps* : the number of steps for each MCMC run. A reasonable starting value is probably 100000, although this may need to be increased if convergence is poor. Note that the number of burn-in steps are not explicitly specified in this script, but the program implements internal methods that should ensure adequate burn-in that is not included in the output. You will have to look at the source code if you want to understand that in detail. The burn-in is set equal to 10% of *nsteps* with two pre-burn runs that are used to calibrate the step sizes. So the overall amount of burn-in is equal to 30% of *nsteps*.
+* *nsteps* : the number of steps for each MCMC run. A reasonable starting value is probably 200000. Note that the number of burn-in steps are not explicitly specified in this input file, but the program implements internal methods that should ensure adequate burn-in that is not included in the output. You will have to look at the source code if you want to understand that in detail. 
 
-* *thin* : the posterior is only recorded every *thin* steps. If you want to record every value, then set *thin* to one. However, consecutive steps are usually correlated, so it is often preferable to set *thin* to a number greater than one. A suggested value is 100. *nsteps* must be a multiple of *thin*.
+* *thin* : the posterior is only recorded every *thin* steps. If you want to record every value, then set *thin* to one. However, consecutive steps are usually correlated, so it is often preferable to set *thin* to a number greater than one. A suggested value is 200. *nsteps* must be a multiple of *thin*.
 
 * *convergence* : the test applied to the MCMC runs to see if they converged. This option is only meaningful if *nruns* > 1 (as is recommended). For each pair of MCMC runs, we calculate the `Shannon-Jensen divergence`_ (logarithm base 2) between the :math:`\pi_{r,a}` values for all *a* for that value of *r*. If the runs converge to identical values, this difference will be zero, whereas its maximum value for highly diverged runs is one. We test whether the actual divergence is less than the value specified by *convergence*. If the difference is greater than *convergence*, then what is done next depends on the values of *stepincrease*. A recommended value for *convergence* is 0.01. The log file contains information about whether the inference converged for each site.
 
@@ -139,8 +139,8 @@ Here is an example input file::
     minvalue 1e-7
     seed 1
     nruns 3
-    nsteps 100000
-    thin 100
+    nsteps 200000
+    thin 200
     stepincrease 4
     convergence 0.01
     MCMC_traces None

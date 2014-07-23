@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>mapmuts_inferpreferences.py &mdash; mapmuts 1.0 documentation</title>
+    <title>mapmuts_inferpreferences.py &mdash; mapmuts 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_preferencescorrelate.py" href="mapmuts_preferencescorrelate.html" />
     <link rel="prev" title="mapmuts_countparsedmuts.py" href="mapmuts_countparsedmuts.html" /> 
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="mapmuts_countparsedmuts.html" title="mapmuts_countparsedmuts.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
           <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
@@ -62,7 +62,7 @@
 <p>This script takes as input the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>, and so is designed to be run after you have completed the analysis with that script.</p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>This script requires <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> for the Bayesian inference, which in turn requires <a class="reference external" href="http://www.numpy.org/">numpy</a>. If you want the script to make plots, you also need <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. The use of <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> version 2.3 is strongly recommended over version 2.2 for better performance.</p>
+<p>This script requires <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> for the Bayesian inference, which in turn requires <a class="reference external" href="http://www.numpy.org/">numpy</a>. If you want the script to make plots, you also need <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. You should use <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> version 2.3. This script may <strong>not</strong> work if you are using another version of <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> (so check that as a possible problem if you are getting strange error messages).</p>
 </div>
 <div class="section" id="background-and-nomenclature">
 <h2>Background and nomenclature<a class="headerlink" href="#background-and-nomenclature" title="Permalink to this headline">¶</a></h2>
@@ -125,11 +125,11 @@ format described below. Then simply run the script with the single text file as 
 </li>
 <li><p class="first"><em>seed</em> : integer seed for the random number generator. Runs with the same seed should generate exactly the same output. Otherwise the output may differ for different seeds as the MCMC uses random numbers.</p>
 </li>
-<li><p class="first"><em>nruns</em> : the number of independent MCMC runs. Must be at least one, but it is recommended that you use <em>nruns</em> equal to at least 2 (and 3 is probably better), as this allows checks for MCMC convergence. When multiple runs are performed, the reported equilibrium preferences come from all runs.</p>
+<li><p class="first"><em>nruns</em> : the number of independent MCMC runs. Must be at least one, but it is recommended that you use <em>nruns</em> equal to at least 2 (and probably preferably 3), as this allows checks for MCMC convergence. When multiple runs are performed, the reported equilibrium preferences come from all runs.</p>
 </li>
-<li><p class="first"><em>nsteps</em> : the number of steps for each MCMC run. A reasonable starting value is probably 100000, although this may need to be increased if convergence is poor. Note that the number of burn-in steps are not explicitly specified in this script, but the program implements internal methods that should ensure adequate burn-in that is not included in the output. You will have to look at the source code if you want to understand that in detail. The burn-in is set equal to 10% of <em>nsteps</em> with two pre-burn runs that are used to calibrate the step sizes. So the overall amount of burn-in is equal to 30% of <em>nsteps</em>.</p>
+<li><p class="first"><em>nsteps</em> : the number of steps for each MCMC run. A reasonable starting value is probably 200000. Note that the number of burn-in steps are not explicitly specified in this input file, but the program implements internal methods that should ensure adequate burn-in that is not included in the output. You will have to look at the source code if you want to understand that in detail.</p>
 </li>
-<li><p class="first"><em>thin</em> : the posterior is only recorded every <em>thin</em> steps. If you want to record every value, then set <em>thin</em> to one. However, consecutive steps are usually correlated, so it is often preferable to set <em>thin</em> to a number greater than one. A suggested value is 100. <em>nsteps</em> must be a multiple of <em>thin</em>.</p>
+<li><p class="first"><em>thin</em> : the posterior is only recorded every <em>thin</em> steps. If you want to record every value, then set <em>thin</em> to one. However, consecutive steps are usually correlated, so it is often preferable to set <em>thin</em> to a number greater than one. A suggested value is 200. <em>nsteps</em> must be a multiple of <em>thin</em>.</p>
 </li>
 <li><p class="first"><em>convergence</em> : the test applied to the MCMC runs to see if they converged. This option is only meaningful if <em>nruns</em> &gt; 1 (as is recommended). For each pair of MCMC runs, we calculate the <a class="reference external" href="http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence">Shannon-Jensen divergence</a> (logarithm base 2) between the <span class="math">\(\pi_{r,a}\)</span> values for all <em>a</em> for that value of <em>r</em>. If the runs converge to identical values, this difference will be zero, whereas its maximum value for highly diverged runs is one. We test whether the actual divergence is less than the value specified by <em>convergence</em>. If the difference is greater than <em>convergence</em>, then what is done next depends on the values of <em>stepincrease</em>. A recommended value for <em>convergence</em> is 0.01. The log file contains information about whether the inference converged for each site.</p>
 </li>
@@ -176,8 +176,8 @@ pi_concentration 1.0
 minvalue 1e-7
 seed 1
 nruns 3
-nsteps 100000
-thin 100
+nsteps 200000
+thin 200
 stepincrease 4
 convergence 0.01
 MCMC_traces None
@@ -308,7 +308,7 @@ removeoutlier False
         <li class="right" >
           <a href="mapmuts_countparsedmuts.html" title="mapmuts_countparsedmuts.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
           <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>

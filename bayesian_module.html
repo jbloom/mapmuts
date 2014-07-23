@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>bayesian Module &mdash; mapmuts 1.0 documentation</title>
+    <title>bayesian Module &mdash; mapmuts 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Python modules" href="pythonapi.html" />
     <link rel="next" title="dssp Module" href="dssp_module.html" />
     <link rel="prev" title="latex Module" href="latex_module.html" /> 
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="latex_module.html" title="latex Module"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
           <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
       </ul>
     </div>  
@@ -76,12 +76,14 @@ this is not strictly required.</p>
 <li><em>InferEnrichmentMCMC</em> : infers enrichment ratio from MCMC over posterior.</li>
 <li><em>InferEnrichmentMCMC_2</em> : faster (usually) version of <em>InferEnrichmentMCMC_2</em>.</li>
 <li><em>InferPreferencesMCMC</em> : infers equilibrium amino-acid preferences using MCMC.</li>
+<li><em>InferDifferentialPreferencesMCMC</em> : infers differential preferences by MCMC.</li>
 <li><em>EquilibriumFracs</em> : calculates equilibrium preferences for amino acids.</li>
 <li><em>CredibleInterval</em> : computes median-centered credible interval.</li>
 <li><em>SiteEntropy</em> : calculates site entropy from equilibrium fractions.</li>
 <li><em>GiniSimpson</em> : calculates Gini-Simpson diversity iversity index.</li>
 <li><em>ShannonJensenDivergence</em> : calculates Shannon-Jensen Divergence.</li>
 <li><em>PreferencesRemoveStop</em> : removes stop codon as possible amino acid from preferences.</li>
+<li><em>DeltaExchange</em> : Implements delta exchange steps for MCMC.</li>
 </ul>
 </div>
 <div class="section" id="details-of-functions">
@@ -96,6 +98,23 @@ this is not strictly required.</p>
 For example, 0.95 corresponds to a 95% credible interval.</p>
 <p>This function returns a <tt class="docutils literal"><span class="pre">numpy</span></tt> array of length 2 giving the lower and
 upper bounds to the credible interval.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bayesian.DeltaExchange">
+<em class="property">class </em><tt class="descclassname">bayesian.</tt><tt class="descname">DeltaExchange</tt><big>(</big><em>stochastic</em>, <em>scale=1.0</em>, <em>proposal_sd=None</em>, <em>proposal_distribution=None</em>, <em>verbose=-1</em>, <em>tally=True</em>, <em>check_before_accepting=True</em><big>)</big><a class="headerlink" href="#bayesian.DeltaExchange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pymc.StepMethods.Metropolis</span></tt></p>
+<p>Implements delta exchange MCMC steps.</p>
+<p>Designed to operate on an incomplete Dirichlet distribution
+variable. Moves an amount from one element to another, effectively
+exchanging an amount delta between two elements of the distribution.
+Can propose moves that leave negative quantities.</p>
+<dl class="method">
+<dt id="bayesian.DeltaExchange.propose">
+<tt class="descname">propose</tt><big>(</big><big>)</big><a class="headerlink" href="#bayesian.DeltaExchange.propose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves random normal quantity from one element to another.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="function">
@@ -169,6 +188,164 @@ and must all be &gt;= 0. The
 Gini-Simpson diversity index is calculated
 as <span class="math">\(D = 1 - \sum_a \pi_a^2\)</span> where <em>a</em> ranges over all values
 in <em>pi</em>. This diversity will be between 0 and 1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.InferDifferentialPreferencesMCMC">
+<tt class="descclassname">bayesian.</tt><tt class="descname">InferDifferentialPreferencesMCMC</tt><big>(</big><em>error_control_counts</em>, <em>starting_sample_counts</em>, <em>control_selection_counts</em>, <em>selection_counts</em>, <em>wtcodon</em>, <em>f_prior</em>, <em>epsilon_prior</em>, <em>pi_concentration</em>, <em>epsilon_concentration</em>, <em>f_concentration</em>, <em>deltapi_concentration</em>, <em>nruns</em>, <em>nsteps</em>, <em>burn</em>, <em>thin</em>, <em>progress_bar=False</em>, <em>minvalue=1e-07</em>, <em>debugging=False</em><big>)</big><a class="headerlink" href="#bayesian.InferDifferentialPreferencesMCMC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Infers differential preferences for a site by MCMC.</p>
+<p>This function utilizes <tt class="docutils literal"><span class="pre">pymc</span></tt> for the inference. Only 
+guaranteed to work for <tt class="docutils literal"><span class="pre">pymc</span></tt> version 2.3.</p>
+<p>This function infers the preferences and differential preferences
+for all amino acids <em>a</em> at a given site. There are 21 possible values
+for <em>a</em> since we allow all 20 amino acids plus a stop codon (denoted
+by the * character). The preferences sum to one; the differential
+preferences sum to zero.</p>
+<p>The full inference algorithm is described in the documentation for
+the <tt class="docutils literal"><span class="pre">mapmuts</span></tt> package, and so it not recapitulated here.</p>
+<p>CALLING VARIABLES:</p>
+<ul>
+<li><p class="first"><em>error_control_counts</em> is a dictionary keyed by all possible codons,
+with the values giving the counts of that codon in the <em>error_control</em>
+sample.</p>
+</li>
+<li><p class="first"><em>starting_sample_counts</em> is like <em>error_control_counts</em>, but for
+the <em>starting_sample</em>.</p>
+</li>
+<li><p class="first"><em>control_selection_counts</em> is like <em>error_control_counts</em>, but for
+the <em>control_selection</em>.</p>
+</li>
+<li><p class="first"><em>selection_counts</em> is a dictionary. The keys are strings giving
+the names of the different <em>selection_i</em> samples, and the values
+for each key are dictionaries like <em>error_control_counts</em> for that
+selection. There must be at least one key here, corresponding to
+at least one selected sample.</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>wtcodon</em> is a string giving the wildtype codon at the site. Should</dt>
+<dd><p class="first last">be an upper-case string, such as <em>GGC</em>.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><em>f_prior</em> : a number giving the prior estimate for the probability
+that the site is mutated from its wildtype codon to some specific other
+codon in the <em>starting_sample</em>. Note that this is the probability to
+be mutated to a <strong>specific</strong> codon, not to any codon.</p>
+</li>
+<li><p class="first"><em>epsilon_prior</em> : a dictionary keyed by the integers 1, 2, and 3
+giving the prior estimate for the probability that the site is
+erroneously read as some other <strong>specific</strong> codon in the 
+<em>error_control</em>. The value for the key of 1 is the probability to be
+mutated to some other specific codon that differs by 1 nucleotide,
+the value for the key of 2 is the probability to be mutated to 
+some other specific codon that differs by 2 nucleotides, etc.</p>
+</li>
+<li><p class="first"><em>pi_concentration</em> is the concentration parameter (<span class="math">\(\sigma_{\pi}\)</span>)
+for the symmetric Dirichlet-distribution prior over the <span class="math">\(\pi_{r,a}\)</span> 
+values.</p>
+</li>
+<li><p class="first"><em>epsilon_concentration</em> is the concentration parameter
+(:math: <cite>sigma_{epsilon}</cite>) for the Dirichlet-distribution prior
+over error rate in the <em>error_control</em>.</p>
+</li>
+<li><p class="first"><em>f_concentration</em> is the concentration parameter (<span class="math">\(\sigma_{f}\)</span>)
+for the Dirichlet-distribution prior over the mutation rate in
+the <em>starting_sample</em>.</p>
+</li>
+<li><p class="first"><em>deltapi_concentration</em> is the concentration parameter 
+(<span class="math">\(\sigma_{\Delta\pi}\)</span>)
+for the Dirichlet-distribution prior over the differential 
+preferences.</p>
+</li>
+<li><p class="first"><em>nruns</em> is the number of MCMC runs to perform, each starting from 
+different random values of the variables. Should be an integer &gt;= 1.
+Each MCMC run is <em>nsteps</em>, with a burn-in of <em>burn</em> and thining of
+<em>thin</em>.</p>
+</li>
+<li><p class="first"><em>nsteps</em> is an integer giving the number of MCMC steps to perform per run.
+Typically you might want values of 1e4 to 1e6 (depending on the chain
+is converging).</p>
+</li>
+<li><p class="first"><em>burn</em> is a number giving the number of burn-in steps to perform per run
+before saving the MCMC values. Typically you might want a value
+equal to 10 to 20% of <em>nsteps</em>.</p>
+</li>
+<li><p class="first"><em>thin</em> specifies the thinning of steps to perform (i.e. only sample
+every <em>thin</em> steps. Typically you might want a value of 10 to 100.
+<em>thin</em> must be set so that <em>burn</em> and <em>nsteps</em> are both multiples
+of <em>thin</em>.</p>
+</li>
+<li><p class="first"><em>progress_bar</em> is a Boolean switch specifying whether we display the 
+MCMC progress bar.</p>
+</li>
+<li><p class="first"><em>minvalue</em> is the minimum value assigned to any of the priors over
+the rates. This prevents the priors from being set to
+zero. A reasonable value is <em>1e-7</em> or <em>1e-8</em>. Set to <em>1e-7</em> by default.</p>
+</li>
+<li><p class="first"><em>debugging</em> is a Boolean switch specifying whether we display
+fairly extensive debugging information. Is <em>False</em> by
+default. If <em>True</em>, the following is done:</p>
+<blockquote>
+<div><ul class="simple">
+<li>MCMC is run with <em>verbose=2</em> rather than the default
+of <em>verbose=0</em>.</li>
+<li>Information about the pre-burn runs and the step methods
+are printed to standard output.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>RETURN VALUE:</p>
+<p>The return value is a dictionary. It is keyed by the string 
+<em>control_selection</em> and a string for every key in <em>selection_counts</em>.
+For each of these string keys, the value is a 4-tuple with the 
+following entries: <em>(means, cred95, traces, run_diff)</em>. For the 
+<em>control_selection</em>, these entries describe the values of the
+preferences <span class="math">\(\pi_{r,a}\)</span>. For the other selections, they
+describe the values of the differential preferences
+<span class="math">\(\Delta\pi_{r,a}^{s_i}\)</span>. Specifically:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>mean</em> is a <tt class="docutils literal"><span class="pre">numpy</span></tt> array of length 21. Element <em>mean[i]</em> holds
+the mean preference or differential preference over all non-burnin
+steps and all <em>nruns</em> runs for amino-acid <span class="math">\(a\)</span> where
+<em>i = mapmuts.sequtils.AminoAcids(includestop=True).index(a)</em>.</li>
+<li><em>cred95</em> gives the median-centered 95% credible intervals.
+<em>cred95[i]</em> is the interval corresponding to the estimate with 
+the mean of <em>mean[i]</em>. The interval is represented such
+that <em>cred95[i][0]</em> is the lower bound, and <em>cred95[i][1]</em>
+is the upper bound. <em>cred95</em> is a <tt class="docutils literal"><span class="pre">numpy</span></tt> array
+of dimension <em>(21, 2)</em>.</li>
+<li><em>traces</em> is a <tt class="docutils literal"><span class="pre">numpy</span></tt> array of dimension 
+<em>(nruns, (nsteps - burn) / thin, 21)</em>. This give values of the
+values during the thinned non-burnin MCMC steps.
+Specifically, <em>traces[irun][istep][iaa]</em> gives the value
+of for run <em>irun</em> (where <em>0 &lt;= irun &lt; nruns</em>)
+for step <em>istep</em> (where <em>0 &lt;= istep &lt; (nsteps - burn) / thin</em>)
+for amino acid <em>a</em> where 
+<em>iaa = mapmuts.sequtils.AminoAcids(includestop=True).index(a)</em>.</li>
+<li><em>run_diff</em> is a measure of the difference between the mean 
+values for all non-burnin steps between the
+<em>nruns</em> different runs. If <em>nruns</em> is 1, then this cannot be
+calculated, so <em>run_diff = None</em>. Otherwise, we calculate
+the Shannon-Jensen divergence between the 
+values for each pair of runs, taking the logarithm to the base
+2. If the two runs are identical, this divergence is zero,
+while its maximum value is one. We then calculate the average
+of the pairwise Shannon-Jensen divergence for all pairs of
+runs, and return that as <em>run_diff</em>. For <em>control_selection</em>,
+the divergence is calculated on the preferences
+<span class="math">\(\pi_{r,a}\)</span>. For the other selections, the divergence
+is calculated on the sum of the preferences and the 
+differential preferences, <span class="math">\(\pi_{r,a} + \Delta\pi^{s_i}_{r,a}\)</span>.
+If <em>run_diff</em> is close
+to zero (say less than 0.01), that indicates that the runs 
+are converging to similar values.
+If <em>run_diff</em> is large (say &gt; 0.05), that indicates
+they are converging to different values &#8211; in that case,
+you might want to increase <em>nsteps</em> (and perhaps <em>burn</em>).</li>
+</ul>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -395,7 +572,7 @@ before running this function.</p>
 
 <dl class="function">
 <dt id="bayesian.InferPreferencesMCMC">
-<tt class="descclassname">bayesian.</tt><tt class="descname">InferPreferencesMCMC</tt><big>(</big><em>library_stats</em>, <em>pi_concentration</em>, <em>epsilon_concentration</em>, <em>mu_concentration</em>, <em>rho_concentration</em>, <em>nruns</em>, <em>nsteps</em>, <em>burn</em>, <em>npreburns</em>, <em>thin</em>, <em>progress_bar=False</em>, <em>minvalue=1e-07</em>, <em>debugging=False</em><big>)</big><a class="headerlink" href="#bayesian.InferPreferencesMCMC" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">bayesian.</tt><tt class="descname">InferPreferencesMCMC</tt><big>(</big><em>library_stats</em>, <em>pi_concentration</em>, <em>epsilon_concentration</em>, <em>mu_concentration</em>, <em>rho_concentration</em>, <em>nruns</em>, <em>nsteps</em>, <em>burn</em>, <em>npreburns</em>, <em>thin</em>, <em>progress_bar=False</em>, <em>minvalue=1e-07</em>, <em>debugging=False</em>, <em>use_delta_exchange=True</em><big>)</big><a class="headerlink" href="#bayesian.InferPreferencesMCMC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Infers equilibrium amino-acid preferences <span class="math">\(\pi_{r,a}\)</span> by MCMC.</p>
 <p>This function utilizes <tt class="docutils literal"><span class="pre">pymc</span></tt> for the inference.</p>
 <p>This function infers the equilibrium preference <span class="math">\(\pi_{r,a}\)</span> for
@@ -405,7 +582,7 @@ by the * character). The preferences sum to one:
 <span class="math">\(\sum_a \pi_{r,a} = 1\)</span>. Higher values of <span class="math">\(\pi_{r,a}\)</span>
 correspond to a larger preference for <em>a</em> at site <em>r</em>.</p>
 <p>The full inference algorithm is described in the documentation for
-the <tt class="docutils literal"><span class="pre">mapmuts</span></tt> function, and so it not recapitulated here.</p>
+the <tt class="docutils literal"><span class="pre">mapmuts</span></tt> package, and so it not recapitulated here.</p>
 <p>CALLING VARIABLES:</p>
 <ul>
 <li><p class="first"><em>library_stats</em> is a list of statistics for each replicate of
@@ -467,8 +644,10 @@ is converging).</p>
 before saving the MCMC values. Typically you might want a value
 equal to 10 to 20% of <em>nsteps</em>.</p>
 </li>
-<li><p class="first"><em>npreburns</em> is the number of &#8220;pre-burn&#8221; runs that are performed. 
-Setting this variable to at least one, and preferably two, is 
+<li><p class="first"><em>npreburns</em> is the number of &#8220;pre-burn&#8221; runs that are performed.
+As long as <em>use_delta_exchange</em> has its default value of <em>True</em>,
+you can safely set this option to zero. Otherwise,
+setting this variable to at least one, and preferably two, is 
 <strong>strongly</strong> recommended. The MCMC becomes very inefficient as it
 approaches its maximum because the sampler currently does not choose
 the step sizes in the Dirichlet-distributed variables in a particularly
@@ -509,6 +688,13 @@ of <em>verbose=0</em>.</li>
 are printed to standard output.</li>
 </ul>
 </div></blockquote>
+</li>
+<li><p class="first"><em>use_delta_exchange</em> specifies that we take the MCMC steps
+by exchanging an amount delta between pairs of elements
+in the Dirichlet distributions, rather than by moving 
+all elements at once. This is <em>True</em> by default, which is the
+recommended value as it avoids problems with the step size
+calibration if the default <tt class="docutils literal"><span class="pre">pymc</span></tt> method is used.</p>
 </li>
 </ul>
 <p>RETURN VALUE:</p>
@@ -717,7 +903,7 @@ on the returned site entropy are therefore bits.</p>
         <li class="right" >
           <a href="latex_module.html" title="latex Module"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
           <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
       </ul>
     </div>

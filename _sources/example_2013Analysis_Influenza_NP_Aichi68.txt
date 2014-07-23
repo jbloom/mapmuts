@@ -429,5 +429,5 @@ As described in the previous section, the overall best inferences for the amino-
 .. _`Fowler et al`: http://www.nature.com/nmeth/journal/v7/n9/full/nmeth.1492.html
 .. _`Gong et al`: http://elife.elifesciences.org/content/2/e00631
 .. _`SRA accession SRP036064`: http://www.ncbi.nlm.nih.gov/sra/?term=SRP036064
-.. _`Bloom 2014`: http://mbe.oxfordjournals.org/content/early/2014/05/23/molbev.msu173.abstract
+.. _`Bloom 2014`: http://mbe.oxfordjournals.org/content/31/8/1956
 .. _`mapmuts version 1.0`: https://github.com/jbloom/mapmuts/tree/v1.0

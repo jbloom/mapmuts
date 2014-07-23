@@ -22,6 +22,4 @@ Here are some known potential shortcomings of `mapmuts`_. These shortcomings are
 
 * As a related issue, all alignments are performed at the nucleotide level. In principle, it might be conceptually preferable to perform the alignments at the codon level for codon mutant libraries.
 
-* The inference of the preferences uses MCMC implemented in `pymc`_. This is definitely the slowest part of the package. It is possible that this could be accelerated. For the inference of the equilbrium preferences, the script currently uses the default `pymc`_ step method for Dirichlet variables rather than the delta-exchange approach used by ``BEAST`` and some other MCMC implementations -- that may adversely affect performance? Overall, it appears that the current approach can lead to good convergence, but further optimizations certainly might be possible.
-
 .. include:: weblinks.txt

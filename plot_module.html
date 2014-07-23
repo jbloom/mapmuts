@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>plot Module &mdash; mapmuts 1.0 documentation</title>
+    <title>plot Module &mdash; mapmuts 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mapmuts 1.0 documentation" href="index.html" />
+    <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Python modules" href="pythonapi.html" />
     <link rel="next" title="latex Module" href="latex_module.html" />
     <link rel="prev" title="simulate Module" href="simulate_module.html" /> 
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="simulate_module.html" title="simulate Module"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
           <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
       </ul>
     </div>  
@@ -576,7 +576,7 @@ if these modules cannot be imported (if <cite>PylabAvailable() == False</cite>).
 
 <dl class="function">
 <dt id="plot.PlotEquilibriumFreqs">
-<tt class="descclassname">plot.</tt><tt class="descname">PlotEquilibriumFreqs</tt><big>(</big><em>pis</em>, <em>plotfile</em>, <em>title=''</em>, <em>pi_errs=None</em><big>)</big><a class="headerlink" href="#plot.PlotEquilibriumFreqs" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">plot.</tt><tt class="descname">PlotEquilibriumFreqs</tt><big>(</big><em>pis</em>, <em>plotfile</em>, <em>title=''</em>, <em>pi_errs=None</em>, <em>differentialpreferences=False</em><big>)</big><a class="headerlink" href="#plot.PlotEquilibriumFreqs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots equilibrium frequencies of different amino acids.</p>
 <p><em>pis</em> : a dictionary keyed by amino acid codes with values giving
 the equilibrium frequency.</p>
@@ -589,6 +589,9 @@ set to another value, it should specify the error bars for the plot.
 In this case, for each key in <em>pis</em>, there should be a similar key
 in <em>pi_errs</em> with the value a list or tuple such that <em>pi_errs[key][0]</em>
 gives the lower bound and <em>pi_errs[key][1]</em> gives the upper bound.</p>
+<p><em>differentialpreferences</em> is an optional argument that is <em>False</em> by
+default. Set to <em>True</em> if you are plotting differential preferences
+rather than preferences.</p>
 <p>This function uses <tt class="docutils literal"><span class="pre">pylab</span></tt> / <tt class="docutils literal"><span class="pre">matplotlib</span></tt>. It will raise an exception
 if these modules cannot be imported (if <cite>PylabAvailable() == False</cite>).</p>
 </dd></dl>
@@ -934,7 +937,7 @@ middle as possible while splitting at a space.</p>
                         title="previous chapter"><tt class="docutils literal"><span class="pre">simulate</span></tt> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="latex_module.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">latex</span></tt> Module</a></p>
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">latex</span></tt> Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -974,7 +977,7 @@ middle as possible while splitting at a space.</p>
         <li class="right" >
           <a href="simulate_module.html" title="simulate Module"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.0 documentation</a> &raquo;</li>
+        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
           <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
       </ul>
     </div>
