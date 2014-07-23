@@ -70,7 +70,7 @@ def RunMCMC(ires, error_control_counts, starting_sample_counts, control_selectio
             logstring.append('Trying again with %d-fold more steps...' % stepincrease)
             returnvalue = \
                 mapmuts.bayesian.InferDifferentialPreferencesMCMC(\
-                error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, nsteps, burn, thin, minvalue=minvalue)
+                error_control_counts, starting_sample_counts, control_selection_counts, selection_counts, wtcodon, f_prior, epsilon_prior, pi_concentration, epsilon_concentration, f_concentration, deltapi_concentration, nruns, int(stepincrease * nsteps), burn, thin, minvalue=minvalue)
             assert len(returnvalue) >= 2, "Should be at least the control preferences and one differential preference"
             t = time.clock() - start_t
             run_diffs = [(selection, returnvalue[selection][3]) for selection in returnvalue.iterkeys()]
