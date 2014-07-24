@@ -300,6 +300,7 @@ def main():
                         plotname = '%s/%sdifferentialpreferences_selection_%s_%d.pdf' % (MCMC_traces, outfileprefix, selection, ires)
                         ylabel = 'differential preference'
                         title = 'selection %s differential preferences, residue %d' % (selection, ires)
+                    assert os.path.isdir(os.path.dirname(plotname)), "Cannot find directory for %s" % plotname
                     mapmuts.plot.PlotTraces(plottraces, plotname, xlabel='MCMC step', ylabel=ylabel, title=title, trace_labels=trace_labels)
                     log.write('Wrote MCMC traces to %s\n' % plotname)
                     log.flush()
@@ -312,6 +313,7 @@ def main():
                         plotname = '%s/%sdifferentialpreferences_selection_%s_%d.pdf' % (preference_plots, outfileprefix, selection, ires)
                         differentialpreferences = True
                     (mean, cred95) = (dict(zip(aas, returnvalue[selection][0])), dict(zip(aas, returnvalue[selection][1])))
+                    assert os.path.isdir(os.path.dirname(plotname)), "Cannot find directory for %s" % plotname
                     mapmuts.plot.PlotEquilibriumFreqs(mean, plotname, 'residue %d' % ires, pi_errs=cred95, differentialpreferences=differentialpreferences)
     except:
         (exc_type, exc_value, exc_traceback) = sys.exc_info()
