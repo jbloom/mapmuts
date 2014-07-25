@@ -42,6 +42,8 @@ List of functions
 
 * *PreferencesRemoveStop* : removes stop codon as possible amino acid from preferences.
 
+* *DifferentialPreferencesRemoveStop* : removes stop codon as possible amino acid from differential preferences.
+
 * *DeltaExchange* : Implements delta exchange steps for MCMC.
 
 Details of functions
@@ -89,6 +91,52 @@ def ScipyAvailable():
     return _scipyavailable
 
 
+def DifferentialPreferencesRemoveStop(differentialpreferences):
+    """Removes stop codon as possible amino acid from differential preferences.
+
+    You should use this function if you have a set of amino acid
+    *differentialpreferences* that include a stop codon (denoted by a * character) as 
+    a possibility and you want to remove the possibility of that stop codon and
+    adjust all of the other differential preferences so that they sum to zero.
+
+    *differentialpreferences* is a variable that stores the preferences of sites
+    for specific amino acids. Typically, these would be the values 
+    written by ``mapmuts_inferdifferentialpreferences.py`` 
+    and then read by *mapmuts.io.ReadDifferentialPreferences*. So
+    *differentialpreferences* is a dictionary keyed by site number *r*, and for each
+    site *r*, *differentialpreferences[r]* is in turn a dictionary. This dictionary
+    has the string keys 'WT_AA', 'RMS_dPI', and then 'dPI_A', 'dPI_C',
+    'dPI_D', etc. The 'dPI_A' entry gives the differential preference for amino acid
+    *A*, etc. There may be 20 entries for the differential preferences for all 20 amino
+    acids, or there may be 21 entries for all 20 amino acids plus for a 
+    stop codon (this would be indicated by 'dPI_*').
+
+    This script goes through all sites *r* that key *differentialpreferences*. For a site,
+    if there is **not** a stop codon key ('dPI_*') in *differentialpreferences[r]*, then
+    nothing is done. But if there is a stop codon entry, then the key
+    'dPI_*' is removed from the dictionary and all of the other differentialpreferences are
+    adjusted up or down by 1/20 the value of dPI_* so that the sum is still zero. The
+    *RMS_dPI* value is also recomputed.
+
+    These changes are made to *differentialpreferences* in place, and there is no
+    return value. Because *differentialpreferences* is a dictionary, it is mutable,
+    so that is why the changes can be made in place.
+    """
+    aas = mapmuts.sequtils.AminoAcids(includestop=False)
+    for r in differentialpreferences.keys():
+        if 'dPI_*' in differentialpreferences[r]:
+            # has stop codon
+            x = differentialpreferences[r]['dPI_*']
+            del differentialpreferences[r]['dPI_*']
+            delta = x / float(len(aas))
+            for aa in aas:
+                differentialpreferences[r]['dPI_%s' % aa] += delta
+            dpi_sum = sum([differentialpreferences[r]['dPI_%s' % aa] for aa in aas]) 
+            assert abs(dpi_sum) < 1e-5, 'dPI values do not sum to close to one, sum is %g' % dpi_sum
+            rms = math.sqrt(sum([differentialpreferences[r]['dPI_%s' % aa]**2 for aa in aas]))
+            differentialpreferences[r]['RMS_dPI'] = rms
+
+
 def PreferencesRemoveStop(preferences):
     """Removes stop codon as a possible amino acid from site preferences.
 
@@ -120,6 +168,9 @@ def PreferencesRemoveStop(preferences):
     These changes are made to *preferences* in place, and there is no
     return value. Because *preferences* is a dictionary, it is mutable,
     so that is why the changes can be made in place.
+
+    This script also updates the value of 'SITE_ENTROPY' if a stop codon is removed,
+    taking the logarithms to the base 2.
     """
     aas = mapmuts.sequtils.AminoAcids(includestop=False)
     for r in preferences.keys():
@@ -132,7 +183,9 @@ def PreferencesRemoveStop(preferences):
             for aa in aas:
                 preferences[r]['PI_%s' % aa] /= rsum
             pi_sum = sum([preferences[r]['PI_%s' % aa] for aa in aas]) 
-            assert abs(pi_sum - 1) < 1e-7, 'PI values do not sum to close to one, sum is %g' % pi_sum
+            assert abs(pi_sum - 1) < 1e-5, 'PI values do not sum to close to one, sum is %g' % pi_sum
+            pi = dict([(aa, preferences[r]['PI_%s' % aa]) for aa in aas])
+            preferences[r]['SITE_ENTROPY'] = SiteEntropy(pi)
 
 
 def ShannonJensenDivergence(p1, p2):
