@@ -4,10 +4,6 @@ Scripts
 
 Installation of `mapmuts`_ installs a set of scripts that can be run directly from the command line. These scripts perform all of the main functions of the package. You should be able to utilize the full functionality simply by running these scripts, without interacting directly with the Python code.
 
-Recommended scripts
----------------------
-Here are scripts that are recommended as part of the current suggested workflow for inferring amino-acid preferences.
-
 .. toctree::
    :maxdepth: 1
 
@@ -17,6 +13,7 @@ Here are scripts that are recommended as part of the current suggested workflow 
    mapmuts_parsesummaryplots
    mapmuts_countparsedmuts
    mapmuts_inferpreferences
+   mapmuts_inferdifferentialpreferences
    mapmuts_preferencescorrelate
    mapmuts_preferencemeans
    mapmuts_siteprofileplots
