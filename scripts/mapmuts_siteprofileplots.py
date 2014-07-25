@@ -45,6 +45,8 @@ def main():
         raise ValueError("sitepreferences did not specify exactly one file")
     sitepreferences = sitepreferences[0]
     outfileprefix = mapmuts.io.ParseStringValue(d, 'outfileprefix')
+    if outfileprefix.upper() == 'NONE':
+        outfileprefix = ''
     siterange = mapmuts.io.ParseStringValue(d, 'siterange')
     if siterange.upper() == 'ALL':
         siterange = None
@@ -55,24 +57,29 @@ def main():
         siterange = (int(tup[0]), int(tup[1]))
         if siterange[1] <= siterange[0]:
             raise ValueError("Empty siterange")
-    dsspfile = mapmuts.io.ParseStringValue(d, 'dsspfile')
-    if dsspfile.upper() in ['NONE', 'FALSE']:
+    if 'dsspfile' not in d:
         dsspfile = False
     else:
-        dsspfile = dsspfile.strip()
-        if not os.path.isfile(dsspfile):
-            raise IOError("Cannot find dsspfile of %s" % dsspfile)
-        dsspchain = mapmuts.io.ParseStringValue(d, 'dsspchain')
-        if dsspchain.upper() in ['NONE', 'FALSE']:
-            dsspchain = None
-    add_rsa = mapmuts.io.ParseBoolValue(d, 'add_rsa')
-    if add_rsa and not dsspfile:
-        raise ValueError("Cannot use add_rsa without dsspfile")
-    add_ss = mapmuts.io.ParseBoolValue(d, 'add_ss')
-    if add_ss and not dsspfile:
-        raise ValueError("Cannot use add_ss without dsspfile")
-    if add_ss and not add_rsa:
-        raise ValueError("Cannot specify add_ss True but add_rsa False")
+        dsspfile = mapmuts.io.ParseStringValue(d, 'dsspfile')
+        if dsspfile.upper() in ['NONE', 'FALSE']:
+            dsspfile = False
+        else:
+            dsspfile = dsspfile.strip()
+            if not os.path.isfile(dsspfile):
+                raise IOError("Cannot find dsspfile of %s" % dsspfile)
+            dsspchain = mapmuts.io.ParseStringValue(d, 'dsspchain')
+            if dsspchain.upper() in ['NONE', 'FALSE']:
+                dsspchain = None
+            if 'add_rsa' in d:
+                add_rsa = mapmuts.io.ParseBoolValue(d, 'add_rsa')
+            else:
+                add_rsa = False
+            if 'add_ss' in d:
+                add_ss = mapmuts.io.ParseBoolValue(d, 'add_ss')
+            else:
+                add_ss = False
+            if add_ss and not add_rsa:
+                raise ValueError("Cannot specify add_ss True but add_rsa False")
     if 'add_custom' in d:
         add_custom = mapmuts.io.ParseStringValue(d, 'add_custom')
         if add_custom.upper() == 'FALSE':
