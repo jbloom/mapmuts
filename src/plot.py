@@ -2309,7 +2309,7 @@ def PlotLinearDensity(datalist, plotfile, xlabel, ylabel, title=False, fixymax=F
     matplotlib.rc('text', usetex=True)
     matplotlib.rc('font', size=9)
     matplotlib.rc('legend', fontsize=10)
-    figure = pylab.figure(figsize=(5, 2), facecolor='white')
+    figure = pylab.figure(figsize=(5, 2.2), facecolor='white')
     ax = pylab.axes([lmargin, bmargin, 1.0 - lmargin - rmargin, 1.0 - tmargin - bmargin])
     pylab.xlabel(xlabel, size=10)
     pylab.ylabel(ylabel, size=10)
