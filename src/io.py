@@ -31,7 +31,9 @@ List of functions
 `ReadEnrichmentRatios` : reads enrichment ratios from ``mapmuts_inferenrichment.py``
 
 `ReadEntropyAndEquilFreqs` : reads entropies / equilibrium freqs from 
-``mapmuts_inferenrichment.py``
+``mapmuts_inferenrichment.py`` or ``mapmuts_inferpreferences.py``.
+
+`ReadDifferentialPreferences` : reads differential preferences from ``mapmuts_inferdifferentialpreferences.py``
 
 `WriteAAsFromCodonCounts` : reads files created by `WriteCodonCounts`
 and writes the amino acid frequencies.
@@ -558,6 +560,59 @@ def ReadAlignmentStatistics(f):
             raise IOError("Invalid line:\n%s" % line)
         s[entries[0].strip()] = int(entries[1])
     return s
+
+
+def ReadDifferentialPreferences(infile):
+    """"Reads differential preferences written by ``mapmuts_inferdifferentialpreferences.py``.
+
+    The single calling argument *infile* should specify a ``differentialpreferences_selection_*.txt`` file
+    written by ``mapmuts_inferdifferentialpreferences.py``.
+
+    These files have the following format::
+
+        #SITE   WT_AA   RMS_dPI dPI_A   dPI_C   dPI_D   dPI_E   dPI_F   dPI_G   dPI_H   dPI_I   dPI_K   dPI_L   dPI_M   dPI_N   dPI_P   dPI_Q   dPI_R   dPI_S   dPI_T   dPI_V   dPI_W   dPI_Y   dPI_*
+        1   M   0.033508    -0.0041802  -0.00160924 -0.00102518 -0.00293463 -0.00112235 -0.000467141    -0.00262952 -0.0032969  -0.00679166 -0.00304567 0.0300719   0.00925138  -0.000442459    -8.11477e-05    -0.00129343 -0.00128639 0.000560046 -0.00243062 -0.00313798 -0.002528   -0.00158079
+        2   K   0.0630635   -0.0159228  0.0128652   -0.00367557 -0.0167789  0.005023    -0.000661766    0.0260142   -0.0040351  0.0025629   0.00523521  0.00449474  0.00192782  0.0189381   0.0171668   -0.00881324 -0.00971018 0.00748405  0.0136674   -0.00289523 -0.0288229  -0.024063
+
+    The first column gives the residue number, the second column gives the wildtype amino acid, the third
+    column gives the root-mean-square (RMS) differential preference, and the remaining columns give the values
+    for each of the 20 amino acids. The columns can be delimited by a single space or a tab. There **may** be
+    a final column ``dPI_*`` giving the differential preference for a stop codon. That column can be either
+    present or absent -- either one is OK.
+
+    The returned variable is a dictionary keyed by residue numbers, and with
+    the values for each residue number being dictionaries keyed by all of the
+    other 22 or 23 column labels ('WT_AA', 'RMS_dPI', 'dPI_A', 'dPI_C', ...)
+    and possibly 'dPI_*' if that is present in the header.
+    """
+    if not os.path.isfile(infile):
+        raise IOError("Cannot find infile %s" % infile)
+    lines = open(infile).readlines()
+    headmatch = re.compile('^#SITE\sWT_AA\sRMS_dPI\sdPI_A\sdPI_C\sdPI_D\sdPI_E\sdPI_F\sdPI_G\sdPI_H\sdPI_I\sdPI_K\sdPI_L\sdPI_M\sdPI_N\sdPI_P\sdPI_Q\sdPI_R\sdPI_S\sdPI_T\sdPI_V\sdPI_W\sdPI_Y(?P<stop>(\sdPI_\*){0,1})\n$')
+    m = headmatch.search(lines[0])
+    if not m:
+        raise ValueError("Invalid header of:\n%s" % lines[0])
+    has_stop = bool(m.group('stop'))
+    keys = lines[0].split()[1 : ]
+    nkeys = len(keys)
+    assert (not has_stop and nkeys == 22) or (has_stop and nkeys == 23), "Invalid header length, not the expected number of keys (found %d)." % nkeys
+    d = {}
+    for line in lines[1 : ]:
+        if line and not line.isspace():
+            entries = line.split()
+            if len(entries) != nkeys + 1:
+                raise ValueError("Invalid line of:\n%s" % line)
+            site = int(entries[0])
+            if site in d:
+                raise ValueError("Duplicate entry for site %d" % site)
+            site_d = {}
+            for (key, value) in zip(keys, entries[1 : ]):
+                if key == 'WT_AA':
+                    site_d[key] = value
+                else:
+                    site_d[key] = float(value)
+            d[site] = site_d
+    return d
 
 
 def ReadEntropyAndEquilFreqs(infile):
