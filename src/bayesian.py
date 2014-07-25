@@ -1398,7 +1398,8 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
 
     def CompletedZeroSum(incomplete_v):
         """Adds a final element so that values sum to zero."""
-        return numpy.append(incomplete_v, -numpy.sum(incomplete_v))            
+        return numpy.append(incomplete_v, -numpy.sum(incomplete_v))
+
     deltapi_incomplete = {}
     deltapi = {}
     for selection in selection_counts.iterkeys():
@@ -1427,6 +1428,7 @@ def InferDifferentialPreferencesMCMC(error_control_counts, starting_sample_count
     def Dot(v1, v2):
         """Evaluates dot product."""
         return float(numpy.dot(v1, v2.ravel()))
+
     nrerror = numpy.array([error_control_counts[codon] for codon in codons])
     pr_nrerror = pymc.Multinomial('pr_nrerror', n=numpy.sum(nrerror), p=epsilon, value=nrerror, observed=True)
     nrstart = numpy.array([starting_sample_counts[codon] for codon in codons])

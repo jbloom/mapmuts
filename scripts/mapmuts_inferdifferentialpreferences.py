@@ -299,7 +299,7 @@ def main():
                     else:
                         plotname = '%s/%sdifferentialpreferences_selection_%s_%d.pdf' % (MCMC_traces, outfileprefix, selection, ires)
                         ylabel = 'differential preference'
-                        title = 'selection %s differential preferences, residue %d' % (selection, ires)
+                        title = 'selection %s differential preferences, residue %d' % (selection.replace('_', ' '), ires)
                     assert os.path.isdir(os.path.dirname(plotname)), "Cannot find directory for %s" % plotname
                     mapmuts.plot.PlotTraces(plottraces, plotname, xlabel='MCMC step', ylabel=ylabel, title=title, trace_labels=trace_labels)
                     log.write('Wrote MCMC traces to %s\n' % plotname)
