@@ -40,10 +40,22 @@ def main():
     if not os.path.isfile(infilename):
         raise IOError("Failed to find infile of %s" % infilename)
     d = mapmuts.io.ParseInfile(open(infilename))
-    sitepreferences = mapmuts.io.ParseFileList(d, 'sitepreferences')
-    if len(sitepreferences) != 1:
-        raise ValueError("sitepreferences did not specify exactly one file")
-    sitepreferences = sitepreferences[0]
+    if 'sitepreferences' in d and 'differentialpreferences' in d:
+        raise ValueError("Cannot specify BOTH sitepreferences and differentialpreferences -- specify just one.")
+    elif 'sitepreferences' in d:
+        differential = False
+        sitepreferences = mapmuts.io.ParseFileList(d, 'sitepreferences')
+        if len(sitepreferences) != 1:
+            raise ValueError("sitepreferences did not specify exactly one file")
+        sitepreferences = sitepreferences[0]
+    elif 'differentialpreferences' in d:
+        differential = True
+        sitepreferences = mapmuts.io.ParseFileList(d, 'differentialpreferences')
+        if len(sitepreferences) != 1:
+            raise ValueError("differentialpreferences did not specify exactly one file")
+        sitepreferences = sitepreferences[0]
+    else:
+        raise ValueError("Cannot find either of sitepreferences or differentialpreferences in input file")
     outfileprefix = mapmuts.io.ParseStringValue(d, 'outfileprefix')
     if outfileprefix.upper() == 'NONE':
         outfileprefix = ''
@@ -58,11 +70,11 @@ def main():
         if siterange[1] <= siterange[0]:
             raise ValueError("Empty siterange")
     if 'dsspfile' not in d:
-        dsspfile = False
+        dsspfile = add_rsa = add_ss = False
     else:
         dsspfile = mapmuts.io.ParseStringValue(d, 'dsspfile')
         if dsspfile.upper() in ['NONE', 'FALSE']:
-            dsspfile = False
+            dsspfile = add_rsa = add_ss = False
         else:
             dsspfile = dsspfile.strip()
             if not os.path.isfile(dsspfile):
@@ -126,33 +138,51 @@ def main():
             if not os.path.isfile(sitenumbermapping):
                 raise IOError("Failed to find sitenumbermapping file %s" % sitenumbermapping)
             sitenumbermapping = dict([(int(line.split(',')[0]), line.split(',')[1]) for line in open(sitenumbermapping).readlines() if line[0] != '#' and not line.isspace()])
+    if 'ymax' in d:
+        ymax = mapmuts.io.ParseFloatValue(d, 'ymax')
+        assert ymax > 0, "ymax must be > 0"
+    else:
+        ymax = 1.0
 
 #    add_entropy = mapmuts.io.ParseBoolValue(d, 'add_entropy')
 
     # start running script
-    d = mapmuts.io.ReadEntropyAndEquilFreqs(sitepreferences)
+    if differential:
+        d = mapmuts.io.ReadDifferentialPreferences(sitepreferences)
+        if not includestop:
+            mapmuts.bayesian.DifferentialPreferencesRemoveStop(d)
+    else:
+        d = mapmuts.io.ReadEntropyAndEquilFreqs(sitepreferences)
+        if not includestop:
+            mapmuts.bayesian.PreferencesRemoveStop(d)
     if not siterange:
         siterange = (min(d.keys()), max(d.keys()))
     sites = [site for site in range(siterange[0], siterange[1] + 1)]
-    if not includestop:
-        mapmuts.bayesian.PreferencesRemoveStop(d)
     if sitenumbermapping:
         for site in sites:
             if site not in sitenumbermapping:
                 raise ValueError("sitenumbermapping file fails to specify a value for site %d" % site)
 
     # make plots of entropies along primary sequence
-    try:
-        entropies = [d[site]['SITE_ENTROPY'] for site in sites]
-    except KeyError:
-        raise KeyError("The sitepreferences file may not contain all of the consecutive required site numbers")
-    plotfile = "%ssite_entropy_plot.pdf" % outfileprefix
+    if differential:
+        plotfile = '%sRMS_differentialpreference_plot.pdf' % outfileprefix
+        ylabel = 'RMS differential preference'
+        try:
+            ydata = [d[site]['RMS_dPI'] for site in sites]
+        except KeyError:
+            raise KeyError("The differentialpreferences file may not contain all of the consecutive required site numbers")
+    else:
+        plotfile = "%ssite_entropy_plot.pdf" % outfileprefix
+        ylabel = 'site entropy (bits)'
+        try:
+            ydata = [d[site]['SITE_ENTROPY'] for site in sites]
+        except KeyError:
+            raise KeyError("The sitepreferences file may not contain all of the consecutive required site numbers")
     sys.stdout.write('Creating plot %s...\n' % plotfile)
-    mapmuts.plot.PlotLinearDensity([('site entropy', zip(sites, entropies))], plotfile, xlabel='residue number', ylabel='site entropy (bits)')
+    mapmuts.plot.PlotLinearDensity([('series 1', zip(sites, ydata))], plotfile, xlabel='residue number', ylabel=ylabel)
 
     # plot entropy / RSA correlation
     if dsspfile:
-        dsspplotfile = '%sentropy_rsa_correlationplot.pdf' % outfileprefix
         sys.stdout.write('Creating plot %s...\n' % dsspplotfile)
         dssp = mapmuts.dssp.ReadDSSP(dsspfile, 'Tien2013', chain=dsspchain)
         if mapmuts.bayesian.ScipyAvailable():
@@ -160,9 +190,16 @@ def main():
         else:
             warnings.warn("Will not be able to display correlation on %s as scipy is unavailable.\n" % dsspplotfile)
             corr = None
-        entropies = [d[site]['SITE_ENTROPY'] for site in sites if site in dssp]
+        if differential:
+            xvalues = [d[site]['RMS_dPI'] for site in sites if site in dssp]
+            dsspplotfile = '%sRMSdifferentialpreference_rsa_correlationplot.pdf' % outfileprefix
+            xlabel = 'RMS differential preference'
+        else:
+            xvalues = [d[site]['SITE_ENTROPY'] for site in sites if site in dssp]
+            dsspplotfile = '%sentropy_rsa_correlationplot.pdf' % outfileprefix
+            xlabel = 'site entropy (bits)'
         rsas = [dssp[site]['RSA'] for site in sites if site in dssp]
-        mapmuts.plot.PlotCorrelation(entropies, rsas, dsspplotfile, xlabel='site entropy (bits)', ylabel='RSA', corr=corr)
+        mapmuts.plot.PlotCorrelation(xvalues, rsas, dsspplotfile, xlabel=xlabel, ylabel='RSA', corr=corr)
 
     # make dictionaries defining other properties
     otherprops = []
@@ -181,8 +218,6 @@ def main():
 #    mapmuts.plot.EquilibriumFreqsHeatMap(sites, d, 'hydrophobicity', heatmapfile, otherprops=otherprops)
 
     # make sequence logo plot
-    logoplotfile = '%ssite_preferences_logoplot.pdf' % outfileprefix
-    sys.stdout.write("Creating plot %s...\n" % logoplotfile)
     if add_rsa:
         if add_ss and not add_custom:
             overlay = [rsa_d, ss_d]
@@ -192,7 +227,14 @@ def main():
             raise ValueError("add_rsa must be paired with exactly one of add_custom or add_ss")
     else:
         overlay = None
-    mapmuts.weblogo.EquilibriumFreqsLogo(sites, d, logoplotfile, nperline=nperline, overlay=overlay, sitenumbermapping=sitenumbermapping)
+    if differential:
+        logoplotfile = '%sdifferentialpreferences_logoplot.pdf' % outfileprefix
+        sys.stdout.write("Creating plot %s...\n" % logoplotfile)
+        mapmuts.weblogo.DifferentialPreferencesLogo(sites, d, logoplotfile, nperline=nperline, overlay=overlay, sitenumbermapping=sitenumbermapping, ydatamax=ymax)
+    else:
+        logoplotfile = '%ssite_preferences_logoplot.pdf' % outfileprefix
+        sys.stdout.write("Creating plot %s...\n" % logoplotfile)
+        mapmuts.weblogo.EquilibriumFreqsLogo(sites, d, logoplotfile, nperline=nperline, overlay=overlay, sitenumbermapping=sitenumbermapping)
 
     sys.stdout.write("Script execution completed.\n")
 

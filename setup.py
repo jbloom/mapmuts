@@ -99,4 +99,5 @@ setup(
             'scripts/mapmuts_siteprofileplots.py',
             'scripts/mapmuts_entropycomparison.py',
             ],
+    package_data = {'mapmuts':['template.eps']}, # template from weblogo version 3.4
 )
