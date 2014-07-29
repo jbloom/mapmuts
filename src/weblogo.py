@@ -310,6 +310,33 @@ def EquilibriumFreqsLogo(sites, pi_d, plotfile, nperline, overlay, sitenumbermap
 def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, sitenumbermapping=None, numberevery=10, ydatamax=1.0):
     """Creates a logo plot of differential amino-acid preferences.
 
+    This plot shows the differential amino-acid preferences, which can potentially
+    total up to 1.0 in each direction. For each stack, there is a center black line,
+    and positive preferences are shown above that line while negative preferences
+    are shown below it.
+
+    All calling arguments have the same meaning as for the function
+    *EquilibriumFreqsLogo* with the following two exceptions:
+
+    *dpi_d* replaces the *pi_d* argument used for *EquilibriumFreqsLogo*.
+    *dpi_d* is a dictionary keyed by every integer in *sites*.
+    *sites*. The value of *dpi_d[isite]* is itself a dictionary,
+    which has keys 'dPI_A', 'dPI_C', 'dPI_D', etc for all 20
+    one-letter upper-case amino acid codes. The values
+    for these keys are the differential preference of that
+    amino acid at that site. So *dpi_d[isite]['dPI_M']* is
+    the differential preference for methionine at site *isite*.
+    *dpi_d* is allowed to either contain or not contain stop codons.
+    If it contains stop codons, then there should be a key
+    'dPI_*' giving the preference for a stop codon for each
+    dictionary *dpi_d[isite]*. However, we only check that there
+    are actually stop codons by looking to see if there
+    is a key 'dPI_*' in *dpi_d[sites[0]]* -- if there is not,
+    then we don't look for stop codons at any other sites either.
+    Note that even though stop codons are denoted by an asterisk
+    in *dpi_d*, they are plotted using an *X* character in the 
+    sequence logo.
+
     *ydatamax* is the maximum that the logo stacks extend in the positive
     and negative directions. Is 1.0 by default.
     """

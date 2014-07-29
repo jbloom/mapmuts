@@ -183,20 +183,21 @@ def main():
 
     # plot entropy / RSA correlation
     if dsspfile:
-        sys.stdout.write('Creating plot %s...\n' % dsspplotfile)
         dssp = mapmuts.dssp.ReadDSSP(dsspfile, 'Tien2013', chain=dsspchain)
         if mapmuts.bayesian.ScipyAvailable():
             corr = 'Pearson'
         else:
-            warnings.warn("Will not be able to display correlation on %s as scipy is unavailable.\n" % dsspplotfile)
+            warnings.warn("Will not be able to display correlation on DSSP plot as scipy is unavailable.\n")
             corr = None
         if differential:
-            xvalues = [d[site]['RMS_dPI'] for site in sites if site in dssp]
             dsspplotfile = '%sRMSdifferentialpreference_rsa_correlationplot.pdf' % outfileprefix
+            sys.stdout.write('Creating plot %s...\n' % dsspplotfile)
+            xvalues = [d[site]['RMS_dPI'] for site in sites if site in dssp]
             xlabel = 'RMS differential preference'
         else:
             xvalues = [d[site]['SITE_ENTROPY'] for site in sites if site in dssp]
             dsspplotfile = '%sentropy_rsa_correlationplot.pdf' % outfileprefix
+            sys.stdout.write('Creating plot %s...\n' % dsspplotfile)
             xlabel = 'site entropy (bits)'
         rsas = [dssp[site]['RSA'] for site in sites if site in dssp]
         mapmuts.plot.PlotCorrelation(xvalues, rsas, dsspplotfile, xlabel=xlabel, ylabel='RSA', corr=corr)
