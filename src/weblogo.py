@@ -54,6 +54,7 @@ import weblogolib # weblogo library
 import weblogolib.colorscheme # weblogo library
 import corebio.matrix # weblogo library
 import corebio.utils # weblogo library
+import numpy
 
 import mapmuts.sequtils
 
@@ -315,6 +316,8 @@ def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, siten
     stopchar = 'X' # character for stop codon in logo plot
     firstblankchar = 'B' # character for first blank space
     lastblankchar = 'b' # character for last blank space
+    separatorchar = '-' # separates positive and negative 
+    separatorheight = 0.01 # height of separator as fraction of total
     if not WebLogoAvailable():
         raise ValueError("Cannot run weblogo")
     if overlay and not PyPdfAvailable():
@@ -357,8 +360,8 @@ def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, siten
         aas_for_string = aas[ : -1] + [stopchar]
     else:
         aas_for_string = aas
-    aas_for_string = [aa for aa in aas_for_string] + [firstblankchar, lastblankchar]
-    ydatamax *= 2.0 # maximum possible range of data, multiply by two for range
+    aas_for_string = [aa for aa in aas_for_string] + [firstblankchar, lastblankchar, separatorchar]
+    ydatamax *= 2.0 / (1.0 - separatorheight)  # maximum possible range of data, multiply by two for range
     try:
         # write data into transfacfile (a temporary file)
         transfacfile = tempfile.mkstemp()[1]
@@ -369,8 +372,8 @@ def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, siten
         for site in sites:
             positivesum = sum([dpi_d[site]['dPI_%s' % aa] for aa in aas if dpi_d[site]['dPI_%s' % aa] > 0])
             negativesum = sum([dpi_d[site]['dPI_%s' % aa] for aa in aas if dpi_d[site]['dPI_%s' % aa] < 0])
-            if abs(positivesum + negativesum) > 1.0e-5:
-                raise ValueError("Differential preference sums not close to zero for site %d" % site)
+            if abs(positivesum + negativesum) > 1.0e-6:
+                raise ValueError("Differential preference sums of %g and %g not close to zero for site %d" % (positivesum, negativesum, site))
             f.write('%d' % site)
             dpi_aa = []
             for aa in aas:
@@ -378,15 +381,17 @@ def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, siten
                 dpi_aa.append((y, aa))
                 f.write(' %g' % (abs(y) / float(ydatamax)))
             dpi_aa.sort()
-            ordered_alphabets[isite] = [firstblankchar] + [tup[1] for tup in dpi_aa] + [lastblankchar]
+            firstpositiveindex = 0
+            while dpi_aa[firstpositiveindex][0] < 0:
+                firstpositiveindex += 1
+            ordered_alphabets[isite] = [firstblankchar] + [tup[1] for tup in dpi_aa[ : firstpositiveindex]] + [separatorchar] + [tup[1] for tup in dpi_aa[firstpositiveindex : ]] + [lastblankchar]
             isite += 1
-            f.write(' %g %g' % (0.5 * (ydatamax + 2.0 * negativesum) / ydatamax, 0.5 * (ydatamax + 2.0 * negativesum) / ydatamax))
-            f.write('\n')
+            f.write(' %g %g %g\n' % (0.5 * (ydatamax + 2.0 * negativesum) / ydatamax, 0.5 * (ydatamax + 2.0 * negativesum) / ydatamax, separatorheight * ydatamax))
         f.close()
         # create web logo
         aastring = ''.join(aas_for_string)
         logoprior = weblogolib.parse_prior('equiprobable', aastring, 0)
-        motif = corebio.matrix.Motif.read_transfac(open(transfacfile), aastring)
+        motif = _my_Motif.read_transfac(open(transfacfile), aastring)
         logodata = weblogolib.LogoData.from_counts(motif.alphabet, motif, logoprior)
         logo_options = weblogolib.LogoOptions()
         logo_options.fineprint = None
@@ -399,8 +404,9 @@ def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, siten
         logo_options.first_index = sites[0]
         (cmap, colormapping, mapper) = mapmuts.plot.KyteDoolittleColorMapping()
         colormapping[firstblankchar] = colormapping[lastblankchar] = '#FFFFFF' # white
+        colormapping[separatorchar] = '#000000' # black
         color_scheme = weblogolib.colorscheme.ColorScheme()
-        for (aa, aaforstring) in zip(aas + [firstblankchar, lastblankchar], aas_for_string):
+        for (aa, aaforstring) in zip(aas + [firstblankchar, lastblankchar, separatorchar], aas_for_string):
             color_scheme.groups.append(weblogolib.colorscheme.ColorGroup(aaforstring, colormapping[aa], "'%s'" % aaforstring))
         logo_options.color_scheme = color_scheme
         # add site number mapping
@@ -632,6 +638,177 @@ def _my_eps_formatter(logodata, format, ordered_alphabets) :
 # End of code modified from weblogo    
 #########################################################################
 
+#########################################################################
+# More code modified from weblogo version 3.4 by Jesse Bloom to allow non-
+# alphabetic characters in motifs.
+
+#  Copyright (c) 2005 Gavin E. Crooks
+#  Copyright (c) 2006 John Gilman
+
+#  This software is distributed under the MIT Open Source License.
+#  <http://www.opensource.org/licenses/mit-license.html>
+#
+#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  copy of this software and associated documentation files (the "Software"),
+#  to deal in the Software without restriction, including without limitation
+#  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#  and/or sell copies of the Software, and to permit persons to whom the
+#  Software is furnished to do so, subject to the following conditions:
+#
+#  The above copyright notice and this permission notice shall be included
+#  in all copies or substantial portions of the Software.
+#
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
+#  IN THE SOFTWARE.
+
+
+class _my_Motif(corebio.matrix.AlphabeticArray) :
+    """A two dimensional array where the second dimension is indexed by an 
+    Alphabet. Used to represent sequence motifs and similar information.
+
+    
+    Attr:
+    - alphabet     -- An Alphabet
+    - array        -- A numpy array
+    - name         -- The name of this motif (if any) as a string.
+    - description  -- The description, if any.
+    
+    """
+            
+    def __init__(self, alphabet, array=None, dtype=None, name=None,
+            description = None, scale=None) :
+        corebio.matrix.AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
+        self.name = name
+        self.description = description
+        self.scale = scale    
+
+    @property
+    def alphabet(self):
+        return self.alphabets[1]
+        
+    def reindex(self, alphabet) :
+        return  _my_Motif(alphabet, corebio.matrix.AlphabeticArray.reindex(self, (None, alphabet)))
+  
+    # These methods alter self, and therefore do not return a value.
+    # (Compare to Seq objects, where the data is immutable and therefore methods return a new Seq.)
+    # TODO: Should reindex (above) also act on self?
+    
+    def reverse(self):
+        """Reverse sequence data"""
+#        self.array = na.array(self.array[::-1]) # This is a view into the origional numpy array.
+        self.array = self.array[::-1] # This is a view into the origional numpy array.
+    
+    @staticmethod #TODO: should be classmethod?
+    def read_transfac( fin, alphabet = None) :
+        """ Parse a sequence matrix from a file. 
+        Returns a tuple of (alphabet, matrix)
+        """
+   
+        items = []
+
+        start=True
+        for line in fin :
+            if line.isspace() or line[0] =='#' : continue
+            stuff = line.split()
+            if start and stuff[0] != 'PO' and stuff[0] != 'P0': continue
+            if stuff[0]=='XX' or stuff[0]=='//': break
+            start = False
+            items.append(stuff)
+        if len(items) < 2  :
+            raise ValueError("Vacuous file.")
+
+        # Is the first line a header line?
+        header = items.pop(0)
+        hcols = len(header)
+        rows = len(items)
+        cols = len(items[0])
+        if not( header[0] == 'PO' or header[0] =='P0' or hcols == cols-1 or hcols == cols-2) :
+            raise ValueError("Missing header line!")
+
+        # Do all lines (except the first) contain the same number of items?
+        cols = len(items[0])
+        for i in range(1, len(items)) :
+            if cols != len(items[i]) :
+                raise ValueError("Inconsistant length, row %d: " % i)
+
+        # Vertical or horizontal arrangement?
+        if header[0] == 'PO' or header[0] == 'P0': header.pop(0)
+
+        position_header = True    
+        alphabet_header = True    
+        for h in header :
+            if not corebio.utils.isint(h) : position_header = False
+#allow non-alphabetic            if not str.isalpha(h) : alphabet_header = False
+
+        if not position_header and not alphabet_header :
+            raise ValueError("Can't parse header: %s" % str(header))
+
+        if position_header and alphabet_header :
+            raise ValueError("Can't parse header")
+
+
+        # Check row headers
+        if alphabet_header :
+            for i,r in enumerate(items) :
+                if not corebio.utils.isint(r[0]) and r[0][0]!='P' : 
+                    raise ValueError(
+                        "Expected position as first item on line %d" % i)
+                r.pop(0)
+                defacto_alphabet = ''.join(header)
+        else :
+            a = []
+            for i,r in enumerate(items) :
+                if not ischar(r[0]) and r[0][0]!='P' : 
+                    raise ValueError(
+                        "Expected position as first item on line %d" % i)
+                a.append(r.pop(0))
+            defacto_alphabet = ''.join(a)                
+
+        # Check defacto_alphabet
+        defacto_alphabet = corebio.seq.Alphabet(defacto_alphabet)
+
+        if alphabet :
+            if not defacto_alphabet.alphabetic(alphabet) :
+                raise ValueError("Incompatible alphabets: %s , %s (defacto)"
+                                 % (alphabet, defacto_alphabet))
+        else :            
+            alphabets = (unambiguous_rna_alphabet,
+                        unambiguous_dna_alphabet,                      
+                        unambiguous_protein_alphabet,
+                      )
+            for a in alphabets :
+                if defacto_alphabet.alphabetic(a) :
+                    alphabet = a
+                    break
+            if not alphabet :
+                alphabet = defacto_alphabet
+   
+
+        # The last item of each row may be extra cruft. Remove
+        if len(items[0]) == len(header) +1 :
+            for r in items :
+                r.pop()
+
+        # items should now be a list of lists of numbers (as strings) 
+        rows = len(items)
+        cols = len(items[0])
+        matrix = numpy.zeros( (rows,cols) , dtype=numpy.float64) 
+        for r in range( rows) :
+            for c in range(cols):
+                matrix[r,c] = float( items[r][c]) 
+
+        if position_header :
+            matrix.transpose() 
+
+        return _my_Motif(defacto_alphabet, matrix).reindex(alphabet)
+
+# End of code modified from weblogo version 3.4
+#==============================================================
 
 if __name__ == '__main__':
     import doctest
