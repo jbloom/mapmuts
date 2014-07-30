@@ -344,7 +344,7 @@ def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, siten
     firstblankchar = 'B' # character for first blank space
     lastblankchar = 'b' # character for last blank space
     separatorchar = '-' # separates positive and negative 
-    separatorheight = 0.01 # height of separator as fraction of total
+    separatorheight = 0.02 # height of separator as fraction of total
     if not WebLogoAvailable():
         raise ValueError("Cannot run weblogo")
     if overlay and not PyPdfAvailable():
@@ -388,7 +388,7 @@ def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, siten
     else:
         aas_for_string = aas
     aas_for_string = [aa for aa in aas_for_string] + [firstblankchar, lastblankchar, separatorchar]
-    ydatamax *= 2.0 / (1.0 - separatorheight)  # maximum possible range of data, multiply by two for range
+    ydatamax *= 2.0 # maximum possible range of data, multiply by two for range
     try:
         # write data into transfacfile (a temporary file)
         transfacfile = tempfile.mkstemp()[1]
@@ -397,8 +397,8 @@ def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, siten
         ordered_alphabets = {} # keyed by site (consecutive 0-index) with values ordered lists of aas from bottom to top
         isite = 0
         for site in sites:
-            positivesum = sum([dpi_d[site]['dPI_%s' % aa] for aa in aas if dpi_d[site]['dPI_%s' % aa] > 0])
-            negativesum = sum([dpi_d[site]['dPI_%s' % aa] for aa in aas if dpi_d[site]['dPI_%s' % aa] < 0])
+            positivesum = sum([dpi_d[site]['dPI_%s' % aa] for aa in aas if dpi_d[site]['dPI_%s' % aa] > 0]) + separatorheight / 2.0
+            negativesum = sum([dpi_d[site]['dPI_%s' % aa] for aa in aas if dpi_d[site]['dPI_%s' % aa] < 0]) - separatorheight / 2.0
             if abs(positivesum + negativesum) > 1.0e-6:
                 raise ValueError("Differential preference sums of %g and %g not close to zero for site %d" % (positivesum, negativesum, site))
             f.write('%d' % site)
@@ -413,7 +413,9 @@ def DifferentialPreferencesLogo(sites, dpi_d, plotfile, nperline, overlay, siten
                 firstpositiveindex += 1
             ordered_alphabets[isite] = [firstblankchar] + [tup[1] for tup in dpi_aa[ : firstpositiveindex]] + [separatorchar] + [tup[1] for tup in dpi_aa[firstpositiveindex : ]] + [lastblankchar]
             isite += 1
-            f.write(' %g %g %g\n' % (0.5 * (ydatamax + 2.0 * negativesum) / ydatamax, 0.5 * (ydatamax + 2.0 * negativesum) / ydatamax, separatorheight * ydatamax))
+            if 2.0 * positivesum > ydatamax:
+                raise ValueError("You need to increase ymax: the total differential preferences sum to more than the y-axis limits")
+            f.write(' %g %g %g\n' % (0.5 * (ydatamax + 2.0 * negativesum) / ydatamax, 0.5 * (ydatamax + 2.0 * negativesum) / ydatamax, separatorheight))
         f.close()
         # create web logo
         aastring = ''.join(aas_for_string)
