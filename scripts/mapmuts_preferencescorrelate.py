@@ -1,8 +1,8 @@
 #!python
 
-"""Plots correlations between amino-acid preferences.
+"""Plots correlations between amino-acid preferences or differential preferences.
 
-Written by Jesse Bloom, 2013.
+Written by Jesse Bloom.
 """
 
 
@@ -41,7 +41,20 @@ def main():
     if not os.path.isfile(infilename):
         raise IOError("Failed to find infile of %s" % infilename)
     d = mapmuts.io.ParseInfile(open(infilename))
-    preferencesfiles = mapmuts.io.ParseFileList(d, 'preferencesfiles')
+    if 'preferencesfiles' in d and 'differentialpreferencesfiles' in d:
+        raise ValueError("You can specify only one of preferencesfile or differentialpreferencesfiles, not both")
+    elif 'preferencesfiles' in d:
+        preferencesfiles = mapmuts.io.ParseFileList(d, 'preferencesfiles')
+        preferences = [mapmuts.io.ReadEntropyAndEquilFreqs(f) for f in preferencesfiles]
+        use_diffprefs = False
+    elif 'differentialpreferencesfiles' in d:
+        preferencesfiles = mapmuts.io.ParseFileList(d, 'differentialpreferencesfiles')
+        preferences = [mapmuts.io.ReadDifferentialPreferences(f) for f in preferencesfiles]
+        use_diffprefs = True
+    else: 
+        raise ValueError("Failed to specify either preferencesfiles or differentialpreferencesfiles")
+    if len(preferencesfiles) < 2:
+        raise ValueError("Failed to specify at least two preferencesfiles or differentialpreferencesfiles")
     samplenames = mapmuts.io.ParseStringValue(d, 'samplenames')
     if 'alpha' in d:
         alpha = mapmuts.io.ParseFloatValue(d, 'alpha')
@@ -57,13 +70,16 @@ def main():
         plot_simpsondiversity = mapmuts.io.ParseBoolValue(d, 'plot_simpsondiversity')
     else:
         plot_simpsondiversity = False
+    if 'plot_RMSdiffpref' in d:
+        plot_RMSdiffpref = mapmuts.io.ParseBoolValue(d, 'plot_RMSdiffpref')
+    else:
+        plot_RMSdiffpref = False
     samplenames = [x.strip() for x in samplenames.split()]
     if len(preferencesfiles) != len(samplenames):
-        raise ValueError("samplenames and preferencesfiles do not specify the same number of entries")
+        raise ValueError("samplenames and preferencesfiles/differentialpreferencesfiles do not specify the same number of entries")
     plotdir = mapmuts.io.ParseStringValue(d, 'plotdir')
     if not os.path.isdir(plotdir):
         raise IOError("plotdir directory of %s does not already exist. You must create it before running this script." % plotdir)
-    preferences = [mapmuts.io.ReadEntropyAndEquilFreqs(f) for f in preferencesfiles]
 
     # make the sample comparison plots
     for isample in range(len(samplenames)):
@@ -75,35 +91,49 @@ def main():
             sharedresidues = [r for r in d1.iterkeys() if r in d2]
             if not sharedresidues:
                 raise ValueError("No shared residues")
-            if ('PI_*' in d1[sharedresidues[0]]) and ('PI_*' in d2[sharedresidues[0]]):
+            if (('PI_*' in d1[sharedresidues[0]]) and ('PI_*' in d2[sharedresidues[0]])) or (('dPI_*' in d1[sharedresidues[0]]) and ('dPI_*' in d2[sharedresidues[0]])):
                 includestop = True
             else:
                 includestop = False
-                if 'PI_*' in d1[sharedresidues[0]]:
+                if 'PI_*' in d1[sharedresidues[0]] or 'dPI_*' in d1[sharedresidues[0]]:
                     d1 = copy.deepcopy(d1)
-                    mapmuts.bayesian.PreferencesRemoveStop(d1)
-                if 'PI_*' in d2[sharedresidues[0]]:
+                    if use_diffprefs:
+                        mapmuts.bayesian.DifferentialPreferencesRemoveStop(d1)
+                    else:
+                        mapmuts.bayesian.PreferencesRemoveStop(d1)
+                if 'PI_*' in d2[sharedresidues[0]] or 'dPI_*' in d2[sharedresidues[0]]:
                     d2 = copy.deepcopy(d2)
-                    mapmuts.bayesian.PreferencesRemoveStop(d2)
+                    if use_diffprefs:
+                        mapmuts.bayesian.DifferentialPreferencesRemoveStop(d2)
+                    else:
+                        mapmuts.bayesian.PreferencesRemoveStop(d2)
             sample1data = []
             sample2data = []
             aas = mapmuts.sequtils.AminoAcids(includestop=includestop)
             for r in sharedresidues:
-                if plot_simpsondiversity:
+                if plot_simpsondiversity and not use_diffprefs:
                     pi1 = dict([(aa, d1[r]['PI_%s' % aa]) for aa in aas])
                     pi2 = dict([(aa, d2[r]['PI_%s' % aa]) for aa in aas])
                     sample1data.append(mapmuts.bayesian.GiniSimpson(pi1))
                     sample2data.append(mapmuts.bayesian.GiniSimpson(pi2))
+                elif plot_RMSdiffpref and use_diffprefs:
+                    sample1data.append(d1[r]['RMS_dPI'])
+                    sample2data.append(d2[r]['RMS_dPI'])
                 else:
                     for aa in aas:
-                        sample1data.append(d1[r]['PI_%s' % aa])
-                        sample2data.append(d2[r]['PI_%s' % aa])
+                        if use_diffprefs:
+                            sample1data.append(d1[r]['dPI_%s' % aa])
+                            sample2data.append(d2[r]['dPI_%s' % aa])
+                        else:
+                            sample1data.append(d1[r]['PI_%s' % aa])
+                            sample2data.append(d2[r]['PI_%s' % aa])
             if logscale:
                 if min(sample1data + sample2data) <= 0:
                     raise ValueError("Cannot use logscale as there is data <= 0")
                 mapmuts.plot.PlotCorrelation(sample1data, sample2data, plotfile, xlabel=sample1.replace('_', ' '), ylabel=sample2.replace('_', ' '), logx=True, logy=True, corr=corr, alpha=alpha, symmetrize=False, fixaxes=False)
             else:
-                mapmuts.plot.PlotCorrelation(sample1data, sample2data, plotfile, xlabel=sample1.replace('_', ' '), ylabel=sample2.replace('_', ' '), corr=corr, alpha=alpha, symmetrize=True, fixaxes=True)
+                fixaxes = not use_diffprefs
+                mapmuts.plot.PlotCorrelation(sample1data, sample2data, plotfile, xlabel=sample1.replace('_', ' '), ylabel=sample2.replace('_', ' '), corr=corr, alpha=alpha, symmetrize=True, fixaxes=fixaxes)
 
     sys.stdout.write("\nScript execution completed.\n")
 
