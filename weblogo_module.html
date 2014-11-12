@@ -59,12 +59,14 @@
 <span id="weblogo-module"></span><h1><a class="reference internal" href="#module-weblogo" title="weblogo"><tt class="xref py py-mod docutils literal"><span class="pre">weblogo</span></tt></a> Module<a class="headerlink" href="#module-weblogo" title="Permalink to this headline">¶</a></h1>
 <p>Module for making sequence logos with <tt class="docutils literal"><span class="pre">weblogo</span></tt>.</p>
 <p>This module uses <tt class="docutils literal"><span class="pre">weblogo</span></tt> (<a class="reference external" href="http://weblogo.threeplusone.com/">http://weblogo.threeplusone.com/</a>). It has been
-tested with <tt class="docutils literal"><span class="pre">weblogo</span></tt> version 3.3. It is not guaranteed to work with
+tested with <tt class="docutils literal"><span class="pre">weblogo</span></tt> version 3.4. It is not guaranteed to work with
 other version of <tt class="docutils literal"><span class="pre">weblogo</span></tt>.</p>
 <p>Before running any function in this module, you can run <em>WebLogoAvailable()</em>
 to test if the <tt class="docutils literal"><span class="pre">weblogo</span></tt> executable can be found. If this function returns
 <em>False</em>, then you need to get the weblogo executable in the current search
 path before running other functions in the module.</p>
+<p>This package also imports the <tt class="docutils literal"><span class="pre">weblogo</span></tt> libraries <tt class="docutils literal"><span class="pre">weblogolib</span></tt> and <tt class="docutils literal"><span class="pre">corebio.matrix</span></tt>
+into <tt class="docutils literal"><span class="pre">Python</span></tt>.</p>
 <p>If you are using an overlay on the sequence logo, the package <tt class="docutils literal"><span class="pre">pyPdf</span></tt>
 (<a class="reference external" href="http://pybrary.net/pyPdf/">http://pybrary.net/pyPdf/</a>) is also required. You can test this with
 <em>PyPdfAvailable()</em>.</p>
@@ -75,6 +77,7 @@ path before running other functions in the module.</p>
 <p><em>ConvertAvailable</em> : tests whether <tt class="docutils literal"><span class="pre">convert</span></tt> utility from ImageMagick is available.</p>
 <p><em>PyPdfAvailable</em> : tests whether <em>pyPdf</em> package is available.</p>
 <p><em>EquilibriumFreqsLogo</em> : plots a sequence logo of equilibrium amino-acid preferences.</p>
+<p><em>DifferentialPreferencesLogo</em> : plots a sequence logo of differential amino-acid preferences.</p>
 </div>
 <div class="section" id="documentation-for-functions">
 <h2>Documentation for functions<a class="headerlink" href="#documentation-for-functions" title="Permalink to this headline">¶</a></h2>
@@ -86,6 +89,38 @@ path before running other functions in the module.</p>
 <p>Returns <em>True</em> if <tt class="docutils literal"><span class="pre">convert</span></tt> can be run using the <em>os</em> system commands
 for running external programs, and <em>False</em> otherwise.</p>
 <p><tt class="docutils literal"><span class="pre">convert</span></tt> is the command-line access to the ImageMagick suite.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="weblogo.DifferentialPreferencesLogo">
+<tt class="descclassname">weblogo.</tt><tt class="descname">DifferentialPreferencesLogo</tt><big>(</big><em>sites</em>, <em>dpi_d</em>, <em>plotfile</em>, <em>nperline</em>, <em>overlay</em>, <em>sitenumbermapping=None</em>, <em>numberevery=10</em>, <em>ydatamax=1.0</em><big>)</big><a class="headerlink" href="#weblogo.DifferentialPreferencesLogo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a logo plot of differential amino-acid preferences.</p>
+<p>This plot shows the differential amino-acid preferences, which can potentially
+total up to 1.0 in each direction. For each stack, there is a center black line,
+and positive preferences are shown above that line while negative preferences
+are shown below it.</p>
+<p>All calling arguments have the same meaning as for the function
+<em>EquilibriumFreqsLogo</em> with the following two exceptions:</p>
+<p><em>dpi_d</em> replaces the <em>pi_d</em> argument used for <em>EquilibriumFreqsLogo</em>.
+<em>dpi_d</em> is a dictionary keyed by every integer in <em>sites</em>.
+<em>sites</em>. The value of <em>dpi_d[isite]</em> is itself a dictionary,
+which has keys &#8216;dPI_A&#8217;, &#8216;dPI_C&#8217;, &#8216;dPI_D&#8217;, etc for all 20
+one-letter upper-case amino acid codes. The values
+for these keys are the differential preference of that
+amino acid at that site. So <em>dpi_d[isite][&#8216;dPI_M&#8217;]</em> is
+the differential preference for methionine at site <em>isite</em>.
+<em>dpi_d</em> is allowed to either contain or not contain stop codons.
+If it contains stop codons, then there should be a key
+&#8216;dPI_*&#8217; giving the preference for a stop codon for each
+dictionary <em>dpi_d[isite]</em>. However, we only check that there
+are actually stop codons by looking to see if there
+is a key &#8216;dPI_*&#8217; in <em>dpi_d[sites[0]]</em> &#8211; if there is not,
+then we don&#8217;t look for stop codons at any other sites either.
+Note that even though stop codons are denoted by an asterisk
+in <em>dpi_d</em>, they are plotted using an <em>X</em> character in the 
+sequence logo.</p>
+<p><em>ydatamax</em> is the maximum that the logo stacks extend in the positive
+and negative directions. Is 1.0 by default.</p>
 </dd></dl>
 
 <dl class="function">
@@ -206,7 +241,7 @@ evaluates to <em>True</em> using <em>bool(WebLogoAvailable())</em>.</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="dssp_module.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">dssp</span></tt> Module</a></p>
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">dssp</span></tt> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="shortcomings.html"
                         title="next chapter">Shortcomings</a></p>

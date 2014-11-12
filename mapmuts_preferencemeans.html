@@ -57,15 +57,24 @@
             
   <div class="section" id="mapmuts-preferencemeans-py">
 <span id="id1"></span><h1>mapmuts_preferencemeans.py<a class="headerlink" href="#mapmuts-preferencemeans-py" title="Permalink to this headline">¶</a></h1>
-<p>This is a simple script that computes the mean of the amino acid preferences inferred by several runs of <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>.</p>
-<p>Briefly, for each residue <em>r</em> in a protein, the script <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a> computes the preference of that site for each amino acid <em>a</em>, which is denoted as <span class="math">\(\pi_{r,a}\)</span>. These preferences sum to one, so <span class="math">\(1 = \sum_a \pi_{r,a}\)</span>. It is possible that you have run several replicates of <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>, such as for several different replicates of an experiment. You then might want to compute the average preference for each amino acid taken over the replicates. This script does that, and writes the output to a file.</p>
+<p>This is a simple script that computes the mean of the amino acid preferences or differential preferences inferred by several runs of <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a> or <a class="reference internal" href="mapmuts_inferdifferentialpreferences.html#mapmuts-inferdifferentialpreferences-py"><em>mapmuts_inferdifferentialpreferences.py</em></a>.</p>
+<div class="section" id="preferences">
+<h2>Preferences<a class="headerlink" href="#preferences" title="Permalink to this headline">¶</a></h2>
+<p>If using amino-acid preferences (<em>preferencefiles</em> argument in <a class="reference internal" href="#input-file">Input file</a>), then we are working with the following data.</p>
+<p>For each residue <em>r</em> in a protein, the script <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a> computes the preference of that site for each amino acid <em>a</em>, which is denoted as <span class="math">\(\pi_{r,a}\)</span>. These preferences sum to one, so <span class="math">\(1 = \sum_a \pi_{r,a}\)</span>. It is possible that you have run several replicates of <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>, such as for several different replicates of an experiment. You then might want to compute the average preference for each amino acid taken over the replicates. This script does that, and writes the output to a file.</p>
 <p>Specifically, let <span class="math">\(\pi_{r,a}^i\)</span> denote the preference for amino acid <em>a</em> at site <em>r</em> computed for replicate <em>i</em>, where <span class="math">\(i = 1, \ldots N\)</span> where <em>N</em> is the number of replicates. Then the mean preference of site <em>r</em> for amino acid <em>a</em> is <span class="math">\(\langle \pi_{r,a} \rangle = \frac{1}{N} \sum_i \pi_{r,a}^i\)</span>. Note that because the preferences sum to one for each individual library, it will also be the case that <span class="math">\(1 = \sum_a \langle \pi_{r,a} \rangle\)</span>.</p>
+</div>
+<div class="section" id="differential-preferences">
+<h2>Differential preferences<a class="headerlink" href="#differential-preferences" title="Permalink to this headline">¶</a></h2>
+<p>If using differential amino-acid preferences (<em>differentialpreferencefiles</em> argument in <a class="reference internal" href="#input-file">Input file</a>), then we are working with the following data.</p>
+<p>For each residue <span class="math">\(r\)</span> in a protein, the script <a class="reference internal" href="mapmuts_inferdifferentialpreferences.html#mapmuts-inferdifferentialpreferences-py"><em>mapmuts_inferdifferentialpreferences.py</em></a> computes the differential preference <span class="math">\(\Delta\pi_{r,a}\)</span> of that site for amino acid <span class="math">\(a\)</span>. These differential preferences sum to zero, so <span class="math">\(0 = \sum_a \Delta\pi_{r,a}\)</span>. This script is designed for the case when you have performed several runs of <a class="reference internal" href="mapmuts_inferdifferentialpreferences.html#mapmuts-inferdifferentialpreferences-py"><em>mapmuts_inferdifferentialpreferences.py</em></a> on different samples, and want to compute the average.</p>
+<p>Specifically, then <span class="math">\(\Delta\pi_{r,a}^i\)</span> denote the differential preferences for replicate <span class="math">\(i\)</span>, where <span class="math">\(i = 1, \ldots N\)</span> where <span class="math">\(N\)</span> is the number of replicates. Then the mean differential preference of site <span class="math">\(r\)</span> for amino acid <span class="math">\(a\)</span> is <span class="math">\(\langle \Delta\pi_{r,a} \rangle = \frac{1}{N} \sum_i \Delta\pi_{r,a}^i\)</span>. Note that because the differential preferences sum to zero for each individual replicate, it will also be the case that the average differential preferences sum to zero.</p>
 <div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
 <p>This script has no dependencies outside of <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> and the standard <a class="reference external" href="http://www.python.org/">Python</a> library.</p>
 </div>
 <div class="section" id="running-the-script">
-<h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
+<h3>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h3>
 <p>To run this script from the prompt, first create a text infile of the
 format described below. Then simply run the script with the single text file as the argument, as in:</p>
 <div class="highlight-python"><div class="highlight"><pre>mapmuts_preferencemeans.py infile.txt
@@ -73,26 +82,20 @@ format described below. Then simply run the script with the single text file as 
 </div>
 </div>
 <div class="section" id="input-file">
-<h2>Input file<a class="headerlink" href="#input-file" title="Permalink to this headline">¶</a></h2>
+<h3>Input file<a class="headerlink" href="#input-file" title="Permalink to this headline">¶</a></h3>
 <p>The input file is a text file with a series of <em>key</em> / <em>value</em> pairs. The required keys are indicated below. The values should not include spaces.</p>
 <p>Lines beginning with # and empty lines are ignored.</p>
 <p>Keys for the input file:</p>
 <ul>
-<li><p class="first"><em>preferencefiles</em> : The input data for this script are the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files created by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. You must specify at least two such files (if there were just one, you wouldn&#8217;t need to run this script). So this key should be followed by a list of two or more <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files. These files will have a format as follows (and as detailed in the documentation for <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>:</p>
-<div class="highlight-python"><div class="highlight"><pre>#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*
-1   M   0.885694    0.000680047 0.00185968  8.48048e-06 0.00128217  0.0289946   0.000654589 0.0212144   0.0205306   0.0021597   0.00056726  0.876551    0.00130602  0.000789781 0.00144568  0.000414457 0.00071164  0.00126055  0.00167084  0.0352283   0.00176486  0.000905383
-2   A   1.1671  0.709575    0.00177747  3.79503e-05 0.00298854  0.00390524  0.00131246  0.00379599  0.000913006 0.00121497  0.000535209 0.00276335  0.00140061  0.000694694 0.0032134   0.00464972  0.000463924 0.000908368 0.254241    0.00335749  0.00137437  0.000876985
-3   N   3.2593  0.129992    0.000540239 4.2514e-06  0.00171887  0.0212062   0.0006086   0.102743    0.0431489   0.00524637  0.0771062   0.021714    0.0641921   0.00338082  0.0149898   0.0106522   0.13886 0.0247841   0.00607319  0.0500692   0.282389    0.000581555
-</pre></div>
-</div>
+<li><p class="first"><em>preferencefiles</em> : You should specify <strong>either</strong> this argument or <em>differentialpreferencefiles</em>, but not both. If using <em>preferencefiles</em>, this argument should be followed by a list of the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files created by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. You must specify at least two such files (if there were just one, you wouldn&#8217;t need to run this script). So this key should be followed by a list of two or more <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files.</p>
+<p>Note that it is optional whether a preference is specified for stop codons (indicated by a * character) in the last column. But all files specified here must be consistent &#8211; they either all must specify a preference for a stop codon, or all must not specify a preference for a stop codon.</p>
 </li>
-</ul>
-<blockquote>
-<div>Note that it is optional whether a preference is specified for stop codons (indicated by a * character) in the last column. But all files specified here must be consistent &#8211; they either all must specify a preference for a stop codon, or all must not specify a preference for a stop codon.</div></blockquote>
-<ul>
+<li><p class="first"><em>differentialpreferencefiles</em> : You should specify <strong>either</strong> this argument or <em>preferencefiles</em>, but not both. If using <em>differentialpreferencefiles</em>, this argument should be followed by a list of the <tt class="docutils literal"><span class="pre">differentialpreferences_selection_*.txt</span></tt> files created by <a class="reference internal" href="mapmuts_inferdifferentialpreferences.html#mapmuts-inferdifferentialpreferences-py"><em>mapmuts_inferdifferentialpreferences.py</em></a>. You must specify at least two such files (if there were just one, you wouldn&#8217;t need to run this script).</p>
+<p>Note that it is optional whether a preference is specified for stop codons (indicated by a * character) in the last column. But all files specified here must be consistent &#8211; they either all must specify a preference for a stop codon, or all must not specify a preference for a stop codon.</p>
+</li>
 <li><p class="first"><em>outfile</em> is the name of the created output file. This output file is in the same format as the input files in <em>preferencefiles</em>, but now contains the average preference.</p>
 </li>
-<li><p class="first"><em>includestop</em> specifies whether we include stop codons (denoted by a * character) as possible amino acids in the generated <em>outfile</em>. If the input <em>preferencesfiles</em> do not specify stop codons as an amino acid, then no stop codons are ever included in <em>outfile</em> and this option is meaningless. But the input <em>preferencesfiles</em> do specify stop codon preferences, the <em>includestop</em> is meaningful. In this case:</p>
+<li><p class="first"><em>includestop</em> specifies whether we include stop codons (denoted by a * character) as possible amino acids in the generated <em>outfile</em>. If the input <em>preferencefiles</em> / <em>differentialpreferencefiles</em> do not specify stop codons as an amino acid, then no stop codons are ever included in <em>outfile</em> and this option is meaningless. But the input files do specify stop codon preferences, the <em>includestop</em> is meaningful. In this case:</p>
 <blockquote>
 <div><ul class="simple">
 <li>If <em>includestop</em> is <em>True</em> then <em>outfile</em> also contains these stop codons as possible amino acids.</li>
@@ -103,7 +106,7 @@ format described below. Then simply run the script with the single text file as 
 </ul>
 </div>
 <div class="section" id="example-input-file">
-<h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
+<h3>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h3>
 <p>Here is an example input file:</p>
 <div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_preferencemeans.py
 preferencefiles WT-1_equilibriumpreferences.txt WT-2_equilibriumpreferences.txt N334H-1_equilibriumpreferences.txt N334H-2_equilibriumpreferences.txt
@@ -113,10 +116,12 @@ includestop False
 </div>
 </div>
 <div class="section" id="output">
-<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<h3>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h3>
 <p>The script writes some brief output to standard output.</p>
-<p>The file specified by <em>outfile</em> is created (or overwritten if it already exists). This file has the exact same format as the input files listed in <em>preferencefiles</em>, except the indicated preferences are now the <span class="math">\(\langle \pi_{r,a} \rangle\)</span> average preferences (this format matches that for the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files described in the documentation for <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. The entropies (third column) are recomputed based on the average preferences as <span class="math">\(h_r = \sum_a \langle \pi_{r,a} \rangle \log_2 \langle \pi_{r,a}\rangle\)</span>. The entries for the wildtype amino acid (second column, <em>WT_AA</em>) show either the single wildtype amino acid (if identical in all <em>preferencefiles</em>) or a comma delimited list of all wildtype amino acids in the different <em>preferencefiles</em> (such as <em>N,N,H,H</em> if the <em>preferencefiles</em> have wildtype amino acids <em>N</em>, <em>N</em>, <em>H</em>, and <em>H</em> for four such files).</p>
+<p>The file specified by <em>outfile</em> is created (or overwritten if it already exists). This file has the exact same format as the input files listed in <em>preferencefiles</em> or <em>differentialpreferencfiles</em>, except the indicated preferences / differential preferences are now average values. The entropies or RMS differential preferences (third columns of these files) are recomputed.</p>
+<p>The entries for the wildtype amino acid (second column, <em>WT_AA</em>) show either the single wildtype amino acid (if identical in all files) or a comma delimited list of all wildtype amino acids in the different files (such as <em>N,N,H,H</em> if the <em>preferencefiles</em> have wildtype amino acids <em>N</em>, <em>N</em>, <em>H</em>, and <em>H</em> for four such files).</p>
 <p>The <em>outfile</em> created by this script is valid input to <a class="reference internal" href="mapmuts_siteprofileplots.html#mapmuts-siteprofileplots-py"><em>mapmuts_siteprofileplots.py</em></a>.</p>
+</div>
 </div>
 </div>
 
@@ -129,11 +134,15 @@ includestop False
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">mapmuts_preferencemeans.py</a><ul>
+<li><a class="reference internal" href="#preferences">Preferences</a></li>
+<li><a class="reference internal" href="#differential-preferences">Differential preferences</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#running-the-script">Running the script</a></li>
 <li><a class="reference internal" href="#input-file">Input file</a></li>
 <li><a class="reference internal" href="#example-input-file">Example input file</a></li>
 <li><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

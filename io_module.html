@@ -75,7 +75,8 @@
 <p><cite>ReadCodonCounts</cite> : reads output of <cite>WriteCodonCounts</cite>.</p>
 <p><cite>ReadEnrichmentRatios</cite> : reads enrichment ratios from <tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt></p>
 <p><cite>ReadEntropyAndEquilFreqs</cite> : reads entropies / equilibrium freqs from 
-<tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt></p>
+<tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt> or <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt>.</p>
+<p><cite>ReadDifferentialPreferences</cite> : reads differential preferences from <tt class="docutils literal"><span class="pre">mapmuts_inferdifferentialpreferences.py</span></tt></p>
 <p><cite>WriteAAsFromCodonCounts</cite> : reads files created by <cite>WriteCodonCounts</cite>
 and writes the amino acid frequencies.</p>
 <p><cite>ParseInfile</cite> : reads key / value pairs from an input file.</p>
@@ -529,6 +530,29 @@ to the <cite>codon_counts</cite> dictionary used to call <cite>WriteCodonCounts<
 </dd></dl>
 
 <dl class="function">
+<dt id="src.io.ReadDifferentialPreferences">
+<tt class="descclassname">src.io.</tt><tt class="descname">ReadDifferentialPreferences</tt><big>(</big><em>infile</em><big>)</big><a class="headerlink" href="#src.io.ReadDifferentialPreferences" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;Reads differential preferences written by <tt class="docutils literal"><span class="pre">mapmuts_inferdifferentialpreferences.py</span></tt>.</p>
+<p>The single calling argument <em>infile</em> should specify a <tt class="docutils literal"><span class="pre">differentialpreferences_selection_*.txt</span></tt> file
+written by <tt class="docutils literal"><span class="pre">mapmuts_inferdifferentialpreferences.py</span></tt>.</p>
+<p>These files have the following format:</p>
+<div class="highlight-python"><div class="highlight"><pre>#SITE   WT_AA   RMS_dPI dPI_A   dPI_C   dPI_D   dPI_E   dPI_F   dPI_G   dPI_H   dPI_I   dPI_K   dPI_L   dPI_M   dPI_N   dPI_P   dPI_Q   dPI_R   dPI_S   dPI_T   dPI_V   dPI_W   dPI_Y   dPI_*
+1   M   0.033508    -0.0041802  -0.00160924 -0.00102518 -0.00293463 -0.00112235 -0.000467141    -0.00262952 -0.0032969  -0.00679166 -0.00304567 0.0300719   0.00925138  -0.000442459    -8.11477e-05    -0.00129343 -0.00128639 0.000560046 -0.00243062 -0.00313798 -0.002528   -0.00158079
+2   K   0.0630635   -0.0159228  0.0128652   -0.00367557 -0.0167789  0.005023    -0.000661766    0.0260142   -0.0040351  0.0025629   0.00523521  0.00449474  0.00192782  0.0189381   0.0171668   -0.00881324 -0.00971018 0.00748405  0.0136674   -0.00289523 -0.0288229  -0.024063
+</pre></div>
+</div>
+<p>The first column gives the residue number, the second column gives the wildtype amino acid, the third
+column gives the root-mean-square (RMS) differential preference, and the remaining columns give the values
+for each of the 20 amino acids. The columns can be delimited by a single space or a tab. There <strong>may</strong> be
+a final column <tt class="docutils literal"><span class="pre">dPI_*</span></tt> giving the differential preference for a stop codon. That column can be either
+present or absent &#8211; either one is OK.</p>
+<p>The returned variable is a dictionary keyed by residue numbers, and with
+the values for each residue number being dictionaries keyed by all of the
+other 22 or 23 column labels (&#8216;WT_AA&#8217;, &#8216;RMS_dPI&#8217;, &#8216;dPI_A&#8217;, &#8216;dPI_C&#8217;, ...)
+and possibly &#8216;dPI_*&#8217; if that is present in the header.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="src.io.ReadEnrichmentRatios">
 <tt class="descclassname">src.io.</tt><tt class="descname">ReadEnrichmentRatios</tt><big>(</big><em>infile</em><big>)</big><a class="headerlink" href="#src.io.ReadEnrichmentRatios" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads enrichment ratios written by <tt class="docutils literal"><span class="pre">mapmuts_inferenrichment.py</span></tt>.</p>
@@ -893,7 +917,7 @@ head each column:</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="sequtils_module.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">sequtils</span></tt> Module</a></p>
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">sequtils</span></tt> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="stats_module.html"
                         title="next chapter"><tt class="docutils literal"><span class="pre">stats</span></tt> Module</a></p>

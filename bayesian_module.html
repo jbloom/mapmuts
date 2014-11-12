@@ -83,6 +83,7 @@ this is not strictly required.</p>
 <li><em>GiniSimpson</em> : calculates Gini-Simpson diversity iversity index.</li>
 <li><em>ShannonJensenDivergence</em> : calculates Shannon-Jensen Divergence.</li>
 <li><em>PreferencesRemoveStop</em> : removes stop codon as possible amino acid from preferences.</li>
+<li><em>DifferentialPreferencesRemoveStop</em> : removes stop codon as possible amino acid from differential preferences.</li>
 <li><em>DeltaExchange</em> : Implements delta exchange steps for MCMC.</li>
 </ul>
 </div>
@@ -115,6 +116,36 @@ Can propose moves that leave negative quantities.</p>
 <dd><p>Moves random normal quantity from one element to another.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="function">
+<dt id="bayesian.DifferentialPreferencesRemoveStop">
+<tt class="descclassname">bayesian.</tt><tt class="descname">DifferentialPreferencesRemoveStop</tt><big>(</big><em>differentialpreferences</em><big>)</big><a class="headerlink" href="#bayesian.DifferentialPreferencesRemoveStop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes stop codon as possible amino acid from differential preferences.</p>
+<p>You should use this function if you have a set of amino acid
+<em>differentialpreferences</em> that include a stop codon (denoted by a * character) as 
+a possibility and you want to remove the possibility of that stop codon and
+adjust all of the other differential preferences so that they sum to zero.</p>
+<p><em>differentialpreferences</em> is a variable that stores the preferences of sites
+for specific amino acids. Typically, these would be the values 
+written by <tt class="docutils literal"><span class="pre">mapmuts_inferdifferentialpreferences.py</span></tt> 
+and then read by <em>mapmuts.io.ReadDifferentialPreferences</em>. So
+<em>differentialpreferences</em> is a dictionary keyed by site number <em>r</em>, and for each
+site <em>r</em>, <em>differentialpreferences[r]</em> is in turn a dictionary. This dictionary
+has the string keys &#8216;WT_AA&#8217;, &#8216;RMS_dPI&#8217;, and then &#8216;dPI_A&#8217;, &#8216;dPI_C&#8217;,
+&#8216;dPI_D&#8217;, etc. The &#8216;dPI_A&#8217; entry gives the differential preference for amino acid
+<em>A</em>, etc. There may be 20 entries for the differential preferences for all 20 amino
+acids, or there may be 21 entries for all 20 amino acids plus for a 
+stop codon (this would be indicated by &#8216;dPI_*&#8217;).</p>
+<p>This script goes through all sites <em>r</em> that key <em>differentialpreferences</em>. For a site,
+if there is <strong>not</strong> a stop codon key (&#8216;dPI_*&#8217;) in <em>differentialpreferences[r]</em>, then
+nothing is done. But if there is a stop codon entry, then the key
+&#8216;dPI_*&#8217; is removed from the dictionary and all of the other differentialpreferences are
+adjusted up or down by 1/20 the value of dPI_* so that the sum is still zero. The
+<em>RMS_dPI</em> value is also recomputed.</p>
+<p>These changes are made to <em>differentialpreferences</em> in place, and there is no
+return value. Because <em>differentialpreferences</em> is a dictionary, it is mutable,
+so that is why the changes can be made in place.</p>
 </dd></dl>
 
 <dl class="function">
@@ -766,6 +797,8 @@ but now sum to one.</p>
 <p>These changes are made to <em>preferences</em> in place, and there is no
 return value. Because <em>preferences</em> is a dictionary, it is mutable,
 so that is why the changes can be made in place.</p>
+<p>This script also updates the value of &#8216;SITE_ENTROPY&#8217; if a stop codon is removed,
+taking the logarithms to the base 2.</p>
 </dd></dl>
 
 <dl class="function">

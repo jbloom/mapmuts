@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mapmuts_inferdifferentialpreferences.py &mdash; mapmuts 1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
+    <link rel="up" title="Scripts" href="scripts.html" />
+    <link rel="next" title="mapmuts_preferencescorrelate.py" href="mapmuts_preferencescorrelate.html" />
+    <link rel="prev" title="mapmuts_inferpreferences.py" href="mapmuts_inferpreferences.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_preferencescorrelate.html" title="mapmuts_preferencescorrelate.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mapmuts-inferdifferentialpreferences-py">
+<span id="id1"></span><h1>mapmuts_inferdifferentialpreferences.py<a class="headerlink" href="#mapmuts-inferdifferentialpreferences-py" title="Permalink to this headline">¶</a></h1>
+<p>This script is designed to infer the differential preferences for each amino acid at each site when comparing two or more selection pressures. It does this using a Bayesian approach implemented via MCMC (Markov chain Monte Carlo).</p>
+<p>Because this script uses MCMC, it takes a fairly long time to run &#8211; perhaps as long as several days depending on your computer and the specific data set.</p>
+<p>This script takes as input the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>, and so is designed to be run after you have completed the analysis with that script.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>This script requires <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> for the Bayesian inference, which in turn requires <a class="reference external" href="http://www.numpy.org/">numpy</a>. If you want the script to make plots, you also need <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. The use of <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> version 2.3 is recommended. This script may <strong>not</strong> work with versions 3.*, and may work suboptimally with earlier versions.</p>
+</div>
+<div class="section" id="when-would-you-use-this-script">
+<h2>When would you use this script?<a class="headerlink" href="#when-would-you-use-this-script" title="Permalink to this headline">¶</a></h2>
+<p>If you just want to infer the site-specific amino-acid preferences by comparing a pre-selection mutant library to a post-selected sample, then you should probably instead use <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>, which implements the algorithm described in <a class="reference external" href="http://dx.doi.org/10.1093/molbev/msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a> (in the Methods section entitled <em>Inference of the Amino Acid Preferences</em>).</p>
+<p>This script is tailored to the case where you have several samples that have been selected in slightly different conditions, and you want to identify sites and amino acids that are selected differently in the different conditions. Most commonly, you would have already selected for basic functionality, and are now looking for differential functionality under various selections. This script identifies the differential preferences in these different conditions. The algorithm here is still similar in many respects to that described in <a class="reference external" href="http://dx.doi.org/10.1093/molbev/msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>, but now is elaborated to infer the differential preferences.</p>
+</div>
+<div class="section" id="the-samples-that-compose-the-data">
+<h2>The samples that compose the data<a class="headerlink" href="#the-samples-that-compose-the-data" title="Permalink to this headline">¶</a></h2>
+<p>We assume that we are sequencing the following samples:</p>
+<ul class="simple">
+<li><em>error_control</em>: This sample is used to measure the error rate associated with sequencing and sample processing. It will generally be the unmutated gene or a wildtype virus grown from unmutated gene, whichever better captures the errors that afflict the samples. For influenza, the errors (or unaccounted for mutations) generally come from mutations during viral replication, errors during reverse transcription, errors during PCR when preparing the sample, and sequencing errors. So here, the appropriate sample is generally wildtype virus grown from an unmutated gene.</li>
+<li><em>starting_sample</em>: This is the sample that was the starting point for the selections. It could be your mutant library, but more typically it will be a mutant virus pool that you have already grown from your mutant library and are now subjecting to further selection. An implicit assumption of the way that the error correction with <em>error_control</em> is done is that at all sites this sample are still mostly wildtype (the mutations are relatively rare).</li>
+<li><em>control_selection</em>: This is <em>starting_sample</em> passaged in your control condition. For instance, this might be virus that is passaged a second time in a control cell line or animal. An implicit assumption of the way that the error correction with <em>error_control</em> is done is that all sites in this sample are still mostly wildtype (the mutations are relatively rare).</li>
+<li><em>selection_1</em>: This is <em>starting_sample</em> passaged in the first selection condition. For instance, this might be virus that is passaged a second time under immune selection. An implicit assumption of the way that the error correction with <em>error_control</em> is done is that all sites in this sample are still mostly wildtype (the mutations are relatively rare).</li>
+<li><em>selection_2</em>, ..., <em>selection_i</em>: These are an arbitrary number of additional samples like <em>selection_1</em> that are passaged in other selection conditions.</li>
+</ul>
+<p>Let <span class="math">\(n^{\rm{error}}_{r,x}\)</span>, <span class="math">\(n^{\rm{start}}_{r,x}\)</span>, <span class="math">\(n^{\rm{control}}_{r,x}\)</span>, and <span class="math">\(n^{s_i}_{r,x}\)</span> be the observed number of counts of codon <span class="math">\(x\)</span> at site <span class="math">\(r\)</span> in the sequencing of <em>error_control</em>, <em>starting_sample</em>, <em>control_selection</em>, and <em>selection_i</em> samples, respectively. Define <span class="math">\(\overrightarrow{n}^{\rm{error}}_{r}\)</span> as the vector of <span class="math">\(n^{\rm{error}}_{r,x}\)</span> values for all codons <span class="math">\(x\)</span>, and make similar definitions for <span class="math">\(\overrightarrow{n}^{\rm{start}}_{r}\)</span>, <span class="math">\(\overrightarrow{n}^{\rm{control}}_{r}\)</span>, and <span class="math">\(\overrightarrow{n}^{s_i}_{r}\)</span>. Define <span class="math">\(N^{\rm{error}}_{r} = \sum_x n^{\rm{error}}_{r,x}\)</span> be the total number of counts of any codon at site <span class="math">\(r\)</span> in the <em>error_control</em> sample, and make similar definitions for <span class="math">\(N^{\rm{start}}_{r}\)</span>, <span class="math">\(N^{\rm{control}}_{r}\)</span> and <span class="math">\(N^{s_i}_{r}\)</span>.</p>
+</div>
+<div class="section" id="the-likelihoods-in-terms-of-unknown-parameters">
+<h2>The likelihoods in terms of unknown parameters<a class="headerlink" href="#the-likelihoods-in-terms-of-unknown-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The <em>error_control</em> which is just sequencing of the wildtype gene. Let <span class="math">\(\rm{wt}_r\)</span> denote the wildtype codon at site <span class="math">\(r\)</span>. Let <span class="math">\(\epsilon_{r,x}\)</span> be the rate that site <span class="math">\(r\)</span> is read to be some mutant codon <span class="math">\(x \ne \rm{wt}_r\)</span>, and let <span class="math">\(\epsilon_{r,\rm{wt}_r} = 1 - \sum_{y \ne \rm{wt}_r} \epsilon_{r,x}\)</span>. Define <span class="math">\(\overrightarrow{\epsilon}_r\)</span> as the vector of <span class="math">\(\epsilon_{r,x}\)</span> values for all <span class="math">\(x\)</span>. The likelihood of observing <span class="math">\(\overrightarrow{n}_{\rm{error},r}\)</span> is</p>
+<div class="math">
+\[\Pr\left(\overrightarrow{n}^{\rm{error}}_{r} \mid N^{\rm{error}}_{r}, \overrightarrow{\epsilon}_r\right) = \operatorname{Multi}\left(\overrightarrow{n}^{\rm{error}}_{r}; N^{\rm{error}}_{r}, \overrightarrow{\epsilon}_r\right)\]</div>
+<p>where <span class="math">\(\operatorname{Multi}\)</span> denotes the multinomial distribution.</p>
+<p>The <em>starting_sample</em> gives the starting frequencies for the various variants before the selections. We assume that all sites are mostly the wildtype codon, and so account for errors from the wildtype codon to mutant codons (as quantified by the <em>error_control</em> sample), but do not account for errors from mutant codons to other codons. Let <span class="math">\(f_{r,x}\)</span> be the frequency of codon <span class="math">\(x\)</span> at site <span class="math">\(r\)</span> with <span class="math">\(\sum_x f_{r,x} = 1\)</span>, and let <span class="math">\(\overrightarrow{f}_r\)</span> be the vector of <span class="math">\(f_{r,x}\)</span> values for all codons <span class="math">\(x\)</span>. The likelihood of observing <span class="math">\(\overrightarrow{n}^{\rm{start}}_{r}\)</span> is</p>
+<div class="math">
+\[\Pr\left(\overrightarrow{n}^{\rm{start}}_{r} \mid N^{\rm{start}}_{r}, \overrightarrow{\epsilon}_r, \overrightarrow{f}_r\right) = \operatorname{Multi}\left(\overrightarrow{n}^{\rm{start}}_{r}; N^{\rm{start}}_{r}, \overrightarrow{\epsilon}_r + \overrightarrow{f}_r - \overrightarrow{\delta}_r\right)\]</div>
+<p>where <span class="math">\(\overrightarrow{\delta}_r\)</span> is the vector with elements <span class="math">\(\delta_{x, \rm{wt}_r}\)</span> that has one in the element corresponding to the wildtype codon and zero for all othere elements.</p>
+<p>The <em>control_selection</em> gives the frequencies after the <em>starting_sample</em> has been passaged in the control condition. These frequencies may change substantially depending on the selection pressures that generated <em>starting_sample</em> versus those acting on the <em>control_selection</em>. We assume that the selection acts entirely on the amino-acid sequence, such that all synonymous codons that encode the same amino-acid are equivalent. Let <span class="math">\(\mathcal{A}\left(x\right)\)</span> denote the amino acid encoded by codon <span class="math">\(x\)</span>. Let <span class="math">\(\pi_{r,a}\)</span> be the preference for amino-acid <span class="math">\(a\)</span> at site <cite>r</cite> in the <em>control_selection</em>, with the constraint that <span class="math">\(\sum_a \pi_{r,a} = 1\)</span>. Let <span class="math">\(\overrightarrow{\pi}_r\)</span> be the vector of <span class="math">\(\pi_{r,a}\)</span> values for all amino acids <span class="math">\(a\)</span>.
+Define the vector-valued function <span class="math">\(\overrightarrow{\mathcal{C}}\)</span> as a mapping for the value of each codon <span class="math">\(x\)</span> to the corresponding value for its amino acid <span class="math">\(\mathcal{A}\left(x\right)\)</span>, such that <span class="math">\(\overrightarrow{\mathcal{C}}\left(\overrightarrow{\pi}_{r}\right) = \left(\ldots, \pi_{r,\mathcal{A}\left(x\right)}, \ldots\right)\)</span> for all codons <span class="math">\(x\)</span>. The expected frequency of codon <span class="math">\(x\)</span> at site <span class="math">\(r\)</span> in the control sample is defined in terms of the preferences as
+<span class="math">\(\frac{f_{r,x} \times \pi_{r,\mathcal{A}\left(x\right)}}{\sum_x f_{r,x} \times \pi_{r,\mathcal{A}\left(x\right)}}\)</span>.
+Therefore, if we again assume that all sites in the <em>control_selection</em> sample are mostly wildtype so that we only account for errors from the wildtype codon to some other codon, then the likelihood of observing <span class="math">\(\overrightarrow{n}^{\rm{control}}_{r}\)</span> is</p>
+<div class="math">
+\[\Pr\left(\overrightarrow{n}^{\rm{control}}_{r} \mid N^{\rm{control}}_{r}, \overrightarrow{\epsilon}_r, \overrightarrow{f}_r, \overrightarrow{\pi}_r\right)
+= \operatorname{Multi}\left(\overrightarrow{n}^{\rm{control}}_{r}; N^{\rm{control}}_{r}, \overrightarrow{\epsilon}_r
++ \frac{\overrightarrow{f}_r \circ \overrightarrow{\mathcal{C}}\left(\overrightarrow{\pi}_r\right)}{\overrightarrow{f}_r \cdot \overrightarrow{\mathcal{C}}\left(\overrightarrow{\pi}_r\right)} - \overrightarrow{\delta}_r \right)\]</div>
+<p>where <span class="math">\(\cdot\)</span> indicates the vector dot product and <span class="math">\(\circ\)</span> indicates the Hadamard (entry-wise) vector product.</p>
+<p>We are most interested in how the other selections differ from the control selection &#8211; in particular whether there is increased or decreased selection for some amino acids at certain sites. Let <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> denote the difference in the preference for amino-acid <span class="math">\(a\)</span> at site <span class="math">\(r\)</span> for <em>selection_i</em> (denoted by <span class="math">\(s_i\)</span>). If <em>selection_i</em> is identical to the control selection, then we expect these differences in preferences to all be zero. Even when they are not zero, we have the constraint <span class="math">\(\sum_a \Delta\pi_{s_i}^{r,a} = 0\)</span>, since any increase in preference for one amino acid must be compensated by a decrease in preference for other amino acids. Let <span class="math">\(\overrightarrow{\Delta\pi}^{s_i}_{r}\)</span> be the vector of <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> values for all amino acids <span class="math">\(a\)</span>. If we again assume that all sites in the <em>control_selection</em> sample are mostly wildtype so that we only account for errors from the wildtype codon to some other codon, then the likelihood of observing <span class="math">\(\overrightarrow{n}^{s_i}_{r}\)</span> is</p>
+<div class="math">
+\[\Pr\left(\overrightarrow{n}^{s_i}_{r} \mid N^{s_i}_{r}, \overrightarrow{\epsilon}_r, \overrightarrow{f}_r, \overrightarrow{\pi}_r, \overrightarrow{\Delta\pi}^{s_i}_{r}\right)
+= \operatorname{Multi}\left(\overrightarrow{n}^{s_i}_{r}; N^{s_i}_{r}, \overrightarrow{\epsilon}_r
++ \frac{\overrightarrow{f}_r \circ \overrightarrow{\mathcal{C}}\left(\overrightarrow{\pi}_r + \overrightarrow{\Delta\pi}^{s_i}_{r}\right)}
+{\overrightarrow{f}_r \cdot
+\overrightarrow{\mathcal{C}}\left(\overrightarrow{\pi}_r + \overrightarrow{\Delta\pi}^{s_i}_{r}\right)} - \overrightarrow{\delta}_r \right)\]</div>
+<div class="section" id="priors-over-the-unknown-parameters">
+<h3>Priors over the unknown parameters<a class="headerlink" href="#priors-over-the-unknown-parameters" title="Permalink to this headline">¶</a></h3>
+<p>We need to place priors over our unknown parameters, which are: <span class="math">\(\overrightarrow{\epsilon}_r\)</span>, <span class="math">\(\overrightarrow{f}_r\)</span>, <span class="math">\(\overrightarrow{\pi}_r\)</span>, and <span class="math">\(\overrightarrow{\Delta\pi}_{s_i,r}\)</span> for all selections <span class="math">\(s_i\)</span>.</p>
+<p>The prior over <span class="math">\(\overrightarrow{\epsilon}_r\)</span> is defined exactly as in the 13th equation of <a class="reference external" href="http://dx.doi.org/10.1093/molbev/msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>. Briefly, the prior is</p>
+<div class="math">
+\[\Pr\left(\overrightarrow{\epsilon}_r\right) =
+\operatorname{Dir}\left(\overrightarrow{\epsilon}_r; n_{\rm{codons}} \cdot \sigma_{\epsilon} \cdot \overrightarrow{\alpha}_{\epsilon,r}\right)\]</div>
+<p>where <span class="math">\(\operatorname{Dir}\)</span> is the <a class="reference external" href="http://en.wikipedia.org/wiki/Dirichlet_distribution">Dirichlet distribution</a>, <span class="math">\(n_{\rm{codons}}\)</span> is the number of different codon identities (typically either 64 or 61, depending on whether stop codons are considered), <span class="math">\(\sigma_{\epsilon}\)</span> is the scalar <a class="reference external" href="http://en.wikipedia.org/wiki/Concentration_parameter">concentration parameter</a>, and <span class="math">\(\overrightarrow{\alpha}_{\epsilon,r}\)</span> is the vector giving the average mutation rate for all codon mutations with that number of mutations over all sites in the <em>error_control</em> sample, exactly as defined in the description of the 13th equation of <a class="reference external" href="http://dx.doi.org/10.1093/molbev/msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>.</p>
+<p>The prior over <span class="math">\(\overrightarrow{f}_r\)</span> is defined similarly to the prior over <span class="math">\(\overrightarrow{\mu}_r\)</span> defined in the 12th equation of <a class="reference external" href="http://dx.doi.org/10.1093/molbev/msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>. Specifically, the prior is</p>
+<div class="math">
+\[\Pr\left(\overrightarrow{f}_r\right) =
+\operatorname{Dir}\left(\overrightarrow{f}_r; n_{\rm{codons}} \cdot \sigma_{f} \cdot \overrightarrow{\alpha}_{f,r}\right)\]</div>
+<p>where <span class="math">\(\sigma_{f}\)</span> is the scalar <a class="reference external" href="http://en.wikipedia.org/wiki/Concentration_parameter">concentration parameter</a> and <span class="math">\(\overrightarrow{\alpha}_{f,r}\)</span> is the vector with elements <span class="math">\(\alpha_{f,r,x} = \frac{\overline{f}}{n_{\rm{codons}} - 1} + \delta_{x,\rm{wt}_r}\left(1 - \overline{f}\times\frac{n_{\rm{codons}}}{n_{\rm{codons}} -1}\right)\)</span> where <span class="math">\(\overline{f}\)</span> is the fraction of all reads in <em>start_sample</em> that do <strong>not</strong> give the wildtype codon <span class="math">\(\rm{wt}_r\)</span> averaged over all sites, and <span class="math">\(\delta_{x,\rm{wt_r}}\)</span> is the Kronecker-delta function which equal to one if codon <span class="math">\(x\)</span> is the wildtype codon <span class="math">\(\rm{wt}_r\)</span> and zero otherwise. In other words, the prior estimate is that all non-wildtype amino acids (mutations) are present at the average rate that any mutation is found over the entire gene. This is a reasonable uninformative prior.</p>
+<p>The prior over <span class="math">\(\overrightarrow{\pi}_{r}\)</span> is defined exactly as in the 15th equation of <a class="reference external" href="http://dx.doi.org/10.1093/molbev/msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>. Specifically, the prior is</p>
+<div class="math">
+\[\Pr\left(\overrightarrow{\pi}_r\right) =
+\operatorname{Dir}\left(\overrightarrow{\pi}_r; \sigma_{\pi} \cdot \overrightarrow{1}\right)\]</div>
+<p>where <span class="math">\(\sigma_{\pi}\)</span> is the scalar <a class="reference external" href="http://en.wikipedia.org/wiki/Concentration_parameter">concentration parameter</a> and <span class="math">\(\overrightarrow{1}\)</span> is a vector that is all ones. In other words, the prior is a symmetric <a class="reference external" href="http://en.wikipedia.org/wiki/Dirichlet_distribution">Dirichlet distribution</a>, so the a prior estimate is that all amino acids are equally preferred at each site.</p>
+<p>We also need to define priors over the differential preferences <span class="math">\(\overrightarrow{\Delta\pi}^{s_i}_r\)</span> under the alternative selections. We would like these priors to be such that the mean prior estimate for <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> for all sites <span class="math">\(r\)</span> and amino acids <span class="math">\(a\)</span>; in other words, we would like the priors to not favor any tendency to estimate non-zero differential preferences. We also need the priors to enforce the conditions that <span class="math">\(\sum_a \Delta\pi^{s_i}_{r,a} = 0\)</span> and that <span class="math">\(0 \le \pi^{s_i}_{r,a} + \Delta\pi^{s_i}_{r,a} \le 1\)</span> for all <span class="math">\(a\)</span>. These conditions therefore require that the priors over <span class="math">\(\overrightarrow{\Delta\pi}^{s_i}_{r}\)</span> be defined in terms of <span class="math">\(\overrightarrow{\pi}_r\)</span>. Specifically, we define</p>
+<div class="math">
+\[\Pr\left(\overrightarrow{\Delta\pi}^{s_i}_r \mid \overrightarrow{\pi}_r\right) = \operatorname{Dir}\left(\overrightarrow{\Delta\pi}^{s_i}_r + \overrightarrow{\pi}_r; \sigma_{\Delta\pi} \cdot n_{\rm{aa}} \cdot \overrightarrow{\pi}_r \right)\]</div>
+<p>where <span class="math">\(\sigma_{\Delta\pi}\)</span> is the <a class="reference external" href="http://en.wikipedia.org/wiki/Concentration_parameter">concentration parameter</a> (assumed to be the same for all selections <span class="math">\(s_i\)</span>) and <span class="math">\(n_{\rm{aa}}\)</span> is the number of amino acids.</p>
+</div>
+</div>
+<div class="section" id="inference-with-mcmc">
+<h2>Inference with MCMC<a class="headerlink" href="#inference-with-mcmc" title="Permalink to this headline">¶</a></h2>
+<p>The goal of the inference is to determine the differential preferences <span class="math">\(\overrightarrow{\Delta\pi}^{s_i}_r\)</span> for all selection pressures <span class="math">\(s_i\)</span>. In some cases we might also be interested in the preferences <span class="math">\(\overrightarrow{\pi}_r\)</span> for the <em>control_selection</em>.</p>
+<p>The other parameters <span class="math">\(\overrightarrow{\epsilon_r}\)</span> and <span class="math">\(\overrightarrow{f}_r\)</span> are nuisance parameters, with values that must be calculated but are not of direct interest for the analyses performed by this script.</p>
+<p>Finally, the <a class="reference external" href="http://en.wikipedia.org/wiki/Concentration_parameter">concentration parameter</a>  used for each priors (<span class="math">\(\sigma_{\epsilon}\)</span>, <span class="math">\(\sigma_{f}\)</span>, <span class="math">\(\sigma_{\pi}\)</span>, and <span class="math">\(\sigma_{\Delta\pi}\)</span> are variables that must be specified a priori by the user of the script.</p>
+<p>The posterior distributions over the parameters of interest are inferred by MCMC (Markov Chain Monte Carlo). Typically the values will be summarized by their posterior means. The sampling is done over the products of the likelihoods and priors specified in the sections above. Specifically, we sample from the following posterior:</p>
+<div class="math">
+\[\begin{split}\rm{posterior} \propto&amp;
+\Pr\left(\overrightarrow{n}^{\rm{error}}_r \mid N_r^{\rm{error}}, \overrightarrow{\epsilon}_r\right) \times \\
+&amp; \Pr\left(\overrightarrow{n}^{\rm{start}}_{r} \mid N^{\rm{start}}_{r}, \overrightarrow{\epsilon}_r, \overrightarrow{f}_r\right) \times \\
+&amp; \Pr\left(\overrightarrow{n}^{\rm{control}}_{r} \mid N^{\rm{control}}_{r}, \overrightarrow{\epsilon}_r, \overrightarrow{f}_r, \overrightarrow{\pi}_r\right) \times \\
+&amp; \left(\prod_{s_i} \Pr\left(\overrightarrow{n}^{s_i}_{r} \mid N^{s_i}_{r}, \overrightarrow{\epsilon}_r, \overrightarrow{f}_r, \overrightarrow{\pi}_r, \overrightarrow{\Delta\pi}^{s_i}_{r}\right)\right) \times \\
+&amp; \Pr\left(\overrightarrow{\epsilon}_r\right) \times \\
+&amp; \Pr\left(\overrightarrow{f}_r\right) \times \\
+&amp; \Pr\left(\overrightarrow{\pi}_r\right) \times \\
+&amp; \left(\prod_{s_i} \Pr\left(\overrightarrow{\Delta\pi}^{s_i}_r \mid \overrightarrow{\pi}_r\right) \right)\end{split}\]</div>
+</div>
+<div class="section" id="implementation-of-the-mcmc">
+<h2>Implementation of the MCMC<a class="headerlink" href="#implementation-of-the-mcmc" title="Permalink to this headline">¶</a></h2>
+<p>The posterior distributions for the differential preferences and preferences are estimated by MCMC using the <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> package. The script automatically tests for convergence using the <em>convergence</em> and <em>nruns</em> options. It is suggested that you use <em>nruns &gt; 1</em> and <em>stepincrease &gt; 1</em> so that you can try to ensure convergence. Substantial effort has been invested to make sure that by default the run will burn-in appropriately and set reasonable step sizes for the variables. The details of this implementation are documented in the source code.</p>
+<p>The log file created by this script will include information about whether the inference for each site converged according the criterium set by <em>convergence</em>. If it consistently fails to converge, you might consider increasing <em>nsteps</em>.</p>
+<p>When examining convergence, the difference between the differential preferences and preferences inferred from different runs is quantified as the <a class="reference external" href="http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence">Shannon-Jensen divergence</a>. The logarithms are taken to the base 2, so this divergence can range from zero (identical inferred preferences) to one (completely independent inferred preferences). For the <em>control_selection</em>, the <a class="reference external" href="http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence">Shannon-Jensen divergence</a> is computed using the preferences <span class="math">\(\pi_{r,a}\)</span>. For the other selections, the <a class="reference external" href="http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence">Shannon-Jensen divergence</a> is computed using the sum of the preferences and differential preferences, <span class="math">\(\pi_{r,a} + \Delta\pi^{s_i}_{r,a}\)</span>.</p>
+</div>
+<div class="section" id="running-the-script">
+<h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
+<p>To run this script from the prompt, first create a text <a class="reference internal" href="#input-file">Input file</a> of the
+format described below. Then simply run the script with the single text file as the argument, as in:</p>
+<div class="highlight-python"><div class="highlight"><pre>mapmuts_inferdifferentialpreferences.py infile.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-file">
+<h2>Input file<a class="headerlink" href="#input-file" title="Permalink to this headline">¶</a></h2>
+<p>The input file is a text file with a series of <em>key</em> / <em>value</em> pairs. The required keys are indicated below. The values should not include spaces.</p>
+<p>Lines beginning with # and empty lines are ignored.</p>
+<p>Keys for the input file:</p>
+<ul class="simple">
+<li><em>error_control</em> : This key should specify a file giving the counts of each codon at each position for the <em>error_control</em> sample; these are the <span class="math">\(\overrightarrow{n}^{\rm{error}}_r\)</span> values. This file should be in the format of a <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. Typically, this sample would be from sequencing either an unmutated gene or a wildtype virus to estimate the baseline error rate.</li>
+<li><em>starting_sample</em> : This key specifies a file giving the counts that are the <span class="math">\(\overrightarrow{n}^{\rm{start}}_r\)</span> values. This file is in the same format as for <em>error_control</em>. Typically, this sample would be the pool of functional mutant variants or viruses that were created from the mutant library and are now being subjected to the subsequent selections.</li>
+<li><em>control_selection</em> : This key specifies a file giving the counts that are the <span class="math">\(\overrightarrow{n}^{\rm{control}}_r\)</span> values. This file is in the same format as for <em>error_control</em>. Typically, this sample would be the pool in <em>starting_sample</em> that has been subjected to the control growth condition, such as passage of a virus in control cells without any additional selection.</li>
+<li><em>selection_???</em> : These keys specify the <em>selection_i</em> conditions used to look for differential selection relative to <em>control_selection</em>. There must be at least one of these keys, but there can be arbitrarily more. The actual key should take the form <em>selection_heat</em> or <em>selection_antibody</em> or <em>selection_</em> followed by any non-whitespace-containing string giving the name assigned to the additional selection. The name given to the selection condition in the results is whatever is the suffix that follows the underscore in the <em>selection_???</em> string. Typically, these samples would be <em>starting_sample</em> passaged in a condition that is being compared to <em>control_selection</em>. The values should be codon counts files in the same format as for <em>error_control</em>.</li>
+<li><em>pi_concentration</em> : the <a class="reference external" href="http://en.wikipedia.org/wiki/Concentration_parameter">concentration parameter</a> of the symmetric <a class="reference external" href="http://en.wikipedia.org/wiki/Dirichlet_distribution">Dirichlet distribution</a>  used as the prior over the preferences <span class="math">\(\pi_{r,a}\)</span> values. This is the parameter denoted as <span class="math">\(\sigma_{\pi}\)</span> above. Note that the concentration parameter here is taken to represent the value of each of the individual elements in the parameter vector. Choosing a value of <em>pi_concentration = 1</em> corresponds to a uniform prior over all of the possible vectors of <em>pi_concentration</em> values, and is probably what you want to choose unless you have a good reason to do otherwise. A value of <em>pi_concentration &gt; 1</em> favors vectors where all <em>pi_concentration</em> values are similar, and a value of <em>pi_concentration &lt; 1</em> favors vectors where some <span class="math">\(\pi_{r,a}\)</span> values are large and others are small.</li>
+<li><em>epsilon_concentration</em> : the <a class="reference external" href="http://en.wikipedia.org/wiki/Concentration_parameter">concentration parameter</a> of the (non-symmetric) <a class="reference external" href="http://en.wikipedia.org/wiki/Dirichlet_distribution">Dirichlet distribution</a> used as a prior over the error rate observed in the <em>error_control</em> library. This is the parameter denoted as <span class="math">\(\sigma_{\epsilon}\)</span> above. The suggested value is one.</li>
+<li><em>f_concentration</em> : the <a class="reference external" href="http://en.wikipedia.org/wiki/Concentration_parameter">concentration parameter</a> of the (non-symmetric) <a class="reference external" href="http://en.wikipedia.org/wiki/Dirichlet_distribution">Dirichlet distribution</a> used as a prior over the frequencies in the <em>starting_sample</em>. This is the parameter denoted as <span class="math">\(\sigma_{f}\)</span> above. The suggested value is one.</li>
+<li><em>deltapi_concentration</em> : the <a class="reference external" href="http://en.wikipedia.org/wiki/Concentration_parameter">concentration parameter</a> of the (non-symmetric) <a class="reference external" href="http://en.wikipedia.org/wiki/Dirichlet_distribution">Dirichlet distribution</a> used as a prior over differential preferences. This is the parameter denoted as <span class="math">\(\sigma_{\Delta\pi}\)</span> above. The suggested value is one.</li>
+<li><em>minvalue</em> : a number specifying the minimum value for the prior estimates for the error rates (<span class="math">\(\overrightarrow{\epsilon}_r\)</span>) determined from the overall library means. Having such a minimum value keeps any of the prior estimates from being set to zero or negative values. A reasonable value is <em>1e-7</em>.</li>
+<li><em>seed</em> : integer seed for the random number generator. Runs with the same seed should generate exactly the same output. Otherwise the output may differ for different seeds as the MCMC uses random numbers.</li>
+<li><em>nruns</em> : the number of independent MCMC runs. Must be at least one, but it is recommended that you use <em>nruns</em> equal to at least 2 (and probably 3), as this allows checks for MCMC convergence. When multiple runs are performed, the reported equilibrium preferences come from all runs.</li>
+<li><em>nsteps</em> : the number of steps for each MCMC run. A reasonable starting value is probably 200000, although this may need to be increased if convergence is poor. Note that the number of burn-in steps are not explicitly specified in this script, but the program implements internal methods that should ensure adequate burn-in that is not included in the output. You will have to look at the source code if you want to understand that in detail.</li>
+<li><em>thin</em> : the posterior is only recorded every <em>thin</em> steps. If you want to record every value, then set <em>thin</em> to one. However, consecutive steps are usually correlated, so it is often preferable to set <em>thin</em> to a number greater than one. A suggested value is 200. <em>nsteps</em> must be a multiple of <em>thin</em>.</li>
+<li><em>convergence</em> : the test applied to the MCMC runs to see if they converged. This option is only meaningful if <em>nruns</em> &gt; 1 (as is recommended). For each pair of MCMC runs, we calculate the <a class="reference external" href="http://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence">Shannon-Jensen divergence</a> (logarithm base 2) between the preferences and differential preferences for that value of <em>r</em>. If the runs converge to identical values, this difference will be zero, whereas its maximum value for highly diverged runs is one. We test whether the actual divergence is less than the value specified by <em>convergence</em>. If the divergence is greater than <em>convergence</em> for any of the preferences or differential preferences, then what is done next depends on the values of <em>stepincrease</em>. A recommended value for <em>convergence</em> is 0.02. The log file contains information about whether the inference converged for each site.</li>
+<li><em>stepincrease</em> : If the chain fails to converge for a given inference (according to the criterion of <em>convergence</em>), then the default action is to try to increase the number of steps to be equal to <em>stepincrease * nsteps</em>. We then test again for convergence for these longer MCMC runs. Typically increasing the step number might improve convergence. So <em>stepincrease</em> must be a number &gt;= 1. If it is one, that is equivalent to not doing any <em>stepincrease</em>. If <em>stepincrease</em> is greater than one, we then try running the MCMC for <em>stepincrease * nsteps</em> steps for each run. If the chain still does not converge, nothing further is done, but we do use the inferences from the longer chain. A suggested value of <em>stepincrease</em> is 4.</li>
+<li><em>MCMC_traces</em> is the directory to which we write plots showing the traces of the preferences and differential preferences as a function of the number of MCMC steps after burn-in and thinning. If you set this to the string <em>None</em>, then no such plots are created. Using this option requires <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. If this directory does not already exist, it is created.</li>
+<li><em>preference_plots</em> is the directory to which we write plots showing the preferences and differential preferences for all amino acids at a site. Shown are the posterior mean and the median-centered 95% credible interval of the posterior. If you set this to the string <em>None</em>, then no such plots are created. Using this option requires <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. If this directory does not already exist, it is created.</li>
+<li><em>outfileprefix</em> is a string giving the prefix for the <a class="reference internal" href="#output-files">Output files</a> described below. If you do not want a prefix on the <a class="reference internal" href="#output-files">Output files</a>, then set this option to <em>None</em>.</li>
+<li><em>ncpus</em> is an option that allows you to run the analyses using multiple CPUs. This will usually be helpful, because these runs can take a long time. If you set <em>ncpus</em> to 1, then we just use one CPU. But if you are working on a multi-threaded processor, then setting to a larger number will take advantage of the additional CPUs. Note however that if you set <em>ncpus</em> to a number larger than the number of spare CPUs, you will overload the processor &#8211; so if you only have one CPU, set this to just 1.</li>
+</ul>
+</div>
+<div class="section" id="example-input-file">
+<h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example input file:</p>
+<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_inferdifferentialpreferences.py
+error_control virus_codoncounts.txt
+starting_sample mutvirus_codoncounts.txt
+control_selection no_serum_codoncounts.txt
+selection_vaccinated_serum vaccinated_serum_codoncounts.txt
+selection_infected_serum infected_serum_codoncounts.txt
+pi_concentration 1.0
+epsilon_concentration 1.0
+f_concentration 1.0
+deltapi_concentration 1.0
+minvalue 1e-7
+seed 1
+nruns 3
+nsteps 200000
+thin 200
+convergence 0.02
+stepincrease 4
+MCMC_traces MCMC_traces/
+preference_plots preference_plots/
+outfileprefix None
+ncpus 4
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-files">
+<h2>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
+<p>Output files are created with the prefix specified by <em>outfileprefix</em> followed by suffixes shown below. These files have the following suffixes:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">inferdifferentialpreferences_log.txt</span></tt> : a text file logging the progress of this script.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">preferences_control_selection.txt</span></tt> : a text file giving the MCMC-inferred preferences <span class="math">\(\pi_{r,a}\)</span> for each amino acid <span class="math">\(a\)</span> at each site <span class="math">\(r\)</span> for the <em>control_selection</em>. Stop codons (denoted by the * character) are included as possible identities. The file also gives the site entropy <span class="math">\(h_r = \sum_a \pi_{r,a} \log_2 \pi_{r,a}\)</span> in bits for each site.</p>
+<p>The first line is a title line that begins with a # character and then lists the column headers separated by tabs. The remaining lines contain the data.</p>
+<p>The columns contain tab-separated values as follows:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">The first column gives the residue number in 1, 2, ... numbering. The header for this column is <em>SITE</em>.</p>
+</li>
+<li><p class="first">The second column gives the wildtype amino acid at the site (such as <em>N</em> or <em>R</em>). The header for this column is <em>WT_AA</em>.</p>
+</li>
+<li><p class="first">The third column lists the site entropy <span class="math">\(h_r\)</span>. The header for this column is <em>SITE_ENTROPY</em>.</p>
+</li>
+<li><p class="first">The remaining 21 columns list the preference <span class="math">\(\pi_{r,a}\)</span> values for each amino acid <span class="math">\(a\)</span> at this site <span class="math">\(r\)</span>. The amino acids are listed in alphabetical order according to their one letter codes, and then the final column gives the equilibrium preference for a stop codon (denoted by a * character). The headers for these columns are <em>PI_A</em>, <em>PI_C</em>, <em>PI_D</em>, ..., <em>PI_W</em>, <em>PI_Y</em>, <em>PI_*</em>. Here is an example of a few lines:</p>
+<div class="highlight-python"><div class="highlight"><pre>#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*
+1   M   0.885694    0.000680047 0.00185968  8.48048e-06 0.00128217  0.0289946   0.000654589 0.0212144   0.0205306   0.0021597   0.00056726  0.876551    0.00130602  0.000789781 0.00144568  0.000414457 0.00071164  0.00126055  0.00167084  0.0352283   0.00176486  0.000905383
+2   A   1.1671  0.709575    0.00177747  3.79503e-05 0.00298854  0.00390524  0.00131246  0.00379599  0.000913006 0.00121497  0.000535209 0.00276335  0.00140061  0.000694694 0.0032134   0.00464972  0.000463924 0.000908368 0.254241    0.00335749  0.00137437  0.000876985
+3   N   3.2593  0.129992    0.000540239 4.2514e-06  0.00171887  0.0212062   0.0006086   0.102743    0.0431489   0.00524637  0.0771062   0.021714    0.0641921   0.00338082  0.0149898   0.0106522   0.13886 0.0247841   0.00607319  0.0500692   0.282389    0.000581555
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">preferences_control_selection_credibleintervals_95.txt</span></tt> : a text file giving the median-centered 95% credible intervals on the <span class="math">\(\pi_{r,a}\)</span> values in <tt class="docutils literal"><span class="pre">preferences_control_selection.txt</span></tt>. The first column is <em>SITE</em> and the remaining columns give the upper and lower bounds on the credible intervals for each of the <span class="math">\(\pi_{r,a}\)</span> values as comma-separated numbers (no spaces) in the same order that they are listed in <tt class="docutils literal"><span class="pre">preferences_control_selection.txt</span></tt>. Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre>#SITE   PI_A_95cred PI_C_95cred PI_D_95cred PI_E_95cred PI_F_95cred PI_G_95cred PI_H_95cred PI_I_95cred PI_K_95cred PI_L_95cred PI_M_95cred PI_N_95cred PI_P_95cred PI_Q_95cred PI_R_95cred PI_S_95cred PI_T_95cred PI_V_95cred PI_W_95cred PI_Y_95cred PI_*_95cred
+1   1.49582e-05,0.00269598  7.2227e-05,0.00604361   4.37378e-06,1.17951e-05 3.26837e-05,0.00433571  0.0114465,0.0491834 1.82621e-05,0.00208322  0.00989126,0.0318659    0.00135281,0.0554989    4.87099e-05,0.00754094  1.41237e-05,0.00202465  0.821886,0.925528   3.69704e-05,0.00458556  1.94864e-05,0.0027967   3.89356e-05,0.00557027  8.44362e-06,0.00134572  1.76935e-05,0.0025792   3.51256e-05,0.00460279  3.68112e-05,0.00664131  0.0270458,0.0403275 5.19957e-05,0.00543017  2.3493e-05,0.00336828
+2   0.683813,0.729505   5.48957e-05,0.00581796  3.3971e-05,4.26404e-05  6.74445e-05,0.0109755   4.8097e-05,0.0145215    5.40342e-05,0.00379731  0.000377183,0.00853322  2.13206e-05,0.00337318  3.52239e-05,0.00407263  1.62767e-05,0.00193362  7.56385e-05,0.00950661  4.20842e-05,0.00481382  1.91134e-05,0.00253192  0.000126937,0.0090789   0.0036588,0.00587762    1.0427e-05,0.0016747    2.57371e-05,0.00350532  0.231977,0.267635   9.01372e-05,0.0116063   3.61905e-05,0.00479547  2.30435e-05,0.0032731
+3   0.122949,0.137744   1.51152e-05,0.00177613  1.65846e-07,1.00925e-05 0.000558957,0.0032513   0.015292,0.0269782  4.06388e-05,0.00157236  0.0925438,0.111993  0.0384322,0.0481046 0.00322823,0.00788021   0.0722691,0.0822557 0.0159843,0.0271257 0.0569958,0.0722337 0.000939467,0.00723918  0.0115211,0.0187761 0.00937067,0.0117235    0.135176,0.142903   0.0211448,0.0287984 0.00433432,0.00801638   0.0457743,0.0548462 0.2689,0.29917  2.91378e-05,0.00163938
+</pre></div>
+</div>
+</li>
+<li><p class="first">Files with suffixes of the form <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???.txt</span></tt> where the <tt class="docutils literal"><span class="pre">???</span></tt> indicates the different selections. For instance, if the <a class="reference internal" href="#input-file">Input file</a> specifies:</p>
+<div class="highlight-python"><div class="highlight"><pre>selection_vaccinated_serum vaccinated_serum_codoncounts.txt
+selection_infected_serum infected_serum_codoncounts.txt
+</pre></div>
+</div>
+<p>as the alternative selections, then the following two files are created: <tt class="docutils literal"><span class="pre">differentialpreferences_selection_vaccinated_serum.txt</span></tt> and <tt class="docutils literal"><span class="pre">differentialpreferences_selection_infected_serum.txt</span></tt>. These files give the differential preferences <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> for each amino acid <span class="math">\(a\)</span> at each site <span class="math">\(r\)</span> for each selection <span class="math">\(s_i\)</span>. The files also give the root mean square (RMS) differential preference at each site for each selection. These are defined as <span class="math">\(\Delta\pi^{s_i}_{\rm{RMS},r} = \sqrt{\sum_a \left(\Delta\pi^{s_i}_{r,a}\right)^2}\)</span>. The minimal value of the RMS differential preference is zero, and the maximal value is 2.</p>
+<p>The first line is a title line that begins with a # character and then lists the column headers separated by tabs. The remaining lines contain the data.</p>
+<p>The columns contain tab-separated values as follows:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">The first column gives the residue number in 1, 2, ... numbering. The header for this column is <em>SITE</em>.</p>
+</li>
+<li><p class="first">The second column gives the wildtype amino acid at the site (such as <em>N</em> or <em>R</em>). The header for this column is <em>WT_AA</em>.</p>
+</li>
+<li><p class="first">The third column lists the RMS differential preference for that site, <span class="math">\(\Delta\pi^{s_i}_{\rm{RMS},r}\)</span>. The header for this column is <em>RMS_dPI</em>.</p>
+</li>
+<li><p class="first">The remaining 21 columns list the differentila preference <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> values for each amino acid <span class="math">\(a\)</span> at this site <span class="math">\(r\)</span> for the selection pressure <span class="math">\(s_i\)</span> described in this file. The amino acids are listed in alphabetical order according to their one letter codes, and then the final column gives the equilibrium preference for a stop codon (denoted by a * character). The headers for these columns are <em>dPI_A</em>, <em>dPI_C</em>, <em>dPI_D</em>, ..., <em>dPI_W</em>, <em>dPI_Y</em>, <em>dPI_*</em>. Here is the header:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#SITE   WT_AA   RMS_dPI    dPI_A    dPI_C    dPI_D    dPI_E    dPI_F    dPI_G    dPI_H    dPI_I    dPI_K    dPI_L    dPI_M    dPI_N    dPI_P    dPI_Q    dPI_R    dPI_S    dPI_T    dPI_V    dPI_W    dPI_Y    dPI_*</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">For each selection pressure, there is also a <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_credibleintervals_95.txt</span></tt>. These are text files giving the median-centered 95% credible intervals on the <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> values in the <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???.txt</span></tt> files. The first column is <em>SITE</em> and the remaining columns give the upper and lower bounds on the credible intervals for each of the <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> values as comma-separated numbers (no spaces). Here is the header:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#SITE   dPI_A_95cred dPI_C_95cred dPI_D_95cred dPI_E_95cred dPI_F_95cred dPI_G_95cred dPI_H_95cred dPI_I_95cred dPI_K_95cred dPI_L_95cred dPI_M_95cred dPI_N_95cred dPI_P_95cred dPI_Q_95cred dPI_R_95cred dPI_S_95cred dPI_T_95cred dPI_V_95cred dPI_W_95cred dPI_Y_95cred dPI_*_95cred</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If the <em>preference_plots</em> option is being used, then plots are created showing the preferences <span class="math">\(\pi_{r,a}\)</span> for the <em>control_sample</em> and the differential preferences <span class="math">\(\Delta\pi_{r,a}^{s_i}\)</span> for each selection <span class="math">\(s_i\)</span>. These plots are in the subdirectory specified by <em>preference_plots</em>. Within this subdirectory, they have names beginning with <em>outfileprefix</em> and then having the suffix <tt class="docutils literal"><span class="pre">preferences_control_selection_1.pdf</span></tt>, <tt class="docutils literal"><span class="pre">preferences_control_selection_2.pdf</span></tt>, ... for residues 1, 2, ... for the <em>control_sample</em> preferences. For the differentail preferences, the names are <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_1.pdf</span></tt>, <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_2.pdf</span></tt>, ... where <tt class="docutils literal"><span class="pre">???</span></tt> gives the name of the selection pressure. These plots show the posterior mean and the median-centered 95% credible intervals.</p>
+</li>
+<li><p class="first">If the <em>MCMC_traces</em> option is being used, then plots are created showing the traces of the <em>control_sample</em> preferences and the differential preferences during the MCMC. These plots are in the subdirectory specified by <em>MCMC_traces</em>, and have names beginning with the prefix given by <em>outfileprefix</em> followed by the suffixes <tt class="docutils literal"><span class="pre">preferences_control_selection_1.pdf</span></tt>, <tt class="docutils literal"><span class="pre">preferences_control_selection_2.pdf`</span></tt>, ... for the <em>control_sample</em> preferences, and followed by the suffix <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_1.pdf</span></tt>, <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_2.pdf</span></tt> for the other selection pressures where <tt class="docutils literal"><span class="pre">???</span></tt> indicates the name of the selection pressure. These plots show traces of the values during the MCMC.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mapmuts_inferdifferentialpreferences.py</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#when-would-you-use-this-script">When would you use this script?</a></li>
+<li><a class="reference internal" href="#the-samples-that-compose-the-data">The samples that compose the data</a></li>
+<li><a class="reference internal" href="#the-likelihoods-in-terms-of-unknown-parameters">The likelihoods in terms of unknown parameters</a><ul>
+<li><a class="reference internal" href="#priors-over-the-unknown-parameters">Priors over the unknown parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inference-with-mcmc">Inference with MCMC</a></li>
+<li><a class="reference internal" href="#implementation-of-the-mcmc">Implementation of the MCMC</a></li>
+<li><a class="reference internal" href="#running-the-script">Running the script</a></li>
+<li><a class="reference internal" href="#input-file">Input file</a></li>
+<li><a class="reference internal" href="#example-input-file">Example input file</a></li>
+<li><a class="reference internal" href="#output-files">Output files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mapmuts_inferpreferences.html"
+                        title="previous chapter">mapmuts_inferpreferences.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapmuts_preferencescorrelate.html"
+                        title="next chapter">mapmuts_preferencescorrelate.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mapmuts_inferdifferentialpreferences.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_preferencescorrelate.html" title="mapmuts_preferencescorrelate.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
+             >previous</a> |</li>
+        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Jesse Bloom.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

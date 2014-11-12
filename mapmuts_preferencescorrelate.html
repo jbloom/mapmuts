@@ -27,7 +27,7 @@
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_preferencemeans.py" href="mapmuts_preferencemeans.html" />
-    <link rel="prev" title="mapmuts_inferpreferences.py" href="mapmuts_inferpreferences.html" /> 
+    <link rel="prev" title="mapmuts_inferdifferentialpreferences.py" href="mapmuts_inferdifferentialpreferences.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -43,7 +43,7 @@
           <a href="mapmuts_preferencemeans.html" title="mapmuts_preferencemeans.py"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
+          <a href="mapmuts_inferdifferentialpreferences.html" title="mapmuts_inferdifferentialpreferences.py"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
           <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
@@ -57,7 +57,8 @@
             
   <div class="section" id="mapmuts-preferencescorrelate-py">
 <span id="id1"></span><h1>mapmuts_preferencescorrelate.py<a class="headerlink" href="#mapmuts-preferencescorrelate-py" title="Permalink to this headline">¶</a></h1>
-<p>This is an analysis script for the output produced by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. It makes plots of the correlation between the amino-acid preferences (<span class="math">\(\pi_{r,a}\)</span>) for all amino acids <em>a</em> at all sites <em>r</em> for multiple analyses or samples. So the typical goal of running this script would be to compare the amino-acid preferences inferred for two different samples to examine the similarity of the inferred values.</p>
+<p>This is an analysis script for examining the correlations between amino-acid preferences <span class="math">\(\pi_{r,a}\)</span> or differential preferences <span class="math">\(\Delta\pi_{r,a}\)</span> from different analyses or samples.</p>
+<p>It is designed to parse either the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> files created by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a> or the <tt class="docutils literal"><span class="pre">differentialpreferences_selection_*.txt</span></tt> files created by <a class="reference internal" href="mapmuts_inferdifferentialpreferences.html#mapmuts-inferdifferentialpreferences-py"><em>mapmuts_inferdifferentialpreferences.py</em></a>. It makes plots of the correlation between the amino-acid preferences or differntial preferences for all amino acids <em>a</em> at all sites <em>r</em> for multiple analyses or samples.</p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
 <p>This script requires <a class="reference external" href="http://matplotlib.org/">matplotlib</a> to make the plots. It will raise an error if <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is not available. This script also requires <a class="reference external" href="http://www.scipy.org/">scipy</a> in order to calculate correlation coefficients. However, you can still use the script if <a class="reference external" href="http://www.scipy.org/">scipy</a> is unavailable &#8211; you just won&#8217;t get any correlation coefficients.</p>
@@ -75,12 +76,14 @@
 <p>Lines beginning with # and empty lines are ignored.</p>
 <p>Keys for the input file:</p>
 <ul class="simple">
-<li><em>preferencesfiles</em> : A listing of the equilibrium preferences files generated as <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. You must list at least two files here (otherwise there is nothing to correlate), but can list more than two if you also want to look at pairwise correlations between larger sets of samples. The files must exist, and the filenames cannot contain any spaces. To list multiple files, just separate them by spaces. The files do not have to be consistent in whether or not they contain stop codons as possible amino acids &#8211; however, if one of the two files in a pair contains a stop codon and the other doesn&#8217;t, then the preferences are renormalized the exclude the stop codon preference in the data that contains it. If both contain stop codons, then these are counted as potential amino acids.</li>
-<li><em>samplenames</em> : A listing of the sample names for each of the files specified by <em>preferencesfiles</em>. These are the names that are given to the samples in plots that compare across multiple samples. You must specify the same number of sample names here as you specify files under <em>preferencesfiles</em>, so there is one name for each corresponding sample. The sample names can NOT contain spaces, and different sample names are separated by spaces. However, if you include an underscore in the sample name then it is converted to a space in the actual plots.</li>
+<li><em>preferencesfiles</em> : Use <strong>either</strong> this option or <em>differentialpreferencesfiles</em>. Use <em>preferencesfiles</em> if you are analyzing amino-acid preferences files generated as <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. You must list at least two files here (otherwise there is nothing to correlate), but can list more than two if you also want to look at pairwise correlations between larger sets of samples. The files must exist, and the filenames cannot contain any spaces. To list multiple files, just separate them by spaces. The files do not have to be consistent in whether or not they contain stop codons as possible amino acids &#8211; however, if one of the two files in a pair contains a stop codon and the other doesn&#8217;t, then the preferences are renormalized the exclude the stop codon preference in the data that contains it. If both contain stop codons, then these are counted as potential amino acids.</li>
+<li><em>differentialpreferencesfiles</em> : Use <strong>either</strong> this option or <em>preferencesfiles</em>. Use <em>differentialpreferencesfiles</em> if you are analyzing differential preference files generated as <tt class="docutils literal"><span class="pre">differentialpreferences_selection_*.txt</span></tt> by <a class="reference internal" href="mapmuts_inferdifferentialpreferences.html#mapmuts-inferdifferentialpreferences-py"><em>mapmuts_inferdifferentialpreferences.py</em></a>. The same restrictions to the files listed here apply as those listed above for <em>preferencesfiles</em>.</li>
+<li><em>samplenames</em> : A listing of the sample names for each of the files specified by <em>preferencesfiles</em> or <em>differentialpreferencesfiles</em>. These are the names that are given to the samples in plots that compare across multiple samples. You must specify the same number of sample names here as you specify files under <em>preferencesfiles</em> or <em>differentialpreferencesfiles</em>, so there is one name for each corresponding sample. The sample names can NOT contain spaces, and different sample names are separated by spaces. However, if you include an underscore in the sample name then it is converted to a space in the actual plots.</li>
 <li><em>plotdir</em> specifies the directory where we place the plots. If you want them to be in the current directory, just make this <tt class="docutils literal"><span class="pre">./</span></tt>. Otherwise specify some other directory, such as <tt class="docutils literal"><span class="pre">preferences_correlations/</span></tt>. Directories specified by this prefix must already exist &#8211; nonexistent directories are NOT created, and an error will be raised if you specify a directory that does not already exist.</li>
 <li><em>alpha</em> is an optional argument. It specifies the transparency of the points in the correlation plot. A value of <em>alpha</em> equal to one corresponds to no transparency. A value of <em>alpha &lt; 1</em> makes the points somewhat transparent. This might be useful if you want to better visualize the density of points and many points fall on top of each other. You must set <em>alpha</em> &gt; 0 and &lt;= 1. In general, the maximum intensity at a spot on the plot will not be obtained until there are <em>1.0 / alpha</em> points on that spot. If you do not specify a value of <em>alpha</em>, it defaults to one.</li>
 <li><em>logscale</em> is an optional argument. If it is left out or set to <em>False</em>, then the data is plotted on a linear scale. If <em>logscale</em> is specified and set to <em>True</em>, then the data is plotted on a log scale. In this case, the correlations are calculated after log-transforming the data.</li>
-<li><em>plot_simpsondiversity</em> is an optional argument. If it is left out or set to <em>False</em>, then the correlation between the amino-acid preferences is plotted. But if <em>plot_simpsondiversity</em> is set to <em>True</em>, then the correlation between the <a class="reference external" href="http://en.wikipedia.org/wiki/Diversity_index#Gini-Simpson">Gini-Simpson index</a> for each site is plotted instead of the correlation between the preferences. For a site <em>r</em> with amino-acid preferences <span class="math">\(\pi_{r,a}\)</span>, the <a class="reference external" href="http://en.wikipedia.org/wiki/Diversity_index#Gini-Simpson">Gini-Simpson index</a> is <span class="math">\(D = 1 - \sum_a \pi_{r,a}^2\)</span>, and so ranges from values of zero to one (for an infinite number of possible amino acids), or in practice from zero to 0.95 (for 20 amino acids). Higher indices imply greatear diversity.</li>
+<li><em>plot_simpsondiversity</em> is an optional argument that is meaningful only if you are using <em>preferencesfiles</em>. If it is left out or set to <em>False</em>, then the correlation between the amino-acid preferences is plotted. But if <em>plot_simpsondiversity</em> is set to <em>True</em>, then the correlation between the <a class="reference external" href="http://en.wikipedia.org/wiki/Diversity_index#Gini-Simpson">Gini-Simpson index</a> for each site is plotted instead of the correlation between the preferences. For a site <em>r</em> with amino-acid preferences <span class="math">\(\pi_{r,a}\)</span>, the <a class="reference external" href="http://en.wikipedia.org/wiki/Diversity_index#Gini-Simpson">Gini-Simpson index</a> is <span class="math">\(D = 1 - \sum_a \pi_{r,a}^2\)</span>, and so ranges from values of zero to one (for an infinite number of possible amino acids), or in practice from zero to 0.95 (for 20 amino acids). Higher indices imply greater diversity.</li>
+<li><em>plot_RMSdiffpref</em> is an optional argument that is meaningful only if you are using <em>differentialpreferencesfiles</em>. If it is left out or set to <em>False</em>, then the correlation between the differential amino-acid preferences is plotted. But if <em>plot_RMSdiffpref</em> is set to <em>True</em>, then the correlation between the root-mean-square (RMS) differential preference <span class="math">\(\Delta\pi_{r,a}\)</span> values computed over all amino acids for each site is plotted instead. Higher values imply greater overall change in preferences under the differential selection.</li>
 </ul>
 </div>
 <div class="section" id="example-input-file">
@@ -96,7 +99,8 @@ alpha 0.1
 </div>
 <div class="section" id="output">
 <h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
-<p>This script will write some brief output to standard out (<em>sys.stdout</em>) describing its progress. However, the main output is the plots created in <em>plotdir</em>. There is a plot for each pair of samples specified by <em>preferencesfiles</em> and <em>samplenames</em>. The plots show the correlations between the amino-acid preferences (unless <em>plot_simpsondiversity</em> is <em>True</em>, in which case they show the correlations between the <a class="reference external" href="http://en.wikipedia.org/wiki/Diversity_index#Gini-Simpson">Gini-Simpson index</a> for each site).</p>
+<p>This script will write some brief output to standard out (<em>sys.stdout</em>) describing its progress. However, the main output is the plots created in <em>plotdir</em>. There is a plot for each pair of samples specified by <em>preferencesfiles</em> (or <em>differentialpreferencesfiles</em>) and <em>samplenames</em>.</p>
+<p>The plots show the correlations between the amino-acid preferences or differential preferences (unless you are using <em>plot_simpsondiversity</em> or <em>plot_RMSdiffpref</em>, in which case they show the correlations between the <a class="reference external" href="http://en.wikipedia.org/wiki/Diversity_index#Gini-Simpson">Gini-Simpson index</a> or root-mean-square differential preference for each site).</p>
 <p>The plots are PDFs generated with <a class="reference external" href="http://matplotlib.org/">matplotlib</a>, and they show the Pearson correlation coefficients if <a class="reference external" href="http://www.scipy.org/">scipy</a> is available. The plots are created in <em>plotdir</em>. For the example input file shown above, the following plots would be created in <em>plotdir</em>:</p>
 <blockquote>
 <div><ul class="simple">
@@ -134,8 +138,8 @@ alpha 0.1
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="mapmuts_inferpreferences.html"
-                        title="previous chapter">mapmuts_inferpreferences.py</a></p>
+  <p class="topless"><a href="mapmuts_inferdifferentialpreferences.html"
+                        title="previous chapter">mapmuts_inferdifferentialpreferences.py</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="mapmuts_preferencemeans.html"
                         title="next chapter">mapmuts_preferencemeans.py</a></p>
@@ -176,7 +180,7 @@ alpha 0.1
           <a href="mapmuts_preferencemeans.html" title="mapmuts_preferencemeans.py"
              >next</a> |</li>
         <li class="right" >
-          <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
+          <a href="mapmuts_inferdifferentialpreferences.html" title="mapmuts_inferdifferentialpreferences.py"
              >previous</a> |</li>
         <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
           <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
