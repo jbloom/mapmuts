@@ -57,6 +57,10 @@
             
   <div class="section" id="mapmuts-inferdifferentialpreferences-py">
 <span id="id1"></span><h1>mapmuts_inferdifferentialpreferences.py<a class="headerlink" href="#mapmuts-inferdifferentialpreferences-py" title="Permalink to this headline">¶</a></h1>
+<dl class="docutils">
+<dt><strong>This program is no longer the state-of-the-art:</strong> You are suggested to instead</dt>
+<dd>use the <a class="reference external" href="http://jbloom.github.io/dms_tools/">dms_tools</a> program <tt class="docutils literal"><span class="pre">dms_inferdiffprefs</span></tt>.</dd>
+</dl>
 <p>This script is designed to infer the differential preferences for each amino acid at each site when comparing two or more selection pressures. It does this using a Bayesian approach implemented via MCMC (Markov chain Monte Carlo).</p>
 <p>Because this script uses MCMC, it takes a fairly long time to run &#8211; perhaps as long as several days depending on your computer and the specific data set.</p>
 <p>This script takes as input the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>, and so is designed to be run after you have completed the analysis with that script.</p>

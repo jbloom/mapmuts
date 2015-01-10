@@ -4,6 +4,9 @@
 mapmuts_siteprofileplots.py
 =========================================
 
+**This program is no longer the state-of-the-art:** You are suggested to instead
+ use the `dms_tools`_ program ``dms_logoplot``.
+
 This script is for the visual display of site-specific amino-acid preferences or differential preferences. The primary output of this script is a sequence logo plot. The script can also overlay some information about aspects of protein structure (secondary structure or solvent accessibility, as well as other user-specified information).
 
 In the notation used here, :math:`\pi_{r,a}` indicates the preference of site *r* for amino acid *a*, where :math:`\sum_a \pi_{r,a} = 1` since each site always contains one of the amino acids. The differential preferences are denoted by :math:`\Delta\pi_{r,a}` (where :math:`\sum_a\Delta\pi_{r,a} = 0`), and indicate the change in preference for amino acid *a* at site *r*.

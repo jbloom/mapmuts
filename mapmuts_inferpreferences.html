@@ -26,7 +26,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
-    <link rel="next" title="mapmuts_preferencescorrelate.py" href="mapmuts_preferencescorrelate.html" />
+    <link rel="next" title="mapmuts_inferdifferentialpreferences.py" href="mapmuts_inferdifferentialpreferences.html" />
     <link rel="prev" title="mapmuts_countparsedmuts.py" href="mapmuts_countparsedmuts.html" /> 
   </head>
   <body role="document">
@@ -40,7 +40,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="mapmuts_preferencescorrelate.html" title="mapmuts_preferencescorrelate.py"
+          <a href="mapmuts_inferdifferentialpreferences.html" title="mapmuts_inferdifferentialpreferences.py"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="mapmuts_countparsedmuts.html" title="mapmuts_countparsedmuts.py"
@@ -57,6 +57,7 @@
             
   <div class="section" id="mapmuts-inferpreferences-py">
 <span id="id1"></span><h1>mapmuts_inferpreferences.py<a class="headerlink" href="#mapmuts-inferpreferences-py" title="Permalink to this headline">¶</a></h1>
+<p><strong>This program is no longer the state-of-the-art:</strong> You are suggested to instead use the <a class="reference external" href="http://jbloom.github.io/dms_tools/">dms_tools</a> program <tt class="docutils literal"><span class="pre">dms_inferprefs</span></tt>.</p>
 <p>This script infers the equilibrium preferences of each site for each amino acid. It does this using a Bayesian approach implemented via MCMC (Markov chain Monte Carlo).</p>
 <p>Because this script uses MCMC, it takes a fairly long time to run &#8211; perhaps as long as several days depending on your computer and the specific data set.</p>
 <p>This script takes as input the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>, and so is designed to be run after you have completed the analysis with that script.</p>
@@ -267,8 +268,8 @@ removeoutlier False
   <p class="topless"><a href="mapmuts_countparsedmuts.html"
                         title="previous chapter">mapmuts_countparsedmuts.py</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="mapmuts_preferencescorrelate.html"
-                        title="next chapter">mapmuts_preferencescorrelate.py</a></p>
+  <p class="topless"><a href="mapmuts_inferdifferentialpreferences.html"
+                        title="next chapter">mapmuts_inferdifferentialpreferences.py</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -303,7 +304,7 @@ removeoutlier False
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="mapmuts_preferencescorrelate.html" title="mapmuts_preferencescorrelate.py"
+          <a href="mapmuts_inferdifferentialpreferences.html" title="mapmuts_inferdifferentialpreferences.py"
              >next</a> |</li>
         <li class="right" >
           <a href="mapmuts_countparsedmuts.html" title="mapmuts_countparsedmuts.py"
