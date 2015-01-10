@@ -9,7 +9,7 @@
 
 `mapmuts`_ is a `Python`_ package for mapping mutations from deep-sequencing of protein-coding genes. It is specifically designed for the analysis of overlapping Illumina paired-end reads.
 
-Please note that for many purposes, `mapmut`_ has been **superseded** by `dms_tools`_. Specifically, you are recommended to use `dms_tools`_ over `mapmuts`_ for:
+Please note that for many purposes, `mapmuts`_ has been **superseded** by `dms_tools`_. Specifically, you are recommended to use `dms_tools`_ over `mapmuts`_ for:
 
     * Inference of site-specific amino-acid preferences
 
