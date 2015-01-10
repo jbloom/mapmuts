@@ -4,6 +4,9 @@
 mapmuts_inferdifferentialpreferences.py
 ========================================
 
+**This program is no longer the state-of-the-art:** You are suggested to instead
+ use the `dms_tools`_ program ``dms_inferdiffprefs``.
+
 This script is designed to infer the differential preferences for each amino acid at each site when comparing two or more selection pressures. It does this using a Bayesian approach implemented via MCMC (Markov chain Monte Carlo).
 
 Because this script uses MCMC, it takes a fairly long time to run -- perhaps as long as several days depending on your computer and the specific data set.

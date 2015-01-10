@@ -31,3 +31,4 @@
 .. _`Gini-Simpson index`: http://en.wikipedia.org/wiki/Diversity_index#Gini-Simpson
 .. _`rpy2`: http://rpy.sourceforge.net/rpy2.html
 .. _`R`: http://rpy.sourceforge.net/rpy2.html
+.. _`dms_tools`: http://jbloom.github.io/dms_tools/
