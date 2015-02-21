@@ -645,28 +645,28 @@ def ReadEntropyAndEquilFreqs(infile):
     if not os.path.isfile(infile):
         raise IOError("Cannot find infile %s" % infile)
     lines = open(infile).readlines()
-    headmatch = re.compile('^#SITE\sWT_AA\sSITE_ENTROPY\sPI_A\sPI_C\sPI_D\sPI_E\sPI_F\sPI_G\sPI_H\sPI_I\sPI_K\sPI_L\sPI_M\sPI_N\sPI_P\sPI_Q\sPI_R\sPI_S\sPI_T\sPI_V\sPI_W\sPI_Y(?P<stop>(\sPI_\*){0,1})\n$')
+    headmatch = re.compile('^#\s{0,1}(SITE|POSITION)\sWT(_AA){0,1}\sSITE_ENTROPY\sPI_A\sPI_C\sPI_D\sPI_E\sPI_F\sPI_G\sPI_H\sPI_I\sPI_K\sPI_L\sPI_M\sPI_N\sPI_P\sPI_Q\sPI_R\sPI_S\sPI_T\sPI_V\sPI_W\sPI_Y(?P<stop>(\sPI_\*){0,1})\s')
     m = headmatch.search(lines[0])
     if not m:
         raise ValueError("Invalid header of:\n%s" % lines[0])
     has_stop = bool(m.group('stop'))
-    keys = lines[0].split()[1 : ]
+    keys = lines[0][1 : ].split()[1 : ]
     nkeys = len(keys)
-    assert (not has_stop and nkeys == 22) or (has_stop and nkeys == 23), "Invalid header length, not the expected number of keys (found %d)." % nkeys
+    assert (not has_stop and nkeys >= 22) or (has_stop and nkeys >= 23), "Invalid header length, not the expected number of keys (found %d)." % nkeys
     d = {}
     for line in lines[1 : ]:
         if line and not line.isspace():
             entries = line.split()
             if len(entries) != nkeys + 1:
-                raise ValueError("Invalid line of:\n%s" % line)
+                raise ValueError("Invalid line of:\n%s\nExpected %d entries, but got %d" % (line, nkeys + 1, len(entries)))
             site = int(entries[0])
             if site in d:
                 raise ValueError("Duplicate entry for site %d" % site)
             site_d = {}
             for (key, value) in zip(keys, entries[1 : ]):
-                if key == 'WT_AA':
+                if key == 'WT_AA' or key == 'WT':
                     site_d[key] = value
-                else:
+                elif '_95' != key[-3 : ]:
                     site_d[key] = float(value)
             d[site] = site_d
     return d
