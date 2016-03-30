@@ -8,7 +8,7 @@
     
     <title>mapmuts_makealignments.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_alignmentsummaryplot.py" href="mapmuts_alignmentsummaryplot.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="scripts.html" title="Scripts"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -60,10 +60,10 @@
 <p>Script to align overlapping paired-end Illumina reads to a target gene.</p>
 <p>This is one of the core scripts of the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package.</p>
 <p>To run this script from the prompt, first create a text infile of the
-format described below. Then simply type <a class="reference internal" href="#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a>
-followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+format described below. Then simply type <a class="reference internal" href="#mapmuts-makealignments-py"><span class="std std-ref">mapmuts_makealignments.py</span></a>
+followed by the infile name. For example, if the name is <code class="docutils literal"><span class="pre">infile.txt</span></code>,
 type:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_makealignments.py infile.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_makealignments</span><span class="o">.</span><span class="n">py</span> <span class="n">infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>This script aligns overlapping paired-end sequencing reads to a target
@@ -127,8 +127,8 @@ statistics is made.</li>
 <div class="section" id="format-of-the-input-file">
 <h2>Format of the input file<a class="headerlink" href="#format-of-the-input-file" title="Permalink to this headline">¶</a></h2>
 <p>The input file specifies <cite>key</cite> / <cite>value</cite> pairs on individual lines in the format:</p>
-<div class="highlight-python"><div class="highlight"><pre>key1 value1
-key2 value2
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">key1</span> <span class="n">value1</span>
+<span class="n">key2</span> <span class="n">value2</span>
 </pre></div>
 </div>
 <p>Blank lines or lines
@@ -144,7 +144,7 @@ should contain the second (R2) reads of a paired-end set. Note that
 the entries in these files must be in the same order, and each must
 contain the same number of reads, so that when reads are read
 sequentially from <cite>r1files</cite> they pair with the reads read sequentially
-from <cite>r2files</cite>. In addition to specifically specifying the file names, you can also list general path information such as <tt class="docutils literal"><span class="pre">./my_directory/*_R1*_.fastq.gz</span></tt> and the <tt class="docutils literal"><span class="pre">*</span></tt> character will be expanded to mean any value as in the standard Linux file naming. In this case, the lists of files matching the specification for <em>r1files</em> and <em>r2files</em> must be the same, and when sorted in alphabetical order the files must pair with each other when the reads are read sequentially. If you are using this sort of general name specification then you can only list one name each for <em>r1files</em> and <em>r2files</em>.</p>
+from <cite>r2files</cite>. In addition to specifically specifying the file names, you can also list general path information such as <code class="docutils literal"><span class="pre">./my_directory/*_R1*_.fastq.gz</span></code> and the <code class="docutils literal"><span class="pre">*</span></code> character will be expanded to mean any value as in the standard Linux file naming. In this case, the lists of files matching the specification for <em>r1files</em> and <em>r2files</em> must be the same, and when sorted in alphabetical order the files must pair with each other when the reads are read sequentially. If you are using this sort of general name specification then you can only list one name each for <em>r1files</em> and <em>r2files</em>.</p>
 </li>
 <li><p class="first"><cite>gzipped</cite> is a Boolean switch specifying whether the FASTQ files
 specified by <cite>r1files</cite> and <cite>r2files</cite> are gzipped. If it is set to <cite>True</cite>,
@@ -238,33 +238,33 @@ script. Name are allowed to contain spaces.</p>
 </li>
 <li><dl class="first docutils">
 <dt><cite>write_unaligned</cite> specifies that we write all unaligned reads to the</dt>
-<dd><p class="first last"><tt class="docutils literal"><span class="pre">*_unaligned.fasta.gz</span></tt> file. This is done if set to <cite>True</cite>, not
+<dd><p class="first last"><code class="docutils literal"><span class="pre">*_unaligned.fasta.gz</span></code> file. This is done if set to <cite>True</cite>, not
 done if set to <cite>False</cite>. Each entry also contains a brief explanation of why it failed to align.</p>
 </dd>
 </dl>
 </li>
 </ul>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># Example input file for mapmuts_makealignments.py
-maxa2m 1
-generange 62 1555
-write_unaligned True
-r2files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_A/Sample_WT-1_DNA/*R2*.fastq.gz
-maxa1m 1
-a1file /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/R1_trim3.fasta
-gzipped True
-minq 25
-minoverlap 30
-maxgenem 6
-r1files /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/FASTQ_files/replicate_A/Sample_WT-1_DNA/*R1*.fastq.gz
-a2file /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/R2_trim3.fasta
-maxrm 1
-outfileprefix replicate_A_WT-1_DNA
-fullgenefile /home/jbloom/mapmuts/examples/2013Analysis_Influenza_NP_Aichi68/Aichi68-NP_amplicon.fasta
-maxn 2
-upcase test
-applyfilter True
-samplename replicate_A, WT-1, DNA
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Example input file for mapmuts_makealignments.py</span>
+<span class="n">maxa2m</span> <span class="mi">1</span>
+<span class="n">generange</span> <span class="mi">62</span> <span class="mi">1555</span>
+<span class="n">write_unaligned</span> <span class="kc">True</span>
+<span class="n">r2files</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">jbloom</span><span class="o">/</span><span class="n">mapmuts</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="mi">2013</span><span class="n">Analysis_Influenza_NP_Aichi68</span><span class="o">/</span><span class="n">FASTQ_files</span><span class="o">/</span><span class="n">replicate_A</span><span class="o">/</span><span class="n">Sample_WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_DNA</span><span class="o">/*</span><span class="n">R2</span><span class="o">*.</span><span class="n">fastq</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">maxa1m</span> <span class="mi">1</span>
+<span class="n">a1file</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">jbloom</span><span class="o">/</span><span class="n">mapmuts</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="mi">2013</span><span class="n">Analysis_Influenza_NP_Aichi68</span><span class="o">/</span><span class="n">R1_trim3</span><span class="o">.</span><span class="n">fasta</span>
+<span class="n">gzipped</span> <span class="kc">True</span>
+<span class="n">minq</span> <span class="mi">25</span>
+<span class="n">minoverlap</span> <span class="mi">30</span>
+<span class="n">maxgenem</span> <span class="mi">6</span>
+<span class="n">r1files</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">jbloom</span><span class="o">/</span><span class="n">mapmuts</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="mi">2013</span><span class="n">Analysis_Influenza_NP_Aichi68</span><span class="o">/</span><span class="n">FASTQ_files</span><span class="o">/</span><span class="n">replicate_A</span><span class="o">/</span><span class="n">Sample_WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_DNA</span><span class="o">/*</span><span class="n">R1</span><span class="o">*.</span><span class="n">fastq</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">a2file</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">jbloom</span><span class="o">/</span><span class="n">mapmuts</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="mi">2013</span><span class="n">Analysis_Influenza_NP_Aichi68</span><span class="o">/</span><span class="n">R2_trim3</span><span class="o">.</span><span class="n">fasta</span>
+<span class="n">maxrm</span> <span class="mi">1</span>
+<span class="n">outfileprefix</span> <span class="n">replicate_A_WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_DNA</span>
+<span class="n">fullgenefile</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">jbloom</span><span class="o">/</span><span class="n">mapmuts</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="mi">2013</span><span class="n">Analysis_Influenza_NP_Aichi68</span><span class="o">/</span><span class="n">Aichi68</span><span class="o">-</span><span class="n">NP_amplicon</span><span class="o">.</span><span class="n">fasta</span>
+<span class="n">maxn</span> <span class="mi">2</span>
+<span class="n">upcase</span> <span class="n">test</span>
+<span class="n">applyfilter</span> <span class="kc">True</span>
+<span class="n">samplename</span> <span class="n">replicate_A</span><span class="p">,</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">DNA</span>
 </pre></div>
 </div>
 </div>
@@ -293,10 +293,10 @@ These lines give:</p>
 indicate identities with the gene at that position. The alignment
 region is shown only for regions of gene (the portion of <cite>fullgene</cite>
 specified by <cite>generange</cite>) covered by both reads. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>@DH1DQQN1:241:C1433ACXX:2:1101:1623:2365
-14 ATAGATACTAGAT 26
-1 .....C.....T. 13
-13 .....C.......  1
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@DH1DQQN1</span><span class="p">:</span><span class="mi">241</span><span class="p">:</span><span class="n">C1433ACXX</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">1101</span><span class="p">:</span><span class="mi">1623</span><span class="p">:</span><span class="mi">2365</span>
+<span class="mi">14</span> <span class="n">ATAGATACTAGAT</span> <span class="mi">26</span>
+<span class="mi">1</span> <span class="o">.....</span><span class="n">C</span><span class="o">.....</span><span class="n">T</span><span class="o">.</span> <span class="mi">13</span>
+<span class="mi">13</span> <span class="o">.....</span><span class="n">C</span><span class="o">.......</span>  <span class="mi">1</span>
 </pre></div>
 </div>
 </li>
@@ -386,9 +386,6 @@ FASTA file with all unaligned reads. Each entry also contains a brief explanatio
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -410,13 +407,13 @@ FASTA file with all unaligned reads. Each entry also contains a brief explanatio
         <li class="right" >
           <a href="scripts.html" title="Scripts"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

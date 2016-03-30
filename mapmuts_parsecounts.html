@@ -8,7 +8,7 @@
     
     <title>mapmuts_parsecounts.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_parsesummaryplots.py" href="mapmuts_parsesummaryplots.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_alignmentsummaryplot.html" title="mapmuts_alignmentsummaryplot.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,13 +57,13 @@
             
   <div class="section" id="mapmuts-parsecounts-py">
 <span id="id1"></span><h1>mapmuts_parsecounts.py<a class="headerlink" href="#mapmuts-parsecounts-py" title="Permalink to this headline">¶</a></h1>
-<p>Parses counts from alignments in the <tt class="docutils literal"><span class="pre">*_alignments.txt.gz</span></tt> file built by <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> into
+<p>Parses counts from alignments in the <code class="docutils literal"><span class="pre">*_alignments.txt.gz</span></code> file built by <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><span class="std std-ref">mapmuts_makealignments.py</span></a> into
 two text output files giving the counts of different nucleotide and codon identities.</p>
 <p>To run this script from the prompt, first create a text infile of the
-format described below. Then simply type <a class="reference internal" href="#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>
-followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+format described below. Then simply type <a class="reference internal" href="#mapmuts-parsecounts-py"><span class="std std-ref">mapmuts_parsecounts.py</span></a>
+followed by the infile name. For example, if the name is <code class="docutils literal"><span class="pre">infile.txt</span></code>,
 type:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_parsecounts.py infile.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_parsecounts</span><span class="o">.</span><span class="n">py</span> <span class="n">infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>The overlapping paired-end read alignments are used to call nucleotide
@@ -89,25 +89,25 @@ into a summary PDF document as well.</p>
 <div class="section" id="input-file-format">
 <h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
 <p>The input file specifies <cite>key</cite> / <cite>value</cite> pairs on individual lines in the format:</p>
-<div class="highlight-python"><div class="highlight"><pre>key1 value1
-key2 value2
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">key1</span> <span class="n">value1</span>
+<span class="n">key2</span> <span class="n">value2</span>
 </pre></div>
 </div>
 <p>Blank lines or lines
 that begin with # are ignored (i.e. as comment lines). The input file
 should contain the following keys:</p>
 <ul class="simple">
-<li><cite>alignmentfile</cite> specifies the name of a <tt class="docutils literal"><span class="pre">*_alignments.txt.gz</span></tt> file
-built by running <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a>.</li>
+<li><cite>alignmentfile</cite> specifies the name of a <code class="docutils literal"><span class="pre">*_alignments.txt.gz</span></code> file
+built by running <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><span class="std std-ref">mapmuts_makealignments.py</span></a>.</li>
 <li><cite>fullgenefile</cite> specifies the name of the file containing the full target
 amplicon to which the reads were aligned. This should be a FASTA file
 containing a single sequence. This should be the same sequence used when
-running <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> to make <cite>alignmentfile</cite>.</li>
+running <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><span class="std std-ref">mapmuts_makealignments.py</span></a> to make <cite>alignmentfile</cite>.</li>
 <li><cite>generange</cite> specifies region of the amplicon that contains the
 the coding sequence. This should be two number specifying the
 first and last nucleotide of the sequence in <cite>fullgenefile</cite> that
 are part of the coding sequence in 1, 2, ... numbering. This should
-be the same value of <cite>generange</cite> used when running <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a>.
+be the same value of <cite>generange</cite> used when running <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><span class="std std-ref">mapmuts_makealignments.py</span></a>.
 to make <cite>alignmentfile</cite>.
 The gene must be a valid coding sequence that can be translated; the terminal
 stop codon should not be included.</li>
@@ -125,7 +125,7 @@ faster. If the first entry is not upper case, then an exception
 is raised, and you wil probably have to switch this option to <cite>True</cite>.</li>
 <li><cite>r1exclude</cite> specifies read position in the R1 read that are excluded
 from the analysis. You might want to exclude a position of the results
-of <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> make clear that certain read positions have
+of <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><span class="std std-ref">mapmuts_makealignments.py</span></a> make clear that certain read positions have
 very high error rates (numbers of mismatches) relative to other positions.
 If no positions are being excluded, enter <cite>None</cite>. If positions are being
 excluded, list the numbers separated by spaces of the positions to exclude
@@ -138,15 +138,15 @@ section on the output files below. Any existing output files are overwritten.</l
 script. Name are allowed to contain spaces.</li>
 </ul>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># Example input file to mapmuts_parsecounts.py
-alignmentfile sample_1_alignments.txt.gz
-fullgenefile Aichi68-NP_amplicon.fasta
-generange 62 1555
-upcase test
-r1exclude None
-r2exclude 2 3 48 49
-outfileprefix example_run
-samplename example run
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Example input file to mapmuts_parsecounts.py</span>
+<span class="n">alignmentfile</span> <span class="n">sample_1_alignments</span><span class="o">.</span><span class="n">txt</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">fullgenefile</span> <span class="n">Aichi68</span><span class="o">-</span><span class="n">NP_amplicon</span><span class="o">.</span><span class="n">fasta</span>
+<span class="n">generange</span> <span class="mi">62</span> <span class="mi">1555</span>
+<span class="n">upcase</span> <span class="n">test</span>
+<span class="n">r1exclude</span> <span class="kc">None</span>
+<span class="n">r2exclude</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">48</span> <span class="mi">49</span>
+<span class="n">outfileprefix</span> <span class="n">example_run</span>
+<span class="n">samplename</span> <span class="n">example</span> <span class="n">run</span>
 </pre></div>
 </div>
 </div>
@@ -248,9 +248,6 @@ overall graphical summary of the results of the alignment parsing.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -272,13 +269,13 @@ overall graphical summary of the results of the alignment parsing.</p>
         <li class="right" >
           <a href="mapmuts_alignmentsummaryplot.html" title="mapmuts_alignmentsummaryplot.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

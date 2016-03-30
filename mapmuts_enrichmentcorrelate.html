@@ -8,7 +8,7 @@
     
     <title>mapmuts_enrichmentcorrelate.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_enrichmentgeomeans.py" href="mapmuts_enrichmentgeomeans.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_inferenrichment.html" title="mapmuts_inferenrichment.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,10 +57,10 @@
             
   <div class="section" id="mapmuts-enrichmentcorrelate-py">
 <span id="id1"></span><h1>mapmuts_enrichmentcorrelate.py<a class="headerlink" href="#mapmuts-enrichmentcorrelate-py" title="Permalink to this headline">¶</a></h1>
-<p>This is an analysis script for the output produced by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a>.
+<p>This is an analysis script for the output produced by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a>.
 This script requires <a class="reference external" href="http://matplotlib.org/">matplotlib</a> to make the plots. It will raise an error if <a class="reference external" href="http://matplotlib.org/">matplotlib</a> is not available. This script also requires <a class="reference external" href="http://www.scipy.org/">scipy</a> in order to calculate correlation coefficients. However, you can still use the script if <a class="reference external" href="http://www.scipy.org/">scipy</a> is unavailable &#8211; you just won&#8217;t get any correlation coefficients.</p>
-<p>The script takes as input the enrichment ratios in the <em>enrichmentratios</em> file(s) produced by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a> and generates some useful correlation plots. All plots are on logarithmic scales since the enrichment scores are themselves ratios which naturally correspond to log scales.</p>
-<p>The <em>enrichmentratios</em> files created by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a> contain the following data for each mutation:</p>
+<p>The script takes as input the enrichment ratios in the <em>enrichmentratios</em> file(s) produced by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a> and generates some useful correlation plots. All plots are on logarithmic scales since the enrichment scores are themselves ratios which naturally correspond to log scales.</p>
+<p>The <em>enrichmentratios</em> files created by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a> contain the following data for each mutation:</p>
 <blockquote>
 <div><ul class="simple">
 <li>The posterior mean enrichment ratio <em>phi</em>, along with the upper and lower limits of its 95% highest posterior density. This will always be a number &gt; 0.</li>
@@ -77,8 +77,8 @@ This script requires <a class="reference external" href="http://matplotlib.org/"
 </div></blockquote>
 <div class="section" id="running-the-script">
 <h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
-<p>To run this script, simply create an input file with the format described below. If you name your input file <tt class="docutils literal"><span class="pre">enrichmentcorrelate_infile.txt</span></tt>, then run the command:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_enrichmentcorrelate.py enrichmentcorrelate_infile.txt
+<p>To run this script, simply create an input file with the format described below. If you name your input file <code class="docutils literal"><span class="pre">enrichmentcorrelate_infile.txt</span></code>, then run the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_enrichmentcorrelate</span><span class="o">.</span><span class="n">py</span> <span class="n">enrichmentcorrelate_infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
@@ -88,22 +88,22 @@ This script requires <a class="reference external" href="http://matplotlib.org/"
 <p>Lines beginning with # and empty lines are ignored.</p>
 <p>Keys for the input file:</p>
 <ul class="simple">
-<li><em>enrichmentratios</em> : A listing of the enrichment ratio files generated as <tt class="docutils literal"><span class="pre">*_enrichmentratios.txt</span></tt> by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a>. You must list at least one file here, but can list more than one if you also want to look at correlations between pairs of samples. The files must exist, and the filenames cannot contain any spaces. To list multiple files, just separate them by spaces.</li>
+<li><em>enrichmentratios</em> : A listing of the enrichment ratio files generated as <code class="docutils literal"><span class="pre">*_enrichmentratios.txt</span></code> by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a>. You must list at least one file here, but can list more than one if you also want to look at correlations between pairs of samples. The files must exist, and the filenames cannot contain any spaces. To list multiple files, just separate them by spaces.</li>
 <li><em>samplenames</em> : A listing of the sample names for each of the files specified by <em>enrichmentratios</em>. These are the names that are given to the samples in plots that compare across multiple samples. You must specify the same number of sample names here as you specify files under <em>enrichmentratios</em>, so there is one name for each corresponding sample. The sample names can NOT contain spaces, and different sample names are separated by spaces. However, if you include an underscore in the sample name then it is converted to a space in the actual plots.</li>
 <li><em>mutdnacounts_cutoff</em> : One or more integers &gt;= 0. Specifies the correlation plots should include only mutations for which <em>mutdnacounts</em> is &gt;= the number specified here. Setting <em>mutdnacounts_cutoff</em> to zero means that all mutations will appear on the correlation plots. If you specify multiple numbers, then plots are created for each cutoff.</li>
-<li><em>plotdir</em> specifies the directory where we place the plots. If you want them to be in the current directory, just make this <tt class="docutils literal"><span class="pre">./</span></tt>. Otherwise specify some other directory, such as <tt class="docutils literal"><span class="pre">enrichmentcorrelations/</span></tt>. Directories specified by this prefix must already exist &#8211; nonexistent directories are NOT created, and an error will be raised if you specify a directory that does not already exist.</li>
+<li><em>plotdir</em> specifies the directory where we place the plots. If you want them to be in the current directory, just make this <code class="docutils literal"><span class="pre">./</span></code>. Otherwise specify some other directory, such as <code class="docutils literal"><span class="pre">enrichmentcorrelations/</span></code>. Directories specified by this prefix must already exist &#8211; nonexistent directories are NOT created, and an error will be raised if you specify a directory that does not already exist.</li>
 <li><em>limitadjustment</em> specifies how we handle <em>directratio</em> values that are &lt;= 0 or equal to <em>inf</em> (infinity). Because our plots are on a log scale, they can only handle finite ratios that are &gt; 0. The enrichment values <em>phi</em> should satisfy this, but <em>directratio</em> will not always do so (for example if the numerator or denominator in the ratio is zero). In order to plot these values and calculate correlations, any values &lt;= 0 are set to be equal to the minimum <em>directratio</em> that is &gt; 0 divided by <em>limitadjustment</em>. Similarly, any value of <em>directratio</em> equal to <em>inf</em> is set to be equal to the maximum finite value of <em>directratio</em> times <em>limitadjustment</em>. For this to work, <em>limitadjustment</em> itself must be a number &gt;= 1. If you set <em>limitadjustment</em> to one, then out of bounds values will be set to the maximum or minimum of the in-bounds values. This is somewhat sensible, but it may be preferable to set <em>limitadjustment</em> to a value such as 2 or 10 so that the out-of-bounds values are noticeably separated from those with actual plottable values of <em>directratio</em>.</li>
 </ul>
 </div>
 <div class="section" id="example-input-file">
 <h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_enrichmentcorrelate.py
-enrichmentratios WT-1/WT-1_enrichmentratios.txt WT-2/WT-2_enrichmentratios.txt N334H-1/N334H-1_enrichmentratios.txt N334H-2/N334H-2_enrichmentratios.txt
-samplenames WT-1 WT-2 N334H-1 N334H-2
-mutdnacounts_cutoff 0 100
-plotdir enrichmentcorrelations/
-limitadjustment 2
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Input file for mapmuts_enrichmentcorrelate.py</span>
+<span class="n">enrichmentratios</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_enrichmentratios</span><span class="o">.</span><span class="n">txt</span> <span class="n">WT</span><span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">2</span><span class="n">_enrichmentratios</span><span class="o">.</span><span class="n">txt</span> <span class="n">N334H</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">N334H</span><span class="o">-</span><span class="mi">1</span><span class="n">_enrichmentratios</span><span class="o">.</span><span class="n">txt</span> <span class="n">N334H</span><span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="n">N334H</span><span class="o">-</span><span class="mi">2</span><span class="n">_enrichmentratios</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">samplenames</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span> <span class="n">WT</span><span class="o">-</span><span class="mi">2</span> <span class="n">N334H</span><span class="o">-</span><span class="mi">1</span> <span class="n">N334H</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">mutdnacounts_cutoff</span> <span class="mi">0</span> <span class="mi">100</span>
+<span class="n">plotdir</span> <span class="n">enrichmentcorrelations</span><span class="o">/</span>
+<span class="n">limitadjustment</span> <span class="mi">2</span>
 </pre></div>
 </div>
 </div>
@@ -113,13 +113,13 @@ limitadjustment 2
 <p><strong>IMPORTANT NOTE:</strong> The Pearson correlation coefficients are computed on the data as it is plotted. So these are correlations for the log-transformed data with any out-of-bounds points adjusted to in-range points as specified by <em>limitadjustment</em>.</p>
 <p>Two types of plots are generated: plots comparing the inferred enrichment ratios <em>phi</em> with the direct estimates <em>directratio</em>, and plots comparing both <em>phi</em> and <em>directratio</em> across multiple samples (if more than one sample is specified). Both types of plots are in PDF format generated with <a class="reference external" href="http://matplotlib.org/">matplotlib</a>, and they include Pearson correlation coefficients if <a class="reference external" href="http://www.scipy.org/">scipy</a> is available. Specifically:</p>
 <ul class="simple">
-<li>For each sample and each <em>mutdnacounts_cutoff</em>, a plot of <em>phi</em> versus <em>directratio</em> is made. These plots only include mutations with values of <em>mutdnacounts</em> that are &gt;= <em>mutdnacounts_cutoff</em>. The plots are named as <tt class="docutils literal"><span class="pre">*/*_inferred_vs_direct_cutoff*.pdf</span></tt> where the first * is filled by <em>plotdir</em>, the second * by the sample name, and the third by the value of <em>mutdna_cutoff</em>. For example, for the input file above, a plot would be <tt class="docutils literal"><span class="pre">enrichmentcorrelations/WT-11_inferred_vs_direct_cutoff0.pdf</span></tt>. Here is an example of such a plot:</li>
+<li>For each sample and each <em>mutdnacounts_cutoff</em>, a plot of <em>phi</em> versus <em>directratio</em> is made. These plots only include mutations with values of <em>mutdnacounts</em> that are &gt;= <em>mutdnacounts_cutoff</em>. The plots are named as <code class="docutils literal"><span class="pre">*/*_inferred_vs_direct_cutoff*.pdf</span></code> where the first * is filled by <em>plotdir</em>, the second * by the sample name, and the third by the value of <em>mutdna_cutoff</em>. For example, for the input file above, a plot would be <code class="docutils literal"><span class="pre">enrichmentcorrelations/WT-11_inferred_vs_direct_cutoff0.pdf</span></code>. Here is an example of such a plot:</li>
 </ul>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="_images/WT-1_inferred_vs_direct_cutoff0.jpg"><img alt="WT-1_inferred_vs_direct_cutoff0.jpg" src="_images/WT-1_inferred_vs_direct_cutoff0.jpg" style="width: 40%;" /></a>
 </div>
 <ul class="simple">
-<li>If multiple samples are specified by <em>enrichmentratios</em> and <em>samplenames</em>, then plots are created that correlate the inferred enrichment ratios <em>phi</em> and the direct ratios <em>directratio</em> between all pairs of plots, making a separate plot for each cutoff specified by <em>mutdnacounts_cutoff</em>. The correlation plots include only those mutations for which both samples have values specified, and for which both samples have a number of counts that satisfies <em>mutdnacounts_cutoff</em>. The plots are named as <tt class="docutils literal"><span class="pre">*/*_vs_*_inferred_cutoff*.pdf</span></tt> and <tt class="docutils literal"><span class="pre">*/*_vs_*_direct_cutoff*.pdf</span></tt> where the first * is filled by <em>plotdir</em>, the second * by the first sample in a pair, the third * by the second sample in a pair, and the last * by the value of <em>mutdna_cutoff</em>. So for the above example input file, the names would be <tt class="docutils literal"><span class="pre">enrichmentcorrelations/WT-1_vs_WT-2_inferred_cutoff0.pdf</span></tt>, etc. Here is an example of such a plot:</li>
+<li>If multiple samples are specified by <em>enrichmentratios</em> and <em>samplenames</em>, then plots are created that correlate the inferred enrichment ratios <em>phi</em> and the direct ratios <em>directratio</em> between all pairs of plots, making a separate plot for each cutoff specified by <em>mutdnacounts_cutoff</em>. The correlation plots include only those mutations for which both samples have values specified, and for which both samples have a number of counts that satisfies <em>mutdnacounts_cutoff</em>. The plots are named as <code class="docutils literal"><span class="pre">*/*_vs_*_inferred_cutoff*.pdf</span></code> and <code class="docutils literal"><span class="pre">*/*_vs_*_direct_cutoff*.pdf</span></code> where the first * is filled by <em>plotdir</em>, the second * by the first sample in a pair, the third * by the second sample in a pair, and the last * by the value of <em>mutdna_cutoff</em>. So for the above example input file, the names would be <code class="docutils literal"><span class="pre">enrichmentcorrelations/WT-1_vs_WT-2_inferred_cutoff0.pdf</span></code>, etc. Here is an example of such a plot:</li>
 </ul>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="_images/WT-1_vs_WT-2_inferred_cutoff0.jpg"><img alt="WT-1_vs_WT-2_inferred_cutoff0.jpg" src="_images/WT-1_vs_WT-2_inferred_cutoff0.jpg" style="width: 40%;" /></a>
@@ -165,9 +165,6 @@ limitadjustment 2
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -189,13 +186,13 @@ limitadjustment 2
         <li class="right" >
           <a href="mapmuts_inferenrichment.html" title="mapmuts_inferenrichment.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

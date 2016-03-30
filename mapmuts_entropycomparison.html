@@ -8,7 +8,7 @@
     
     <title>mapmuts_entropycomparison.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_aafracsplots.py" href="mapmuts_aafracsplots.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_siteprofileplots.html" title="mapmuts_siteprofileplots.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -69,8 +69,8 @@
 </div>
 <div class="section" id="running-the-script">
 <h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
-<p>To run this script, simply create an input file with the format described below. If you name your input file <tt class="docutils literal"><span class="pre">infile.txt</span></tt>, then run the command:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_entropycomparison.py infile.txt
+<p>To run this script, simply create an input file with the format described below. If you name your input file <code class="docutils literal"><span class="pre">infile.txt</span></code>, then run the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_entropycomparison</span><span class="o">.</span><span class="n">py</span> <span class="n">infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
@@ -80,12 +80,12 @@
 <p>Lines beginning with # and empty lines are ignored.</p>
 <p>Keys for the input file:</p>
 <ul>
-<li><p class="first"><em>aapreferences</em> : The name of the file giving the site-specific amino-acid preferences <span class="math">\(\pi_{r,a}\)</span>. Typically this would be the <tt class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></tt> file created by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>. These site-specific amino-acid preferences are used to calculate the site entropies.</p>
+<li><p class="first"><em>aapreferences</em> : The name of the file giving the site-specific amino-acid preferences <span class="math">\(\pi_{r,a}\)</span>. Typically this would be the <code class="docutils literal"><span class="pre">*_equilibriumpreferences.txt</span></code> file created by <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><span class="std std-ref">mapmuts_inferpreferences.py</span></a>. These site-specific amino-acid preferences are used to calculate the site entropies.</p>
 <p>The file has a header, and then for each site <em>r</em> there is a line giving the site entropy <span class="math">\(h_r\)</span> and all of the preferences <span class="math">\(\pi_{r,a}\)</span>. It is acceptable for a preference for a stop codon (denoted by a * character) to be either present or absent &#8211; but all other 20 amino acids must always be present. Here is an example of a few lines of such a file:</p>
-<div class="highlight-python"><div class="highlight"><pre>#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*
-1   M   0.885694    0.000680047 0.00185968  8.48048e-06 0.00128217  0.0289946   0.000654589 0.0212144   0.0205306   0.0021597   0.00056726  0.876551    0.00130602  0.000789781 0.00144568  0.000414457 0.00071164  0.00126055  0.00167084  0.0352283   0.00176486  0.000905383
-2   A   1.1671  0.709575    0.00177747  3.79503e-05 0.00298854  0.00390524  0.00131246  0.00379599  0.000913006 0.00121497  0.000535209 0.00276335  0.00140061  0.000694694 0.0032134   0.00464972  0.000463924 0.000908368 0.254241    0.00335749  0.00137437  0.000876985
-3   N   3.2593  0.129992    0.000540239 4.2514e-06  0.00171887  0.0212062   0.0006086   0.102743    0.0431489   0.00524637  0.0771062   0.021714    0.0641921   0.00338082  0.0149898   0.0106522   0.13886 0.0247841   0.00607319  0.0500692   0.282389    0.000581555
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*</span>
+<span class="mi">1</span>   <span class="n">M</span>   <span class="mf">0.885694</span>    <span class="mf">0.000680047</span> <span class="mf">0.00185968</span>  <span class="mf">8.48048e-06</span> <span class="mf">0.00128217</span>  <span class="mf">0.0289946</span>   <span class="mf">0.000654589</span> <span class="mf">0.0212144</span>   <span class="mf">0.0205306</span>   <span class="mf">0.0021597</span>   <span class="mf">0.00056726</span>  <span class="mf">0.876551</span>    <span class="mf">0.00130602</span>  <span class="mf">0.000789781</span> <span class="mf">0.00144568</span>  <span class="mf">0.000414457</span> <span class="mf">0.00071164</span>  <span class="mf">0.00126055</span>  <span class="mf">0.00167084</span>  <span class="mf">0.0352283</span>   <span class="mf">0.00176486</span>  <span class="mf">0.000905383</span>
+<span class="mi">2</span>   <span class="n">A</span>   <span class="mf">1.1671</span>  <span class="mf">0.709575</span>    <span class="mf">0.00177747</span>  <span class="mf">3.79503e-05</span> <span class="mf">0.00298854</span>  <span class="mf">0.00390524</span>  <span class="mf">0.00131246</span>  <span class="mf">0.00379599</span>  <span class="mf">0.000913006</span> <span class="mf">0.00121497</span>  <span class="mf">0.000535209</span> <span class="mf">0.00276335</span>  <span class="mf">0.00140061</span>  <span class="mf">0.000694694</span> <span class="mf">0.0032134</span>   <span class="mf">0.00464972</span>  <span class="mf">0.000463924</span> <span class="mf">0.000908368</span> <span class="mf">0.254241</span>    <span class="mf">0.00335749</span>  <span class="mf">0.00137437</span>  <span class="mf">0.000876985</span>
+<span class="mi">3</span>   <span class="n">N</span>   <span class="mf">3.2593</span>  <span class="mf">0.129992</span>    <span class="mf">0.000540239</span> <span class="mf">4.2514e-06</span>  <span class="mf">0.00171887</span>  <span class="mf">0.0212062</span>   <span class="mf">0.0006086</span>   <span class="mf">0.102743</span>    <span class="mf">0.0431489</span>   <span class="mf">0.00524637</span>  <span class="mf">0.0771062</span>   <span class="mf">0.021714</span>    <span class="mf">0.0641921</span>   <span class="mf">0.00338082</span>  <span class="mf">0.0149898</span>   <span class="mf">0.0106522</span>   <span class="mf">0.13886</span> <span class="mf">0.0247841</span>   <span class="mf">0.00607319</span>  <span class="mf">0.0500692</span>   <span class="mf">0.282389</span>    <span class="mf">0.000581555</span>
 </pre></div>
 </div>
 </li>
@@ -96,18 +96,18 @@ You can then use the <a class="reference external" href="http://swift.cmbi.ru.nl
 </li>
 <li><p class="first"><em>dsspchain</em> should specify the chain in the PDB file (such as <em>A</em>) that we want to use. If there is only one chain, you can set this option to <em>None</em>.</p>
 </li>
-<li><p class="first"><em>plotfile</em> is the name of the output plot that is created. It is a PDF, and so should end in the extension <tt class="docutils literal"><span class="pre">*.pdf</span></tt>.</p>
+<li><p class="first"><em>plotfile</em> is the name of the output plot that is created. It is a PDF, and so should end in the extension <code class="docutils literal"><span class="pre">*.pdf</span></code>.</p>
 </li>
 <li><p class="first"><em>alpha</em> specifies the alpha value (transparency) for the plot. A value of <em>1.0</em> means no transparency, and smaller values (such as <em>0.2</em> mean more transparency). If you do not include this value, then <em>alpha</em> is set to 1.0 by default.</p>
 </li>
 <li><p class="first"><em>siterange</em> specifies the range of residues that are included in the analysis. The value should be two numbers giving the first and the last residues to include in the plots. You would use this option if you want to only consider a certain range of residues. If you want to include all of the residues, just set to this to be the string <em>all</em>.</p>
 </li>
 <li><p class="first"><em>selectedsites</em> is the name of a file that lists the sites that are the selected subset that we are comparing to all other sites. This should be a text file. Lines beginning with # or empty lines are ignored. All other lines should have an integer as their first number, and this is read as the site number. Any other entries on the line are ignored. So in this example file:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># example selectesites file</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># example selectesites file</span>
 <span class="mi">1</span>
 <span class="mi">2</span>
-<span class="c"># don&#39;t include 3</span>
-<span class="mi">4</span> <span class="c"># we do include this residue</span>
+<span class="c1"># don&#39;t include 3</span>
+<span class="mi">4</span> <span class="c1"># we do include this residue</span>
 </pre></div>
 </div>
 <p>specifies that we include residues 1, 2, and 4 as selected sites.</p>
@@ -119,15 +119,15 @@ You can then use the <a class="reference external" href="http://swift.cmbi.ru.nl
 <div class="section" id="example-input-file">
 <h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># input file for mapmuts_entropycomparison.py
-dsspfile ./PDB_structure/1RVX_trimer_renumbered.dssp
-dsspchain A
-aapreferences combined_amino_acid_preferences.txt
-plotfile corr.pdf
-linearmodelfile linearmodelresults.txt
-alpha 1.0
-siterange 2 365
-selectedsites Caton_H1_HA_antigenic_sites.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># input file for mapmuts_entropycomparison.py</span>
+<span class="n">dsspfile</span> <span class="o">./</span><span class="n">PDB_structure</span><span class="o">/</span><span class="mi">1</span><span class="n">RVX_trimer_renumbered</span><span class="o">.</span><span class="n">dssp</span>
+<span class="n">dsspchain</span> <span class="n">A</span>
+<span class="n">aapreferences</span> <span class="n">combined_amino_acid_preferences</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">plotfile</span> <span class="n">corr</span><span class="o">.</span><span class="n">pdf</span>
+<span class="n">linearmodelfile</span> <span class="n">linearmodelresults</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">alpha</span> <span class="mf">1.0</span>
+<span class="n">siterange</span> <span class="mi">2</span> <span class="mi">365</span>
+<span class="n">selectedsites</span> <span class="n">Caton_H1_HA_antigenic_sites</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
@@ -135,12 +135,12 @@ selectedsites Caton_H1_HA_antigenic_sites.txt
 <h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
 <p>The analysis considers all sites that are specified in both <em>aapreferences</em> and in <em>dsspfile</em> and are also in site range.</p>
 <p>There are two output. First, the PDF file specified by <em>plotfile</em> is created. All of the non-selected sites are shown in blue circles, and the selected sites are shown in red triangles. An example plot is shown below:</p>
-<div class="figure align-center">
+<div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="_images/example_entropycomparison_plot.jpg"><img alt="example_entropycomparison_plot.jpg" src="_images/example_entropycomparison_plot.jpg" style="width: 40%;" /></a>
-<p class="caption">Example of the <em>plotfile</em> plot created by this script.</p>
+<p class="caption"><span class="caption-text">Example of the <em>plotfile</em> plot created by this script.</span></p>
 </div>
-<p>The second output is the result of an <a class="reference external" href="http://rpy.sourceforge.net/rpy2.html">R</a> linear model analysis (<a class="reference external" href="http://rpy.sourceforge.net/rpy2.html">R</a> function <tt class="docutils literal"><span class="pre">lm</span></tt>) that looks for the correlations of RSA and presence in <em>selectedsites</em> with site entropy. Essentially, this analysis regresses site entropy against both RSA and the presence in <em>selectedsites</em> (coded as 0 if not in <em>selectedsites</em>, and 1 if in <em>selectedsites</em>). The results of the analysis are written to <em>linearmodelfile</em>. Below is example output. For instance, this example shows that RSA is positively correlated with entropy, and that being a selected site is also positively correlated with diversity:</p>
-<div class="highlight-python"><div class="highlight"><pre>Residuals:
+<p>The second output is the result of an <a class="reference external" href="http://rpy.sourceforge.net/rpy2.html">R</a> linear model analysis (<a class="reference external" href="http://rpy.sourceforge.net/rpy2.html">R</a> function <code class="docutils literal"><span class="pre">lm</span></code>) that looks for the correlations of RSA and presence in <em>selectedsites</em> with site entropy. Essentially, this analysis regresses site entropy against both RSA and the presence in <em>selectedsites</em> (coded as 0 if not in <em>selectedsites</em>, and 1 if in <em>selectedsites</em>). The results of the analysis are written to <em>linearmodelfile</em>. Below is example output. For instance, this example shows that RSA is positively correlated with entropy, and that being a selected site is also positively correlated with diversity:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Residuals:
      Min       1Q   Median       3Q      Max
 -1.45241 -0.27611 -0.01408  0.34896  0.96557
 
@@ -199,9 +199,6 @@ F-statistic: 81.65 on 2 and 341 DF,  p-value: &lt; 2.2e-16
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -223,13 +220,13 @@ F-statistic: 81.65 on 2 and 341 DF,  p-value: &lt; 2.2e-16
         <li class="right" >
           <a href="mapmuts_siteprofileplots.html" title="mapmuts_siteprofileplots.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

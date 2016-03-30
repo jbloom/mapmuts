@@ -8,7 +8,7 @@
     
     <title>mapmuts_inferenrichment.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_enrichmentcorrelate.py" href="mapmuts_enrichmentcorrelate.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_aafracsplots.html" title="mapmuts_aafracsplots.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,7 +59,7 @@
 <span id="id1"></span><h1>mapmuts_inferenrichment.py<a class="headerlink" href="#mapmuts-inferenrichment-py" title="Permalink to this headline">¶</a></h1>
 <p>This script is designed to infer the enrichment or depletion of given amino-acid mutations in a selected versus unselected library, accounting for errors afflicting both. It does this using a Bayesian approach that uses MCMC (Markov chain Monte Carlo).</p>
 <p>Because this script implement MCMC algorithms, it takes a fairly long time to run &#8211; perhaps as long as several days depending on your computer and the specific problem.</p>
-<p>This script uses the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>, and so is designed to be run after you have completed the analysis with that script.</p>
+<p>This script uses the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><span class="std std-ref">mapmuts_parsecounts.py</span></a>, and so is designed to be run after you have completed the analysis with that script.</p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
 <p>This script requires <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> for the Bayesian inference, which in turn requires <a class="reference external" href="http://www.numpy.org/">numpy</a>. To get the plots, you also need <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. The MCMC is much more efficient if <a class="reference external" href="http://www.scipy.org/">scipy</a> is available, so installation of <a class="reference external" href="http://www.scipy.org/">scipy</a> is strongly recommended.</p>
@@ -83,7 +83,7 @@
 </div>
 <div class="section" id="inference-algorithm">
 <h2>Inference algorithm<a class="headerlink" href="#inference-algorithm" title="Permalink to this headline">¶</a></h2>
-<p>A full description of the inference algorithm, definition of likelihood and prior functions, etc, can be found in the following PDF file <a class="reference download internal" href="_downloads/enrichment_inference_algorithm.pdf"><tt class="xref download docutils literal"><span class="pre">enrichment_inference_algorithm.pdf</span></tt></a></p>
+<p>A full description of the inference algorithm, definition of likelihood and prior functions, etc, can be found in the following PDF file <a class="reference download internal" href="_downloads/enrichment_inference_algorithm.pdf" download=""><code class="xref download docutils literal"><span class="pre">enrichment_inference_algorithm.pdf</span></code></a></p>
 </div>
 <div class="section" id="implementation-of-the-mcmc">
 <h2>Implementation of the MCMC<a class="headerlink" href="#implementation-of-the-mcmc" title="Permalink to this headline">¶</a></h2>
@@ -92,10 +92,10 @@
 <div class="section" id="running-the-script">
 <h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
 <p>To run this script from the prompt, first create a text infile of the
-format described below. Then simply type <a class="reference internal" href="#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a>
-followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+format described below. Then simply type <a class="reference internal" href="#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a>
+followed by the infile name. For example, if the name is <code class="docutils literal"><span class="pre">infile.txt</span></code>,
 type:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_inferenrichment.py infile.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_inferenrichment</span><span class="o">.</span><span class="n">py</span> <span class="n">infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
@@ -105,7 +105,7 @@ type:</p>
 <p>Lines beginning with # and empty lines are ignored.</p>
 <p>Keys for the input file:</p>
 <ul>
-<li><p class="first"><em>DNA_files</em> : The input data for this script are the <em>_codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. For each library being used for the inference (and you can combine data from multiple libraries), this key should be followed by a string giving the path to the <em>_codoncounts.txt</em> file for the <em>DNA</em> sample. The number of files listed here must be the same as the number listed for <em>RNA_files</em>, <em>mutDNA_files</em>, and <em>mutvirus_files</em> as all four files are needed for each library &#8211; they should also be listed in the same order (i.e. library 1, library 2, etc). Only definitively called codons (both reads agree, upper case in the <em>_codoncounts.txt</em> file) are used in the counts.</p>
+<li><p class="first"><em>DNA_files</em> : The input data for this script are the <em>_codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><span class="std std-ref">mapmuts_parsecounts.py</span></a>. For each library being used for the inference (and you can combine data from multiple libraries), this key should be followed by a string giving the path to the <em>_codoncounts.txt</em> file for the <em>DNA</em> sample. The number of files listed here must be the same as the number listed for <em>RNA_files</em>, <em>mutDNA_files</em>, and <em>mutvirus_files</em> as all four files are needed for each library &#8211; they should also be listed in the same order (i.e. library 1, library 2, etc). Only definitively called codons (both reads agree, upper case in the <em>_codoncounts.txt</em> file) are used in the counts.</p>
 </li>
 <li><p class="first"><em>RNA_files</em> : like <em>DNA_files</em> but for the <em>RNA</em> samples.</p>
 </li>
@@ -114,7 +114,7 @@ type:</p>
 <li><p class="first"><em>mutvirus_files</em> : like <em>DNA_files</em> but for the <em>mutvirus</em> samples.</p>
 </li>
 <li><p class="first"><em>excludesite_NNN</em> : This is an optional key that does not have to appear at all. You would use this key if you want to exclude a particular site from just one of multiple libraries specified by <em>DNA_files</em>, <em>RNA_files</em>, <em>mutDNA_files</em>, and <em>mutvirus_files</em>. For instance, imagine that those keys specify four files each. Imagine that the first two and last two files differ in identity at residue 334, so that only two of the libraries (say the first two) would be used for the inference at this site. You would then set:</p>
-<div class="highlight-python"><div class="highlight"><pre>excludesite_334 use use exclude exclude
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">excludesite_334</span> <span class="n">use</span> <span class="n">use</span> <span class="n">exclude</span> <span class="n">exclude</span>
 </pre></div>
 </div>
 <p>In this usage, the key <em>excludesite_</em> has a suffix giving a site number. There then should be a number of entries equal to the number of files specified for <em>DNA_files</em>, etc. In order, put <em>use</em> if that file is used for that site and <em>exclude</em> if that file is excluded for that site. Note, however, that at least one file must be <em>use</em> for each site. If you don&#8217;t want to exclude any sites from particular libraries, then just don&#8217;t include this key. If you want to exclude more than one residue, then have multiple entries of the key.</p>
@@ -154,26 +154,26 @@ type:</p>
 <div class="section" id="example-input-file">
 <h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_inferenrichment.py
-DNA_files DNA/WT-1_DNA_codoncounts.txt
-RNA_files RNA/WT-1_RNA_codoncounts.txt
-mutDNA_files mutDNA/WT-1_mutDNA_codoncounts.txt
-mutvirus_files mutvirus-p1/WT-1_mutvirus-p1_codoncounts.txt
-alpha 4.0
-phi_prior 0.1
-minbeta 1e-8
-seed 1
-nruns 3
-nsteps 10000
-burn 2000
-thin 10
-stepincrease 5
-convergence 1.05
-convergencewarning True
-MCMC_traces None
-enrichmentratio_plots enrichmentratio_plots/
-equilibriumfreqs_plots equilibriumfreqs_plots/
-outfileprefix WT-1
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Input file for mapmuts_inferenrichment.py</span>
+<span class="n">DNA_files</span> <span class="n">DNA</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_DNA_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">RNA_files</span> <span class="n">RNA</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_RNA_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">mutDNA_files</span> <span class="n">mutDNA</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_mutDNA_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">mutvirus_files</span> <span class="n">mutvirus</span><span class="o">-</span><span class="n">p1</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_mutvirus</span><span class="o">-</span><span class="n">p1_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">alpha</span> <span class="mf">4.0</span>
+<span class="n">phi_prior</span> <span class="mf">0.1</span>
+<span class="n">minbeta</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">seed</span> <span class="mi">1</span>
+<span class="n">nruns</span> <span class="mi">3</span>
+<span class="n">nsteps</span> <span class="mi">10000</span>
+<span class="n">burn</span> <span class="mi">2000</span>
+<span class="n">thin</span> <span class="mi">10</span>
+<span class="n">stepincrease</span> <span class="mi">5</span>
+<span class="n">convergence</span> <span class="mf">1.05</span>
+<span class="n">convergencewarning</span> <span class="kc">True</span>
+<span class="n">MCMC_traces</span> <span class="kc">None</span>
+<span class="n">enrichmentratio_plots</span> <span class="n">enrichmentratio_plots</span><span class="o">/</span>
+<span class="n">equilibriumfreqs_plots</span> <span class="n">equilibriumfreqs_plots</span><span class="o">/</span>
+<span class="n">outfileprefix</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -195,26 +195,26 @@ outfileprefix WT-1
 </ul>
 </div></blockquote>
 <p>Here is an example of a few lines:</p>
-<div class="highlight-python"><div class="highlight"><pre>#MUTATION PHI PHI_HPD95_LOW PHI_HPD95_HIGH DIRECT_RATIO MUTDNA_COUNTS
-G185V   0.026264    0.006302    0.050351    0.007457    317
-G185Y   0.033638    0.005914    0.068137    0.000000    117
-V186A   0.078486    0.038127    0.128140    0.087605    288
-V186C   0.127639    0.059663    0.201455    0.109420    110
-V186E   0.417777    0.289428    0.553911    0.450757    112
-V186D   0.062760    0.012822    0.119158    -0.070268   132
-V186G   0.024509    0.007273    0.044088    0.037411    413
-V186F   0.066532    0.010803    0.132563    -0.138370   87
-V186I   2.922233    2.530891    3.313716    3.699339    287
-V186H   0.057314    0.015062    0.101838    0.034704    125
-V186K   0.024061    0.004826    0.048173    0.000000    174
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#MUTATION PHI PHI_HPD95_LOW PHI_HPD95_HIGH DIRECT_RATIO MUTDNA_COUNTS</span>
+<span class="n">G185V</span>   <span class="mf">0.026264</span>    <span class="mf">0.006302</span>    <span class="mf">0.050351</span>    <span class="mf">0.007457</span>    <span class="mi">317</span>
+<span class="n">G185Y</span>   <span class="mf">0.033638</span>    <span class="mf">0.005914</span>    <span class="mf">0.068137</span>    <span class="mf">0.000000</span>    <span class="mi">117</span>
+<span class="n">V186A</span>   <span class="mf">0.078486</span>    <span class="mf">0.038127</span>    <span class="mf">0.128140</span>    <span class="mf">0.087605</span>    <span class="mi">288</span>
+<span class="n">V186C</span>   <span class="mf">0.127639</span>    <span class="mf">0.059663</span>    <span class="mf">0.201455</span>    <span class="mf">0.109420</span>    <span class="mi">110</span>
+<span class="n">V186E</span>   <span class="mf">0.417777</span>    <span class="mf">0.289428</span>    <span class="mf">0.553911</span>    <span class="mf">0.450757</span>    <span class="mi">112</span>
+<span class="n">V186D</span>   <span class="mf">0.062760</span>    <span class="mf">0.012822</span>    <span class="mf">0.119158</span>    <span class="o">-</span><span class="mf">0.070268</span>   <span class="mi">132</span>
+<span class="n">V186G</span>   <span class="mf">0.024509</span>    <span class="mf">0.007273</span>    <span class="mf">0.044088</span>    <span class="mf">0.037411</span>    <span class="mi">413</span>
+<span class="n">V186F</span>   <span class="mf">0.066532</span>    <span class="mf">0.010803</span>    <span class="mf">0.132563</span>    <span class="o">-</span><span class="mf">0.138370</span>   <span class="mi">87</span>
+<span class="n">V186I</span>   <span class="mf">2.922233</span>    <span class="mf">2.530891</span>    <span class="mf">3.313716</span>    <span class="mf">3.699339</span>    <span class="mi">287</span>
+<span class="n">V186H</span>   <span class="mf">0.057314</span>    <span class="mf">0.015062</span>    <span class="mf">0.101838</span>    <span class="mf">0.034704</span>    <span class="mi">125</span>
+<span class="n">V186K</span>   <span class="mf">0.024061</span>    <span class="mf">0.004826</span>    <span class="mf">0.048173</span>    <span class="mf">0.000000</span>    <span class="mi">174</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first"><em>outfileprefix</em>_equilibriumfreqs.txt : a text file giving the equilibrium frequencies for each amino acid at each site. Stop codons are NOT included as possible identities for these frequencies. The equilibrium frequency <em>pi</em> for an amino acid is calculated from the posterior mean enrichment ratio <em>phi</em> as estimated by the MCMC. Essentially, this gives the probability that an amino acid would have some identity if all residues were present at relative frequencies specified by the enrichment ratios. We also calculate a site entropy <em>h</em> for each site as the entropy (log base 2, units of bits) for a hypothetical situation in which each amino acid is present at its equilibrium frequency. All of this information is written to this text file. The first column gives the residue number, the second column gives the wildtype amino acid, the third column gives the site entropy, and the remaining columns give the equilibrium frequencies for all of the amino acids in the order indicated by the header (which is alphabetical order). Here is an example of a few lines:</p>
-<div class="highlight-python"><div class="highlight"><pre>#SITE WT_AA SITE_ENTROPY PI_A PI_C PI_D PI_E PI_F PI_G PI_H PI_I PI_K PI_L PI_M PI_N PI_P PI_Q PI_R PI_S PI_T PI_V PI_W PI_Y
-1   M   3.952438    0.027276    0.057787    0.061477    0.0589700.058843    0.023888    0.050938    0.017797    0.062260    0.019259    0.216150    0.070343    0.029413    0.052597    0.018734    0.013009    0.025890    0.020677    0.058900    0.055793
-2   A   2.362402    0.537118    0.012475    0.013213    0.0258260.014365    0.008897    0.005926    0.009136    0.013902    0.003019    0.191576    0.010007    0.001631    0.007791    0.003013    0.004130    0.005614    0.099395    0.020214    0.012752
-3   S   2.745295    0.024799    0.002901    0.002167    0.0071370.311824    0.002504    0.022821    0.008849    0.004478    0.059771    0.015584    0.022394    0.005062    0.004390    0.006270    0.091925    0.014399    0.003761    0.048111    0.340854
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#SITE WT_AA SITE_ENTROPY PI_A PI_C PI_D PI_E PI_F PI_G PI_H PI_I PI_K PI_L PI_M PI_N PI_P PI_Q PI_R PI_S PI_T PI_V PI_W PI_Y</span>
+<span class="mi">1</span>   <span class="n">M</span>   <span class="mf">3.952438</span>    <span class="mf">0.027276</span>    <span class="mf">0.057787</span>    <span class="mf">0.061477</span>    <span class="mf">0.0589700</span><span class="o">.</span><span class="mi">058843</span>    <span class="mf">0.023888</span>    <span class="mf">0.050938</span>    <span class="mf">0.017797</span>    <span class="mf">0.062260</span>    <span class="mf">0.019259</span>    <span class="mf">0.216150</span>    <span class="mf">0.070343</span>    <span class="mf">0.029413</span>    <span class="mf">0.052597</span>    <span class="mf">0.018734</span>    <span class="mf">0.013009</span>    <span class="mf">0.025890</span>    <span class="mf">0.020677</span>    <span class="mf">0.058900</span>    <span class="mf">0.055793</span>
+<span class="mi">2</span>   <span class="n">A</span>   <span class="mf">2.362402</span>    <span class="mf">0.537118</span>    <span class="mf">0.012475</span>    <span class="mf">0.013213</span>    <span class="mf">0.0258260</span><span class="o">.</span><span class="mi">014365</span>    <span class="mf">0.008897</span>    <span class="mf">0.005926</span>    <span class="mf">0.009136</span>    <span class="mf">0.013902</span>    <span class="mf">0.003019</span>    <span class="mf">0.191576</span>    <span class="mf">0.010007</span>    <span class="mf">0.001631</span>    <span class="mf">0.007791</span>    <span class="mf">0.003013</span>    <span class="mf">0.004130</span>    <span class="mf">0.005614</span>    <span class="mf">0.099395</span>    <span class="mf">0.020214</span>    <span class="mf">0.012752</span>
+<span class="mi">3</span>   <span class="n">S</span>   <span class="mf">2.745295</span>    <span class="mf">0.024799</span>    <span class="mf">0.002901</span>    <span class="mf">0.002167</span>    <span class="mf">0.0071370</span><span class="o">.</span><span class="mi">311824</span>    <span class="mf">0.002504</span>    <span class="mf">0.022821</span>    <span class="mf">0.008849</span>    <span class="mf">0.004478</span>    <span class="mf">0.059771</span>    <span class="mf">0.015584</span>    <span class="mf">0.022394</span>    <span class="mf">0.005062</span>    <span class="mf">0.004390</span>    <span class="mf">0.006270</span>    <span class="mf">0.091925</span>    <span class="mf">0.014399</span>    <span class="mf">0.003761</span>    <span class="mf">0.048111</span>    <span class="mf">0.340854</span>
 </pre></div>
 </div>
 </li>
@@ -277,9 +277,6 @@ V186K   0.024061    0.004826    0.048173    0.000000    174
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -301,13 +298,13 @@ V186K   0.024061    0.004826    0.048173    0.000000    174
         <li class="right" >
           <a href="mapmuts_aafracsplots.html" title="mapmuts_aafracsplots.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

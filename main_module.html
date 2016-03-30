@@ -8,7 +8,7 @@
     
     <title>main Module &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Python modules" href="pythonapi.html" />
     <link rel="next" title="align Module" href="align_module.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_package.html" title="mapmuts Package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -55,359 +55,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-main">
-<span id="main-module"></span><h1><a class="reference internal" href="#module-main" title="main"><tt class="xref py py-mod docutils literal"><span class="pre">main</span></tt></a> Module<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
-<p>Module for performing main script functions for <cite>mapmuts</cite> package.</p>
-<p>This module contains higher-level functions that are designed to be
-called fairly directly by scripts to perform complete operations in the
-mapping of sequencing reads to genes.</p>
-<div class="section" id="list-of-functions">
-<h2>List of functions<a class="headerlink" href="#list-of-functions" title="Permalink to this headline">¶</a></h2>
-<p><cite>MakeAlignments</cite> : Takes input FASTQ files for paired reads
-and creates alignments of these reads to a target gene. Also creates
-output files summarizing the alignments and reads.</p>
-<p><cite>MakeAlignmentsPlots</cite> : creates plots summarizing output of
-MakeAlignments.</p>
-<p><cite>ParseNTCodonCounts</cite> : parses frequency of different nucleotide and codon
-variants from the <tt class="docutils literal"><span class="pre">*_alignments.txt.gz</span></tt> file built by <cite>MakeAlignments</cite>.</p>
-<p><cite>ParseNTCodonCountsPlots</cite> : creates plots summarizing the output of
-<cite>ParseNTCodonCounts</cite>.</p>
-</div>
-<div class="section" id="documentation-for-functions">
-<h2>Documentation for functions<a class="headerlink" href="#documentation-for-functions" title="Permalink to this headline">¶</a></h2>
-<p>Documentation for the individual functions is provided in their 
-definitions below.</p>
-<dl class="function">
-<dt id="main.MakeAlignments">
-<tt class="descclassname">main.</tt><tt class="descname">MakeAlignments</tt><big>(</big><em>r1files</em>, <em>r2files</em>, <em>gzipped</em>, <em>applyfilter</em>, <em>minq</em>, <em>fullgene</em>, <em>generange</em>, <em>a1</em>, <em>a2</em>, <em>maxn</em>, <em>minoverlap</em>, <em>maxrm</em>, <em>maxa1m</em>, <em>maxa2m</em>, <em>maxgenem</em>, <em>outfileprefix</em>, <em>upcase='test'</em>, <em>logevery=100000</em>, <em>log=None</em>, <em>write_unaligned=False</em><big>)</big><a class="headerlink" href="#main.MakeAlignments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Aligns overlapping paired-end reads to a gene.</p>
-<p>This function aligns overlapping paired-end sequencing reads to a
-gene sequence. It has been tested on the alignment of 50 nt
-paired-end Illumina reads to a roughly 1.5 kb gene, although it
-should work more generally. The result of running this function is a
-variety of output files containing the actual alignments and summary
-information about the alignment process.</p>
-<p>Some important notes:</p>
-<ul class="simple">
-<li>The alignments are not actually true alignments, but rather direct
-searches for substrings allowing some mismatches. This works
-efficiently for short Illumina reads (which tend not to have gap
-mutations) being aligned to relatively short genes (a few kb). It
-will become increasingly less computationally efficient for longer
-reads or gene, and is not a good option if the main mode of
-sequencing errors is insertions/deletions.</li>
-<li>N / n nucleotides do not count as mismatches, regardless of what they
-are aligned with. Instead, there is simply a limit on how many of
-these can occur in a read as specified by <cite>maxn</cite>.</li>
-<li>The alignments are case-sensitive. In general, you will want to
-guarantee that the sequences are all of the same case. See the 
-<cite>upcase</cite> option.</li>
-</ul>
-<p>This function has been tested on FASTQ files generated from the
-Illumina Casava 1.8 pipeline for paired-end reads. It should work
-more generally on FASTQ files, but that has not been tested.</p>
-<p>The general procedure is as follows:</p>
-<ol class="arabic simple">
-<li>Paired Illumina reads (R1 and R2 reads) are read from a FASTQ
-file. If the applyfilter option is True, any reads that fail the
-Illumina chastity filter are discarded. In addition, any reads
-that fail the Q-score cutoff specified by <cite>minq</cite> are discarded.</li>
-<li>The R1 and R2 reads are aligned to each other assuming that reads
-have the terminal adaptor sequences specified by <cite>a1</cite> and <cite>a2</cite>. The
-alignment must meet the standards specified by <cite>maxn</cite>, <cite>minoverlap</cite>,
-<cite>maxrm</cite>, <cite>maxa1m</cite>, and <cite>maxa2m</cite>. If the paired reads cannot be aligned
-to each other, they are discarded.</li>
-<li>The overlapped region of the R1 and R2 reads is aligned to the
-full template sequence given by <cite>fullgene</cite>. If the region cannot
-be aligned with &lt;= <cite>maxgenem</cite> mismatches, the reads are discarded.</li>
-<li>The portion of the overlap to the gene range of interest
-(specified by <em>generange</em>) is written to an output file, assuming
-that some of the overlap is to the gene range of interest.</li>
-<li>Other output files are generated with statistics from the
-alignment process.</li>
-</ol>
-<p>CALLING PARAMETERS:</p>
-<p><cite>r1files</cite> : list of file name(s) containing the R1 reads.</p>
-<p><cite>r2files</cite> : list of file name(s) containing the R2 reads. The files
-specified here must specify the exact same number of reads as
-those in <cite>r1files</cite>, and they must be in the same sequence (i.e.
-the first R1 read found going through <cite>r1files</cite> in order must
-match the first R2 read found going through <cite>r2files</cite> in order).</p>
-<p><cite>gzipped</cite> : a Boolean switch specifying whether the FASTQ files
-specified by <cite>r1files</cite> and <cite>r2files</cite> are gzipped. If set to <cite>True</cite>,
-they are gzipped &#8211; they will be read without being unzipped.</p>
-<p><cite>applyfilter</cite> : a Boolean switch specifying whether we remove read
-pairs in which one or more of the reads failed the Illumina
-chastity filter. If <cite>True</cite>, all reads that failed the Illumina
-chastity filter are discarded. You probably want this option to
-be <cite>True</cite> unless you have a good reason to do otherwise.</p>
-<p><cite>minq</cite> : specifies the minimum acceptable average Q-score (with the
-average taken over all positions in the read). Any read pair in
-which either read has an average Q-score &lt; <cite>minq</cite> is discarded.</p>
-<p><cite>fullgene</cite> : a string giving the full sequence of the gene that is
-being sequenced (i.e. the template amplicon). Note that this
-full sequence will typically be longer than the actual coding
-gene range of interest, for example due to terminal PCR
-sequences. The substring of <cite>fullgene</cite> of interest is specified by
-<cite>generange</cite>, and is denoted as <cite>gene</cite> in the remaining
-documentation.</p>
-<p><cite>generange</cite> : a 2-tuple <cite>(gstart, gend)</cite> that specifies the portion of
-<cite>fullgene</cite> that contains the gene of interest. Specifically, <tt class="docutils literal"><span class="pre">gene</span>
-<span class="pre">=</span> <span class="pre">fullgene[generange[0]</span> <span class="pre">:</span> <span class="pre">generange[1]]</span></tt>.</p>
-<p><cite>a1</cite> : a string giving the adaptor sequence that will be found at the
-3&#8217; end of any R1 reads that read past the insert and into the
-adaptor.</p>
-<p><cite>a2</cite> : a string giving the adaptor sequence that will be found at the
-3&#8217; end of any R2 reads that read past the insert and into the
-adaptor.</p>
-<p><cite>maxn</cite> : the maximum number of N or n nucleotides that are allowed
-in either read of a read pair. If one of the reads has &gt; <cite>maxn</cite>
-N / n nucleotides, the pair is discarded.</p>
-<p><cite>minoverlap</cite> : the minimum length of the overlap between R1 and R2,
-representing their joint coverage of the target sequence. The
-overlap length must be &gt;= this number.</p>
-<p><cite>maxrm</cite> : the maximum number of mismatches allowed in the overlap of
-R1 and R2. The number of mismatches must be &lt;= this number.</p>
-<p><cite>maxa1m</cite> : the maximum number of mismatches allowed in the overlap of
-R1 with adaptor <cite>a1</cite>. The number of mismatches must be &lt;= this
-number.</p>
-<p><cite>maxa2m</cite> : the maximum number of mismatches allowed in the overlap of
-R2 with adaptor <cite>a2</cite>. The number of mismatches must be &lt;= this
-number.</p>
-<p><cite>maxgenem</cite> : the maximum number of mismatches that is allowed for
-either read individually when it is aligned with <cite>fullgene</cite> after
-removing the adaptor sequences (<cite>a1</cite> or <cite>a2</cite>).</p>
-<p><cite>outfileprefix</cite> : all output files generated by this method have this
-prefix appended to the suffix described below.</p>
-<p><cite>upcase</cite> : specifies how we handle possible upper / lower case
-differences in nucleotide codes. The alignments handle upper and
-lower case letters as different. If <cite>upcase</cite> has its default value
-of &#8216;test&#8217;, then <cite>fullgene</cite>, <cite>a1</cite>, and <cite>a2</cite> are all converted to upper
-case. For the reads, the very first read pair is tested to make
-sure that it is upper case &#8211; if it is not, an exception is
-raised. You can also set <cite>upcase</cite> to <cite>False</cite> &#8211; in this case, no
-case conversion is done for any of the sequences. Finally, you
-can set <cite>upcase</cite> to <cite>True</cite> &#8211; in this case, all sequences are
-converted to upper case. This will guarantee no case mismatches,
-but will also be slower due to the extra time of converting all
-sequences to upper case.</p>
-<p><cite>logevery</cite> : an integer specifying that we print an update to the log
-output file each time we have finished this many read pairs.</p>
-<p><cite>log</cite> : an optional argument specifying that we write the log of
-this function&#8217;s progress to a specified file-like object rather
-than to the file <tt class="docutils literal"><span class="pre">&quot;%s_log.txt&quot;</span> <span class="pre">%</span> <span class="pre">outfileprefix</span></tt>. By default,
-<cite>log</cite> is <cite>None</cite>, meaning that the output is logged to the aforementioned
-newly created file. If <cite>log</cite> is instead set to a writable file-like
-object, we write the output to this file-like object.</p>
-<p><cite>write_unaligned</cite> : a Boolean switch specifying that we write a
-file containing reads that cannot be aligned. <cite>False</cite> by default,
-meaning that no such file is written. If set to <cite>True</cite>, then a 
-file <tt class="docutils literal"><span class="pre">&quot;%s_unaligned.fasta.gz&quot;</span> <span class="pre">%</span> <span class="pre">outfileprefix</span></tt> is written
-containing unaligned reads. If <cite>applyfilter</cite> is <cite>True</cite>, this
-file does NOT contain reads that fail the filter.</p>
-<p>OUTPUT FILES:</p>
-<p>The output is a series of files. All of these files begin with
-<cite>outfileprefix</cite>, conforming to <tt class="docutils literal"><span class="pre">&quot;%s_suffix&quot;</span> <span class="pre">%</span> <span class="pre">outfileprefix</span></tt>. Any
-existing files with the same names are overwritten. We have
-the following files with the following suffixes:</p>
-<p>&#8220;alignments.txt.gz&#8221; : A gzipped text file containing the read pair
-to gene alignments for all read pairs that pass the various
-filters and cutoffs. Each alignment consists of five lines.
-These lines give:</p>
-<ol class="arabic simple">
-<li>the read name,</li>
-<li>the alignment region of the gene with indices,</li>
-<li>the alignment region of R1 with indices,</li>
-<li>the alignment region of R2 with indices</li>
-<li>a blank line.</li>
-</ol>
-<p>The indices indicate the number of the first and last nucleotide shown
-in 1, 2, ... numbering. For the reads, a &#8216;.&#8217; is used to indicated
-identities with the gene at that position. The alignment region
-is only shown for regions of gene covered by both reads. For
-example, here is a possible entry:</p>
-<div class="highlight-python"><div class="highlight"><pre>@DH1DQQN1:241:C1433ACXX:2:1101:1623:2365
-14 ATAGATACTAGAT 26
- 1 .....C.....T. 13
-13 .....C.......  1
-</pre></div>
-</div>
-<p>&#8220;log.txt&#8221; : A text file logging progress of the function. This can
-be tracked in real time to see how we are proceeding. Note
-that if the <cite>log</cite> option is set a file-like object rather than
-its default value of <cite>None</cite>, this file is not created and written.</p>
-<p>&#8220;alignmentstatistics.txt&#8221; : A text file giving a summary of the
-alignment, in the format written by <cite>io.WriteAlignmentStatistics</cite>.</p>
-<p>&#8220;insertlengths.txt&#8221; : A text file giving the distribution of insert
-lengths for all R1-R2 read pairs that align with each other
-according to the given specifications. The shortest possible
-value of the insert is <cite>minoverlap</cite>, while the longest possible
-value is the sum of the two read lengths minus <cite>minoverlap</cite>. In
-the format written by <cite>io.WriteInsertLengths</cite>.</p>
-<p>&#8220;R1mismatches.txt&#8221; : A text file giving the fraction and number of
-mismatches between the R1 read and the <cite>fullgene</cite> template for all
-positions in the read that align with <cite>fullgene</cite>, for reads that
-pass the pairwise alignment with each other. In the format
-written by <cite>io.WriteReadMismatches</cite>.</p>
-<p>&#8220;R2mismatches.txt&#8221; : Like &#8220;R1mismatches.txt&#8221; but for the R2 reads.</p>
-<p>&#8220;unaligned.fasta.gz&#8221; : Only created if <cite>write_unaligned</cite> is <cite>True</cite>,
-contains unaligned reads that pass <cite>applyfilter</cite> option.</p>
-<p>C-EXTENSIONS:</p>
-<p>This function uses all available C-extensions to speed up 
-the code as much as possible.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="main.MakeAlignmentsPlots">
-<tt class="descclassname">main.</tt><tt class="descname">MakeAlignmentsPlots</tt><big>(</big><em>outfileprefix</em>, <em>nlowq</em>, <em>maxn</em>, <em>minoverlap</em>, <em>maxrm</em>, <em>maxa1m</em>, <em>maxa2m</em>, <em>maxgenem</em>, <em>latexsummary</em>, <em>summarytitle</em><big>)</big><a class="headerlink" href="#main.MakeAlignmentsPlots" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes plots summarizing the output of <cite>MakeAlignments</cite>.</p>
-<p>This function creates plots summarizing the results output by the
-<cite>mapmuts.main.MakeAlignments</cite> function. These plots are created using
-<tt class="docutils literal"><span class="pre">pylab</span></tt> / <tt class="docutils literal"><span class="pre">matplotlib</span></tt>, so this function will raise an exception if
-these packages are not available (if <tt class="docutils literal"><span class="pre">mapmuts.plot.PylabAvailable()</span> <span class="pre">==</span>
-<span class="pre">False</span></tt>). If <tt class="docutils literal"><span class="pre">pdflatex</span></tt> is available (if 
-<em>mapmuts.latex.PdflatexAvailable()</em>) this function can also optionally
-create a summary PDF file containing all of these plots.
-All output files from <cite>MakeAlignments</cite> are expected to
-exist with the names created using the value <cite>outfileprefix</cite> used
-to call the <cite>MakeAlignments</cite> function.</p>
-<p>CALLING VARIABLES:</p>
-<p><cite>outfileprefix</cite> : prefix of output files, value used to call
-<cite>MakeAlignments</cite>.</p>
-<p><cite>nlowq</cite>, <cite>maxn</cite>, <cite>minoverlap</cite>, <cite>maxrm</cite>, <cite>maxa1m</cite>, <cite>maxa2m</cite>, 
-<cite>maxgenem</cite> : the values of these variables
-used when calling <cite>MakeAlignments</cite>. These values are
-used to output information about the alignment parameters.</p>
-<p><cite>latexsummary</cite> : Boolean switch specifying that we create the PDF
-summary file using <cite>mapmuts.latex.MakeAlignmentsSummary</cite>. We do
-this if <cite>latexsummary</cite> is <cite>True</cite>.</p>
-<p><cite>summarytitle</cite> : string giving the title printed at the top of the
-latex summary PDF if it is created.</p>
-<p>OUTPUT PLOTS:</p>
-<p>Plots are created summarizing each of the four output files <tt class="docutils literal"><span class="pre">*.txt</span></tt>
-files created by <cite>MakeAlignments</cite>. These files have the same names as
-the output file, but with the suffix <tt class="docutils literal"><span class="pre">.pdf</span></tt>. So these files are:</p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_alignmentstatistics.pdf&quot;</span> <span class="pre">%</span> <span class="pre">outfile_prefix</span></tt></p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_insertlengths.pdf&quot;</span> <span class="pre">%</span> <span class="pre">outfile_prefix</span></tt></p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_R1mismatches.pdf&quot;</span> <span class="pre">%</span> <span class="pre">outfile_prefix</span></tt></p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_R2mismatches.pdf&quot;</span> <span class="pre">%</span> <span class="pre">outfile_prefix</span></tt></p>
-<p>The <cite>latexsummary</cite> file (if created) has the name:</p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_makealignments_summary.pdf&quot;</span> <span class="pre">%</span> <span class="pre">outfileprefix</span></tt></p>
-</dd></dl>
-
-<dl class="function">
-<dt id="main.ParseNTCodonCounts">
-<tt class="descclassname">main.</tt><tt class="descname">ParseNTCodonCounts</tt><big>(</big><em>alignmentfile</em>, <em>outfileprefix</em>, <em>gene</em>, <em>r1exclude</em>, <em>r2exclude</em>, <em>upcase='test'</em>, <em>logevery=100000</em>, <em>log=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x2b12e9fdd150&gt;</em><big>)</big><a class="headerlink" href="#main.ParseNTCodonCounts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parses nucleotide and codon counts from alignment from <cite>MakeAlignments</cite>.</p>
-<p>This function parses information from the <tt class="docutils literal"><span class="pre">*_alignments.txt.gz</span></tt> file
-created by <cite>MakeAlignments</cite>. The counts of nucleotide and codon variants
-at each position is parsed, and written to two output files.</p>
-<p>The overlapping paired-end read alignments are used to call nucleotide
-identities. Nucleotides are called as follows:</p>
-<ul class="simple">
-<li>If both reads agree on the identity and neither relevant read position
-is in the exclusion lists (<cite>r1exclude</cite> or <cite>r2exclude</cite>), then the
-nucleotide is called at that identity using upper-case nucleotides,
-for example &#8216;A&#8217; or &#8216;T&#8217;.</li>
-<li>If one read specifies an identity and the other read gives an &#8216;N&#8217;
-or is at an excluded position, the identity is called to the 
-lower-case value of the read the specifies an identity. For
-example, a position might be called to &#8216;a&#8217; or &#8216;t&#8217;.</li>
-<li>If the two reads specify different identities, or if both specify
-an N or have the position excluded, a position is called to &#8216;N&#8217;</li>
-</ul>
-<p>Codons are called to the constituent nucleotides using the 
-aforementioned scheme. Codons for which only partial nucleotide
-coverage is achieved are not called.</p>
-<p>CALLING VARIABLES:</p>
-<p><cite>alignmentfile</cite> : the name of a <tt class="docutils literal"><span class="pre">*_alignments.txt.gz</span></tt> file built
-by <cite>MakeAlignments</cite>. It is crucial that the alignments be written
-in all upper case nucleotides for this method to work correctly.
-See the <cite>upcase</cite> option.</p>
-<p><cite>outfileprefix</cite> : the prefix used at the beginning of the output files. The
-two output files created by this function have the following two names:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;</span><span class="si">%s</span><span class="s">_ntcounts.txt&quot;</span> <span class="o">%</span> <span class="n">outfileprefix</span>
-<span class="s">&quot;</span><span class="si">%s</span><span class="s">_codoncounts.txt&quot;</span> <span class="o">%</span> <span class="n">outfileprefix</span>
-</pre></div>
-</div>
-<p><cite>gene</cite> : a string giving the gene sequence for the gene used to build
-alignmentfile. If <cite>fullgene</cite> and <cite>generange</cite> are the calling variables
-to <cite>MakeAlignments</cite>, <tt class="docutils literal"><span class="pre">gene</span> <span class="pre">=</span> <span class="pre">fullgene[generange[0]</span> <span class="pre">:</span> <span class="pre">generange[1]]</span></tt>.
-The gene is converted to upper case (see the <cite>upcase</cite> option).
-In addition, it must be a protein-coding
-sequence with length that is a multiple of three and no stop codons
-except for possibly the last codon. This is checked, and there will
-be an exception raised if gene is not a valid protein-coding gene.</p>
-<p><cite>r1exclude</cite> : a list, dictionary, or set that specifies the integer
-positions of any sites in the R1 reads that are excluded from
-being considered, in 1, 2, ... numbering. <cite>r1exclude</cite> must support
-the <tt class="docutils literal"><span class="pre">in</span></tt> operator, such that we exclude any position i for which 
-<tt class="docutils literal"><span class="pre">i</span> <span class="pre">in</span> <span class="pre">r1exclude</span> <span class="pre">==</span> <span class="pre">True</span></tt>. You would want to specify read positions
-that have high error rates, and so for which you do not want
-to include when identifying variants.</p>
-<p><cite>r2exclude</cite> : like <cite>r1exclude</cite>, but for the R2 reads.</p>
-<p><cite>upcase</cite> : specifies how we handle possible upper / lower case
-differences in nucleotide codes. Note that because of the coding
-used in calling the identities, this method will not work if some
-of the nucleotides are lower case. The alignments handle upper and
-lower case letters as different. If upcase has its default value
-of &#8216;test&#8217;, then gene is converted to upper case. For the alignments,
-the very first alignment is tested to make sure that it is upper case
-&#8211; if it is not, an exception is raised. You can also set upcase to
-<cite>True</cite>, in which case all sequences are converted to upper case. This
-is the safest option, but is slwo due to all the case conversion.</p>
-<p><cite>logevery</cite> : if <cite>log</cite> (the next parameter) evaluates <cite>True</cite>, write updated progress
-every time we have processed this many read alignments. Is set to
-<tt class="docutils literal"><span class="pre">int(1e5)</span></tt> by default.</p>
-<p><cite>log</cite> : a file-like object to which we write progress of this function.
-Is set to <tt class="docutils literal"><span class="pre">sys.stdout</span></tt> by default. You can also set it to any other
-writable file-like object, or to <cite>None</cite> if you do not want to log
-any progress.</p>
-<p>OUTPUT FILES:</p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_ntcounts.txt&quot;</span> <span class="pre">%</span> <span class="pre">outfileprefix</span></tt> : a file giving the nucleotide
-identity counts at each position, in the format written by
-<cite>mapmuts.io.WriteNTCounts</cite>.</p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_codoncountx.txt&quot;</span> <span class="pre">%</span> <span class="pre">outfileprefix</span></tt> : a file giving the
-codon identity counts at each position, in the format written
-by <cite>mapmuts.io.WriteCodonCounts</cite>.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="main.ParseNTCodonCountsPlots">
-<tt class="descclassname">main.</tt><tt class="descname">ParseNTCodonCountsPlots</tt><big>(</big><em>outfileprefix</em>, <em>r1exclude</em>, <em>r2exclude</em>, <em>latexsummary</em>, <em>summarytitle</em><big>)</big><a class="headerlink" href="#main.ParseNTCodonCountsPlots" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes plots summarizing the output of <cite>ParseNTCodonCounts</cite>.</p>
-<p>This function creates plots summarizing the results output by the
-<cite>mapmuts.main.ParseNTCodonCounts</cite> function. These plots are created using
-<tt class="docutils literal"><span class="pre">pylab</span></tt> / <tt class="docutils literal"><span class="pre">matplotlib</span></tt>, so this function will raise an exception if
-these packages are not available (if <tt class="docutils literal"><span class="pre">mapmuts.plot.PylabAvailable()</span> <span class="pre">==</span>
-<span class="pre">False</span></tt>). If <tt class="docutils literal"><span class="pre">pdflatex</span></tt> is available (if 
-<em>mapmuts.latex.PdflatexAvailable()</em>) this function can also optionally
-create a summary PDF file containing all of these plots.
-All output files from <cite>ParseNTCodonCounts</cite> are expected to
-exist with the names created using <cite>outfileprefix</cite> as the calling variable
-to that function.</p>
-<p>CALLING VARIABLES:</p>
-<p><cite>outfileprefix</cite> : prefix of output files, used to call <cite>MakeAlignments</cite>.</p>
-<p><cite>r1exclude</cite>, <cite>r2exclude</cite> : the values of the variables used when
-calling <cite>ParseNTCodonCounts</cite>. These values are used
-to output information about the parsing parameters.</p>
-<p><cite>latexsummary</cite> : Boolean switch specifying that we create the PDF
-summary file using <cite>mapmuts.latex.ParseNTCodonCountsSummary</cite>. We do
-this if <cite>latexsummary</cite> is <cite>True</cite>.</p>
-<p><cite>summarytitle</cite> : string giving the title printed at the top of the
-latex summary PDF if it is created.</p>
-<p>OUTPUT FILES</p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_codondepth.pdf&quot;</span> <span class="pre">%</span> <span class="pre">outfile_prefix</span></tt> : summarizes codon depth
-across the gene.</p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_syn-ns-dist.pdf&quot;</span> <span class="pre">%</span> <span class="pre">outfile_prefix</span></tt> : summarizes distribution
-of synonymous / nonsynonymous mutations.</p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_nmutspercodon-dist.pdf&quot;</span> <span class="pre">%</span> <span class="pre">outfile_prefix</span></tt> : summarizes
-distribution of number of nucleotide mutations per codon mutation.</p>
-<p><tt class="docutils literal"><span class="pre">&quot;%s_parsesummary.pdf&quot;</span> <span class="pre">%</span> <span class="pre">outfileprefix</span></tt> : LaTex summary file if
-created (if <tt class="docutils literal"><span class="pre">latexsummary</span> <span class="pre">==</span> <span class="pre">True</span></tt>).</p>
-</dd></dl>
-
-</div>
+  <div class="section" id="main-module">
+<h1><code class="xref py py-mod docutils literal"><span class="pre">main</span></code> Module<a class="headerlink" href="#main-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -416,21 +65,12 @@ created (if <tt class="docutils literal"><span class="pre">latexsummary</span> <
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">main</span></tt> Module</a><ul>
-<li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
-<li><a class="reference internal" href="#documentation-for-functions">Documentation for functions</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="mapmuts_package.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">mapmuts</span></tt> Package</a></p>
+                        title="previous chapter"><code class="docutils literal"><span class="pre">mapmuts</span></code> Package</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="align_module.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">align</span></tt> Module</a></p>
+                        title="next chapter"><code class="docutils literal"><span class="pre">align</span></code> Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -446,9 +86,6 @@ created (if <tt class="docutils literal"><span class="pre">latexsummary</span> <
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -470,13 +107,13 @@ created (if <tt class="docutils literal"><span class="pre">latexsummary</span> <
         <li class="right" >
           <a href="mapmuts_package.html" title="mapmuts Package"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

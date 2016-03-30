@@ -8,7 +8,7 @@
     
     <title>mapmuts_enrichmentgeomeans.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="Examples" href="examples.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_enrichmentcorrelate.html" title="mapmuts_enrichmentcorrelate.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,25 +57,25 @@
             
   <div class="section" id="mapmuts-enrichmentgeomeans-py">
 <span id="id1"></span><h1>mapmuts_enrichmentgeomeans.py<a class="headerlink" href="#mapmuts-enrichmentgeomeans-py" title="Permalink to this headline">¶</a></h1>
-<p>This script is designed to be used after you have inferred the enrichment ratios for several libraries using <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a>. This script then computes the geometric means of the enrichment ratios for each library, and then uses those geometric mean enrichment ratios to calculate equilibrium frequencies and site entropies.</p>
+<p>This script is designed to be used after you have inferred the enrichment ratios for several libraries using <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a>. This script then computes the geometric means of the enrichment ratios for each library, and then uses those geometric mean enrichment ratios to calculate equilibrium frequencies and site entropies.</p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
 <p>This script requires <a class="reference external" href="http://matplotlib.org/">matplotlib</a> for plotting.</p>
 </div>
 <div class="section" id="background-and-nomenclature">
 <h2>Background and nomenclature<a class="headerlink" href="#background-and-nomenclature" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a> program calculates posterior mean enrichment ratios <em>phi</em> for mutations using MCMC, and stores them in <tt class="docutils literal"><span class="pre">*_enrichmentratios.txt</span></tt> files. If you have several library replicates, you might want to somehow average these enrichment ratios. In principle, you can run the MCMC over several libraries, but in practice this seems to lead to inflated enrichment ratios in cases where one library has a very large value of <em>phi</em> but the others do not.</p>
+<p>The <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a> program calculates posterior mean enrichment ratios <em>phi</em> for mutations using MCMC, and stores them in <code class="docutils literal"><span class="pre">*_enrichmentratios.txt</span></code> files. If you have several library replicates, you might want to somehow average these enrichment ratios. In principle, you can run the MCMC over several libraries, but in practice this seems to lead to inflated enrichment ratios in cases where one library has a very large value of <em>phi</em> but the others do not.</p>
 <p>A good way of getting an &#8220;average&#8221; enrichment ratio is therefore to take the geometric mean of the enrichment ratios for the individual libraries &#8211; that is what this script does. In general you would want to apply it to several replicates of identical libraries, although there is also an option (specified by the <em>excludesite</em> option) to use information from libraries only closely related mutants of a protein.</p>
-<p>The output of this script is the geometric mean of the enrichment ratios, as well as site entropies and equilibrium frequencies (these concepts are described in more detail in the <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a> documentation) computed from these geometric mean enrichment ratios. Also see the following PDF file, which describes the net computations performed by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a> and this script:
-<a class="reference download internal" href="_downloads/enrichment_inference_algorithm.pdf"><tt class="xref download docutils literal"><span class="pre">enrichment_inference_algorithm.pdf</span></tt></a></p>
+<p>The output of this script is the geometric mean of the enrichment ratios, as well as site entropies and equilibrium frequencies (these concepts are described in more detail in the <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a> documentation) computed from these geometric mean enrichment ratios. Also see the following PDF file, which describes the net computations performed by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a> and this script:
+<a class="reference download internal" href="_downloads/enrichment_inference_algorithm.pdf" download=""><code class="xref download docutils literal"><span class="pre">enrichment_inference_algorithm.pdf</span></code></a></p>
 </div>
 <div class="section" id="running-the-script">
 <h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
 <p>To run this script from the prompt, first create a text infile of the
-format described below. Then simply type <a class="reference internal" href="#mapmuts-enrichmentgeomeans-py"><em>mapmuts_enrichmentgeomeans.py</em></a>
-followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+format described below. Then simply type <a class="reference internal" href="#mapmuts-enrichmentgeomeans-py"><span class="std std-ref">mapmuts_enrichmentgeomeans.py</span></a>
+followed by the infile name. For example, if the name is <code class="docutils literal"><span class="pre">infile.txt</span></code>,
 type:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_enrichmentgeomeans.py infile.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_enrichmentgeomeans</span><span class="o">.</span><span class="n">py</span> <span class="n">infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
@@ -85,10 +85,10 @@ type:</p>
 <p>Lines beginning with # and empty lines are ignored.</p>
 <p>Keys for the input file:</p>
 <ul>
-<li><p class="first"><em>enrichmentratios</em> : A listing of the enrichment ratio files generated as <tt class="docutils literal"><span class="pre">*_enrichmentratios.txt</span></tt> by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><em>mapmuts_inferenrichment.py</em></a>. You must list at least one file here, but can list more than one if you also want to look at correlations between pairs of samples. The files must exist, and the filenames cannot contain any spaces. To list multiple files, just separate them by spaces.</p>
+<li><p class="first"><em>enrichmentratios</em> : A listing of the enrichment ratio files generated as <code class="docutils literal"><span class="pre">*_enrichmentratios.txt</span></code> by <a class="reference internal" href="mapmuts_inferenrichment.html#mapmuts-inferenrichment-py"><span class="std std-ref">mapmuts_inferenrichment.py</span></a>. You must list at least one file here, but can list more than one if you also want to look at correlations between pairs of samples. The files must exist, and the filenames cannot contain any spaces. To list multiple files, just separate them by spaces.</p>
 </li>
 <li><p class="first"><em>excludesite_NNN</em> : This is an optional key that does not have to appear at all. You would use this key if you want to exclude a particular site from just one of multiple libraries specified by <em>enrichmentratios</em>. For instance, imagine that key specify four files. Imagine that the first two and last two files differ in identity at residue 334, so that only two of the libraries (say the first two) would be used for the inference at this site. You would then set:</p>
-<div class="highlight-python"><div class="highlight"><pre>excludesite_334 use use exclude exclude
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">excludesite_334</span> <span class="n">use</span> <span class="n">use</span> <span class="n">exclude</span> <span class="n">exclude</span>
 </pre></div>
 </div>
 <p>In this usage, the key <em>excludesite_</em> has a suffix giving a site number. There then should be a number of entries equal to the number of files specified for <em>enrichmentratios</em>, etc. In order, put <em>use</em> if that file is used for that site and <em>exclude</em> if that file is excluded for that site. Note, however, that at least one file must be <em>use</em> for each site. If you don&#8217;t want to exclude any sites from particular libraries, then just don&#8217;t include this key. If you want to exclude more than one residue, then have multiple entries of the key.</p>
@@ -104,12 +104,12 @@ type:</p>
 <div class="section" id="example-input-file">
 <h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_enrichmentgeomeans.py
-enrichmentratios WT-1/WT-1_enrichmentratios.txt WT-2/WT-2_enrichmentratios.txt N334H-1/N334H-1_enrichmentratios.txt N334H-2/N334H-2_enrichmentratios.txt
-excludesite_334 use use exclude exclude
-outfileprefix combined_geomean
-enrichmentratio_plots enrichmentratio_plots/
-equilibriumfreqs_plots equilibriumfreqs_plots/
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Input file for mapmuts_enrichmentgeomeans.py</span>
+<span class="n">enrichmentratios</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_enrichmentratios</span><span class="o">.</span><span class="n">txt</span> <span class="n">WT</span><span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">2</span><span class="n">_enrichmentratios</span><span class="o">.</span><span class="n">txt</span> <span class="n">N334H</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">N334H</span><span class="o">-</span><span class="mi">1</span><span class="n">_enrichmentratios</span><span class="o">.</span><span class="n">txt</span> <span class="n">N334H</span><span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="n">N334H</span><span class="o">-</span><span class="mi">2</span><span class="n">_enrichmentratios</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">excludesite_334</span> <span class="n">use</span> <span class="n">use</span> <span class="n">exclude</span> <span class="n">exclude</span>
+<span class="n">outfileprefix</span> <span class="n">combined_geomean</span>
+<span class="n">enrichmentratio_plots</span> <span class="n">enrichmentratio_plots</span><span class="o">/</span>
+<span class="n">equilibriumfreqs_plots</span> <span class="n">equilibriumfreqs_plots</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
@@ -125,25 +125,25 @@ equilibriumfreqs_plots equilibriumfreqs_plots/
 </ul>
 </div></blockquote>
 <p>Here is an example of a few lines:</p>
-<div class="highlight-python"><div class="highlight"><pre>#MUTATION GEOMEAN_PHI
-M1A 0.171246
-M1C 0.249930
-M1D 0.249028
-M1E 0.246096
-M1F 0.245388
-M1G 0.172780
-M1H 0.234997
-M1I 0.113813
-M1K 0.255940
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#MUTATION GEOMEAN_PHI</span>
+<span class="n">M1A</span> <span class="mf">0.171246</span>
+<span class="n">M1C</span> <span class="mf">0.249930</span>
+<span class="n">M1D</span> <span class="mf">0.249028</span>
+<span class="n">M1E</span> <span class="mf">0.246096</span>
+<span class="n">M1F</span> <span class="mf">0.245388</span>
+<span class="n">M1G</span> <span class="mf">0.172780</span>
+<span class="n">M1H</span> <span class="mf">0.234997</span>
+<span class="n">M1I</span> <span class="mf">0.113813</span>
+<span class="n">M1K</span> <span class="mf">0.255940</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first"><em>outfileprefix</em>_equilibriumfreqs.txt : a text file giving the equilibrium frequencies for each amino acid at each site. Stop codons are NOT included as possible identities for these frequencies. The equilibrium frequency <em>pi</em> for an amino acid is calculated from the geometric mean enrichment ratio <em>phi</em>. Essentially, this gives the probability that an amino acid would have some identity if all residues were present at relative frequencies specified by the enrichment ratios. We also calculate a site entropy <em>h</em> for each site as the entropy (log base 2, units of bits) for a hypothetical situation in which each amino acid is present at its equilibrium frequency. All of this information is written to this text file. The first column gives the residue number, the second column gives the wildtype amino acid, the third column gives the site entropy, and the remaining columns give the equilibrium frequencies for all of the amino acids in the order indicated by the header (which is alphabetical order). Here is an example of a few lines:</p>
-<div class="highlight-python"><div class="highlight"><pre>#SITE WT_AA SITE_ENTROPY PI_A PI_C PI_D PI_E PI_F PI_G PI_H PI_I PI_K PI_L PI_M PI_N PI_P PI_Q PI_R PI_S PI_T PI_V PI_W PI_Y
-1   M   4.063980    0.035380    0.051636    0.051450    0.050844    0.050698    0.035697    0.048551    0.023514    0.052878    0.029298    0.206602    0.052339    0.036233    0.049689    0.028100    0.026248    0.037069    0.026387    0.056218    0.051170
-2   A   2.916478    0.493120    0.025100    0.025514    0.043860    0.029769    0.012059    0.012405    0.020354    0.026235    0.007163    0.118429    0.020809    0.003767    0.016877    0.006905    0.009597    0.011775    0.051123    0.041176    0.023962
-3   S   3.368413    0.039375    0.010811    0.008294    0.012489    0.160579    0.007068    0.021544    0.014624    0.011574    0.253193    0.035198    0.014573    0.006610    0.017904    0.010872    0.154344    0.023793    0.013304    0.054196    0.129656
-4   Q   3.206882    0.014669    0.010812    0.001101    0.007597    0.233611    0.007712    0.001347    0.104908    0.003885    0.207108    0.006095    0.126407    0.000240    0.016678    0.001580    0.088960    0.045545    0.011868    0.041575    0.068301
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#SITE WT_AA SITE_ENTROPY PI_A PI_C PI_D PI_E PI_F PI_G PI_H PI_I PI_K PI_L PI_M PI_N PI_P PI_Q PI_R PI_S PI_T PI_V PI_W PI_Y</span>
+<span class="mi">1</span>   <span class="n">M</span>   <span class="mf">4.063980</span>    <span class="mf">0.035380</span>    <span class="mf">0.051636</span>    <span class="mf">0.051450</span>    <span class="mf">0.050844</span>    <span class="mf">0.050698</span>    <span class="mf">0.035697</span>    <span class="mf">0.048551</span>    <span class="mf">0.023514</span>    <span class="mf">0.052878</span>    <span class="mf">0.029298</span>    <span class="mf">0.206602</span>    <span class="mf">0.052339</span>    <span class="mf">0.036233</span>    <span class="mf">0.049689</span>    <span class="mf">0.028100</span>    <span class="mf">0.026248</span>    <span class="mf">0.037069</span>    <span class="mf">0.026387</span>    <span class="mf">0.056218</span>    <span class="mf">0.051170</span>
+<span class="mi">2</span>   <span class="n">A</span>   <span class="mf">2.916478</span>    <span class="mf">0.493120</span>    <span class="mf">0.025100</span>    <span class="mf">0.025514</span>    <span class="mf">0.043860</span>    <span class="mf">0.029769</span>    <span class="mf">0.012059</span>    <span class="mf">0.012405</span>    <span class="mf">0.020354</span>    <span class="mf">0.026235</span>    <span class="mf">0.007163</span>    <span class="mf">0.118429</span>    <span class="mf">0.020809</span>    <span class="mf">0.003767</span>    <span class="mf">0.016877</span>    <span class="mf">0.006905</span>    <span class="mf">0.009597</span>    <span class="mf">0.011775</span>    <span class="mf">0.051123</span>    <span class="mf">0.041176</span>    <span class="mf">0.023962</span>
+<span class="mi">3</span>   <span class="n">S</span>   <span class="mf">3.368413</span>    <span class="mf">0.039375</span>    <span class="mf">0.010811</span>    <span class="mf">0.008294</span>    <span class="mf">0.012489</span>    <span class="mf">0.160579</span>    <span class="mf">0.007068</span>    <span class="mf">0.021544</span>    <span class="mf">0.014624</span>    <span class="mf">0.011574</span>    <span class="mf">0.253193</span>    <span class="mf">0.035198</span>    <span class="mf">0.014573</span>    <span class="mf">0.006610</span>    <span class="mf">0.017904</span>    <span class="mf">0.010872</span>    <span class="mf">0.154344</span>    <span class="mf">0.023793</span>    <span class="mf">0.013304</span>    <span class="mf">0.054196</span>    <span class="mf">0.129656</span>
+<span class="mi">4</span>   <span class="n">Q</span>   <span class="mf">3.206882</span>    <span class="mf">0.014669</span>    <span class="mf">0.010812</span>    <span class="mf">0.001101</span>    <span class="mf">0.007597</span>    <span class="mf">0.233611</span>    <span class="mf">0.007712</span>    <span class="mf">0.001347</span>    <span class="mf">0.104908</span>    <span class="mf">0.003885</span>    <span class="mf">0.207108</span>    <span class="mf">0.006095</span>    <span class="mf">0.126407</span>    <span class="mf">0.000240</span>    <span class="mf">0.016678</span>    <span class="mf">0.001580</span>    <span class="mf">0.088960</span>    <span class="mf">0.045545</span>    <span class="mf">0.011868</span>    <span class="mf">0.041575</span>    <span class="mf">0.068301</span>
 </pre></div>
 </div>
 </li>
@@ -202,9 +202,6 @@ M1K 0.255940
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -226,13 +223,13 @@ M1K 0.255940
         <li class="right" >
           <a href="mapmuts_enrichmentcorrelate.html" title="mapmuts_enrichmentcorrelate.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

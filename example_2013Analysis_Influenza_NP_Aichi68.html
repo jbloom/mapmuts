@@ -8,7 +8,7 @@
     
     <title>2013 analysis of Influenza NP (Aichi/1968) &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Examples" href="examples.html" />
     <link rel="next" title="Analysis of Influenza Hemagglutinin from A/WSN/1933(H1N1)" href="example_WSN_HA_2014Analysis.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="examples.html" title="Examples"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="examples.html" accesskey="U">Examples</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="examples.html" accesskey="U">Examples</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -56,21 +56,21 @@
           <div class="body" role="main">
             
   <div class="section" id="analysis-of-influenza-np-aichi-1968">
-<h1><a class="toc-backref" href="#id1">2013 analysis of Influenza NP (Aichi/1968)</a><a class="headerlink" href="#analysis-of-influenza-np-aichi-1968" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id16">2013 analysis of Influenza NP (Aichi/1968)</a><a class="headerlink" href="#analysis-of-influenza-np-aichi-1968" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#analysis-of-influenza-np-aichi-1968" id="id1">2013 analysis of Influenza NP (Aichi/1968)</a><ul>
-<li><a class="reference internal" href="#overview" id="id2">Overview</a></li>
-<li><a class="reference internal" href="#outline-of-experiment" id="id3">Outline of experiment</a></li>
-<li><a class="reference internal" href="#software-used" id="id4">Software used</a></li>
-<li><a class="reference internal" href="#input-files" id="id5">Input files</a></li>
-<li><a class="reference internal" href="#analysis-steps-and-results" id="id6">Analysis steps and results</a><ul>
-<li><a class="reference internal" href="#making-alignments" id="id7">Making alignments</a></li>
-<li><a class="reference internal" href="#parsing-mutations" id="id8">Parsing mutations</a></li>
-<li><a class="reference internal" href="#checking-mutation-sampling-completeness" id="id9">Checking mutation sampling completeness</a></li>
-<li><a class="reference internal" href="#inference-of-amino-acid-preferences" id="id10">Inference of amino-acid preferences</a></li>
-<li><a class="reference internal" href="#summary-of-amino-acid-preferences" id="id11">Summary of amino-acid preferences</a></li>
+<li><a class="reference internal" href="#analysis-of-influenza-np-aichi-1968" id="id16">2013 analysis of Influenza NP (Aichi/1968)</a><ul>
+<li><a class="reference internal" href="#overview" id="id17">Overview</a></li>
+<li><a class="reference internal" href="#outline-of-experiment" id="id18">Outline of experiment</a></li>
+<li><a class="reference internal" href="#software-used" id="id19">Software used</a></li>
+<li><a class="reference internal" href="#input-files" id="id20">Input files</a></li>
+<li><a class="reference internal" href="#analysis-steps-and-results" id="id21">Analysis steps and results</a><ul>
+<li><a class="reference internal" href="#making-alignments" id="id22">Making alignments</a></li>
+<li><a class="reference internal" href="#parsing-mutations" id="id23">Parsing mutations</a></li>
+<li><a class="reference internal" href="#checking-mutation-sampling-completeness" id="id24">Checking mutation sampling completeness</a></li>
+<li><a class="reference internal" href="#inference-of-amino-acid-preferences" id="id25">Inference of amino-acid preferences</a></li>
+<li><a class="reference internal" href="#summary-of-amino-acid-preferences" id="id26">Summary of amino-acid preferences</a></li>
 </ul>
 </li>
 </ul>
@@ -78,25 +78,25 @@
 </ul>
 </div>
 <div class="section" id="overview">
-<h2><a class="toc-backref" href="#id2">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>This is a description of the analysis of mutagenesis and deep-sequencing of the nucleoprotein (NP) from the human H3N2 influenza strain A/Aichi/2/1968. The ultimate goal is to infer the preference of each site for each possible amino acid.</p>
 <p>This is the analysis described at <a class="reference external" href="http://mbe.oxfordjournals.org/content/31/8/1956">Bloom 2014</a>.</p>
 <p>The overall conceptual approach of the experiments is similar to the strategy originally described by <a class="reference external" href="http://www.nature.com/nmeth/journal/v7/n9/full/nmeth.1492.html">Fowler et al</a>.</p>
 <p>The sequencing and analysis was performed by <a class="reference external" href="http://research.fhcrc.org/bloom/en.html">Jesse Bloom</a> using the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package. The sequencing was performed in 2013, and the analysis extended from 2013 to 2014.</p>
-<p>This analysis can be replicated if you install the appropriate software (see <a class="reference internal" href="#software-used">Software used</a>) by downloading the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> and going to the directory <tt class="docutils literal"><span class="pre">./examples/2013Analysis_Influenza_NP_Aichi68/</span></tt> in the main <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package directory. This will contain all of the necessary input files (see <a class="reference internal" href="#input-files">Input files</a>) with the exception of the very large Illumina FASTQ files, which are available at <a class="reference external" href="http://www.ncbi.nlm.nih.gov/sra/?term=SRP036064">SRA accession SRP036064</a>. Once all of this is set up, you can replicate the analysis with the simple command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python run_mapmuts.py
+<p>This analysis can be replicated if you install the appropriate software (see <a class="reference internal" href="#software-used">Software used</a>) by downloading the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> and going to the directory <code class="docutils literal"><span class="pre">./examples/2013Analysis_Influenza_NP_Aichi68/</span></code> in the main <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package directory. This will contain all of the necessary input files (see <a class="reference internal" href="#input-files">Input files</a>) with the exception of the very large Illumina FASTQ files, which are available at <a class="reference external" href="http://www.ncbi.nlm.nih.gov/sra/?term=SRP036064">SRA accession SRP036064</a>. Once all of this is set up, you can replicate the analysis with the simple command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">run_mapmuts</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
-<p>The complete analysis performed by this script generates a large amount of output &#8211; to much to easily store in the <tt class="docutils literal"><span class="pre">./examples/2013Analysis_Influenza_NP_Aichi68</span></tt> subdirectory of the main <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a>. Therefore, only the key output files described below are retained in the repository. However, the entire analysis with all output files can be re-generated on your computer using the <tt class="docutils literal"><span class="pre">run_mapmuts.py</span></tt> script as described below.</p>
+<p>The complete analysis performed by this script generates a large amount of output &#8211; to much to easily store in the <code class="docutils literal"><span class="pre">./examples/2013Analysis_Influenza_NP_Aichi68</span></code> subdirectory of the main <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a>. Therefore, only the key output files described below are retained in the repository. However, the entire analysis with all output files can be re-generated on your computer using the <code class="docutils literal"><span class="pre">run_mapmuts.py</span></code> script as described below.</p>
 </div>
 <div class="section" id="outline-of-experiment">
-<h2><a class="toc-backref" href="#id3">Outline of experiment</a><a class="headerlink" href="#outline-of-experiment" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">Outline of experiment</a><a class="headerlink" href="#outline-of-experiment" title="Permalink to this headline">¶</a></h2>
 <p>The basic idea of the experiment is to create plasmid mutant libraries of influenza nucleoprotein, rescue pools of mutant viruses by reverse genetics, and then passage the viruses twice at moderately low multiplicity of infection (MOI) in tissue culture. The viral cDNA is deep sequencing at each step using overlapping paired-end 50-nt Illumina reads. Some controls are also included.</p>
 <p>Overall, each <em>sample</em> contains seven <em>amplicons</em>, which are illustrated graphically below:</p>
 <blockquote>
-<div><div class="figure align-center">
+<div><div class="figure align-center" id="id1">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_schematic.jpg"><img alt="schematic.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_schematic.jpg" style="width: 75%;" /></a>
-<p class="caption">Schematic of the <em>amplicons</em> (in yellow) for each <em>sample</em>.</p>
+<p class="caption"><span class="caption-text">Schematic of the <em>amplicons</em> (in yellow) for each <em>sample</em>.</span></p>
 </div>
 </div></blockquote>
 <p>The <em>amplicons</em> are as follows:</p>
@@ -129,10 +129,10 @@
 </div></blockquote>
 </div>
 <div class="section" id="software-used">
-<h2><a class="toc-backref" href="#id4">Software used</a><a class="headerlink" href="#software-used" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">Software used</a><a class="headerlink" href="#software-used" title="Permalink to this headline">¶</a></h2>
 <p>This analysis was performed using the following software
 on the Fred Hutchinson computer cluster using the following Linux distribution:</p>
-<div class="highlight-python"><div class="highlight"><pre>Linux version 3.5.0-43-generic (buildd@roseapple) (gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) ) #66~precise1-Ubuntu SMP Thu Oct 24 14:52:23 UTC 2013
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Linux</span> <span class="n">version</span> <span class="mf">3.5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mi">43</span><span class="o">-</span><span class="n">generic</span> <span class="p">(</span><span class="n">buildd</span><span class="nd">@roseapple</span><span class="p">)</span> <span class="p">(</span><span class="n">gcc</span> <span class="n">version</span> <span class="mf">4.6</span><span class="o">.</span><span class="mi">3</span> <span class="p">(</span><span class="n">Ubuntu</span><span class="o">/</span><span class="n">Linaro</span> <span class="mf">4.6</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="mi">1</span><span class="n">ubuntu5</span><span class="p">)</span> <span class="p">)</span> <span class="c1">#66~precise1-Ubuntu SMP Thu Oct 24 14:52:23 UTC 2013</span>
 </pre></div>
 </div>
 <p>In order to replicate the analysis, you will also need to use Linux or Mac OS X, and install the following software.</p>
@@ -148,133 +148,133 @@ on the Fred Hutchinson computer cluster using the following Linux distribution:<
 <li><a class="reference external" href="http://www.tug.org/applications/pdftex/">pdflatex</a> version 3.1415926-1.40.10-2.2</li>
 <li><a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> version 3.3</li>
 <li><a class="reference external" href="http://www.imagemagick.org/script/convert.php">ImageMagick convert</a> 6.6.9-7 2012-08-17</li>
-<li><a class="reference external" href="https://computing.llnl.gov/linux/slurm/sbatch.html">sbatch</a> (version 2.6.2) was used by the <tt class="docutils literal"><span class="pre">run_mapmuts.py</span></tt> script to submit the jobs on a computer cluster.</li>
+<li><a class="reference external" href="https://computing.llnl.gov/linux/slurm/sbatch.html">sbatch</a> (version 2.6.2) was used by the <code class="docutils literal"><span class="pre">run_mapmuts.py</span></code> script to submit the jobs on a computer cluster.</li>
 </ul>
 </div>
 <div class="section" id="input-files">
-<h2><a class="toc-backref" href="#id5">Input files</a><a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
-<p>Here is a listing of the input data / files that are necessary to repeat the analysis if all of the appropriate software is installed. These are the names assigned to the files within the <tt class="docutils literal"><span class="pre">./examples/2013Analysis_Influenza_NP_Aichi68</span></tt> subdirectory of the main <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package.</p>
+<h2><a class="toc-backref" href="#id20">Input files</a><a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
+<p>Here is a listing of the input data / files that are necessary to repeat the analysis if all of the appropriate software is installed. These are the names assigned to the files within the <code class="docutils literal"><span class="pre">./examples/2013Analysis_Influenza_NP_Aichi68</span></code> subdirectory of the main <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package.</p>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">run_mapmuts.py</span></tt> is a <a class="reference external" href="https://www.python.org">Python</a> script that will perform the entire analysis assuming that you have all of the specified software (see <a class="reference internal" href="#software-used">Software used</a>) and input files (see <a class="reference internal" href="#input-files">Input files</a>) installed. To run this script, simply type:</p>
-<div class="highlight-python"><div class="highlight"><pre>python run_mapmuts.py
+<li><p class="first"><code class="docutils literal"><span class="pre">run_mapmuts.py</span></code> is a <a class="reference external" href="https://www.python.org">Python</a> script that will perform the entire analysis assuming that you have all of the specified software (see <a class="reference internal" href="#software-used">Software used</a>) and input files (see <a class="reference internal" href="#input-files">Input files</a>) installed. To run this script, simply type:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">run_mapmuts</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
-<p>at the command line. Note that the script has an option to use <a class="reference external" href="https://computing.llnl.gov/linux/slurm/sbatch.html">sbatch</a> to submit the jobs in parallel on a computing cluster. This option was used during the analysis described here. If you don&#8217;t want to use <a class="reference external" href="https://computing.llnl.gov/linux/slurm/sbatch.html">sbatch</a>, modify the <em>use_sbatch</em> option hard-coded within the <tt class="docutils literal"><span class="pre">run_mapmuts.py</span></tt> script.</p>
+<p>at the command line. Note that the script has an option to use <a class="reference external" href="https://computing.llnl.gov/linux/slurm/sbatch.html">sbatch</a> to submit the jobs in parallel on a computing cluster. This option was used during the analysis described here. If you don&#8217;t want to use <a class="reference external" href="https://computing.llnl.gov/linux/slurm/sbatch.html">sbatch</a>, modify the <em>use_sbatch</em> option hard-coded within the <code class="docutils literal"><span class="pre">run_mapmuts.py</span></code> script.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">./FASTQ_files/</span></tt> is a subdirectory that contains the Illumina FASTQ files. Please note that this subdirectory is <strong>not</strong> distributed with the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> because of the very large size of these files. Instead, you can download the FASTQ files from <a class="reference external" href="http://www.ncbi.nlm.nih.gov/sra/?term=SRP036064">SRA accession SRP036064</a>.</p>
-<p>The download from <a class="reference external" href="http://www.ncbi.nlm.nih.gov/sra/?term=SRP036064">SRA accession SRP036064</a> will give you the <tt class="docutils literal"><span class="pre">*.sra</span></tt> files. In order to process these with the <tt class="docutils literal"><span class="pre">run_mapmuts.py</span></tt> script provided here, you will need to convert the reads into <tt class="docutils literal"><span class="pre">*.fastq</span></tt> files and place in a directory called <tt class="docutils literal"><span class="pre">./FASTQ_files/</span></tt>. Within this directory, there should be a different subdirectory for each <em>replicate</em> (i.e. <tt class="docutils literal"><span class="pre">./FASTQ_files/replicate_A/</span></tt>). Each <em>sample</em> and <em>amplicon</em> should then have its own subdirectory with names such as <tt class="docutils literal"><span class="pre">./FASTQ_files/replicate_A/Sample_WT-1_DNA/</span></tt>. Within these subdirectories, there should be gzipped <tt class="docutils literal"><span class="pre">*.fastq</span></tt> files for the read 1 and read 2, specified by <em>R1</em> and <em>R2</em> somewhere in the file name. For example, for <em>replicate_A</em>, <em>WT-1</em>, <em>DNA</em> there should be files matching the following:</p>
-<div class="highlight-python"><div class="highlight"><pre>./FASTQ_files/replicate_A/Sample_WT-1_DNA/*R1*.fastq.gz
-./FASTQ_files/replicate_A/Sample_WT-1_DNA/*R2*.fastq.gz
+<li><p class="first"><code class="docutils literal"><span class="pre">./FASTQ_files/</span></code> is a subdirectory that contains the Illumina FASTQ files. Please note that this subdirectory is <strong>not</strong> distributed with the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> because of the very large size of these files. Instead, you can download the FASTQ files from <a class="reference external" href="http://www.ncbi.nlm.nih.gov/sra/?term=SRP036064">SRA accession SRP036064</a>.</p>
+<p>The download from <a class="reference external" href="http://www.ncbi.nlm.nih.gov/sra/?term=SRP036064">SRA accession SRP036064</a> will give you the <code class="docutils literal"><span class="pre">*.sra</span></code> files. In order to process these with the <code class="docutils literal"><span class="pre">run_mapmuts.py</span></code> script provided here, you will need to convert the reads into <code class="docutils literal"><span class="pre">*.fastq</span></code> files and place in a directory called <code class="docutils literal"><span class="pre">./FASTQ_files/</span></code>. Within this directory, there should be a different subdirectory for each <em>replicate</em> (i.e. <code class="docutils literal"><span class="pre">./FASTQ_files/replicate_A/</span></code>). Each <em>sample</em> and <em>amplicon</em> should then have its own subdirectory with names such as <code class="docutils literal"><span class="pre">./FASTQ_files/replicate_A/Sample_WT-1_DNA/</span></code>. Within these subdirectories, there should be gzipped <code class="docutils literal"><span class="pre">*.fastq</span></code> files for the read 1 and read 2, specified by <em>R1</em> and <em>R2</em> somewhere in the file name. For example, for <em>replicate_A</em>, <em>WT-1</em>, <em>DNA</em> there should be files matching the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">FASTQ_files</span><span class="o">/</span><span class="n">replicate_A</span><span class="o">/</span><span class="n">Sample_WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_DNA</span><span class="o">/*</span><span class="n">R1</span><span class="o">*.</span><span class="n">fastq</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">./</span><span class="n">FASTQ_files</span><span class="o">/</span><span class="n">replicate_A</span><span class="o">/</span><span class="n">Sample_WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_DNA</span><span class="o">/*</span><span class="n">R2</span><span class="o">*.</span><span class="n">fastq</span><span class="o">.</span><span class="n">gz</span>
 </pre></div>
 </div>
 <p>The FASTQ files themselves were generated by processing and de-multiplexing the Illumina reads with the CASAVA pipeline (version 1.8.2).</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">R1_trim3.fasta</span></tt> and <tt class="docutils literal"><span class="pre">R2_trim3.fasta</span></tt> specify the adaptor sequences that are found at the 3&#8217; end after the insert of R1 or R2 reads, respectively. These files are needed to delineate the sequence that we expect to find at the 3&#8217; ends of any 50-nt reads of inserts that are less than 50 nt, since for such inserts the read will extend into the adaptor.</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">R1_trim3.fasta</span></code> and <code class="docutils literal"><span class="pre">R2_trim3.fasta</span></code> specify the adaptor sequences that are found at the 3&#8217; end after the insert of R1 or R2 reads, respectively. These files are needed to delineate the sequence that we expect to find at the 3&#8217; ends of any 50-nt reads of inserts that are less than 50 nt, since for such inserts the read will extend into the adaptor.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">Aichi68-NP_amplicon.fasta</span></tt> and <tt class="docutils literal"><span class="pre">Aichi68-NP-N334H_amplicon.fasta</span></tt> are FASTA files that give the sequences of the full PCR amplicons which are fragmented for sequencing. These include the gene sequence of interest plus the extra sequence added by PCR primers during amplification of the gene. There are two files, one giving the sequence for the wildtype and one for the N334H mutant of the NP from A/Aichi/2/1968 (H3N2) influenza.</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">Aichi68-NP_amplicon.fasta</span></code> and <code class="docutils literal"><span class="pre">Aichi68-NP-N334H_amplicon.fasta</span></code> are FASTA files that give the sequences of the full PCR amplicons which are fragmented for sequencing. These include the gene sequence of interest plus the extra sequence added by PCR primers during amplification of the gene. There are two files, one giving the sequence for the wildtype and one for the N334H mutant of the NP from A/Aichi/2/1968 (H3N2) influenza.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">Sanger_codontypes.txt</span></tt> and <tt class="docutils literal"><span class="pre">Sanger_codonnmuts.txt</span></tt> are text files that give the estimated frequencies of different types of mutations for the <em>mutDNA</em> libraries based on Sanger sequencing of some clones. <tt class="docutils literal"><span class="pre">Sanger_codontypes.txt</span></tt> lists the estimated per-codon frequencies of synonymous, nonsynonymous, and stop codon mutations. <tt class="docutils literal"><span class="pre">Sanger_codonnmuts.txt</span></tt> lists the estimated per-codon frequencies of one-, two-, and three-nucleotide codon mutations.</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">Sanger_codontypes.txt</span></code> and <code class="docutils literal"><span class="pre">Sanger_codonnmuts.txt</span></code> are text files that give the estimated frequencies of different types of mutations for the <em>mutDNA</em> libraries based on Sanger sequencing of some clones. <code class="docutils literal"><span class="pre">Sanger_codontypes.txt</span></code> lists the estimated per-codon frequencies of synonymous, nonsynonymous, and stop codon mutations. <code class="docutils literal"><span class="pre">Sanger_codonnmuts.txt</span></code> lists the estimated per-codon frequencies of one-, two-, and three-nucleotide codon mutations.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">./DSSP_analysis/</span></tt> is a subdirectory that contains the results of analyzing the solvent accessibilities and secondary structures of NP from the crystal structure. Briefly, the NP crystal structure in <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=2iqh">PDB 2IQH</a> was downloaded, and the <tt class="docutils literal"><span class="pre">2IQH.pdb</span></tt> file was manually edited to extract only monomer C into <tt class="docutils literal"><span class="pre">2IQH_monomerC.pdb</span></tt>. This monomer was then analyzed with the <a class="reference external" href="http://www.cmbi.ru.nl/hsspsoap/">DSSP webserver</a> to create the results stored in <tt class="docutils literal"><span class="pre">2IQH_monomerC.dssp</span></tt>.</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">./DSSP_analysis/</span></code> is a subdirectory that contains the results of analyzing the solvent accessibilities and secondary structures of NP from the crystal structure. Briefly, the NP crystal structure in <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=2iqh">PDB 2IQH</a> was downloaded, and the <code class="docutils literal"><span class="pre">2IQH.pdb</span></code> file was manually edited to extract only monomer C into <code class="docutils literal"><span class="pre">2IQH_monomerC.pdb</span></code>. This monomer was then analyzed with the <a class="reference external" href="http://www.cmbi.ru.nl/hsspsoap/">DSSP webserver</a> to create the results stored in <code class="docutils literal"><span class="pre">2IQH_monomerC.dssp</span></code>.</p>
 </li>
 </ul>
 </div>
 <div class="section" id="analysis-steps-and-results">
-<h2><a class="toc-backref" href="#id6">Analysis steps and results</a><a class="headerlink" href="#analysis-steps-and-results" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id21">Analysis steps and results</a><a class="headerlink" href="#analysis-steps-and-results" title="Permalink to this headline">¶</a></h2>
 <p>You can run the entire analysis with the following command:</p>
-<div class="highlight-python"><div class="highlight"><pre>python run_analysis.py
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">run_analysis</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
 <p>The individual steps and results are as follows:</p>
 <div class="section" id="making-alignments">
-<h3><a class="toc-backref" href="#id7">Making alignments</a><a class="headerlink" href="#making-alignments" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal"><span class="pre">mapmuts_makealignments.py</span></tt> is used to align the overlapping paired-end reads to the template gene.</p>
-<p>Each analysis is run in a subdirectory that conforms to <em>replicate/sample/amplicon/</em>, such as <tt class="docutils literal"><span class="pre">replicate_A/WT-1/DNA/</span></tt>.</p>
-<p>The master <tt class="docutils literal"><span class="pre">run_analysis.py</span></tt> script creates an input file, <tt class="docutils literal"><span class="pre">makealignments_infile.txt</span></tt>, that specifies the specific criteria that are used to make the alignments. These criteria determine what read pairs are considered to successfully overlap and align, and which are discarded. The lines specifying the alignment criteria in these <tt class="docutils literal"><span class="pre">makealignments_infile.txt</span></tt> files are as follows (the meanings are detailed in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a> for <tt class="docutils literal"><span class="pre">mapmuts_makealignments.py</span></tt>):</p>
-<div class="highlight-python"><div class="highlight"><pre>applyfilter True
-minq 25
-maxn 2
-minoverlap 30
-maxa1m 1
-maxa2m 1
-maxrm 1
-maxgenem 6
+<h3><a class="toc-backref" href="#id22">Making alignments</a><a class="headerlink" href="#making-alignments" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <code class="docutils literal"><span class="pre">mapmuts_makealignments.py</span></code> is used to align the overlapping paired-end reads to the template gene.</p>
+<p>Each analysis is run in a subdirectory that conforms to <em>replicate/sample/amplicon/</em>, such as <code class="docutils literal"><span class="pre">replicate_A/WT-1/DNA/</span></code>.</p>
+<p>The master <code class="docutils literal"><span class="pre">run_analysis.py</span></code> script creates an input file, <code class="docutils literal"><span class="pre">makealignments_infile.txt</span></code>, that specifies the specific criteria that are used to make the alignments. These criteria determine what read pairs are considered to successfully overlap and align, and which are discarded. The lines specifying the alignment criteria in these <code class="docutils literal"><span class="pre">makealignments_infile.txt</span></code> files are as follows (the meanings are detailed in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a> for <code class="docutils literal"><span class="pre">mapmuts_makealignments.py</span></code>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">applyfilter</span> <span class="kc">True</span>
+<span class="n">minq</span> <span class="mi">25</span>
+<span class="n">maxn</span> <span class="mi">2</span>
+<span class="n">minoverlap</span> <span class="mi">30</span>
+<span class="n">maxa1m</span> <span class="mi">1</span>
+<span class="n">maxa2m</span> <span class="mi">1</span>
+<span class="n">maxrm</span> <span class="mi">1</span>
+<span class="n">maxgenem</span> <span class="mi">6</span>
 </pre></div>
 </div>
-<p>Within each subdirectory are the files created by <tt class="docutils literal"><span class="pre">mapmuts_makealignments.py</span></tt>. Here are the ones that will be of greatest interest. All of these files-of-greatest-interest are part of the repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> except as specifically noted below:</p>
+<p>Within each subdirectory are the files created by <code class="docutils literal"><span class="pre">mapmuts_makealignments.py</span></code>. Here are the ones that will be of greatest interest. All of these files-of-greatest-interest are part of the repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> except as specifically noted below:</p>
 <blockquote>
 <div><ul>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">*_alignments.txt.gz</span></tt> file gives the alignments of the reads to the template gene. This file is <strong>not</strong> included in the repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> due to its large size.</p>
+<li><p class="first">The <code class="docutils literal"><span class="pre">*_alignments.txt.gz</span></code> file gives the alignments of the reads to the template gene. This file is <strong>not</strong> included in the repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> due to its large size.</p>
 </li>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">*_unaligned.fasta.gz</span></tt> file contains reads that could not be aligned with the specified criteria. This file is <strong>not</strong> included in the repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> due to its large size.</p>
+<li><p class="first">The <code class="docutils literal"><span class="pre">*_unaligned.fasta.gz</span></code> file contains reads that could not be aligned with the specified criteria. This file is <strong>not</strong> included in the repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a> due to its large size.</p>
 </li>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">*_makealignments_log.txt</span></tt> file records the progress of the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal"><span class="pre">mapmuts_makealignments.py</span></tt>.</p>
+<li><p class="first">The <code class="docutils literal"><span class="pre">*_makealignments_log.txt</span></code> file records the progress of the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <code class="docutils literal"><span class="pre">mapmuts_makealignments.py</span></code>.</p>
 </li>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">*_alignmentstatistics.pdf</span></tt> file shows how many reads could be overlapped and aligned to the template gene. In general, a high fraction of reads could be overlappend and aligned to the template. An example is below:</p>
-<div class="figure align-center">
+<li><p class="first">The <code class="docutils literal"><span class="pre">*_alignmentstatistics.pdf</span></code> file shows how many reads could be overlapped and aligned to the template gene. In general, a high fraction of reads could be overlappend and aligned to the template. An example is below:</p>
+<div class="figure align-center" id="id2">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_WT-1_DNA_replicate_A_WT-1_DNA_alignmentstatistics.jpg"><img alt="replicate_A/WT-1/DNA/replicate_A_WT-1_DNA_alignmentstatistics.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_WT-1_DNA_replicate_A_WT-1_DNA_alignmentstatistics.jpg" style="width: 45%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">*_alignmentstatistics.pdf</span></tt> plot for <em>replicate_A</em>, <em>WT-1</em>, <em>DNA</em>.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">*_alignmentstatistics.pdf</span></code> plot for <em>replicate_A</em>, <em>WT-1</em>, <em>DNA</em>.</span></p>
 </div>
 </li>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">*_insertlengths.pdf</span></tt> file shows the lengths of the inserts that could be overlapped and aligned to the template gene. The target insert length is 50 nucleotides &#8211; in most cases the distribution was reasonably distributed around that target. An example is below:</p>
-<div class="figure align-center">
+<li><p class="first">The <code class="docutils literal"><span class="pre">*_insertlengths.pdf</span></code> file shows the lengths of the inserts that could be overlapped and aligned to the template gene. The target insert length is 50 nucleotides &#8211; in most cases the distribution was reasonably distributed around that target. An example is below:</p>
+<div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_WT-1_DNA_replicate_A_WT-1_DNA_insertlengths.jpg"><img alt="replicate_A/WT-1/DNA/replicate_A_WT-1_DNA_insertlengths.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_WT-1_DNA_replicate_A_WT-1_DNA_insertlengths.jpg" style="width: 45%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">*_insertlengths.pdf</span></tt> plot for <em>replicate_A</em>, <em>WT-1</em>, <em>DNA</em>.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">*_insertlengths.pdf</span></code> plot for <em>replicate_A</em>, <em>WT-1</em>, <em>DNA</em>.</span></p>
 </div>
 </li>
 </ul>
 </div></blockquote>
-<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal"><span class="pre">mapmuts_alignmentsummaryplot.py</span></tt> is then used to summarize how many reads could be overlapped and aligned for all <em>amplicons</em> and <em>samples</em> for each <em>replicate</em>. The plots have the name <tt class="docutils literal"><span class="pre">alignmentsummaryplot.pdf</span></tt> and are in the subdirectory for each <em>replicate</em> (so for example <tt class="docutils literal"><span class="pre">replicate_A/alignmentsummaryplot.pdf</span></tt>).</p>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <code class="docutils literal"><span class="pre">mapmuts_alignmentsummaryplot.py</span></code> is then used to summarize how many reads could be overlapped and aligned for all <em>amplicons</em> and <em>samples</em> for each <em>replicate</em>. The plots have the name <code class="docutils literal"><span class="pre">alignmentsummaryplot.pdf</span></code> and are in the subdirectory for each <em>replicate</em> (so for example <code class="docutils literal"><span class="pre">replicate_A/alignmentsummaryplot.pdf</span></code>).</p>
 <p>Below are the summary plots. This plot shows a large number of overlapped and aligned reads for all <em>amplicons</em>. The reason that the bars aren&#8217;t all exactly equal height for all <em>amplicons</em> within a <em>sample</em> is that the barcoded DNA was not pooled exactly evenly owing to imperfect quantification.</p>
 <blockquote>
-<div><div class="figure align-center">
+<div><div class="figure align-center" id="id4">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_alignmentsummaryplot.jpg"><img alt="replicate_A/alignmentsummaryplot.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_alignmentsummaryplot.jpg" style="width: 65%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">alignmentsummaryplot.pdf</span></tt> plot for <em>replicate_A</em>.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">alignmentsummaryplot.pdf</span></code> plot for <em>replicate_A</em>.</span></p>
 </div>
-<div class="figure align-center">
+<div class="figure align-center" id="id5">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_B_alignmentsummaryplot.jpg"><img alt="replicate_B/alignmentsummaryplot.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_B_alignmentsummaryplot.jpg" style="width: 65%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">alignmentsummaryplot.pdf</span></tt> plot for <em>replicate_B</em>.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">alignmentsummaryplot.pdf</span></code> plot for <em>replicate_B</em>.</span></p>
 </div>
 </div></blockquote>
 </div>
 <div class="section" id="parsing-mutations">
-<h3><a class="toc-backref" href="#id8">Parsing mutations</a><a class="headerlink" href="#parsing-mutations" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal"><span class="pre">mapmuts_parsecounts.py</span></tt> is used to parse the counts of mutations out of the alignments created in the previous step.</p>
-<p>Each analysis is run in a subdirectory that conforms to <em>replicate/sample/amplicon/</em>, such as <tt class="docutils literal"><span class="pre">replicate_A/WT-1/DNA/</span></tt> &#8211; these subdirectories already contain the alignment results.</p>
-<p>The master <tt class="docutils literal"><span class="pre">run_analysis.py</span></tt> script creates an input file, <tt class="docutils literal"><span class="pre">parsecounts_infile.txt</span></tt> that serves as input to <tt class="docutils literal"><span class="pre">mapmuts_parsecounts.py</span></tt>.
-Within each subdirectory are the files created by <tt class="docutils literal"><span class="pre">mapmuts_parsecounts.py</span></tt>. Here are the ones that will be of greatest interest:</p>
+<h3><a class="toc-backref" href="#id23">Parsing mutations</a><a class="headerlink" href="#parsing-mutations" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <code class="docutils literal"><span class="pre">mapmuts_parsecounts.py</span></code> is used to parse the counts of mutations out of the alignments created in the previous step.</p>
+<p>Each analysis is run in a subdirectory that conforms to <em>replicate/sample/amplicon/</em>, such as <code class="docutils literal"><span class="pre">replicate_A/WT-1/DNA/</span></code> &#8211; these subdirectories already contain the alignment results.</p>
+<p>The master <code class="docutils literal"><span class="pre">run_analysis.py</span></code> script creates an input file, <code class="docutils literal"><span class="pre">parsecounts_infile.txt</span></code> that serves as input to <code class="docutils literal"><span class="pre">mapmuts_parsecounts.py</span></code>.
+Within each subdirectory are the files created by <code class="docutils literal"><span class="pre">mapmuts_parsecounts.py</span></code>. Here are the ones that will be of greatest interest:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> gives the counts for all of the different codons identified at each site, in the format described in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>.</li>
-<li>The <tt class="docutils literal"><span class="pre">*_parsecounts_log.txt</span></tt> file logs the progress of <tt class="docutils literal"><span class="pre">mapmuts_parsecounts.py</span></tt>.</li>
-<li>The <tt class="docutils literal"><span class="pre">*_codondepth.pdf</span></tt> file plots the read depth for each codon. Below are example plots for a <em>DNA</em> and <em>mutDNA</em> amplicon. From these examples, you can see that the read depth was fairly good across the gene with one notable dip at a consistent location (presumably due to poor fragmentation of the amplicon at this location).</li>
+<li>The <code class="docutils literal"><span class="pre">*_codoncounts.txt</span></code> gives the counts for all of the different codons identified at each site, in the format described in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>.</li>
+<li>The <code class="docutils literal"><span class="pre">*_parsecounts_log.txt</span></code> file logs the progress of <code class="docutils literal"><span class="pre">mapmuts_parsecounts.py</span></code>.</li>
+<li>The <code class="docutils literal"><span class="pre">*_codondepth.pdf</span></code> file plots the read depth for each codon. Below are example plots for a <em>DNA</em> and <em>mutDNA</em> amplicon. From these examples, you can see that the read depth was fairly good across the gene with one notable dip at a consistent location (presumably due to poor fragmentation of the amplicon at this location).</li>
 </ul>
-<div class="figure align-center">
+<div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_WT-1_DNA_replicate_A_WT-1_DNA_codondepth.jpg"><img alt="replicate_A/WT-1/DNA/replicate_A_WT-1_DNA_codondepth.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_WT-1_DNA_replicate_A_WT-1_DNA_codondepth.jpg" style="width: 60%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">replicate_A/WT-1/DNA/replicate_A_WT-1_DNA_codondepth.pdf</span></tt> plot.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">replicate_A/WT-1/DNA/replicate_A_WT-1_DNA_codondepth.pdf</span></code> plot.</span></p>
 </div>
-<div class="figure align-center">
+<div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_WT-1_mutDNA_replicate_A_WT-1_mutDNA_codondepth.jpg"><img alt="replicate_A/WT-1/mutDNA/replicate_A_WT-1_mutDNA_codondepth.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_WT-1_mutDNA_replicate_A_WT-1_mutDNA_codondepth.jpg" style="width: 60%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">replicate_A/WT-1/mutDNA/replicate_A_WT-1_mutDNA_codondepth.pdf</span></tt> plot.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">replicate_A/WT-1/mutDNA/replicate_A_WT-1_mutDNA_codondepth.pdf</span></code> plot.</span></p>
 </div>
 </div></blockquote>
-<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal"><span class="pre">mapmuts_parsesummaryplots.py</span></tt> is then used to summarize the mutations for all <em>amplicons</em> and <em>samples</em> for each <em>replicate</em>. The output here is in the subdirectory for each <em>replicate</em>, and consists of the following three files:</p>
+<p>The <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <code class="docutils literal"><span class="pre">mapmuts_parsesummaryplots.py</span></code> is then used to summarize the mutations for all <em>amplicons</em> and <em>samples</em> for each <em>replicate</em>. The output here is in the subdirectory for each <em>replicate</em>, and consists of the following three files:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The <tt class="docutils literal"><span class="pre">parsesummary_codontypes.txt</span></tt> gives the overall fraction of mutations to each type of mutation (synonymous, nonsynonymous, stop codon) for each <em>amplicon</em> and <em>sample</em>.</li>
-<li>The <tt class="docutils literal"><span class="pre">parsesummary_codonnmuts.txt</span></tt> gives the overall fraction of mutations with one-, two-, and three-nucleotide changes for each <em>amplicon</em> and <em>sample</em>.</li>
-<li>The <tt class="docutils literal"><span class="pre">parsesummary_codon_types_and_nmuts.pdf</span></tt> plot gives a graphical summary of the frequencies of different types of mutations.</li>
+<li>The <code class="docutils literal"><span class="pre">parsesummary_codontypes.txt</span></code> gives the overall fraction of mutations to each type of mutation (synonymous, nonsynonymous, stop codon) for each <em>amplicon</em> and <em>sample</em>.</li>
+<li>The <code class="docutils literal"><span class="pre">parsesummary_codonnmuts.txt</span></code> gives the overall fraction of mutations with one-, two-, and three-nucleotide changes for each <em>amplicon</em> and <em>sample</em>.</li>
+<li>The <code class="docutils literal"><span class="pre">parsesummary_codon_types_and_nmuts.pdf</span></code> plot gives a graphical summary of the frequencies of different types of mutations.</li>
 </ul>
 </div></blockquote>
 <p>These last plots are the key summary figures. They are shown below:</p>
 <blockquote>
-<div><div class="figure align-center">
+<div><div class="figure align-center" id="id8">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_parsesummary_codon_types_and_nmuts.jpg"><img alt="replicate_A/parsesummary_codon_types_and_nmuts.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_parsesummary_codon_types_and_nmuts.jpg" style="width: 65%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">replicate_A/parsesummary_codon_types_and_nmuts.pdf</span></tt> plot for <em>replicate_A</em>.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">replicate_A/parsesummary_codon_types_and_nmuts.pdf</span></code> plot for <em>replicate_A</em>.</span></p>
 </div>
-<div class="figure align-center">
+<div class="figure align-center" id="id9">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_B_parsesummary_codon_types_and_nmuts.jpg"><img alt="replicate_B/parsesummary_codon_types_and_nmuts.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_B_parsesummary_codon_types_and_nmuts.jpg" style="width: 65%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">replicate_B/parsesummary_codon_types_and_nmuts.pdf</span></tt> plot for <em>replicate_B</em>.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">replicate_B/parsesummary_codon_types_and_nmuts.pdf</span></code> plot for <em>replicate_B</em>.</span></p>
 </div>
 </div></blockquote>
 <p>Key points from these plots:</p>
@@ -291,12 +291,12 @@ Within each subdirectory are the files created by <tt class="docutils literal"><
 </div></blockquote>
 </div>
 <div class="section" id="checking-mutation-sampling-completeness">
-<h3><a class="toc-backref" href="#id9">Checking mutation sampling completeness</a><a class="headerlink" href="#checking-mutation-sampling-completeness" title="Permalink to this headline">¶</a></h3>
-<p>An analysis was performed to see how completely the possible mutations were sampled for each <em>replicate</em> (looking at the net sampling over the pooled <em>samples</em> for each replicate). To do this, the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <tt class="docutils literal"><span class="pre">mapmuts_countparsedmuts.py</span></tt> was used.</p>
-<p>Each analysis was done in the subdirectory for that <em>replicate</em> (i.e. <tt class="docutils literal"><span class="pre">./replicate_A/</span></tt>) and created the following files of interest:</p>
+<h3><a class="toc-backref" href="#id24">Checking mutation sampling completeness</a><a class="headerlink" href="#checking-mutation-sampling-completeness" title="Permalink to this headline">¶</a></h3>
+<p>An analysis was performed to see how completely the possible mutations were sampled for each <em>replicate</em> (looking at the net sampling over the pooled <em>samples</em> for each replicate). To do this, the <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> script <code class="docutils literal"><span class="pre">mapmuts_countparsedmuts.py</span></code> was used.</p>
+<p>Each analysis was done in the subdirectory for that <em>replicate</em> (i.e. <code class="docutils literal"><span class="pre">./replicate_A/</span></code>) and created the following files of interest:</p>
 <blockquote>
 <div><ul>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">countparsedmuts_multi-nt-allcodonmutcounts.txt</span></tt> file gives the fraction of all mutations that involve multiple nucleotide changes to the same codon that are found <span class="math">\(\ge n\)</span> times for <em>n</em> ranging from 0 to 50. The reason that this fraction is of interest is that multiple nucleotide change codon mutations arise only very rarely due to sequencing or reverse-transcription errors &#8211; so occurrence of these mutations will tend to be due to the desired codon mutagenesis process. Here are the first few lines of this file for <em>replicate_A</em> (this is the <tt class="docutils literal"><span class="pre">./replicate_A/countparsedmuts_multi-nt-allcodonmutcounts.txt</span></tt> file):</p>
+<li><p class="first">The <code class="docutils literal"><span class="pre">countparsedmuts_multi-nt-allcodonmutcounts.txt</span></code> file gives the fraction of all mutations that involve multiple nucleotide changes to the same codon that are found <span class="math">\(\ge n\)</span> times for <em>n</em> ranging from 0 to 50. The reason that this fraction is of interest is that multiple nucleotide change codon mutations arise only very rarely due to sequencing or reverse-transcription errors &#8211; so occurrence of these mutations will tend to be due to the desired codon mutagenesis process. Here are the first few lines of this file for <em>replicate_A</em> (this is the <code class="docutils literal"><span class="pre">./replicate_A/countparsedmuts_multi-nt-allcodonmutcounts.txt</span></code> file):</p>
 <blockquote>
 <div><pre class="literal-block">
 # File listing the fraction of multi-nt-all mutations that are found greater than or equal to n times.
@@ -325,7 +325,7 @@ Within each subdirectory are the files created by <tt class="docutils literal"><
 </div></blockquote>
 <p>To attempt to distinguish between these explanations, see the next files...</p>
 </li>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">countparsedmuts_multi-nt-syncodonmutcounts.txt</span></tt> file gives the fraction of <strong>synonymous</strong> multi-nucleotide change mutations that are found <span class="math">\(\ge n\)</span> times for <em>n</em> ranging from 0 to 50. We would expect that synonymous mutations will usually not be highly deleterious, and so will usually not be purged by selection during viral growth. (Note however that this is not completely true for influenza, as some synonymous mutations to the virus can be extremely deleterious; see for example <a class="reference external" href="http://jvi.asm.org/content/82/5/2295.short">J Virol, 82, 2295</a> and <a class="reference external" href="http://www.nature.com/nbt/journal/v28/n7/full/nbt.1636.html">Nat Biotech, 28, 723</a>). Here are the first few lines of this file for <em>replicate_A</em> (this is the <tt class="docutils literal"><span class="pre">./replicate_A/countparsedmuts_multi-nt-syncodonmutcounts.txt</span></tt> file):</p>
+<li><p class="first">The <code class="docutils literal"><span class="pre">countparsedmuts_multi-nt-syncodonmutcounts.txt</span></code> file gives the fraction of <strong>synonymous</strong> multi-nucleotide change mutations that are found <span class="math">\(\ge n\)</span> times for <em>n</em> ranging from 0 to 50. We would expect that synonymous mutations will usually not be highly deleterious, and so will usually not be purged by selection during viral growth. (Note however that this is not completely true for influenza, as some synonymous mutations to the virus can be extremely deleterious; see for example <a class="reference external" href="http://jvi.asm.org/content/82/5/2295.short">J Virol, 82, 2295</a> and <a class="reference external" href="http://www.nature.com/nbt/journal/v28/n7/full/nbt.1636.html">Nat Biotech, 28, 723</a>). Here are the first few lines of this file for <em>replicate_A</em> (this is the <code class="docutils literal"><span class="pre">./replicate_A/countparsedmuts_multi-nt-syncodonmutcounts.txt</span></code> file):</p>
 <blockquote>
 <div><pre class="literal-block">
 # File listing the fraction of multi-nt-syn mutations that are found greater than or equal to n times.
@@ -346,11 +346,11 @@ Within each subdirectory are the files created by <tt class="docutils literal"><
 </pre>
 </div></blockquote>
 </li>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">countparsedmuts_multi-nt-codonmutcounts.pdf</span></tt> file plots the results in the two aforementioned files:</p>
+<li><p class="first">The <code class="docutils literal"><span class="pre">countparsedmuts_multi-nt-codonmutcounts.pdf</span></code> file plots the results in the two aforementioned files:</p>
 <blockquote>
-<div><div class="figure align-center">
+<div><div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_countparsedmuts_multi-nt-codonmutcounts.jpg"><img alt="replicate_A/countparsedmuts_multi-nt-codonmutcounts.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_replicate_A_countparsedmuts_multi-nt-codonmutcounts.jpg" style="width: 85%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">replicate_A/countparsedmuts_multi-nt-codonmutcounts.jpg</span></tt> plot.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">replicate_A/countparsedmuts_multi-nt-codonmutcounts.jpg</span></code> plot.</span></p>
 </div>
 </div></blockquote>
 <p>We see that the multi-nucleotide synonymous mutations are again sampled very thoroughly in the <em>mutDNA</em> amplicons (98% are found at least 10 times). Now the mutations are also sampled much more thoroughly in the <em>mutvirus-p1</em> amplicons as well, with 77% appearing at least 10 times. This compares to only 47% appearing at least 10 times for all (including nonsynonymous) multi-nucleotide mutations. So the sampling is fairly good here. Why is it not closer to 100% of the <em>mutvirus-p1</em> amplicons? It could be that experimental limitations mean that some of the mutations never make it into the viruses. However, because some synonymous mutations are known to be highly deleterious (see the <a class="reference external" href="http://jvi.asm.org/content/82/5/2295.short">J Virol, 82, 2295</a> and <a class="reference external" href="http://www.nature.com/nbt/journal/v28/n7/full/nbt.1636.html">Nat Biotech, 28, 723</a> references mentioned above), it could simply be a sign that these mutations are under selection. Overall, we interpret the fact that nearly 80% of the synonymous mutations are found at least 10 times in the <em>mutvirus-p1</em> amplicons to be a good sign, and to indicate that most mutations were sampled in the mutant viruses.</p>
@@ -359,90 +359,90 @@ Within each subdirectory are the files created by <tt class="docutils literal"><
 </div></blockquote>
 </div>
 <div class="section" id="inference-of-amino-acid-preferences">
-<h3><a class="toc-backref" href="#id10">Inference of amino-acid preferences</a><a class="headerlink" href="#inference-of-amino-acid-preferences" title="Permalink to this headline">¶</a></h3>
-<p>We next use the results of the deep-sequencing analysis to infer the preference of each site for each amino acid. The MCMC algorithm for inference of the preferences is described in detail in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a> describing the <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt> script.</p>
+<h3><a class="toc-backref" href="#id25">Inference of amino-acid preferences</a><a class="headerlink" href="#inference-of-amino-acid-preferences" title="Permalink to this headline">¶</a></h3>
+<p>We next use the results of the deep-sequencing analysis to infer the preference of each site for each amino acid. The MCMC algorithm for inference of the preferences is described in detail in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a> describing the <code class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></code> script.</p>
 <p>Briefly, we use the <em>DNA</em> amplicons to estimate the sequencing error rate that afflicts the <em>mutDNA</em> amplicons, and the <em>RNA</em> amplicons to estimate the sequence / reverse-transcription error rate that afflicts the <em>mutvirus-p1</em> amplicons. We then infer the preferences based on changes in frequency going from the <em>mutDNA</em> to the <em>mutvirus-p1</em> (which involves selection for viral growth).</p>
 <p>We infer the preferences separately for each <em>replicate</em>, averaging over all of the <em>samples</em> for the replicate. We then compare the inferred preferences among the replicates, and summarize the results graphically.</p>
 <p>Specifically, the steps are as follows:</p>
 <ol class="arabic">
-<li><p class="first">Infer the preferences separately for each <em>sample</em> within each <em>replicate</em> using <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt>. The preferences are inferred using both the passage 1 (<em>p1</em>) and passage 2 (<em>p2</em>) mutant viruses, and these inferences are done within the subdirectory for each sample (such as <tt class="docutils literal"><span class="pre">./replicate_A/WT-1/</span></tt>). The input files that specify the parameters used by <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt> are in files with names <tt class="docutils literal"><span class="pre">p1_inferpreferences_infile.txt</span></tt> and <tt class="docutils literal"><span class="pre">p2_inferpreferences_infile.txt</span></tt> within each <em>sample</em> subdirectory. The key settings for the priors and MCMC are as follows (the exact meanings are detailed in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a> for <tt class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></tt>):</p>
-<div class="highlight-python"><div class="highlight"><pre>nsteps 200000
-nruns 3
-thin 200
-convergence 0.01
-stepincrease 4
-mu_concentration 1.0
-pi_concentration 1.0
-rho_concentration 1.0
-epsilon_concentration 1.0
-minvalue 1e-7
-removeoutlier False
+<li><p class="first">Infer the preferences separately for each <em>sample</em> within each <em>replicate</em> using <code class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></code>. The preferences are inferred using both the passage 1 (<em>p1</em>) and passage 2 (<em>p2</em>) mutant viruses, and these inferences are done within the subdirectory for each sample (such as <code class="docutils literal"><span class="pre">./replicate_A/WT-1/</span></code>). The input files that specify the parameters used by <code class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></code> are in files with names <code class="docutils literal"><span class="pre">p1_inferpreferences_infile.txt</span></code> and <code class="docutils literal"><span class="pre">p2_inferpreferences_infile.txt</span></code> within each <em>sample</em> subdirectory. The key settings for the priors and MCMC are as follows (the exact meanings are detailed in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a> for <code class="docutils literal"><span class="pre">mapmuts_inferpreferences.py</span></code>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nsteps</span> <span class="mi">200000</span>
+<span class="n">nruns</span> <span class="mi">3</span>
+<span class="n">thin</span> <span class="mi">200</span>
+<span class="n">convergence</span> <span class="mf">0.01</span>
+<span class="n">stepincrease</span> <span class="mi">4</span>
+<span class="n">mu_concentration</span> <span class="mf">1.0</span>
+<span class="n">pi_concentration</span> <span class="mf">1.0</span>
+<span class="n">rho_concentration</span> <span class="mf">1.0</span>
+<span class="n">epsilon_concentration</span> <span class="mf">1.0</span>
+<span class="n">minvalue</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">7</span>
+<span class="n">removeoutlier</span> <span class="kc">False</span>
 </pre></div>
 </div>
 <p>The following files are created within each <em>sample</em> subdirectory. Such files are created both for the <em>p1</em> viruses with names indicated below, and also comparable files for the <em>p2</em> viruses:</p>
 <blockquote>
 <div><ul class="simple">
-<li><tt class="docutils literal"><span class="pre">p1_inferpreferences_log.txt</span></tt> logs the MCMC progress.</li>
-<li><tt class="docutils literal"><span class="pre">p1_equilibriumpreferences.txt</span></tt> is a text file giving the posterior mean inferred preferences.</li>
-<li><tt class="docutils literal"><span class="pre">p1_equilibriumpreferences_credibleintervals_95.txt</span></tt> is a text file giving 95% credible intervals for the inferred preferences.</li>
+<li><code class="docutils literal"><span class="pre">p1_inferpreferences_log.txt</span></code> logs the MCMC progress.</li>
+<li><code class="docutils literal"><span class="pre">p1_equilibriumpreferences.txt</span></code> is a text file giving the posterior mean inferred preferences.</li>
+<li><code class="docutils literal"><span class="pre">p1_equilibriumpreferences_credibleintervals_95.txt</span></code> is a text file giving 95% credible intervals for the inferred preferences.</li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">Compute the overall equilibrium preferences inferred for each <em>replicate</em> by averaging the inferred preferences for the <em>samples</em> in that replicate with <tt class="docutils literal"><span class="pre">mapmuts_preferencemeans.py</span></tt>. This inference is done within every <em>replicate</em> subdirectory (such as <tt class="docutils literal"><span class="pre">./replicate_A/</span></tt> to create the file summarizing the preferences for that replicate. The following files are created:</p>
+<li><p class="first">Compute the overall equilibrium preferences inferred for each <em>replicate</em> by averaging the inferred preferences for the <em>samples</em> in that replicate with <code class="docutils literal"><span class="pre">mapmuts_preferencemeans.py</span></code>. This inference is done within every <em>replicate</em> subdirectory (such as <code class="docutils literal"><span class="pre">./replicate_A/</span></code> to create the file summarizing the preferences for that replicate. The following files are created:</p>
 <blockquote>
 <div><ul class="simple">
-<li><tt class="docutils literal"><span class="pre">./replicate_A/replicate_A_p1_equilibriumpreferences.txt</span></tt> : The preferences inferred for <em>replicate_A</em> using the <em>p1</em> (passaged once) viruses.</li>
-<li><tt class="docutils literal"><span class="pre">./replicate_A/replicate_A_p2_equilibriumpreferences.txt</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">./replicate_B/replicate_B_p1_equilibriumpreferences.txt</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">./replicate_B/replicate_B_p2_equilibriumpreferences.txt</span></tt></li>
+<li><code class="docutils literal"><span class="pre">./replicate_A/replicate_A_p1_equilibriumpreferences.txt</span></code> : The preferences inferred for <em>replicate_A</em> using the <em>p1</em> (passaged once) viruses.</li>
+<li><code class="docutils literal"><span class="pre">./replicate_A/replicate_A_p2_equilibriumpreferences.txt</span></code></li>
+<li><code class="docutils literal"><span class="pre">./replicate_B/replicate_B_p1_equilibriumpreferences.txt</span></code></li>
+<li><code class="docutils literal"><span class="pre">./replicate_B/replicate_B_p2_equilibriumpreferences.txt</span></code></li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">Compute the overall equilibrium preferences across both <em>replicates</em> for the <em>WT</em> samples and the <em>N334H</em> samples with <tt class="docutils literal"><span class="pre">mapmuts_preferencemeans.py</span></tt>. This creates the following files:</p>
+<li><p class="first">Compute the overall equilibrium preferences across both <em>replicates</em> for the <em>WT</em> samples and the <em>N334H</em> samples with <code class="docutils literal"><span class="pre">mapmuts_preferencemeans.py</span></code>. This creates the following files:</p>
 <blockquote>
 <div><ul class="simple">
-<li><tt class="docutils literal"><span class="pre">./WT_p1_equilibriumpreferences.txt</span></tt> gives the preferences inferred from the passage 1 (<em>p1</em>) averaged across the <em>WT-1</em> and <em>WT-2</em> <em>samples</em> from both <em>replicates</em>.</li>
-<li><tt class="docutils literal"><span class="pre">./N334H_p1_equilibriumpreferences.txt</span></tt></li>
+<li><code class="docutils literal"><span class="pre">./WT_p1_equilibriumpreferences.txt</span></code> gives the preferences inferred from the passage 1 (<em>p1</em>) averaged across the <em>WT-1</em> and <em>WT-2</em> <em>samples</em> from both <em>replicates</em>.</li>
+<li><code class="docutils literal"><span class="pre">./N334H_p1_equilibriumpreferences.txt</span></code></li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">Compute the overall equilibrium preferences averaged over the two independent replicates (<em>replicate_A</em> and <em>replicate_B</em>) with <tt class="docutils literal"><span class="pre">mapmuts_preferencemeans.py</span></tt>. This is the &#8220;best&#8221; estimate for these preferences as it combines the data for the two replicates. The results are in the main subdirectory for this example in the following files:</p>
+<li><p class="first">Compute the overall equilibrium preferences averaged over the two independent replicates (<em>replicate_A</em> and <em>replicate_B</em>) with <code class="docutils literal"><span class="pre">mapmuts_preferencemeans.py</span></code>. This is the &#8220;best&#8221; estimate for these preferences as it combines the data for the two replicates. The results are in the main subdirectory for this example in the following files:</p>
 <blockquote>
 <div><ul class="simple">
-<li><tt class="docutils literal"><span class="pre">./p1_equilibriumpreferences.txt</span></tt> gives the preferences inferred from the first passage (<em>p1</em>).</li>
-<li><tt class="docutils literal"><span class="pre">./p2_equilibriumpreferences.txt</span></tt> gives the preferences inferred from the second passage (<em>p2</em>).</li>
+<li><code class="docutils literal"><span class="pre">./p1_equilibriumpreferences.txt</span></code> gives the preferences inferred from the first passage (<em>p1</em>).</li>
+<li><code class="docutils literal"><span class="pre">./p2_equilibriumpreferences.txt</span></code> gives the preferences inferred from the second passage (<em>p2</em>).</li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">Compute the correlations between the inferred preferences. These allow us to compare the inferred preferences across replicates, and between the passage 1 (<em>p1</em>) and passage 2 (<em>p2</em>) viruses within each replicate. These correlations were computed using the <tt class="docutils literal"><span class="pre">mapmuts_preferencescorrelate.py</span></tt> described in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>). The results are in the form of PDF plots that are created in the <tt class="docutils literal"><span class="pre">./correlations/</span></tt> subdirectory. The key plots are shown below. Overall these plots show that the two passages <em>p1</em> and <em>p2</em> are highly correlated with each other. The two independent replicates (<em>replicate_A</em> and <em>replicate_B</em>) are correlated, but less so &#8211; presumably this is due to stochasticity in growth of the viruses from these replicates. The <em>WT</em> and <em>N334H</em> samples are about as correlated as the two replicates.</p>
+<li><p class="first">Compute the correlations between the inferred preferences. These allow us to compare the inferred preferences across replicates, and between the passage 1 (<em>p1</em>) and passage 2 (<em>p2</em>) viruses within each replicate. These correlations were computed using the <code class="docutils literal"><span class="pre">mapmuts_preferencescorrelate.py</span></code> described in the <a class="reference external" href="http://jbloom.github.io/mapmuts/">mapmuts documentation</a>). The results are in the form of PDF plots that are created in the <code class="docutils literal"><span class="pre">./correlations/</span></code> subdirectory. The key plots are shown below. Overall these plots show that the two passages <em>p1</em> and <em>p2</em> are highly correlated with each other. The two independent replicates (<em>replicate_A</em> and <em>replicate_B</em>) are correlated, but less so &#8211; presumably this is due to stochasticity in growth of the viruses from these replicates. The <em>WT</em> and <em>N334H</em> samples are about as correlated as the two replicates.</p>
 <blockquote>
-<div><div class="figure align-center">
+<div><div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_A_p1_vs_replicate_A_p2.jpg"><img alt="correlations/replicate_A_p1_vs_replicate_A_p2.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_A_p1_vs_replicate_A_p2.jpg" style="width: 30%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">correlations/replicate_A_p1_vs_replicate_A_p2.jpg</span></tt> plot.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">correlations/replicate_A_p1_vs_replicate_A_p2.jpg</span></code> plot.</span></p>
 </div>
-<div class="figure align-center">
+<div class="figure align-center" id="id12">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_B_p1_vs_replicate_B_p2.jpg"><img alt="correlations/replicate_B_p1_vs_replicate_B_p2.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_B_p1_vs_replicate_B_p2.jpg" style="width: 30%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">correlations/replicate_B_p1_vs_replicate_B_p2.jpg</span></tt> plot.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">correlations/replicate_B_p1_vs_replicate_B_p2.jpg</span></code> plot.</span></p>
 </div>
-<div class="figure align-center">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_A_p1_vs_replicate_B_p1.jpg"><img alt="correlations/replicate_A_p1_vs_replicate_B_p1.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_replicate_A_p1_vs_replicate_B_p1.jpg" style="width: 30%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">correlations/replicate_A_p1_vs_replicate_B_p1.jpg</span></tt> plot.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">correlations/replicate_A_p1_vs_replicate_B_p1.jpg</span></code> plot.</span></p>
 </div>
-<div class="figure align-center">
+<div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_WT_p1_vs_N334H_p1.jpg"><img alt="correlations/WT_p1_vs_N334H_p1.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_correlations_WT_p1_vs_N334H_p1.jpg" style="width: 30%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">correlations/WT_p1_vs_N334H_p1.jpg</span></tt> plot.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">correlations/WT_p1_vs_N334H_p1.jpg</span></code> plot.</span></p>
 </div>
 </div></blockquote>
 </li>
 </ol>
 </div>
 <div class="section" id="summary-of-amino-acid-preferences">
-<h3><a class="toc-backref" href="#id11">Summary of amino-acid preferences</a><a class="headerlink" href="#summary-of-amino-acid-preferences" title="Permalink to this headline">¶</a></h3>
-<p>As described in the previous section, the overall best inferences for the amino-acid preferences are contained in the <tt class="docutils literal"><span class="pre">p1_equilibriumpreferences.txt</span></tt> file. To graphically summarize these preferences, the <tt class="docutils literal"><span class="pre">mapmuts_siteprofileplots.py</span></tt> script was used. The resulting logo plot is shown below. For each site, the height of the bars are proportional to the preference for that amino acid at that site. The letters are colored according to amino-acid hydrophobicity, and solvent accessibilities and secondary structures (computed from <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=2iqh">PDB 2IQH</a> using the <a class="reference external" href="http://www.cmbi.ru.nl/hsspsoap/">DSSP webserver</a>) are overlaid for those residues that are present in the crystal structure.</p>
+<h3><a class="toc-backref" href="#id26">Summary of amino-acid preferences</a><a class="headerlink" href="#summary-of-amino-acid-preferences" title="Permalink to this headline">¶</a></h3>
+<p>As described in the previous section, the overall best inferences for the amino-acid preferences are contained in the <code class="docutils literal"><span class="pre">p1_equilibriumpreferences.txt</span></code> file. To graphically summarize these preferences, the <code class="docutils literal"><span class="pre">mapmuts_siteprofileplots.py</span></code> script was used. The resulting logo plot is shown below. For each site, the height of the bars are proportional to the preference for that amino acid at that site. The letters are colored according to amino-acid hydrophobicity, and solvent accessibilities and secondary structures (computed from <a class="reference external" href="http://www.rcsb.org/pdb/explore.do?structureId=2iqh">PDB 2IQH</a> using the <a class="reference external" href="http://www.cmbi.ru.nl/hsspsoap/">DSSP webserver</a>) are overlaid for those residues that are present in the crystal structure.</p>
 <blockquote>
-<div><div class="figure align-center">
+<div><div class="figure align-center" id="id15">
 <a class="reference internal image-reference" href="_images/example_2013Analysis_Influenza_NP_Aichi68_p1_site_preferences_logoplot.jpg"><img alt="p1_site_preferences_logoplot.jpg" src="_images/example_2013Analysis_Influenza_NP_Aichi68_p1_site_preferences_logoplot.jpg" style="width: 90%;" /></a>
-<p class="caption">The <tt class="docutils literal"><span class="pre">p1_site_preferences_logoplot.jpg</span></tt> plot.</p>
+<p class="caption"><span class="caption-text">The <code class="docutils literal"><span class="pre">p1_site_preferences_logoplot.jpg</span></code> plot.</span></p>
 </div>
 </div></blockquote>
 </div>
@@ -495,9 +495,6 @@ removeoutlier False
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -519,13 +516,13 @@ removeoutlier False
         <li class="right" >
           <a href="examples.html" title="Examples"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="examples.html" >Examples</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="examples.html" >Examples</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

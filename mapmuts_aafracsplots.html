@@ -8,7 +8,7 @@
     
     <title>mapmuts_aafracsplots.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_inferenrichment.py" href="mapmuts_inferenrichment.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_entropycomparison.html" title="mapmuts_entropycomparison.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,14 +59,14 @@
 <span id="id1"></span><h1>mapmuts_aafracsplots.py<a class="headerlink" href="#mapmuts-aafracsplots-py" title="Permalink to this headline">¶</a></h1>
 <p>Makes plots summarizing fractions of each different mutant amino acid at each site.
 This script is designed to be run after you have already run
-<a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a> on several samples. Each run of that program
-generates a <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> file, which is used as input for this
+<a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><span class="std std-ref">mapmuts_parsecounts.py</span></a> on several samples. Each run of that program
+generates a <code class="docutils literal"><span class="pre">*_codoncounts.txt</span></code> file, which is used as input for this
 script.</p>
 <p>To run this script from the prompt, first create a text infile of the
-format described below. Then simply type <a class="reference internal" href="#mapmuts-aafracsplots-py"><em>mapmuts_aafracsplots.py</em></a>
-followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+format described below. Then simply type <a class="reference internal" href="#mapmuts-aafracsplots-py"><span class="std std-ref">mapmuts_aafracsplots.py</span></a>
+followed by the infile name. For example, if the name is <code class="docutils literal"><span class="pre">infile.txt</span></code>,
 type:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_aafracsplots.py infile.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_aafracsplots</span><span class="o">.</span><span class="n">py</span> <span class="n">infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>This script will only work if <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> are available.</p>
@@ -74,29 +74,29 @@ type:</p>
 <h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
 <p>The input file is a text file that should have the following entries. Blank lines or lines beginning with # are ignored (i.e. as comment lines).</p>
 <p>The first line should specify the key <em>plotfileprefix</em> followed by the prefix given to the plot for each site. For example, to place the plots in the directory <em>aafracsplots</em> with the prefix <em>WT-1_aafracs</em> you would use:</p>
-<div class="highlight-python"><div class="highlight"><pre>plotfileprefix aafracsplots/WT-1_aafracs
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">plotfileprefix</span> <span class="n">aafracsplots</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_aafracs</span>
 </pre></div>
 </div>
-<p>This would then create files <tt class="docutils literal"><span class="pre">aafracsplots/WT-1_aafracs_M1.pdf</span></tt>, etc for all sites. Note that if <em>plotfileprefix</em> specifies a directory as part of the prefix, that directory must already exist (so in the above example, <tt class="docutils literal"><span class="pre">aafracsplots/</span></tt> must already exist).</p>
-<p>There should then be a list of lines specifying the locations of the <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. Each line should give the name / location of the file (no spaces allowed), followed by the name given to that sample in the plots.</p>
+<p>This would then create files <code class="docutils literal"><span class="pre">aafracsplots/WT-1_aafracs_M1.pdf</span></code>, etc for all sites. Note that if <em>plotfileprefix</em> specifies a directory as part of the prefix, that directory must already exist (so in the above example, <code class="docutils literal"><span class="pre">aafracsplots/</span></code> must already exist).</p>
+<p>There should then be a list of lines specifying the locations of the <code class="docutils literal"><span class="pre">*_codoncounts.txt</span></code> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><span class="std std-ref">mapmuts_parsecounts.py</span></a>. Each line should give the name / location of the file (no spaces allowed), followed by the name given to that sample in the plots.</p>
 <p>Finally, there should be a line with the key <em>printprogress</em> and the value being either <em>True</em> or <em>False</em>. If it is <em>True</em>, a progress line is printed as the script runs, indicating how many plots have been made already.</p>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># input file to mapmuts_aafracsplots.py
-plotfileprefix aafracsplots/WT-1_aafracs
-DNA/WT-1_DNA_codoncounts.txt WT-1 DNA
-mutDNA/WT-1_mutDNA_codoncounts.txt WT-1 mutDNA
-RNA/WT-1_RNA_codoncounts.txt WT-1 RNA
-virus-p1/WT-1_virus-p1_codoncounts.txt WT-1 virus-p1
-virus-p2/WT-1_virus-p2_codoncounts.txt WT-1 virus-p2
-mutvirus-p1/WT-1_mutvirus-p1_codoncounts.txt WT-1 mutvirus-p1
-mutvirus-p2/WT-1_mutvirus-p2_codoncounts.txt WT-1 mutvirus-p2
-printprogress True
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># input file to mapmuts_aafracsplots.py</span>
+<span class="n">plotfileprefix</span> <span class="n">aafracsplots</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_aafracs</span>
+<span class="n">DNA</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_DNA_codoncounts</span><span class="o">.</span><span class="n">txt</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span> <span class="n">DNA</span>
+<span class="n">mutDNA</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_mutDNA_codoncounts</span><span class="o">.</span><span class="n">txt</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span> <span class="n">mutDNA</span>
+<span class="n">RNA</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_RNA_codoncounts</span><span class="o">.</span><span class="n">txt</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span> <span class="n">RNA</span>
+<span class="n">virus</span><span class="o">-</span><span class="n">p1</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_virus</span><span class="o">-</span><span class="n">p1_codoncounts</span><span class="o">.</span><span class="n">txt</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span> <span class="n">virus</span><span class="o">-</span><span class="n">p1</span>
+<span class="n">virus</span><span class="o">-</span><span class="n">p2</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_virus</span><span class="o">-</span><span class="n">p2_codoncounts</span><span class="o">.</span><span class="n">txt</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span> <span class="n">virus</span><span class="o">-</span><span class="n">p2</span>
+<span class="n">mutvirus</span><span class="o">-</span><span class="n">p1</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_mutvirus</span><span class="o">-</span><span class="n">p1_codoncounts</span><span class="o">.</span><span class="n">txt</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span> <span class="n">mutvirus</span><span class="o">-</span><span class="n">p1</span>
+<span class="n">mutvirus</span><span class="o">-</span><span class="n">p2</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_mutvirus</span><span class="o">-</span><span class="n">p2_codoncounts</span><span class="o">.</span><span class="n">txt</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span> <span class="n">mutvirus</span><span class="o">-</span><span class="n">p2</span>
+<span class="n">printprogress</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="output-files">
 <h2>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
-<p>This script will generate an output plot for each site in the protein. These sites will be named with the prefix given by <em>plotfileprefix</em> and the suffix being the wildtype identity at that site and then the site number. For example, assuming the first residue in methionine (M), the first plot for the above example input file would be <tt class="docutils literal"><span class="pre">aafracsplots/WT-1_aafracs_M1A.pdf</span></tt>.</p>
+<p>This script will generate an output plot for each site in the protein. These sites will be named with the prefix given by <em>plotfileprefix</em> and the suffix being the wildtype identity at that site and then the site number. For example, assuming the first residue in methionine (M), the first plot for the above example input file would be <code class="docutils literal"><span class="pre">aafracsplots/WT-1_aafracs_M1A.pdf</span></code>.</p>
 <p>In general, there are going to be quite a few of these plots (for example, there will be 500 for a 500-residue protein). This is why you may want to specify a new directory with <em>plotfileprefix</em>.</p>
 <p>Here is an example plot:</p>
 <div class="figure align-center">
@@ -141,9 +141,6 @@ printprogress True
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -165,13 +162,13 @@ printprogress True
         <li class="right" >
           <a href="mapmuts_entropycomparison.html" title="mapmuts_entropycomparison.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

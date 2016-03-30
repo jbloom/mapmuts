@@ -8,7 +8,7 @@
     
     <title>mapmuts_alignmentsummaryplot.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_parsecounts.py" href="mapmuts_parsecounts.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_makealignments.html" title="mapmuts_makealignments.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,33 +57,33 @@
             
   <div class="section" id="mapmuts-alignmentsummaryplot-py">
 <span id="id1"></span><h1>mapmuts_alignmentsummaryplot.py<a class="headerlink" href="#mapmuts-alignmentsummaryplot-py" title="Permalink to this headline">¶</a></h1>
-<p>Makes summary plot after several runs of <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a>.</p>
+<p>Makes summary plot after several runs of <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><span class="std std-ref">mapmuts_makealignments.py</span></a>.</p>
 <p>This script creates a stacked bar graph that summarizes the overall
 number of reads for each sample and how many reads were retained
 and removed during the alignment process.</p>
 <p>To run this script from the prompt, first create a text infile of the
-format described below. Then simply type <a class="reference internal" href="#mapmuts-alignmentsummaryplot-py"><em>mapmuts_alignmentsummaryplot.py</em></a>
-followed by the infile name. For example, if the name is <tt class="docutils literal"><span class="pre">infile.txt</span></tt>,
+format described below. Then simply type <a class="reference internal" href="#mapmuts-alignmentsummaryplot-py"><span class="std std-ref">mapmuts_alignmentsummaryplot.py</span></a>
+followed by the infile name. For example, if the name is <code class="docutils literal"><span class="pre">infile.txt</span></code>,
 type:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_alignmentsummaryplot.py infile.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_alignmentsummaryplot</span><span class="o">.</span><span class="n">py</span> <span class="n">infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>This script is designed to be run after you have already run
-<a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> on several samples. Each run of that program
-generates an <tt class="docutils literal"><span class="pre">*_alignmentstatistics.txt</span></tt> file. This script reads in
+<a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><span class="std std-ref">mapmuts_makealignments.py</span></a> on several samples. Each run of that program
+generates an <code class="docutils literal"><span class="pre">*_alignmentstatistics.txt</span></code> file. This script reads in
 those files and creates a stacked bar graph that summarizes the output
 of the various samples.</p>
 <p>This script will only work if <a class="reference external" href="http://wiki.scipy.org/PyLab">pylab</a> / <a class="reference external" href="http://matplotlib.org/">matplotlib</a> are available.</p>
 <div class="section" id="input-file-format">
 <h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
-<p>The input file should specify all of the <tt class="docutils literal"><span class="pre">*_alignmentstatistics.txt</span></tt> files created by <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><em>mapmuts_makealignments.py</em></a> along with the sample names these are assigned. Each entry should be on a separate line, with the file name (no spaces allowed) followed by a space and then the sample name used in the plot (spaces are allowed). There must be at least two such entries.</p>
+<p>The input file should specify all of the <code class="docutils literal"><span class="pre">*_alignmentstatistics.txt</span></code> files created by <a class="reference internal" href="mapmuts_makealignments.html#mapmuts-makealignments-py"><span class="std std-ref">mapmuts_makealignments.py</span></a> along with the sample names these are assigned. Each entry should be on a separate line, with the file name (no spaces allowed) followed by a space and then the sample name used in the plot (spaces are allowed). There must be at least two such entries.</p>
 <p>There should then be a line with the initial word <em>plotfile</em> and then the name of the PDF plot that is created. This file is overwritten if it alread exits.</p>
 <p>Blank lines and lines beginning with # are ignored.</p>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># Input file to mapmuts_alignmentsummaryplot.py
-sample_1_alignmentstatistics.txt sample 1
-sample_2_alignmentstatistics.txt sample 2
-plotfile alignmentstatistics_plot.pdf
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Input file to mapmuts_alignmentsummaryplot.py</span>
+<span class="n">sample_1_alignmentstatistics</span><span class="o">.</span><span class="n">txt</span> <span class="n">sample</span> <span class="mi">1</span>
+<span class="n">sample_2_alignmentstatistics</span><span class="o">.</span><span class="n">txt</span> <span class="n">sample</span> <span class="mi">2</span>
+<span class="n">plotfile</span> <span class="n">alignmentstatistics_plot</span><span class="o">.</span><span class="n">pdf</span>
 </pre></div>
 </div>
 </div>
@@ -132,9 +132,6 @@ plotfile alignmentstatistics_plot.pdf
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -156,13 +153,13 @@ plotfile alignmentstatistics_plot.pdf
         <li class="right" >
           <a href="mapmuts_makealignments.html" title="mapmuts_makealignments.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

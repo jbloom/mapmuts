@@ -8,7 +8,7 @@
     
     <title>mapmuts_inferdifferentialpreferences.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_preferencescorrelate.py" href="mapmuts_preferencescorrelate.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,18 +59,18 @@
 <span id="id1"></span><h1>mapmuts_inferdifferentialpreferences.py<a class="headerlink" href="#mapmuts-inferdifferentialpreferences-py" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
 <dt><strong>This program is no longer the state-of-the-art:</strong> You are suggested to instead</dt>
-<dd>use the <a class="reference external" href="http://jbloom.github.io/dms_tools/">dms_tools</a> program <tt class="docutils literal"><span class="pre">dms_inferdiffprefs</span></tt>.</dd>
+<dd>use the <a class="reference external" href="http://jbloomlab.github.io/dms_tools/">dms_tools</a> program <code class="docutils literal"><span class="pre">dms_inferdiffprefs</span></code>.</dd>
 </dl>
 <p>This script is designed to infer the differential preferences for each amino acid at each site when comparing two or more selection pressures. It does this using a Bayesian approach implemented via MCMC (Markov chain Monte Carlo).</p>
 <p>Because this script uses MCMC, it takes a fairly long time to run &#8211; perhaps as long as several days depending on your computer and the specific data set.</p>
-<p>This script takes as input the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>, and so is designed to be run after you have completed the analysis with that script.</p>
+<p>This script takes as input the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><span class="std std-ref">mapmuts_parsecounts.py</span></a>, and so is designed to be run after you have completed the analysis with that script.</p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
 <p>This script requires <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> for the Bayesian inference, which in turn requires <a class="reference external" href="http://www.numpy.org/">numpy</a>. If you want the script to make plots, you also need <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. The use of <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> version 2.3 is recommended. This script may <strong>not</strong> work with versions 3.*, and may work suboptimally with earlier versions.</p>
 </div>
 <div class="section" id="when-would-you-use-this-script">
 <h2>When would you use this script?<a class="headerlink" href="#when-would-you-use-this-script" title="Permalink to this headline">¶</a></h2>
-<p>If you just want to infer the site-specific amino-acid preferences by comparing a pre-selection mutant library to a post-selected sample, then you should probably instead use <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><em>mapmuts_inferpreferences.py</em></a>, which implements the algorithm described in <a class="reference external" href="http://dx.doi.org/10.1093/molbev/msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a> (in the Methods section entitled <em>Inference of the Amino Acid Preferences</em>).</p>
+<p>If you just want to infer the site-specific amino-acid preferences by comparing a pre-selection mutant library to a post-selected sample, then you should probably instead use <a class="reference internal" href="mapmuts_inferpreferences.html#mapmuts-inferpreferences-py"><span class="std std-ref">mapmuts_inferpreferences.py</span></a>, which implements the algorithm described in <a class="reference external" href="http://dx.doi.org/10.1093/molbev/msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a> (in the Methods section entitled <em>Inference of the Amino Acid Preferences</em>).</p>
 <p>This script is tailored to the case where you have several samples that have been selected in slightly different conditions, and you want to identify sites and amino acids that are selected differently in the different conditions. Most commonly, you would have already selected for basic functionality, and are now looking for differential functionality under various selections. This script identifies the differential preferences in these different conditions. The algorithm here is still similar in many respects to that described in <a class="reference external" href="http://dx.doi.org/10.1093/molbev/msu173">An experimentally determined evolutionary model dramatically improves phylogenetic fit</a>, but now is elaborated to infer the differential preferences.</p>
 </div>
 <div class="section" id="the-samples-that-compose-the-data">
@@ -162,7 +162,7 @@ Therefore, if we again assume that all sites in the <em>control_selection</em> s
 <h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
 <p>To run this script from the prompt, first create a text <a class="reference internal" href="#input-file">Input file</a> of the
 format described below. Then simply run the script with the single text file as the argument, as in:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_inferdifferentialpreferences.py infile.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_inferdifferentialpreferences</span><span class="o">.</span><span class="n">py</span> <span class="n">infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
@@ -172,7 +172,7 @@ format described below. Then simply run the script with the single text file as 
 <p>Lines beginning with # and empty lines are ignored.</p>
 <p>Keys for the input file:</p>
 <ul class="simple">
-<li><em>error_control</em> : This key should specify a file giving the counts of each codon at each position for the <em>error_control</em> sample; these are the <span class="math">\(\overrightarrow{n}^{\rm{error}}_r\)</span> values. This file should be in the format of a <tt class="docutils literal"><span class="pre">*_codoncounts.txt</span></tt> created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. Typically, this sample would be from sequencing either an unmutated gene or a wildtype virus to estimate the baseline error rate.</li>
+<li><em>error_control</em> : This key should specify a file giving the counts of each codon at each position for the <em>error_control</em> sample; these are the <span class="math">\(\overrightarrow{n}^{\rm{error}}_r\)</span> values. This file should be in the format of a <code class="docutils literal"><span class="pre">*_codoncounts.txt</span></code> created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><span class="std std-ref">mapmuts_parsecounts.py</span></a>. Typically, this sample would be from sequencing either an unmutated gene or a wildtype virus to estimate the baseline error rate.</li>
 <li><em>starting_sample</em> : This key specifies a file giving the counts that are the <span class="math">\(\overrightarrow{n}^{\rm{start}}_r\)</span> values. This file is in the same format as for <em>error_control</em>. Typically, this sample would be the pool of functional mutant variants or viruses that were created from the mutant library and are now being subjected to the subsequent selections.</li>
 <li><em>control_selection</em> : This key specifies a file giving the counts that are the <span class="math">\(\overrightarrow{n}^{\rm{control}}_r\)</span> values. This file is in the same format as for <em>error_control</em>. Typically, this sample would be the pool in <em>starting_sample</em> that has been subjected to the control growth condition, such as passage of a virus in control cells without any additional selection.</li>
 <li><em>selection_???</em> : These keys specify the <em>selection_i</em> conditions used to look for differential selection relative to <em>control_selection</em>. There must be at least one of these keys, but there can be arbitrarily more. The actual key should take the form <em>selection_heat</em> or <em>selection_antibody</em> or <em>selection_</em> followed by any non-whitespace-containing string giving the name assigned to the additional selection. The name given to the selection condition in the results is whatever is the suffix that follows the underscore in the <em>selection_???</em> string. Typically, these samples would be <em>starting_sample</em> passaged in a condition that is being compared to <em>control_selection</em>. The values should be codon counts files in the same format as for <em>error_control</em>.</li>
@@ -196,27 +196,27 @@ format described below. Then simply run the script with the single text file as 
 <div class="section" id="example-input-file">
 <h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_inferdifferentialpreferences.py
-error_control virus_codoncounts.txt
-starting_sample mutvirus_codoncounts.txt
-control_selection no_serum_codoncounts.txt
-selection_vaccinated_serum vaccinated_serum_codoncounts.txt
-selection_infected_serum infected_serum_codoncounts.txt
-pi_concentration 1.0
-epsilon_concentration 1.0
-f_concentration 1.0
-deltapi_concentration 1.0
-minvalue 1e-7
-seed 1
-nruns 3
-nsteps 200000
-thin 200
-convergence 0.02
-stepincrease 4
-MCMC_traces MCMC_traces/
-preference_plots preference_plots/
-outfileprefix None
-ncpus 4
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Input file for mapmuts_inferdifferentialpreferences.py</span>
+<span class="n">error_control</span> <span class="n">virus_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">starting_sample</span> <span class="n">mutvirus_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">control_selection</span> <span class="n">no_serum_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">selection_vaccinated_serum</span> <span class="n">vaccinated_serum_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">selection_infected_serum</span> <span class="n">infected_serum_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">pi_concentration</span> <span class="mf">1.0</span>
+<span class="n">epsilon_concentration</span> <span class="mf">1.0</span>
+<span class="n">f_concentration</span> <span class="mf">1.0</span>
+<span class="n">deltapi_concentration</span> <span class="mf">1.0</span>
+<span class="n">minvalue</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">7</span>
+<span class="n">seed</span> <span class="mi">1</span>
+<span class="n">nruns</span> <span class="mi">3</span>
+<span class="n">nsteps</span> <span class="mi">200000</span>
+<span class="n">thin</span> <span class="mi">200</span>
+<span class="n">convergence</span> <span class="mf">0.02</span>
+<span class="n">stepincrease</span> <span class="mi">4</span>
+<span class="n">MCMC_traces</span> <span class="n">MCMC_traces</span><span class="o">/</span>
+<span class="n">preference_plots</span> <span class="n">preference_plots</span><span class="o">/</span>
+<span class="n">outfileprefix</span> <span class="kc">None</span>
+<span class="n">ncpus</span> <span class="mi">4</span>
 </pre></div>
 </div>
 </div>
@@ -224,9 +224,9 @@ ncpus 4
 <h2>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
 <p>Output files are created with the prefix specified by <em>outfileprefix</em> followed by suffixes shown below. These files have the following suffixes:</p>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">inferdifferentialpreferences_log.txt</span></tt> : a text file logging the progress of this script.</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">inferdifferentialpreferences_log.txt</span></code> : a text file logging the progress of this script.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">preferences_control_selection.txt</span></tt> : a text file giving the MCMC-inferred preferences <span class="math">\(\pi_{r,a}\)</span> for each amino acid <span class="math">\(a\)</span> at each site <span class="math">\(r\)</span> for the <em>control_selection</em>. Stop codons (denoted by the * character) are included as possible identities. The file also gives the site entropy <span class="math">\(h_r = \sum_a \pi_{r,a} \log_2 \pi_{r,a}\)</span> in bits for each site.</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">preferences_control_selection.txt</span></code> : a text file giving the MCMC-inferred preferences <span class="math">\(\pi_{r,a}\)</span> for each amino acid <span class="math">\(a\)</span> at each site <span class="math">\(r\)</span> for the <em>control_selection</em>. Stop codons (denoted by the * character) are included as possible identities. The file also gives the site entropy <span class="math">\(h_r = \sum_a \pi_{r,a} \log_2 \pi_{r,a}\)</span> in bits for each site.</p>
 <p>The first line is a title line that begins with a # character and then lists the column headers separated by tabs. The remaining lines contain the data.</p>
 <p>The columns contain tab-separated values as follows:</p>
 <blockquote>
@@ -238,30 +238,30 @@ ncpus 4
 <li><p class="first">The third column lists the site entropy <span class="math">\(h_r\)</span>. The header for this column is <em>SITE_ENTROPY</em>.</p>
 </li>
 <li><p class="first">The remaining 21 columns list the preference <span class="math">\(\pi_{r,a}\)</span> values for each amino acid <span class="math">\(a\)</span> at this site <span class="math">\(r\)</span>. The amino acids are listed in alphabetical order according to their one letter codes, and then the final column gives the equilibrium preference for a stop codon (denoted by a * character). The headers for these columns are <em>PI_A</em>, <em>PI_C</em>, <em>PI_D</em>, ..., <em>PI_W</em>, <em>PI_Y</em>, <em>PI_*</em>. Here is an example of a few lines:</p>
-<div class="highlight-python"><div class="highlight"><pre>#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*
-1   M   0.885694    0.000680047 0.00185968  8.48048e-06 0.00128217  0.0289946   0.000654589 0.0212144   0.0205306   0.0021597   0.00056726  0.876551    0.00130602  0.000789781 0.00144568  0.000414457 0.00071164  0.00126055  0.00167084  0.0352283   0.00176486  0.000905383
-2   A   1.1671  0.709575    0.00177747  3.79503e-05 0.00298854  0.00390524  0.00131246  0.00379599  0.000913006 0.00121497  0.000535209 0.00276335  0.00140061  0.000694694 0.0032134   0.00464972  0.000463924 0.000908368 0.254241    0.00335749  0.00137437  0.000876985
-3   N   3.2593  0.129992    0.000540239 4.2514e-06  0.00171887  0.0212062   0.0006086   0.102743    0.0431489   0.00524637  0.0771062   0.021714    0.0641921   0.00338082  0.0149898   0.0106522   0.13886 0.0247841   0.00607319  0.0500692   0.282389    0.000581555
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*</span>
+<span class="mi">1</span>   <span class="n">M</span>   <span class="mf">0.885694</span>    <span class="mf">0.000680047</span> <span class="mf">0.00185968</span>  <span class="mf">8.48048e-06</span> <span class="mf">0.00128217</span>  <span class="mf">0.0289946</span>   <span class="mf">0.000654589</span> <span class="mf">0.0212144</span>   <span class="mf">0.0205306</span>   <span class="mf">0.0021597</span>   <span class="mf">0.00056726</span>  <span class="mf">0.876551</span>    <span class="mf">0.00130602</span>  <span class="mf">0.000789781</span> <span class="mf">0.00144568</span>  <span class="mf">0.000414457</span> <span class="mf">0.00071164</span>  <span class="mf">0.00126055</span>  <span class="mf">0.00167084</span>  <span class="mf">0.0352283</span>   <span class="mf">0.00176486</span>  <span class="mf">0.000905383</span>
+<span class="mi">2</span>   <span class="n">A</span>   <span class="mf">1.1671</span>  <span class="mf">0.709575</span>    <span class="mf">0.00177747</span>  <span class="mf">3.79503e-05</span> <span class="mf">0.00298854</span>  <span class="mf">0.00390524</span>  <span class="mf">0.00131246</span>  <span class="mf">0.00379599</span>  <span class="mf">0.000913006</span> <span class="mf">0.00121497</span>  <span class="mf">0.000535209</span> <span class="mf">0.00276335</span>  <span class="mf">0.00140061</span>  <span class="mf">0.000694694</span> <span class="mf">0.0032134</span>   <span class="mf">0.00464972</span>  <span class="mf">0.000463924</span> <span class="mf">0.000908368</span> <span class="mf">0.254241</span>    <span class="mf">0.00335749</span>  <span class="mf">0.00137437</span>  <span class="mf">0.000876985</span>
+<span class="mi">3</span>   <span class="n">N</span>   <span class="mf">3.2593</span>  <span class="mf">0.129992</span>    <span class="mf">0.000540239</span> <span class="mf">4.2514e-06</span>  <span class="mf">0.00171887</span>  <span class="mf">0.0212062</span>   <span class="mf">0.0006086</span>   <span class="mf">0.102743</span>    <span class="mf">0.0431489</span>   <span class="mf">0.00524637</span>  <span class="mf">0.0771062</span>   <span class="mf">0.021714</span>    <span class="mf">0.0641921</span>   <span class="mf">0.00338082</span>  <span class="mf">0.0149898</span>   <span class="mf">0.0106522</span>   <span class="mf">0.13886</span> <span class="mf">0.0247841</span>   <span class="mf">0.00607319</span>  <span class="mf">0.0500692</span>   <span class="mf">0.282389</span>    <span class="mf">0.000581555</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">preferences_control_selection_credibleintervals_95.txt</span></tt> : a text file giving the median-centered 95% credible intervals on the <span class="math">\(\pi_{r,a}\)</span> values in <tt class="docutils literal"><span class="pre">preferences_control_selection.txt</span></tt>. The first column is <em>SITE</em> and the remaining columns give the upper and lower bounds on the credible intervals for each of the <span class="math">\(\pi_{r,a}\)</span> values as comma-separated numbers (no spaces) in the same order that they are listed in <tt class="docutils literal"><span class="pre">preferences_control_selection.txt</span></tt>. Here is an example:</p>
-<div class="highlight-python"><div class="highlight"><pre>#SITE   PI_A_95cred PI_C_95cred PI_D_95cred PI_E_95cred PI_F_95cred PI_G_95cred PI_H_95cred PI_I_95cred PI_K_95cred PI_L_95cred PI_M_95cred PI_N_95cred PI_P_95cred PI_Q_95cred PI_R_95cred PI_S_95cred PI_T_95cred PI_V_95cred PI_W_95cred PI_Y_95cred PI_*_95cred
-1   1.49582e-05,0.00269598  7.2227e-05,0.00604361   4.37378e-06,1.17951e-05 3.26837e-05,0.00433571  0.0114465,0.0491834 1.82621e-05,0.00208322  0.00989126,0.0318659    0.00135281,0.0554989    4.87099e-05,0.00754094  1.41237e-05,0.00202465  0.821886,0.925528   3.69704e-05,0.00458556  1.94864e-05,0.0027967   3.89356e-05,0.00557027  8.44362e-06,0.00134572  1.76935e-05,0.0025792   3.51256e-05,0.00460279  3.68112e-05,0.00664131  0.0270458,0.0403275 5.19957e-05,0.00543017  2.3493e-05,0.00336828
-2   0.683813,0.729505   5.48957e-05,0.00581796  3.3971e-05,4.26404e-05  6.74445e-05,0.0109755   4.8097e-05,0.0145215    5.40342e-05,0.00379731  0.000377183,0.00853322  2.13206e-05,0.00337318  3.52239e-05,0.00407263  1.62767e-05,0.00193362  7.56385e-05,0.00950661  4.20842e-05,0.00481382  1.91134e-05,0.00253192  0.000126937,0.0090789   0.0036588,0.00587762    1.0427e-05,0.0016747    2.57371e-05,0.00350532  0.231977,0.267635   9.01372e-05,0.0116063   3.61905e-05,0.00479547  2.30435e-05,0.0032731
-3   0.122949,0.137744   1.51152e-05,0.00177613  1.65846e-07,1.00925e-05 0.000558957,0.0032513   0.015292,0.0269782  4.06388e-05,0.00157236  0.0925438,0.111993  0.0384322,0.0481046 0.00322823,0.00788021   0.0722691,0.0822557 0.0159843,0.0271257 0.0569958,0.0722337 0.000939467,0.00723918  0.0115211,0.0187761 0.00937067,0.0117235    0.135176,0.142903   0.0211448,0.0287984 0.00433432,0.00801638   0.0457743,0.0548462 0.2689,0.29917  2.91378e-05,0.00163938
+<li><p class="first"><code class="docutils literal"><span class="pre">preferences_control_selection_credibleintervals_95.txt</span></code> : a text file giving the median-centered 95% credible intervals on the <span class="math">\(\pi_{r,a}\)</span> values in <code class="docutils literal"><span class="pre">preferences_control_selection.txt</span></code>. The first column is <em>SITE</em> and the remaining columns give the upper and lower bounds on the credible intervals for each of the <span class="math">\(\pi_{r,a}\)</span> values as comma-separated numbers (no spaces) in the same order that they are listed in <code class="docutils literal"><span class="pre">preferences_control_selection.txt</span></code>. Here is an example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#SITE   PI_A_95cred PI_C_95cred PI_D_95cred PI_E_95cred PI_F_95cred PI_G_95cred PI_H_95cred PI_I_95cred PI_K_95cred PI_L_95cred PI_M_95cred PI_N_95cred PI_P_95cred PI_Q_95cred PI_R_95cred PI_S_95cred PI_T_95cred PI_V_95cred PI_W_95cred PI_Y_95cred PI_*_95cred</span>
+<span class="mi">1</span>   <span class="mf">1.49582e-05</span><span class="p">,</span><span class="mf">0.00269598</span>  <span class="mf">7.2227e-05</span><span class="p">,</span><span class="mf">0.00604361</span>   <span class="mf">4.37378e-06</span><span class="p">,</span><span class="mf">1.17951e-05</span> <span class="mf">3.26837e-05</span><span class="p">,</span><span class="mf">0.00433571</span>  <span class="mf">0.0114465</span><span class="p">,</span><span class="mf">0.0491834</span> <span class="mf">1.82621e-05</span><span class="p">,</span><span class="mf">0.00208322</span>  <span class="mf">0.00989126</span><span class="p">,</span><span class="mf">0.0318659</span>    <span class="mf">0.00135281</span><span class="p">,</span><span class="mf">0.0554989</span>    <span class="mf">4.87099e-05</span><span class="p">,</span><span class="mf">0.00754094</span>  <span class="mf">1.41237e-05</span><span class="p">,</span><span class="mf">0.00202465</span>  <span class="mf">0.821886</span><span class="p">,</span><span class="mf">0.925528</span>   <span class="mf">3.69704e-05</span><span class="p">,</span><span class="mf">0.00458556</span>  <span class="mf">1.94864e-05</span><span class="p">,</span><span class="mf">0.0027967</span>   <span class="mf">3.89356e-05</span><span class="p">,</span><span class="mf">0.00557027</span>  <span class="mf">8.44362e-06</span><span class="p">,</span><span class="mf">0.00134572</span>  <span class="mf">1.76935e-05</span><span class="p">,</span><span class="mf">0.0025792</span>   <span class="mf">3.51256e-05</span><span class="p">,</span><span class="mf">0.00460279</span>  <span class="mf">3.68112e-05</span><span class="p">,</span><span class="mf">0.00664131</span>  <span class="mf">0.0270458</span><span class="p">,</span><span class="mf">0.0403275</span> <span class="mf">5.19957e-05</span><span class="p">,</span><span class="mf">0.00543017</span>  <span class="mf">2.3493e-05</span><span class="p">,</span><span class="mf">0.00336828</span>
+<span class="mi">2</span>   <span class="mf">0.683813</span><span class="p">,</span><span class="mf">0.729505</span>   <span class="mf">5.48957e-05</span><span class="p">,</span><span class="mf">0.00581796</span>  <span class="mf">3.3971e-05</span><span class="p">,</span><span class="mf">4.26404e-05</span>  <span class="mf">6.74445e-05</span><span class="p">,</span><span class="mf">0.0109755</span>   <span class="mf">4.8097e-05</span><span class="p">,</span><span class="mf">0.0145215</span>    <span class="mf">5.40342e-05</span><span class="p">,</span><span class="mf">0.00379731</span>  <span class="mf">0.000377183</span><span class="p">,</span><span class="mf">0.00853322</span>  <span class="mf">2.13206e-05</span><span class="p">,</span><span class="mf">0.00337318</span>  <span class="mf">3.52239e-05</span><span class="p">,</span><span class="mf">0.00407263</span>  <span class="mf">1.62767e-05</span><span class="p">,</span><span class="mf">0.00193362</span>  <span class="mf">7.56385e-05</span><span class="p">,</span><span class="mf">0.00950661</span>  <span class="mf">4.20842e-05</span><span class="p">,</span><span class="mf">0.00481382</span>  <span class="mf">1.91134e-05</span><span class="p">,</span><span class="mf">0.00253192</span>  <span class="mf">0.000126937</span><span class="p">,</span><span class="mf">0.0090789</span>   <span class="mf">0.0036588</span><span class="p">,</span><span class="mf">0.00587762</span>    <span class="mf">1.0427e-05</span><span class="p">,</span><span class="mf">0.0016747</span>    <span class="mf">2.57371e-05</span><span class="p">,</span><span class="mf">0.00350532</span>  <span class="mf">0.231977</span><span class="p">,</span><span class="mf">0.267635</span>   <span class="mf">9.01372e-05</span><span class="p">,</span><span class="mf">0.0116063</span>   <span class="mf">3.61905e-05</span><span class="p">,</span><span class="mf">0.00479547</span>  <span class="mf">2.30435e-05</span><span class="p">,</span><span class="mf">0.0032731</span>
+<span class="mi">3</span>   <span class="mf">0.122949</span><span class="p">,</span><span class="mf">0.137744</span>   <span class="mf">1.51152e-05</span><span class="p">,</span><span class="mf">0.00177613</span>  <span class="mf">1.65846e-07</span><span class="p">,</span><span class="mf">1.00925e-05</span> <span class="mf">0.000558957</span><span class="p">,</span><span class="mf">0.0032513</span>   <span class="mf">0.015292</span><span class="p">,</span><span class="mf">0.0269782</span>  <span class="mf">4.06388e-05</span><span class="p">,</span><span class="mf">0.00157236</span>  <span class="mf">0.0925438</span><span class="p">,</span><span class="mf">0.111993</span>  <span class="mf">0.0384322</span><span class="p">,</span><span class="mf">0.0481046</span> <span class="mf">0.00322823</span><span class="p">,</span><span class="mf">0.00788021</span>   <span class="mf">0.0722691</span><span class="p">,</span><span class="mf">0.0822557</span> <span class="mf">0.0159843</span><span class="p">,</span><span class="mf">0.0271257</span> <span class="mf">0.0569958</span><span class="p">,</span><span class="mf">0.0722337</span> <span class="mf">0.000939467</span><span class="p">,</span><span class="mf">0.00723918</span>  <span class="mf">0.0115211</span><span class="p">,</span><span class="mf">0.0187761</span> <span class="mf">0.00937067</span><span class="p">,</span><span class="mf">0.0117235</span>    <span class="mf">0.135176</span><span class="p">,</span><span class="mf">0.142903</span>   <span class="mf">0.0211448</span><span class="p">,</span><span class="mf">0.0287984</span> <span class="mf">0.00433432</span><span class="p">,</span><span class="mf">0.00801638</span>   <span class="mf">0.0457743</span><span class="p">,</span><span class="mf">0.0548462</span> <span class="mf">0.2689</span><span class="p">,</span><span class="mf">0.29917</span>  <span class="mf">2.91378e-05</span><span class="p">,</span><span class="mf">0.00163938</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Files with suffixes of the form <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???.txt</span></tt> where the <tt class="docutils literal"><span class="pre">???</span></tt> indicates the different selections. For instance, if the <a class="reference internal" href="#input-file">Input file</a> specifies:</p>
-<div class="highlight-python"><div class="highlight"><pre>selection_vaccinated_serum vaccinated_serum_codoncounts.txt
-selection_infected_serum infected_serum_codoncounts.txt
+<li><p class="first">Files with suffixes of the form <code class="docutils literal"><span class="pre">differentialpreferences_selection_???.txt</span></code> where the <code class="docutils literal"><span class="pre">???</span></code> indicates the different selections. For instance, if the <a class="reference internal" href="#input-file">Input file</a> specifies:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">selection_vaccinated_serum</span> <span class="n">vaccinated_serum_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">selection_infected_serum</span> <span class="n">infected_serum_codoncounts</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
-<p>as the alternative selections, then the following two files are created: <tt class="docutils literal"><span class="pre">differentialpreferences_selection_vaccinated_serum.txt</span></tt> and <tt class="docutils literal"><span class="pre">differentialpreferences_selection_infected_serum.txt</span></tt>. These files give the differential preferences <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> for each amino acid <span class="math">\(a\)</span> at each site <span class="math">\(r\)</span> for each selection <span class="math">\(s_i\)</span>. The files also give the root mean square (RMS) differential preference at each site for each selection. These are defined as <span class="math">\(\Delta\pi^{s_i}_{\rm{RMS},r} = \sqrt{\sum_a \left(\Delta\pi^{s_i}_{r,a}\right)^2}\)</span>. The minimal value of the RMS differential preference is zero, and the maximal value is 2.</p>
+<p>as the alternative selections, then the following two files are created: <code class="docutils literal"><span class="pre">differentialpreferences_selection_vaccinated_serum.txt</span></code> and <code class="docutils literal"><span class="pre">differentialpreferences_selection_infected_serum.txt</span></code>. These files give the differential preferences <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> for each amino acid <span class="math">\(a\)</span> at each site <span class="math">\(r\)</span> for each selection <span class="math">\(s_i\)</span>. The files also give the root mean square (RMS) differential preference at each site for each selection. These are defined as <span class="math">\(\Delta\pi^{s_i}_{\rm{RMS},r} = \sqrt{\sum_a \left(\Delta\pi^{s_i}_{r,a}\right)^2}\)</span>. The minimal value of the RMS differential preference is zero, and the maximal value is 2.</p>
 <p>The first line is a title line that begins with a # character and then lists the column headers separated by tabs. The remaining lines contain the data.</p>
 <p>The columns contain tab-separated values as follows:</p>
 <blockquote>
@@ -273,21 +273,21 @@ selection_infected_serum infected_serum_codoncounts.txt
 <li><p class="first">The third column lists the RMS differential preference for that site, <span class="math">\(\Delta\pi^{s_i}_{\rm{RMS},r}\)</span>. The header for this column is <em>RMS_dPI</em>.</p>
 </li>
 <li><p class="first">The remaining 21 columns list the differentila preference <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> values for each amino acid <span class="math">\(a\)</span> at this site <span class="math">\(r\)</span> for the selection pressure <span class="math">\(s_i\)</span> described in this file. The amino acids are listed in alphabetical order according to their one letter codes, and then the final column gives the equilibrium preference for a stop codon (denoted by a * character). The headers for these columns are <em>dPI_A</em>, <em>dPI_C</em>, <em>dPI_D</em>, ..., <em>dPI_W</em>, <em>dPI_Y</em>, <em>dPI_*</em>. Here is the header:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">#SITE   WT_AA   RMS_dPI    dPI_A    dPI_C    dPI_D    dPI_E    dPI_F    dPI_G    dPI_H    dPI_I    dPI_K    dPI_L    dPI_M    dPI_N    dPI_P    dPI_Q    dPI_R    dPI_S    dPI_T    dPI_V    dPI_W    dPI_Y    dPI_*</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#SITE   WT_AA   RMS_dPI    dPI_A    dPI_C    dPI_D    dPI_E    dPI_F    dPI_G    dPI_H    dPI_I    dPI_K    dPI_L    dPI_M    dPI_N    dPI_P    dPI_Q    dPI_R    dPI_S    dPI_T    dPI_V    dPI_W    dPI_Y    dPI_*</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">For each selection pressure, there is also a <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_credibleintervals_95.txt</span></tt>. These are text files giving the median-centered 95% credible intervals on the <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> values in the <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???.txt</span></tt> files. The first column is <em>SITE</em> and the remaining columns give the upper and lower bounds on the credible intervals for each of the <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> values as comma-separated numbers (no spaces). Here is the header:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">#SITE   dPI_A_95cred dPI_C_95cred dPI_D_95cred dPI_E_95cred dPI_F_95cred dPI_G_95cred dPI_H_95cred dPI_I_95cred dPI_K_95cred dPI_L_95cred dPI_M_95cred dPI_N_95cred dPI_P_95cred dPI_Q_95cred dPI_R_95cred dPI_S_95cred dPI_T_95cred dPI_V_95cred dPI_W_95cred dPI_Y_95cred dPI_*_95cred</span>
+<li><p class="first">For each selection pressure, there is also a <code class="docutils literal"><span class="pre">differentialpreferences_selection_???_credibleintervals_95.txt</span></code>. These are text files giving the median-centered 95% credible intervals on the <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> values in the <code class="docutils literal"><span class="pre">differentialpreferences_selection_???.txt</span></code> files. The first column is <em>SITE</em> and the remaining columns give the upper and lower bounds on the credible intervals for each of the <span class="math">\(\Delta\pi^{s_i}_{r,a}\)</span> values as comma-separated numbers (no spaces). Here is the header:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#SITE   dPI_A_95cred dPI_C_95cred dPI_D_95cred dPI_E_95cred dPI_F_95cred dPI_G_95cred dPI_H_95cred dPI_I_95cred dPI_K_95cred dPI_L_95cred dPI_M_95cred dPI_N_95cred dPI_P_95cred dPI_Q_95cred dPI_R_95cred dPI_S_95cred dPI_T_95cred dPI_V_95cred dPI_W_95cred dPI_Y_95cred dPI_*_95cred</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">If the <em>preference_plots</em> option is being used, then plots are created showing the preferences <span class="math">\(\pi_{r,a}\)</span> for the <em>control_sample</em> and the differential preferences <span class="math">\(\Delta\pi_{r,a}^{s_i}\)</span> for each selection <span class="math">\(s_i\)</span>. These plots are in the subdirectory specified by <em>preference_plots</em>. Within this subdirectory, they have names beginning with <em>outfileprefix</em> and then having the suffix <tt class="docutils literal"><span class="pre">preferences_control_selection_1.pdf</span></tt>, <tt class="docutils literal"><span class="pre">preferences_control_selection_2.pdf</span></tt>, ... for residues 1, 2, ... for the <em>control_sample</em> preferences. For the differentail preferences, the names are <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_1.pdf</span></tt>, <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_2.pdf</span></tt>, ... where <tt class="docutils literal"><span class="pre">???</span></tt> gives the name of the selection pressure. These plots show the posterior mean and the median-centered 95% credible intervals.</p>
+<li><p class="first">If the <em>preference_plots</em> option is being used, then plots are created showing the preferences <span class="math">\(\pi_{r,a}\)</span> for the <em>control_sample</em> and the differential preferences <span class="math">\(\Delta\pi_{r,a}^{s_i}\)</span> for each selection <span class="math">\(s_i\)</span>. These plots are in the subdirectory specified by <em>preference_plots</em>. Within this subdirectory, they have names beginning with <em>outfileprefix</em> and then having the suffix <code class="docutils literal"><span class="pre">preferences_control_selection_1.pdf</span></code>, <code class="docutils literal"><span class="pre">preferences_control_selection_2.pdf</span></code>, ... for residues 1, 2, ... for the <em>control_sample</em> preferences. For the differentail preferences, the names are <code class="docutils literal"><span class="pre">differentialpreferences_selection_???_1.pdf</span></code>, <code class="docutils literal"><span class="pre">differentialpreferences_selection_???_2.pdf</span></code>, ... where <code class="docutils literal"><span class="pre">???</span></code> gives the name of the selection pressure. These plots show the posterior mean and the median-centered 95% credible intervals.</p>
 </li>
-<li><p class="first">If the <em>MCMC_traces</em> option is being used, then plots are created showing the traces of the <em>control_sample</em> preferences and the differential preferences during the MCMC. These plots are in the subdirectory specified by <em>MCMC_traces</em>, and have names beginning with the prefix given by <em>outfileprefix</em> followed by the suffixes <tt class="docutils literal"><span class="pre">preferences_control_selection_1.pdf</span></tt>, <tt class="docutils literal"><span class="pre">preferences_control_selection_2.pdf`</span></tt>, ... for the <em>control_sample</em> preferences, and followed by the suffix <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_1.pdf</span></tt>, <tt class="docutils literal"><span class="pre">differentialpreferences_selection_???_2.pdf</span></tt> for the other selection pressures where <tt class="docutils literal"><span class="pre">???</span></tt> indicates the name of the selection pressure. These plots show traces of the values during the MCMC.</p>
+<li><p class="first">If the <em>MCMC_traces</em> option is being used, then plots are created showing the traces of the <em>control_sample</em> preferences and the differential preferences during the MCMC. These plots are in the subdirectory specified by <em>MCMC_traces</em>, and have names beginning with the prefix given by <em>outfileprefix</em> followed by the suffixes <code class="docutils literal"><span class="pre">preferences_control_selection_1.pdf</span></code>, <code class="docutils literal"><span class="pre">preferences_control_selection_2.pdf`</span></code>, ... for the <em>control_sample</em> preferences, and followed by the suffix <code class="docutils literal"><span class="pre">differentialpreferences_selection_???_1.pdf</span></code>, <code class="docutils literal"><span class="pre">differentialpreferences_selection_???_2.pdf</span></code> for the other selection pressures where <code class="docutils literal"><span class="pre">???</span></code> indicates the name of the selection pressure. These plots show traces of the values during the MCMC.</p>
 </li>
 </ul>
 </div>
@@ -340,9 +340,6 @@ selection_infected_serum infected_serum_codoncounts.txt
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -364,13 +361,13 @@ selection_infected_serum infected_serum_codoncounts.txt
         <li class="right" >
           <a href="mapmuts_inferpreferences.html" title="mapmuts_inferpreferences.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

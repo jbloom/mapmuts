@@ -8,7 +8,7 @@
     
     <title>dssp Module &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Python modules" href="pythonapi.html" />
     <link rel="next" title="weblogo Module" href="weblogo_module.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="bayesian_module.html" title="bayesian Module"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pythonapi.html" accesskey="U">Python modules</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -56,7 +56,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-dssp">
-<span id="dssp-module"></span><h1><a class="reference internal" href="#module-dssp" title="dssp"><tt class="xref py py-mod docutils literal"><span class="pre">dssp</span></tt></a> Module<a class="headerlink" href="#module-dssp" title="Permalink to this headline">¶</a></h1>
+<span id="dssp-module"></span><h1><a class="reference internal" href="#module-dssp" title="dssp"><code class="xref py py-mod docutils literal"><span class="pre">dssp</span></code></a> Module<a class="headerlink" href="#module-dssp" title="Permalink to this headline">¶</a></h1>
 <p>Reads output from DSSP program.</p>
 <p>DSSP is a program for classifying secondary structures and solvent
 accessibility from protein structures. This module contains functions
@@ -78,7 +78,7 @@ as of May-24-2013.</p>
 definitions below.</p>
 <dl class="function">
 <dt id="dssp.MaxASA">
-<tt class="descclassname">dssp.</tt><tt class="descname">MaxASA</tt><big>(</big><em>scale</em><big>)</big><a class="headerlink" href="#dssp.MaxASA" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">dssp.</code><code class="descname">MaxASA</code><span class="sig-paren">(</span><em>scale</em><span class="sig-paren">)</span><a class="headerlink" href="#dssp.MaxASA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the maximum accessible surface area for amino acids.</p>
 <p>This function returns the maximum accessible surface area (ASA)
 for the amino acids in units of square angstroms. These ASAs
@@ -99,10 +99,10 @@ at <a class="reference external" href="http://www.plosone.org/article/info:doi/1
 upper-case one-letter amino-acid code, with the values
 being the ASA for that residue.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">asa</span> <span class="o">=</span> <span class="n">MaxASA</span><span class="p">(</span><span class="s">&#39;Tien2013&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">asa</span> <span class="o">=</span> <span class="n">MaxASA</span><span class="p">(</span><span class="s1">&#39;Tien2013&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">asa</span><span class="p">)</span> <span class="o">==</span> <span class="mi">20</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">asa</span> <span class="o">==</span> <span class="p">{</span><span class="s">&#39;A&#39;</span><span class="p">:</span><span class="mf">129.0</span><span class="p">,</span> <span class="s">&#39;R&#39;</span><span class="p">:</span><span class="mf">274.0</span><span class="p">,</span> <span class="s">&#39;N&#39;</span><span class="p">:</span><span class="mf">195.0</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">:</span><span class="mf">193.0</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="mf">167.0</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">:</span><span class="mf">223.0</span><span class="p">,</span> <span class="s">&#39;Q&#39;</span><span class="p">:</span><span class="mf">225.0</span><span class="p">,</span> <span class="s">&#39;G&#39;</span><span class="p">:</span><span class="mf">104.0</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">:</span><span class="mf">224.0</span><span class="p">,</span> <span class="s">&#39;I&#39;</span><span class="p">:</span><span class="mf">197.0</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">:</span><span class="mf">201.0</span><span class="p">,</span> <span class="s">&#39;K&#39;</span><span class="p">:</span><span class="mf">236.0</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">:</span><span class="mf">224.0</span><span class="p">,</span> <span class="s">&#39;F&#39;</span><span class="p">:</span><span class="mf">240.0</span><span class="p">,</span> <span class="s">&#39;P&#39;</span><span class="p">:</span><span class="mf">159.0</span><span class="p">,</span> <span class="s">&#39;S&#39;</span><span class="p">:</span><span class="mf">155.0</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">:</span><span class="mf">172.0</span><span class="p">,</span> <span class="s">&#39;W&#39;</span><span class="p">:</span><span class="mf">285.0</span><span class="p">,</span> <span class="s">&#39;Y&#39;</span><span class="p">:</span><span class="mf">263.0</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">:</span><span class="mf">174.0</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">asa</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mf">129.0</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="mf">274.0</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">:</span><span class="mf">195.0</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span><span class="mf">193.0</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mf">167.0</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span><span class="mf">223.0</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">:</span><span class="mf">225.0</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span><span class="mf">104.0</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span><span class="mf">224.0</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mf">197.0</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mf">201.0</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">:</span><span class="mf">236.0</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mf">224.0</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">:</span><span class="mf">240.0</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">:</span><span class="mf">159.0</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mf">155.0</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="mf">172.0</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="mf">285.0</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="mf">263.0</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="mf">174.0</span><span class="p">}</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -110,7 +110,7 @@ being the ASA for that residue.</p>
 
 <dl class="function">
 <dt id="dssp.ReadDSSP">
-<tt class="descclassname">dssp.</tt><tt class="descname">ReadDSSP</tt><big>(</big><em>infile</em>, <em>asa_scale</em>, <em>chain=None</em><big>)</big><a class="headerlink" href="#dssp.ReadDSSP" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">dssp.</code><code class="descname">ReadDSSP</code><span class="sig-paren">(</span><em>infile</em>, <em>asa_scale</em>, <em>chain=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dssp.ReadDSSP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads secondary structure and ASA from DSSP output.</p>
 <p>DSSP is a program that calculates secondary structure and
 absolute solvent accessibility (ASA) on a per-residue
@@ -194,7 +194,7 @@ are defined by the following strings based on <em>SS</em>:</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">dssp</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">dssp</span></code> Module</a><ul>
 <li><a class="reference internal" href="#list-of-functions">List of functions</a></li>
 <li><a class="reference internal" href="#documentation-for-individual-functions">Documentation for individual functions</a></li>
 </ul>
@@ -203,10 +203,10 @@ are defined by the following strings based on <em>SS</em>:</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="bayesian_module.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">bayesian</span></tt> Module</a></p>
+                        title="previous chapter"><code class="docutils literal"><span class="pre">bayesian</span></code> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="weblogo_module.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">weblogo</span></tt> Module</a></p>
+                        title="next chapter"><code class="docutils literal"><span class="pre">weblogo</span></code> Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -222,9 +222,6 @@ are defined by the following strings based on <em>SS</em>:</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -246,13 +243,13 @@ are defined by the following strings based on <em>SS</em>:</p>
         <li class="right" >
           <a href="bayesian_module.html" title="bayesian Module"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pythonapi.html" >Python modules</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

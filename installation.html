@@ -8,7 +8,7 @@
     
     <title>Installation &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="next" title="Workflow" href="workflow.html" />
     <link rel="prev" title="mapmuts" href="index.html" /> 
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="index.html" title="mapmuts"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -98,35 +98,35 @@
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">Creation of sequence logos requires installation of <a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> in a location that puts it in the current search path so that it can be run from the shell. This package has been tested with <a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> version 3.4. It is not known if it would work with other versions. Note that if <a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> crashes with a Ghostscript error, you may want to see <a class="reference external" href="https://code.google.com/p/weblogo/issues/detail?id=36">this bug report</a>. Some of the functionality also requires installation of the <a class="reference external" href="http://www.python.org/">Python</a> <a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> library (<tt class="docutils literal"><span class="pre">weblogolib</span></tt>) in a location that can be imported into <a class="reference external" href="http://www.python.org/">Python</a>.</p>
+<li><p class="first">Creation of sequence logos requires installation of <a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> in a location that puts it in the current search path so that it can be run from the shell. This package has been tested with <a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> version 3.4. It is not known if it would work with other versions. Note that if <a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> crashes with a Ghostscript error, you may want to see <a class="reference external" href="https://code.google.com/p/weblogo/issues/detail?id=36">this bug report</a>. Some of the functionality also requires installation of the <a class="reference external" href="http://www.python.org/">Python</a> <a class="reference external" href="http://weblogo.threeplusone.com/">weblogo</a> library (<code class="docutils literal"><span class="pre">weblogolib</span></code>) in a location that can be imported into <a class="reference external" href="http://www.python.org/">Python</a>.</p>
 </li>
-<li><p class="first">Overlay of RSA and SS information on the sequence logos requires the <a class="reference external" href="http://pybrary.net/pyPdf/">pyPdf</a> package to be installed. This package has only been tested with <a class="reference external" href="http://pybrary.net/pyPdf/">pyPdf</a> version 1.13 &#8211; it is unknown whether it would work with <tt class="docutils literal"><span class="pre">pyPdf2</span></tt>.</p>
+<li><p class="first">Overlay of RSA and SS information on the sequence logos requires the <a class="reference external" href="http://pybrary.net/pyPdf/">pyPdf</a> package to be installed. This package has only been tested with <a class="reference external" href="http://pybrary.net/pyPdf/">pyPdf</a> version 1.13 &#8211; it is unknown whether it would work with <code class="docutils literal"><span class="pre">pyPdf2</span></code>.</p>
 </li>
-<li><p class="first">The <cite>rpy2</cite> package is required for the <a class="reference internal" href="mapmuts_entropycomparison.html#mapmuts-entropycomparison-py"><em>mapmuts_entropycomparison.py</em></a> script. This package has been tested with version 2.3.9.</p>
+<li><p class="first">The <cite>rpy2</cite> package is required for the <a class="reference internal" href="mapmuts_entropycomparison.html#mapmuts-entropycomparison-py"><span class="std std-ref">mapmuts_entropycomparison.py</span></a> script. This package has been tested with version 2.3.9.</p>
 </li>
-<li><p class="first">The <a class="reference external" href="http://rpy.sourceforge.net/rpy2.html">R</a> statistical package is required for the <a class="reference internal" href="mapmuts_entropycomparison.html#mapmuts-entropycomparison-py"><em>mapmuts_entropycomparison.py</em></a> script. This package has been tested with version 3.0.3.</p>
+<li><p class="first">The <a class="reference external" href="http://rpy.sourceforge.net/rpy2.html">R</a> statistical package is required for the <a class="reference internal" href="mapmuts_entropycomparison.html#mapmuts-entropycomparison-py"><span class="std std-ref">mapmuts_entropycomparison.py</span></a> script. This package has been tested with version 3.0.3.</p>
 </li>
 </ul>
 </div>
 <div class="section" id="id1">
 <h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>To install <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a>, first download the source ZIP repository <a class="reference external" href="https://github.com/jbloom/mapmuts">on GitHub</a>. After unzipping the file, run the following commands:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd mapmuts
-python setup.py build
-python setup.py test
-python setup.py install
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">mapmuts</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
 <p>The last command might need to be replaced with:</p>
-<div class="highlight-python"><div class="highlight"><pre>sudo python setup.py install
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
 <p>if you want to install the package globally do not have privileges to the default global installation directory. Alternatively, if you just want to install the package locally for the current user, you can use:</p>
-<div class="highlight-python"><div class="highlight"><pre>python setup.py install --user
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">test</span></tt> command runs a variety of tests to check that the program appears to be working properly. This is optional, and the tests may take a few minutes to run. Running these tests is recommended.</p>
-<p>These commands install the <a class="reference external" href="http://www.python.org/">Python</a> modules and also install several scripts, which provide the most convenient high-level interface into <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package. There is also an <tt class="docutils literal"><span class="pre">./examples/</span></tt> subdirectory in the main <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> directory that contains some examples. Looking at these examples may be helpful for understanding the typical workflow.</p>
+<p>The <code class="docutils literal"><span class="pre">test</span></code> command runs a variety of tests to check that the program appears to be working properly. This is optional, and the tests may take a few minutes to run. Running these tests is recommended.</p>
+<p>These commands install the <a class="reference external" href="http://www.python.org/">Python</a> modules and also install several scripts, which provide the most convenient high-level interface into <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> package. There is also an <code class="docutils literal"><span class="pre">./examples/</span></code> subdirectory in the main <a class="reference external" href="https://github.com/jbloom/mapmuts">mapmuts</a> directory that contains some examples. Looking at these examples may be helpful for understanding the typical workflow.</p>
 </div>
 </div>
 
@@ -166,9 +166,6 @@ python setup.py install
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -190,12 +187,12 @@ python setup.py install
         <li class="right" >
           <a href="index.html" title="mapmuts"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

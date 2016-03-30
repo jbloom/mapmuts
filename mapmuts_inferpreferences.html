@@ -8,7 +8,7 @@
     
     <title>mapmuts_inferpreferences.py &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="up" title="Scripts" href="scripts.html" />
     <link rel="next" title="mapmuts_inferdifferentialpreferences.py" href="mapmuts_inferdifferentialpreferences.html" />
@@ -45,8 +45,8 @@
         <li class="right" >
           <a href="mapmuts_countparsedmuts.html" title="mapmuts_countparsedmuts.py"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,10 +57,10 @@
             
   <div class="section" id="mapmuts-inferpreferences-py">
 <span id="id1"></span><h1>mapmuts_inferpreferences.py<a class="headerlink" href="#mapmuts-inferpreferences-py" title="Permalink to this headline">¶</a></h1>
-<p><strong>This program is no longer the state-of-the-art:</strong> You are suggested to instead use the <a class="reference external" href="http://jbloom.github.io/dms_tools/">dms_tools</a> program <tt class="docutils literal"><span class="pre">dms_inferprefs</span></tt>.</p>
+<p><strong>This program is no longer the state-of-the-art:</strong> You are suggested to instead use the <a class="reference external" href="http://jbloomlab.github.io/dms_tools/">dms_tools</a> program <code class="docutils literal"><span class="pre">dms_inferprefs</span></code>.</p>
 <p>This script infers the equilibrium preferences of each site for each amino acid. It does this using a Bayesian approach implemented via MCMC (Markov chain Monte Carlo).</p>
 <p>Because this script uses MCMC, it takes a fairly long time to run &#8211; perhaps as long as several days depending on your computer and the specific data set.</p>
-<p>This script takes as input the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>, and so is designed to be run after you have completed the analysis with that script.</p>
+<p>This script takes as input the <em>codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><span class="std std-ref">mapmuts_parsecounts.py</span></a>, and so is designed to be run after you have completed the analysis with that script.</p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
 <p>This script requires <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> for the Bayesian inference, which in turn requires <a class="reference external" href="http://www.numpy.org/">numpy</a>. If you want the script to make plots, you also need <a class="reference external" href="http://matplotlib.org/">matplotlib</a>. You should use <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> version 2.3. This script may <strong>not</strong> work if you are using another version of <a class="reference external" href="http://pymc-devs.github.io/pymc/">pymc</a> (so check that as a possible problem if you are getting strange error messages).</p>
@@ -84,7 +84,7 @@
 </div>
 <div class="section" id="inference-algorithm">
 <h2>Inference algorithm<a class="headerlink" href="#inference-algorithm" title="Permalink to this headline">¶</a></h2>
-<p>A full description of the inference algorithm, definition of likelihood, prior, and posterior functions, etc, can be found in the following PDF file <a class="reference download internal" href="_downloads/preference_inference_algorithm.pdf"><tt class="xref download docutils literal"><span class="pre">preference_inference_algorithm.pdf</span></tt></a></p>
+<p>A full description of the inference algorithm, definition of likelihood, prior, and posterior functions, etc, can be found in the following PDF file <a class="reference download internal" href="_downloads/preference_inference_algorithm.pdf" download=""><code class="xref download docutils literal"><span class="pre">preference_inference_algorithm.pdf</span></code></a></p>
 </div>
 <div class="section" id="implementation-of-the-mcmc">
 <h2>Implementation of the MCMC<a class="headerlink" href="#implementation-of-the-mcmc" title="Permalink to this headline">¶</a></h2>
@@ -96,7 +96,7 @@
 <h2>Running the script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h2>
 <p>To run this script from the prompt, first create a text infile of the
 format described below. Then simply run the script with the single text file as the argument, as in:</p>
-<div class="highlight-python"><div class="highlight"><pre>mapmuts_inferpreferences.py infile.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mapmuts_inferpreferences</span><span class="o">.</span><span class="n">py</span> <span class="n">infile</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
@@ -106,7 +106,7 @@ format described below. Then simply run the script with the single text file as 
 <p>Lines beginning with # and empty lines are ignored.</p>
 <p>Keys for the input file:</p>
 <ul>
-<li><p class="first"><em>DNA_files</em> : The input data for this script are the <em>_codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><em>mapmuts_parsecounts.py</em></a>. For each library being used for the inference (and you can combine data from multiple libraries), this key should be followed by a string giving the path to the <em>_codoncounts.txt</em> file for the <em>DNA</em> sample. The number of files listed here must be the same as the number listed for <em>RNA_files</em>, <em>mutDNA_files</em>, and <em>mutvirus_files</em> as all four files are needed for each library &#8211; they should also be listed in the same order (i.e. library 1, library 2, etc). Only definitively called codons (both reads agree, upper case in the <em>_codoncounts.txt</em> file) are used in the counts.</p>
+<li><p class="first"><em>DNA_files</em> : The input data for this script are the <em>_codoncounts.txt</em> files created by <a class="reference internal" href="mapmuts_parsecounts.html#mapmuts-parsecounts-py"><span class="std std-ref">mapmuts_parsecounts.py</span></a>. For each library being used for the inference (and you can combine data from multiple libraries), this key should be followed by a string giving the path to the <em>_codoncounts.txt</em> file for the <em>DNA</em> sample. The number of files listed here must be the same as the number listed for <em>RNA_files</em>, <em>mutDNA_files</em>, and <em>mutvirus_files</em> as all four files are needed for each library &#8211; they should also be listed in the same order (i.e. library 1, library 2, etc). Only definitively called codons (both reads agree, upper case in the <em>_codoncounts.txt</em> file) are used in the counts.</p>
 </li>
 <li><p class="first"><em>RNA_files</em> : like <em>DNA_files</em> but for the <em>RNA</em> samples.</p>
 </li>
@@ -145,7 +145,7 @@ format described below. Then simply run the script with the single text file as 
 <li><p class="first"><em>ncpus</em> is an option that allows you to run the analyses using multiple CPUs. This will usually be helpful, because these runs can take a long time. If you set <em>ncpus</em> to 1, then we just use one CPU. But if you are working on a multi-threaded processor, then setting to a larger number will take advantage of the additional CPUs. Note however that if you set <em>ncpus</em> to a number larger than the number of spare CPUs, you will overload the processor &#8211; so if you only have one CPU, set this to just 1.</p>
 </li>
 <li><p class="first"><em>sites</em> is an optional key. If specified, it should have a key of <em>sites</em> and is used to specify that we only examine certain sites. If this line is not included or is set to <em>all</em> then all sites listed in the count files (those specified by <em>DNA_file</em>, <em>mutDNA_files</em>, etc) are used in tallying the counts. However, sometimes you may only want to specify a certain range of sites. If so, <em>sites</em> allows you to do this. Just put the number of the first and last site that you want to include, and all sites in this range will be counted. For example, a line of:</p>
-<div class="highlight-python"><div class="highlight"><pre>sites 2 565
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sites</span> <span class="mi">2</span> <span class="mi">565</span>
 </pre></div>
 </div>
 <p>means that we would only infer preferences for residues 2, 3, ..., 564, 565. In this case, we would exclude residue one from the range. You might want to do this if for example you did not mutagenize the N-terminal methionine of your gene.</p>
@@ -165,28 +165,28 @@ format described below. Then simply run the script with the single text file as 
 <div class="section" id="example-input-file">
 <h2>Example input file<a class="headerlink" href="#example-input-file" title="Permalink to this headline">¶</a></h2>
 <p>Here is an example input file:</p>
-<div class="highlight-python"><div class="highlight"><pre># Input file for mapmuts_inferpreferences.py
-DNA_files DNA/WT-1_DNA_codoncounts.txt
-RNA_files RNA/WT-1_RNA_codoncounts.txt
-mutDNA_files mutDNA/WT-1_mutDNA_codoncounts.txt
-mutvirus_files mutvirus-p1/WT-1_mutvirus-p1_codoncounts.txt
-epsilon_concentration 1.0
-mu_concentration 1.0
-rho_concentration 1.0
-pi_concentration 1.0
-minvalue 1e-7
-seed 1
-nruns 3
-nsteps 200000
-thin 200
-stepincrease 4
-convergence 0.01
-MCMC_traces None
-preference_plots preference_plots/
-outfileprefix WT-1
-ncpus 2
-sites all
-removeoutlier False
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Input file for mapmuts_inferpreferences.py</span>
+<span class="n">DNA_files</span> <span class="n">DNA</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_DNA_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">RNA_files</span> <span class="n">RNA</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_RNA_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">mutDNA_files</span> <span class="n">mutDNA</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_mutDNA_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">mutvirus_files</span> <span class="n">mutvirus</span><span class="o">-</span><span class="n">p1</span><span class="o">/</span><span class="n">WT</span><span class="o">-</span><span class="mi">1</span><span class="n">_mutvirus</span><span class="o">-</span><span class="n">p1_codoncounts</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">epsilon_concentration</span> <span class="mf">1.0</span>
+<span class="n">mu_concentration</span> <span class="mf">1.0</span>
+<span class="n">rho_concentration</span> <span class="mf">1.0</span>
+<span class="n">pi_concentration</span> <span class="mf">1.0</span>
+<span class="n">minvalue</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">7</span>
+<span class="n">seed</span> <span class="mi">1</span>
+<span class="n">nruns</span> <span class="mi">3</span>
+<span class="n">nsteps</span> <span class="mi">200000</span>
+<span class="n">thin</span> <span class="mi">200</span>
+<span class="n">stepincrease</span> <span class="mi">4</span>
+<span class="n">convergence</span> <span class="mf">0.01</span>
+<span class="n">MCMC_traces</span> <span class="kc">None</span>
+<span class="n">preference_plots</span> <span class="n">preference_plots</span><span class="o">/</span>
+<span class="n">outfileprefix</span> <span class="n">WT</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">ncpus</span> <span class="mi">2</span>
+<span class="n">sites</span> <span class="nb">all</span>
+<span class="n">removeoutlier</span> <span class="kc">False</span>
 </pre></div>
 </div>
 </div>
@@ -208,10 +208,10 @@ removeoutlier False
 <li><p class="first">The third column lists the site entropy <span class="math">\(h_r\)</span>. The header for this column is <em>SITE_ENTROPY</em>.</p>
 </li>
 <li><p class="first">The remaining 21 columns list the equilibrium preference <span class="math">\(\pi_{r,a}\)</span> values for each amino acid <em>a</em> at this site <em>r</em>. The amino acids are listed in alphabetical order according to their one letter codes, and then the final column gives the equilibrium preference for a stop codon (denoted by a * character). The headers for these columns are <em>PI_A</em>, <em>PI_C</em>, <em>PI_D</em>, ..., <em>PI_W</em>, <em>PI_Y</em>, <em>PI_*</em>. Here is an example of a few lines:</p>
-<div class="highlight-python"><div class="highlight"><pre>#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*
-1   M   0.885694    0.000680047 0.00185968  8.48048e-06 0.00128217  0.0289946   0.000654589 0.0212144   0.0205306   0.0021597   0.00056726  0.876551    0.00130602  0.000789781 0.00144568  0.000414457 0.00071164  0.00126055  0.00167084  0.0352283   0.00176486  0.000905383
-2   A   1.1671  0.709575    0.00177747  3.79503e-05 0.00298854  0.00390524  0.00131246  0.00379599  0.000913006 0.00121497  0.000535209 0.00276335  0.00140061  0.000694694 0.0032134   0.00464972  0.000463924 0.000908368 0.254241    0.00335749  0.00137437  0.000876985
-3   N   3.2593  0.129992    0.000540239 4.2514e-06  0.00171887  0.0212062   0.0006086   0.102743    0.0431489   0.00524637  0.0771062   0.021714    0.0641921   0.00338082  0.0149898   0.0106522   0.13886 0.0247841   0.00607319  0.0500692   0.282389    0.000581555
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#SITE   WT_AA   SITE_ENTROPY    PI_A    PI_C    PI_D    PI_E    PI_F    PI_G    PI_H    PI_I    PI_K    PI_L    PI_M    PI_N    PI_P    PI_Q    PI_R    PI_S    PI_T    PI_V    PI_W    PI_Y    PI_*</span>
+<span class="mi">1</span>   <span class="n">M</span>   <span class="mf">0.885694</span>    <span class="mf">0.000680047</span> <span class="mf">0.00185968</span>  <span class="mf">8.48048e-06</span> <span class="mf">0.00128217</span>  <span class="mf">0.0289946</span>   <span class="mf">0.000654589</span> <span class="mf">0.0212144</span>   <span class="mf">0.0205306</span>   <span class="mf">0.0021597</span>   <span class="mf">0.00056726</span>  <span class="mf">0.876551</span>    <span class="mf">0.00130602</span>  <span class="mf">0.000789781</span> <span class="mf">0.00144568</span>  <span class="mf">0.000414457</span> <span class="mf">0.00071164</span>  <span class="mf">0.00126055</span>  <span class="mf">0.00167084</span>  <span class="mf">0.0352283</span>   <span class="mf">0.00176486</span>  <span class="mf">0.000905383</span>
+<span class="mi">2</span>   <span class="n">A</span>   <span class="mf">1.1671</span>  <span class="mf">0.709575</span>    <span class="mf">0.00177747</span>  <span class="mf">3.79503e-05</span> <span class="mf">0.00298854</span>  <span class="mf">0.00390524</span>  <span class="mf">0.00131246</span>  <span class="mf">0.00379599</span>  <span class="mf">0.000913006</span> <span class="mf">0.00121497</span>  <span class="mf">0.000535209</span> <span class="mf">0.00276335</span>  <span class="mf">0.00140061</span>  <span class="mf">0.000694694</span> <span class="mf">0.0032134</span>   <span class="mf">0.00464972</span>  <span class="mf">0.000463924</span> <span class="mf">0.000908368</span> <span class="mf">0.254241</span>    <span class="mf">0.00335749</span>  <span class="mf">0.00137437</span>  <span class="mf">0.000876985</span>
+<span class="mi">3</span>   <span class="n">N</span>   <span class="mf">3.2593</span>  <span class="mf">0.129992</span>    <span class="mf">0.000540239</span> <span class="mf">4.2514e-06</span>  <span class="mf">0.00171887</span>  <span class="mf">0.0212062</span>   <span class="mf">0.0006086</span>   <span class="mf">0.102743</span>    <span class="mf">0.0431489</span>   <span class="mf">0.00524637</span>  <span class="mf">0.0771062</span>   <span class="mf">0.021714</span>    <span class="mf">0.0641921</span>   <span class="mf">0.00338082</span>  <span class="mf">0.0149898</span>   <span class="mf">0.0106522</span>   <span class="mf">0.13886</span> <span class="mf">0.0247841</span>   <span class="mf">0.00607319</span>  <span class="mf">0.0500692</span>   <span class="mf">0.282389</span>    <span class="mf">0.000581555</span>
 </pre></div>
 </div>
 </li>
@@ -219,26 +219,26 @@ removeoutlier False
 </div></blockquote>
 </li>
 <li><p class="first"><em>equilibriumpreferences_credibleintervals_95.txt</em> : a text file giving the median-centered 95% credible intervals on the <span class="math">\(\pi_{r,a}\)</span> values in <em>equilibriumpreferences.txt</em>. The first column is <em>SITE</em> and the remaining columns give the upper and lower bounds on the credible intervals for each of the <span class="math">\(\pi_{r,a}\)</span> values as comma-separated numbers (no spaces) in the same order that they are listed in <em>equilibriumpreferencesfile.txt</em>. Here is an example:</p>
-<div class="highlight-python"><div class="highlight"><pre>#SITE   PI_A_95cred PI_C_95cred PI_D_95cred PI_E_95cred PI_F_95cred PI_G_95cred PI_H_95cred PI_I_95cred PI_K_95cred PI_L_95cred PI_M_95cred PI_N_95cred PI_P_95cred PI_Q_95cred PI_R_95cred PI_S_95cred PI_T_95cred PI_V_95cred PI_W_95cred PI_Y_95cred PI_*_95cred
-1   1.49582e-05,0.00269598  7.2227e-05,0.00604361   4.37378e-06,1.17951e-05 3.26837e-05,0.00433571  0.0114465,0.0491834 1.82621e-05,0.00208322  0.00989126,0.0318659    0.00135281,0.0554989    4.87099e-05,0.00754094  1.41237e-05,0.00202465  0.821886,0.925528   3.69704e-05,0.00458556  1.94864e-05,0.0027967   3.89356e-05,0.00557027  8.44362e-06,0.00134572  1.76935e-05,0.0025792   3.51256e-05,0.00460279  3.68112e-05,0.00664131  0.0270458,0.0403275 5.19957e-05,0.00543017  2.3493e-05,0.00336828
-2   0.683813,0.729505   5.48957e-05,0.00581796  3.3971e-05,4.26404e-05  6.74445e-05,0.0109755   4.8097e-05,0.0145215    5.40342e-05,0.00379731  0.000377183,0.00853322  2.13206e-05,0.00337318  3.52239e-05,0.00407263  1.62767e-05,0.00193362  7.56385e-05,0.00950661  4.20842e-05,0.00481382  1.91134e-05,0.00253192  0.000126937,0.0090789   0.0036588,0.00587762    1.0427e-05,0.0016747    2.57371e-05,0.00350532  0.231977,0.267635   9.01372e-05,0.0116063   3.61905e-05,0.00479547  2.30435e-05,0.0032731
-3   0.122949,0.137744   1.51152e-05,0.00177613  1.65846e-07,1.00925e-05 0.000558957,0.0032513   0.015292,0.0269782  4.06388e-05,0.00157236  0.0925438,0.111993  0.0384322,0.0481046 0.00322823,0.00788021   0.0722691,0.0822557 0.0159843,0.0271257 0.0569958,0.0722337 0.000939467,0.00723918  0.0115211,0.0187761 0.00937067,0.0117235    0.135176,0.142903   0.0211448,0.0287984 0.00433432,0.00801638   0.0457743,0.0548462 0.2689,0.29917  2.91378e-05,0.00163938
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#SITE   PI_A_95cred PI_C_95cred PI_D_95cred PI_E_95cred PI_F_95cred PI_G_95cred PI_H_95cred PI_I_95cred PI_K_95cred PI_L_95cred PI_M_95cred PI_N_95cred PI_P_95cred PI_Q_95cred PI_R_95cred PI_S_95cred PI_T_95cred PI_V_95cred PI_W_95cred PI_Y_95cred PI_*_95cred</span>
+<span class="mi">1</span>   <span class="mf">1.49582e-05</span><span class="p">,</span><span class="mf">0.00269598</span>  <span class="mf">7.2227e-05</span><span class="p">,</span><span class="mf">0.00604361</span>   <span class="mf">4.37378e-06</span><span class="p">,</span><span class="mf">1.17951e-05</span> <span class="mf">3.26837e-05</span><span class="p">,</span><span class="mf">0.00433571</span>  <span class="mf">0.0114465</span><span class="p">,</span><span class="mf">0.0491834</span> <span class="mf">1.82621e-05</span><span class="p">,</span><span class="mf">0.00208322</span>  <span class="mf">0.00989126</span><span class="p">,</span><span class="mf">0.0318659</span>    <span class="mf">0.00135281</span><span class="p">,</span><span class="mf">0.0554989</span>    <span class="mf">4.87099e-05</span><span class="p">,</span><span class="mf">0.00754094</span>  <span class="mf">1.41237e-05</span><span class="p">,</span><span class="mf">0.00202465</span>  <span class="mf">0.821886</span><span class="p">,</span><span class="mf">0.925528</span>   <span class="mf">3.69704e-05</span><span class="p">,</span><span class="mf">0.00458556</span>  <span class="mf">1.94864e-05</span><span class="p">,</span><span class="mf">0.0027967</span>   <span class="mf">3.89356e-05</span><span class="p">,</span><span class="mf">0.00557027</span>  <span class="mf">8.44362e-06</span><span class="p">,</span><span class="mf">0.00134572</span>  <span class="mf">1.76935e-05</span><span class="p">,</span><span class="mf">0.0025792</span>   <span class="mf">3.51256e-05</span><span class="p">,</span><span class="mf">0.00460279</span>  <span class="mf">3.68112e-05</span><span class="p">,</span><span class="mf">0.00664131</span>  <span class="mf">0.0270458</span><span class="p">,</span><span class="mf">0.0403275</span> <span class="mf">5.19957e-05</span><span class="p">,</span><span class="mf">0.00543017</span>  <span class="mf">2.3493e-05</span><span class="p">,</span><span class="mf">0.00336828</span>
+<span class="mi">2</span>   <span class="mf">0.683813</span><span class="p">,</span><span class="mf">0.729505</span>   <span class="mf">5.48957e-05</span><span class="p">,</span><span class="mf">0.00581796</span>  <span class="mf">3.3971e-05</span><span class="p">,</span><span class="mf">4.26404e-05</span>  <span class="mf">6.74445e-05</span><span class="p">,</span><span class="mf">0.0109755</span>   <span class="mf">4.8097e-05</span><span class="p">,</span><span class="mf">0.0145215</span>    <span class="mf">5.40342e-05</span><span class="p">,</span><span class="mf">0.00379731</span>  <span class="mf">0.000377183</span><span class="p">,</span><span class="mf">0.00853322</span>  <span class="mf">2.13206e-05</span><span class="p">,</span><span class="mf">0.00337318</span>  <span class="mf">3.52239e-05</span><span class="p">,</span><span class="mf">0.00407263</span>  <span class="mf">1.62767e-05</span><span class="p">,</span><span class="mf">0.00193362</span>  <span class="mf">7.56385e-05</span><span class="p">,</span><span class="mf">0.00950661</span>  <span class="mf">4.20842e-05</span><span class="p">,</span><span class="mf">0.00481382</span>  <span class="mf">1.91134e-05</span><span class="p">,</span><span class="mf">0.00253192</span>  <span class="mf">0.000126937</span><span class="p">,</span><span class="mf">0.0090789</span>   <span class="mf">0.0036588</span><span class="p">,</span><span class="mf">0.00587762</span>    <span class="mf">1.0427e-05</span><span class="p">,</span><span class="mf">0.0016747</span>    <span class="mf">2.57371e-05</span><span class="p">,</span><span class="mf">0.00350532</span>  <span class="mf">0.231977</span><span class="p">,</span><span class="mf">0.267635</span>   <span class="mf">9.01372e-05</span><span class="p">,</span><span class="mf">0.0116063</span>   <span class="mf">3.61905e-05</span><span class="p">,</span><span class="mf">0.00479547</span>  <span class="mf">2.30435e-05</span><span class="p">,</span><span class="mf">0.0032731</span>
+<span class="mi">3</span>   <span class="mf">0.122949</span><span class="p">,</span><span class="mf">0.137744</span>   <span class="mf">1.51152e-05</span><span class="p">,</span><span class="mf">0.00177613</span>  <span class="mf">1.65846e-07</span><span class="p">,</span><span class="mf">1.00925e-05</span> <span class="mf">0.000558957</span><span class="p">,</span><span class="mf">0.0032513</span>   <span class="mf">0.015292</span><span class="p">,</span><span class="mf">0.0269782</span>  <span class="mf">4.06388e-05</span><span class="p">,</span><span class="mf">0.00157236</span>  <span class="mf">0.0925438</span><span class="p">,</span><span class="mf">0.111993</span>  <span class="mf">0.0384322</span><span class="p">,</span><span class="mf">0.0481046</span> <span class="mf">0.00322823</span><span class="p">,</span><span class="mf">0.00788021</span>   <span class="mf">0.0722691</span><span class="p">,</span><span class="mf">0.0822557</span> <span class="mf">0.0159843</span><span class="p">,</span><span class="mf">0.0271257</span> <span class="mf">0.0569958</span><span class="p">,</span><span class="mf">0.0722337</span> <span class="mf">0.000939467</span><span class="p">,</span><span class="mf">0.00723918</span>  <span class="mf">0.0115211</span><span class="p">,</span><span class="mf">0.0187761</span> <span class="mf">0.00937067</span><span class="p">,</span><span class="mf">0.0117235</span>    <span class="mf">0.135176</span><span class="p">,</span><span class="mf">0.142903</span>   <span class="mf">0.0211448</span><span class="p">,</span><span class="mf">0.0287984</span> <span class="mf">0.00433432</span><span class="p">,</span><span class="mf">0.00801638</span>   <span class="mf">0.0457743</span><span class="p">,</span><span class="mf">0.0548462</span> <span class="mf">0.2689</span><span class="p">,</span><span class="mf">0.29917</span>  <span class="mf">2.91378e-05</span><span class="p">,</span><span class="mf">0.00163938</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Plots showing the equilibrium preferences for each amino acid at a site. These plots are are PDFs in the directory specified by <em>preference_plots</em>. The plots have the prefix given by <em>outfileprefix</em> followed by an underscore and the residue number, such as <em>_residue_1.pdf</em>. The points show the mean estimate, and the error bars show the median-centered 95% credible interval. Here is an example of such a plot:</p>
 </li>
 </ul>
-<div class="figure align-center">
+<div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="_images/preference_plot_example.jpg"><img alt="preference_plot_example.jpg" src="_images/preference_plot_example.jpg" style="width: 55%;" /></a>
-<p class="caption">Example <em>preference_plots</em> plot.</p>
+<p class="caption"><span class="caption-text">Example <em>preference_plots</em> plot.</span></p>
 </div>
 <ul class="simple">
 <li>Plots showing the traces of the equilibrium preferences during the MCMC, in the directory specified by <em>MCMC_traces</em> (if this option is being used). These plots are PDFs with the prefix given by <em>outfileprefix</em> followed by an underscore and the residue number, such as <em>_residue_1.pdf</em>. Here is an example of such a plot:</li>
 </ul>
-<div class="figure align-center">
+<div class="figure align-center" id="id4">
 <a class="reference internal image-reference" href="_images/preference_MCMC_plot_example.jpg"><img alt="preference_MCMC_plot_example.jpg" src="_images/preference_MCMC_plot_example.jpg" style="width: 75%;" /></a>
-<p class="caption">Example <em>MCMC_traces</em> plot.</p>
+<p class="caption"><span class="caption-text">Example <em>MCMC_traces</em> plot.</span></p>
 </div>
 </div>
 </div>
@@ -285,9 +285,6 @@ removeoutlier False
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -309,13 +306,13 @@ removeoutlier False
         <li class="right" >
           <a href="mapmuts_countparsedmuts.html" title="mapmuts_countparsedmuts.py"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
-          <li><a href="scripts.html" >Scripts</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="scripts.html" >Scripts</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

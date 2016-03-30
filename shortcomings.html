@@ -8,7 +8,7 @@
     
     <title>Shortcomings &mdash; mapmuts 1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mapmuts 1.1 documentation" href="index.html" />
     <link rel="next" title="Acknowledgements" href="acknowledgements.html" />
     <link rel="prev" title="weblogo Module" href="weblogo_module.html" /> 
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="weblogo_module.html" title="weblogo Module"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -62,12 +62,12 @@
 <li><p class="first">The alignment algorithms just searches for substrings rather than global best alignments. This is not a problem for genes with little redundancy, but could pose a problem on longer templates or highly redundant ones. This will definitely become highly inefficient for much longer reads and/or templates, in which case some sort of hashing approach might be preferable.</p>
 </li>
 <li><p class="first">There is currently no mechanism for handling gaps in the alignments. In general, this just causes gapped reads to be discarded. However, it could cause incorrect calling of mutations near the end of reads when there is actually a gap. Consider two reads that actually align like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ATGGGACCATTT</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ATGGGACCATTT</span>
 <span class="n">ATGGGACC</span><span class="o">-</span><span class="n">TTT</span>
 </pre></div>
 </div>
 <p>It is possible that they will actually be aligned like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ATGGGACCATTT</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ATGGGACCATTT</span>
 <span class="n">ATGGGACCTTT</span>
 </pre></div>
 </div>
@@ -86,7 +86,7 @@
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="weblogo_module.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">weblogo</span></tt> Module</a></p>
+                        title="previous chapter"><code class="docutils literal"><span class="pre">weblogo</span></code> Module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="acknowledgements.html"
                         title="next chapter">Acknowledgements</a></p>
@@ -105,9 +105,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -129,12 +126,12 @@
         <li class="right" >
           <a href="weblogo_module.html" title="weblogo Module"
              >previous</a> |</li>
-        <li><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">mapmuts 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Jesse Bloom.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>
